@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Login-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" userLabel="Login" customClass="ViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FLa-rJ-cAk">
+                                <rect key="frame" x="188" y="533" width="39" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="로그인"/>
+                                <connections>
+                                    <segue destination="qYv-Rf-f1v" kind="show" id="BWv-9z-1DQ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="122" y="139"/>
+        </scene>
+        <!--video-->
+        <scene sceneID="syK-nQ-NiC">
+            <objects>
+                <viewController id="44q-nB-p0M" customClass="VideoListViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Jwc-Nk-bpW">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wPi-Hs-DHf" userLabel="NavigationBar">
+                                <rect key="frame" x="0.0" y="-46" width="414" height="130"/>
+                                <subviews>
+                                    <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Anl-MQ-Gna">
+                                        <rect key="frame" x="0.0" y="86" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="barTintColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <textAttributes key="titleTextAttributes">
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </textAttributes>
+                                        <items>
+                                            <navigationItem title="강좌 목록" id="DHd-Ct-xxA"/>
+                                        </items>
+                                    </navigationBar>
+                                </subviews>
+                                <color key="backgroundColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="130" id="0fP-8A-YRt"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="9XL-hy-hwf" firstAttribute="top" secondItem="wPi-Hs-DHf" secondAttribute="bottom" constant="-40" id="EHw-Mq-jZ6"/>
+                            <constraint firstItem="wPi-Hs-DHf" firstAttribute="width" secondItem="9XL-hy-hwf" secondAttribute="width" id="fhr-HI-jAX"/>
+                            <constraint firstItem="wPi-Hs-DHf" firstAttribute="centerX" secondItem="9XL-hy-hwf" secondAttribute="centerX" id="jUb-iJ-cfI"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="9XL-hy-hwf"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="video" id="aRj-Ka-ukr"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cS4-Oj-jlp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-245" y="1015"/>
+        </scene>
+        <!--Home-->
+        <scene sceneID="1eM-hn-Gda">
+            <objects>
+                <viewController id="93I-Ed-TeH" customClass="HomePageViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0r9-uT-flh">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aWc-v3-1bh">
+                                <rect key="frame" x="171" y="298" width="73" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="학습 중 강좌"/>
+                                <connections>
+                                    <segue destination="I7x-9P-glX" kind="show" id="wch-d0-eqR"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cUy-gr-fe6">
+                                <rect key="frame" x="179" y="528" width="56" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="추천 강좌"/>
+                                <connections>
+                                    <segue destination="vBt-y0-S93" kind="show" id="fQT-IZ-272"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hkJ-Cp-aug" userLabel="NavigationBar">
+                                <rect key="frame" x="0.0" y="-46" width="414" height="130"/>
+                                <subviews>
+                                    <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jut-Ao-3m0">
+                                        <rect key="frame" x="0.0" y="86" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="barTintColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <textAttributes key="titleTextAttributes">
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </textAttributes>
+                                        <items>
+                                            <navigationItem title="Shinple" id="AAa-ll-xVQ"/>
+                                        </items>
+                                    </navigationBar>
+                                </subviews>
+                                <color key="backgroundColor" red="0.18912024300579211" green="0.5369307015020055" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="130" id="mja-4a-gqP"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="wFH-BB-e9M" firstAttribute="top" secondItem="hkJ-Cp-aug" secondAttribute="bottom" constant="-40" id="Qd4-6f-VYq"/>
+                            <constraint firstItem="hkJ-Cp-aug" firstAttribute="width" secondItem="wFH-BB-e9M" secondAttribute="width" id="SA4-s8-ce7"/>
+                            <constraint firstItem="hkJ-Cp-aug" firstAttribute="centerX" secondItem="wFH-BB-e9M" secondAttribute="centerX" id="wzC-RW-eeC"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="wFH-BB-e9M"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Home" id="EYP-iR-T0S">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
+                    </tabBarItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="llE-kS-Mx3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1664" y="1015"/>
+        </scene>
+        <!--Notification-->
+        <scene sceneID="XnS-D6-9MZ">
+            <objects>
+                <viewController id="TDz-ij-i0p" customClass="NotificationViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3dc-rK-Qki">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ley-wd-MeY" userLabel="NavigationBar">
+                                <rect key="frame" x="0.0" y="-46" width="414" height="130"/>
+                                <color key="backgroundColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="130" id="YEw-s0-EJ6"/>
+                                </constraints>
+                            </view>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QDg-b4-Rgv">
+                                <rect key="frame" x="0.0" y="40" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="barTintColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem title="알림" id="FDr-wN-GYC"/>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="qlQ-xd-Ass" firstAttribute="top" secondItem="Ley-wd-MeY" secondAttribute="bottom" constant="-40" id="UeM-hq-4N1"/>
+                            <constraint firstItem="Ley-wd-MeY" firstAttribute="width" secondItem="qlQ-xd-Ass" secondAttribute="width" id="mae-ng-ux2"/>
+                            <constraint firstItem="Ley-wd-MeY" firstAttribute="centerX" secondItem="qlQ-xd-Ass" secondAttribute="centerX" id="oWU-Zd-Jk9"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="qlQ-xd-Ass"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Notification" id="clP-xW-caF"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="E3j-fO-q0E" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3796" y="1015"/>
+        </scene>
+        <!--studyGroup-->
+        <scene sceneID="2Zw-U0-rTu">
+            <objects>
+                <viewController id="20v-Yl-dM6" customClass="GroupMainViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9SP-hA-d0S">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s2r-n6-YDw" userLabel="NavigationBar">
+                                <rect key="frame" x="0.0" y="-46" width="414" height="130"/>
+                                <subviews>
+                                    <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pko-AQ-D80">
+                                        <rect key="frame" x="0.0" y="86" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="barTintColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <textAttributes key="titleTextAttributes">
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </textAttributes>
+                                        <items>
+                                            <navigationItem title="스터디 그룹" id="xi6-Zf-khp">
+                                                <rightBarButtonItems>
+                                                    <barButtonItem systemItem="compose" id="Jc4-st-iW5">
+                                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <connections>
+                                                            <segue destination="Vfq-Du-ut2" kind="show" id="ckD-WG-6UP"/>
+                                                        </connections>
+                                                    </barButtonItem>
+                                                    <barButtonItem systemItem="add" id="5N8-4Y-Wnx">
+                                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <connections>
+                                                            <segue destination="D4h-Vj-zeC" kind="show" id="xPE-Ea-1Wz"/>
+                                                        </connections>
+                                                    </barButtonItem>
+                                                </rightBarButtonItems>
+                                            </navigationItem>
+                                        </items>
+                                    </navigationBar>
+                                </subviews>
+                                <color key="backgroundColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="130" id="C6l-qE-RoB"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="s2r-n6-YDw" firstAttribute="centerX" secondItem="lcC-aS-PLc" secondAttribute="centerX" id="hPN-IP-PMY"/>
+                            <constraint firstItem="lcC-aS-PLc" firstAttribute="top" secondItem="s2r-n6-YDw" secondAttribute="bottom" constant="-40" id="s18-r1-aK1"/>
+                            <constraint firstItem="s2r-n6-YDw" firstAttribute="width" secondItem="lcC-aS-PLc" secondAttribute="width" id="xrj-d7-3aQ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="lcC-aS-PLc"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="studyGroup" id="oag-MJ-KGK"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YKa-2f-yGx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1093" y="1015"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="QK0-2U-UWI">
+            <objects>
+                <tabBarController id="qYv-Rf-f1v" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="UrW-a3-TPN">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="93I-Ed-TeH" kind="relationship" relationship="viewControllers" id="O4s-bi-dN4"/>
+                        <segue destination="44q-nB-p0M" kind="relationship" relationship="viewControllers" id="emq-Uh-L9T"/>
+                        <segue destination="20v-Yl-dM6" kind="relationship" relationship="viewControllers" id="55X-wb-nrW"/>
+                        <segue destination="007-dA-fRr" kind="relationship" relationship="viewControllers" id="Pja-bd-EmP"/>
+                        <segue destination="TDz-ij-i0p" kind="relationship" relationship="viewControllers" id="ZRM-ur-7ed"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kBv-3k-cLg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1093" y="139"/>
+        </scene>
+        <!--myPage-->
+        <scene sceneID="rJm-k8-usx">
+            <objects>
+                <viewController id="007-dA-fRr" customClass="MyPageViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="VTR-kx-YiF">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AJ9-7G-e3m" userLabel="NavigationBar">
+                                <rect key="frame" x="0.0" y="-46" width="414" height="130"/>
+                                <subviews>
+                                    <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QaD-ba-F36">
+                                        <rect key="frame" x="0.0" y="86" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="barTintColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <textAttributes key="titleTextAttributes">
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </textAttributes>
+                                        <items>
+                                            <navigationItem title="마이페이지" id="etu-Ha-lVK"/>
+                                        </items>
+                                    </navigationBar>
+                                </subviews>
+                                <color key="backgroundColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="130" id="tUN-0E-Aiz"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="AJ9-7G-e3m" firstAttribute="centerX" secondItem="U52-qV-exq" secondAttribute="centerX" id="SUj-ia-yDa"/>
+                            <constraint firstItem="U52-qV-exq" firstAttribute="top" secondItem="AJ9-7G-e3m" secondAttribute="bottom" constant="-40" id="gPc-Mf-YZ2"/>
+                            <constraint firstItem="AJ9-7G-e3m" firstAttribute="width" secondItem="U52-qV-exq" secondAttribute="width" id="ti6-11-Azd"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="U52-qV-exq"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="myPage" id="CsR-4T-YpV"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wru-Sx-kqY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2451" y="1015"/>
+        </scene>
+        <!--watching-->
+        <scene sceneID="gfn-es-SDp">
+            <objects>
+                <viewController id="I7x-9P-glX" userLabel="watching" customClass="WatchingVideoViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GV2-lt-Wum">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kU3-CW-Lhe" userLabel="NavigationBar">
+                                <rect key="frame" x="0.0" y="-46" width="414" height="130"/>
+                                <subviews>
+                                    <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="izw-jb-3j2">
+                                        <rect key="frame" x="0.0" y="86" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="tintColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="barTintColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <textAttributes key="titleTextAttributes">
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </textAttributes>
+                                        <items>
+                                            <navigationItem title="학습 강좌" id="toP-Bd-qB5">
+                                                <barButtonItem key="leftBarButtonItem" title="back" id="poS-7z-tKe">
+                                                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="onGoBack:" destination="I7x-9P-glX" id="Wj3-mL-mfm"/>
+                                                    </connections>
+                                                </barButtonItem>
+                                            </navigationItem>
+                                        </items>
+                                    </navigationBar>
+                                </subviews>
+                                <color key="backgroundColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="130" id="9hD-2G-1sv"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5XW-E2-E7o">
+                                <rect key="frame" x="216" y="387" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="재생"/>
+                                <connections>
+                                    <segue destination="QOc-2w-dqb" kind="show" id="NnH-YO-rYR"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="45w-7o-4tf" firstAttribute="top" secondItem="kU3-CW-Lhe" secondAttribute="bottom" constant="-40" id="Cw8-CQ-LhH"/>
+                            <constraint firstItem="kU3-CW-Lhe" firstAttribute="width" secondItem="45w-7o-4tf" secondAttribute="width" id="YbW-F1-kZ8"/>
+                            <constraint firstItem="kU3-CW-Lhe" firstAttribute="centerX" secondItem="45w-7o-4tf" secondAttribute="centerX" id="ocW-7Q-JPt"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="45w-7o-4tf"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="home" id="cUZ-mB-xPu"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qj4-XT-IEX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2091" y="1783"/>
+        </scene>
+        <!--recommended-->
+        <scene sceneID="JX7-Fh-oXF">
+            <objects>
+                <viewController id="vBt-y0-S93" userLabel="recommended" customClass="RecommendedViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Uer-Tg-4pP">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B7d-9s-qkN" userLabel="NavigationBar">
+                                <rect key="frame" x="0.0" y="-46" width="414" height="130"/>
+                                <subviews>
+                                    <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wjY-kL-dDC">
+                                        <rect key="frame" x="0.0" y="86" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="barTintColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <textAttributes key="titleTextAttributes">
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </textAttributes>
+                                        <items>
+                                            <navigationItem title="추천 강좌" id="aa3-iG-dUB">
+                                                <barButtonItem key="leftBarButtonItem" title="back" id="j0R-6q-W8C">
+                                                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="onGoBack:" destination="vBt-y0-S93" id="jzm-co-oDG"/>
+                                                    </connections>
+                                                </barButtonItem>
+                                            </navigationItem>
+                                        </items>
+                                    </navigationBar>
+                                </subviews>
+                                <color key="backgroundColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="130" id="7QK-ep-NLD"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Hq-lB-pz2">
+                                <rect key="frame" x="249" y="332" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="재생"/>
+                                <connections>
+                                    <segue destination="QOc-2w-dqb" kind="show" id="nhm-7K-iMZ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="B7d-9s-qkN" firstAttribute="width" secondItem="1io-dD-vqX" secondAttribute="width" id="Toq-Z0-zHi"/>
+                            <constraint firstItem="B7d-9s-qkN" firstAttribute="centerX" secondItem="1io-dD-vqX" secondAttribute="centerX" id="mAH-rn-LwR"/>
+                            <constraint firstItem="1io-dD-vqX" firstAttribute="top" secondItem="B7d-9s-qkN" secondAttribute="bottom" constant="-40" id="u9N-hF-qza"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="1io-dD-vqX"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="home" id="4iZ-Xv-h2E"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nnZ-dw-KRH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1249" y="1783"/>
+        </scene>
+        <!--videoDetails-->
+        <scene sceneID="aOA-HB-Agp">
+            <objects>
+                <viewController id="QOc-2w-dqb" userLabel="videoDetails" customClass="VideoDetailViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="BUF-EE-Ifb">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1um-yK-jWN" userLabel="NavigationBar">
+                                <rect key="frame" x="0.0" y="-46" width="414" height="130"/>
+                                <subviews>
+                                    <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r0I-2B-0yd">
+                                        <rect key="frame" x="0.0" y="86" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="barTintColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <textAttributes key="titleTextAttributes">
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </textAttributes>
+                                        <items>
+                                            <navigationItem title="강좌 상세" id="LVt-BY-HXn">
+                                                <barButtonItem key="leftBarButtonItem" title="back" id="Emg-UL-F0K">
+                                                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="onGoBack:" destination="QOc-2w-dqb" id="uic-TU-xzi"/>
+                                                    </connections>
+                                                </barButtonItem>
+                                            </navigationItem>
+                                        </items>
+                                    </navigationBar>
+                                </subviews>
+                                <color key="backgroundColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="130" id="Udx-CI-MDB"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="1um-yK-jWN" firstAttribute="centerX" secondItem="O2J-rq-Ltz" secondAttribute="centerX" id="6E0-H0-um5"/>
+                            <constraint firstItem="1um-yK-jWN" firstAttribute="width" secondItem="O2J-rq-Ltz" secondAttribute="width" id="75f-mp-nX4"/>
+                            <constraint firstItem="O2J-rq-Ltz" firstAttribute="top" secondItem="1um-yK-jWN" secondAttribute="bottom" constant="-40" id="KdC-Pp-yJ8"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="O2J-rq-Ltz"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="home" id="7IP-q0-H2l"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bxN-rC-PYn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1665" y="2562"/>
+        </scene>
+        <!--createStudy-->
+        <scene sceneID="ENA-jJ-jfK">
+            <objects>
+                <viewController id="D4h-Vj-zeC" userLabel="createStudy" customClass="GroupCreateViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fTa-LZ-hfT">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="is2-Iu-DjE" userLabel="NavigationBar">
+                                <rect key="frame" x="0.0" y="-46" width="414" height="130"/>
+                                <subviews>
+                                    <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JP2-bj-bHB">
+                                        <rect key="frame" x="0.0" y="86" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="barTintColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <textAttributes key="titleTextAttributes">
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </textAttributes>
+                                        <items>
+                                            <navigationItem title="스터디그룹 생성" id="tv9-X0-i2Y">
+                                                <barButtonItem key="leftBarButtonItem" title="back" id="XWI-TJ-kAs">
+                                                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="onGoBack:" destination="D4h-Vj-zeC" id="Zx7-xx-udG"/>
+                                                    </connections>
+                                                </barButtonItem>
+                                            </navigationItem>
+                                        </items>
+                                    </navigationBar>
+                                </subviews>
+                                <color key="backgroundColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="130" id="yNa-cu-EBt"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="is2-Iu-DjE" firstAttribute="width" secondItem="2Q7-XO-fMR" secondAttribute="width" id="aNz-jB-3fj"/>
+                            <constraint firstItem="is2-Iu-DjE" firstAttribute="centerX" secondItem="2Q7-XO-fMR" secondAttribute="centerX" id="tH5-9K-7pQ"/>
+                            <constraint firstItem="2Q7-XO-fMR" firstAttribute="top" secondItem="is2-Iu-DjE" secondAttribute="bottom" constant="-40" id="uwl-4c-2vD"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="2Q7-XO-fMR"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="videoList" id="CRu-dj-Ari"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cWp-uE-NE0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="683" y="1783"/>
+        </scene>
+        <!--studyBoard-->
+        <scene sceneID="PxP-b8-Hg2">
+            <objects>
+                <viewController id="Vfq-Du-ut2" userLabel="studyBoard" customClass="GroupBoardViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Y2s-pl-hN3">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n4t-Oj-gl7" userLabel="NavigationBar">
+                                <rect key="frame" x="0.0" y="-46" width="414" height="130"/>
+                                <subviews>
+                                    <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lm6-xR-6l2">
+                                        <rect key="frame" x="0.0" y="86" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="barTintColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <textAttributes key="titleTextAttributes">
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </textAttributes>
+                                        <items>
+                                            <navigationItem title="게시판" id="B9M-Gs-DMs">
+                                                <barButtonItem key="leftBarButtonItem" title="back" id="KEW-Ac-T0T">
+                                                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="onGoBack:" destination="Vfq-Du-ut2" id="wpT-Hn-jnm"/>
+                                                    </connections>
+                                                </barButtonItem>
+                                            </navigationItem>
+                                        </items>
+                                    </navigationBar>
+                                </subviews>
+                                <color key="backgroundColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="130" id="18d-Ke-IFJ"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="tAf-qD-10g" firstAttribute="top" secondItem="n4t-Oj-gl7" secondAttribute="bottom" constant="-40" id="3fR-go-9eQ"/>
+                            <constraint firstItem="n4t-Oj-gl7" firstAttribute="width" secondItem="tAf-qD-10g" secondAttribute="width" id="dJV-r3-8Nb"/>
+                            <constraint firstItem="n4t-Oj-gl7" firstAttribute="centerX" secondItem="tAf-qD-10g" secondAttribute="centerX" id="uzk-Gz-D8Y"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="tAf-qD-10g"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="videoList" id="pjL-YI-Gaa"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aWf-U2-pbx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1514" y="1783"/>
+        </scene>
+    </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="NnH-YO-rYR"/>
+    </inferredMetricsTieBreakers>
+</document>
