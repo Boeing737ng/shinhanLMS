@@ -6,6 +6,12 @@
 //  Copyright © 2019 sfo. All rights reserved.
 //
 
+//DATABASE::-----
+//Group List Info
+//- Group Image
+//- Group Name
+//- Group's population
+
 import UIKit
 
 class GroupMainViewController: UIViewController {

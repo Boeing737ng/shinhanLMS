@@ -6,6 +6,10 @@
 //  Copyright © 2019 sfo. All rights reserved.
 //
 
+//DATABASE READ::-----
+//Video Info
+//- Everything about selected video
+
 import UIKit
 
 class VideoDetailViewController: UIViewController {

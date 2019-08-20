@@ -6,6 +6,12 @@
 //  Copyright © 2019 sfo. All rights reserved.
 //
 
+//DATABASE READ::-----
+//Video Info upon Categories
+//- thumbnail image
+//- name
+//- download Url
+
 import UIKit
 
 class HomePageViewController: UIViewController {

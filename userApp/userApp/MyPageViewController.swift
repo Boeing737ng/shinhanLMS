@@ -6,6 +6,14 @@
 //  Copyright © 2019 sfo. All rights reserved.
 //
 
+//DATABASE READ::-----
+//User Info
+//- Name
+//- Department
+//- Selected Tags
+//- User's group list
+//- User's Playlist
+
 import UIKit
 
 class MyPageViewController: UIViewController {

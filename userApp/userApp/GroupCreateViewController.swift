@@ -6,6 +6,11 @@
 //  Copyright © 2019 sfo. All rights reserved.
 //
 
+//DATABASE WRITE::-----
+//- Group Image
+//- Group Name
+//- Group's description
+
 import UIKit
 
 class GroupCreateViewController: UIViewController {
