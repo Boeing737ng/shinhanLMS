@@ -12,6 +12,7 @@
 
 import UIKit
 import Firebase
+import AVKit
 
 class VideoDetailViewController: UIViewController {
 
@@ -52,7 +53,19 @@ class VideoDetailViewController: UIViewController {
             print(error.localizedDescription)
         }
     }
-
+    
+    // get URL dynamically
+    func playVideo() {
+        let url = "https://firebasestorage.googleapis.com/v0/b/shinhanlms.appspot.com/o/videos%2FTween_app_instruction.MP4?alt=media&token=ef53ac22-6729-4056-a9d8-a3f0e0c0b849"
+        let player = AVPlayer(url: URL(string: url)!)
+        let playerViewController = AVPlayerViewController()
+        playerViewController.player = player
+        
+        present(playerViewController, animated: true) {
+            player.play()
+        }
+    }
+    
     /*
     // MARK: - Navigation
 
