@@ -4,5 +4,6 @@
 *.framework
 *.embeddedframework
 *.lock
+GoogleService-Info.plist
 Podfile
 Pods
