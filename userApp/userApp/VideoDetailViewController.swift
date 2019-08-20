@@ -11,6 +11,7 @@
 //- Everything about selected video
 
 import UIKit
+import Firebase
 
 class VideoDetailViewController: UIViewController {
 
@@ -29,6 +30,28 @@ class VideoDetailViewController: UIViewController {
         self.dismiss(animated: false, completion: nil)
     }
     
+    func getVideoInfoFromDB() {
+        print("DB function called")
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        ref.child("videos").observeSingleEvent(of: .value, with: { (snapshot) in
+            // Get user value
+            let value = snapshot.value as? NSDictionary
+            
+            for item in value! {
+                print(item.key)
+                var dict = item.value as! Dictionary<String, Any>;()
+                print(dict["author"]!)
+                print(dict["category"]!)
+                print(dict["date"]!)
+                print(dict["description"]!)
+                print(dict["downloadURL"]!)
+                print(dict["tags"]!)
+            }
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
 
     /*
     // MARK: - Navigation
