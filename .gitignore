@@ -4,3 +4,5 @@
 *.framework
 *.embeddedframework
 *.lock
+Podfile
+Pods
