@@ -339,9 +339,9 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5XW-E2-E7o">
-                                <rect key="frame" x="216" y="387" width="30" height="30"/>
+                                <rect key="frame" x="203" y="387" width="56" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="재생"/>
+                                <state key="normal" title="강좌 상세"/>
                                 <connections>
                                     <segue destination="QOc-2w-dqb" kind="show" id="NnH-YO-rYR"/>
                                 </connections>
@@ -397,9 +397,9 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Hq-lB-pz2">
-                                <rect key="frame" x="249" y="332" width="30" height="30"/>
+                                <rect key="frame" x="236" y="332" width="56" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="재생"/>
+                                <state key="normal" title="강좌 상세"/>
                                 <connections>
                                     <segue destination="QOc-2w-dqb" kind="show" id="nhm-7K-iMZ"/>
                                 </connections>
@@ -571,6 +571,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="NnH-YO-rYR"/>
+        <segue reference="nhm-7K-iMZ"/>
     </inferredMetricsTieBreakers>
 </document>
