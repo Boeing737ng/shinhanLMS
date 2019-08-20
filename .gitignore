@@ -7,3 +7,5 @@
 GoogleService-Info.plist
 Podfile
 Pods
+
+firebaseConfig.js
