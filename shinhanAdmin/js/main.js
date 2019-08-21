@@ -254,6 +254,7 @@ function fnLoadMenu() {
                 if(firstFlag) {
                     $(newLi).addClass('active'); 
                     firstFlag = false;
+                    fnLoadPage(menuObj['title'], menuObj['url']);
                 }
             });
         });
@@ -272,7 +273,6 @@ function fnLoadPage(title, url) {
             $('#contentDiv').empty();
             $('#contentDiv').html(html);
 
-            alert('load');
             var event = jQuery.Event("load"); 
             $('#contentDiv').trigger(event);
         }

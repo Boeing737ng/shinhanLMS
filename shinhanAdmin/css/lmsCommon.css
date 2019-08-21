@@ -1,0 +1,78 @@
+.dummy {
+    display: none;
+}
+
+
+.searchComponentDiv {
+    margin: 10px
+}
+
+
+.bootstrap-select > .dropdown-toggle {
+    border: 1px solid #d1d3e2;
+    border-top-color: rgb(209, 211, 226);
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-right-color: rgb(209, 211, 226);
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-bottom-color: rgb(209, 211, 226);
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-left-color: rgb(209, 211, 226);
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-image-source: initial;
+    border-image-slice: initial;
+    border-image-width: initial;
+    border-image-outset: initial;
+    border-image-repeat: initial;
+}
+
+
+div.searchComponentDiv > label + div {
+    width:166px !important;
+    float: none !important;
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+}
+
+
+div.searchComponentDiv > label + div > input[type=text][class=form-control] {
+    float: left;
+}
+
+
+div.searchResultDiv {
+    margin-top: 20px;
+  
+}
+  
+
+div.moduleBtnDiv {
+    margin: 0 !important;
+    float: right;
+}
+
+
+div.moduleBtnDiv > ul {
+    margin: 0 !important;
+    list-style: none;
+}
+  
+
+div.moduleBtnDiv > ul > li {
+    float: left;
+}
+  
+
+div.moduleBtnDiv > ul > li > a {
+    margin-right: 5px;
+}
+
+div.lms-grid {
+    margin-bottom: 20px;
+}
+
+

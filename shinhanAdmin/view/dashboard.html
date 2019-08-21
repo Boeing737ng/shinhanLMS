@@ -319,10 +319,14 @@ author : jybobo
       <!-- Page level custom scripts -->
       <script src="js/demo/chart-area-demo.js"></script>
       <script src="js/demo/chart-pie-demo.js"></script>
+      <!-- TOAST Grid -->
+      <script src="/vendor/tui.grid-4.4.0/tui-grid.js"></script>
+      <!-- /* bootstrap select */ -->
+      <script src="/vendor/bootstrap-select/dist/js/bootstrap-select.js"></script>
 
 
       <script>
-      $('#contentDiv').on('load', function() {
+      $('#contentDiv').off('load').on('load', function() {
 
           $('#selectPicker').selectpicker();
 
