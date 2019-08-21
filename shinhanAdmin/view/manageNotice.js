@@ -8,7 +8,7 @@ $('#contentDiv').off('load').on('load', function () {
     $('#searhRelatedTag').selectpicker();
 
 
-    $('#searchRegDate')
+    $('#searchRegDate').datepicker();
 
 
     //행추가 버튼
