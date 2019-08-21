@@ -110,7 +110,8 @@
   position: absolute;
   background: #fff;
   text-align: center;
-  z-index: 18;
+  /* z-index: 18; */
+  z-index: 1;
 }
 .tui-grid-layer-state p {
   position: absolute;
