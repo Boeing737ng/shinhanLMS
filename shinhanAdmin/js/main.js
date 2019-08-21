@@ -254,7 +254,7 @@ function fnLoadMenu() {
                 if(firstFlag) {
                     $(newLi).addClass('active'); 
                     firstFlag = false;
-                    fnLoadPage(menuObj['title'], menuObj['url']);
+                    //fnLoadPage(menuObj['title'], menuObj['url']);
                 }
             });
         });
@@ -265,26 +265,25 @@ function fnLoadMenu() {
 //메뉴에 해당하는 페이지로 이동
 function fnLoadPage(title, url) {
     
-    $('#contentHeader').text(title);
+    /* $(document.getElementById('contentDiv').contentWindow).on('windowLoad', function() {
 
-    $.ajax({
-        url: url,
-        success: function(html) {
-            $('#contentDiv').empty();
-            $('#contentDiv').html(html);
+        var the_height= document.body.scrollHeight;
+        alert(the_height);
 
-            var event = jQuery.Event("load"); 
-            $('#contentDiv').trigger(event);
-        }
-    })
-    
-    /* $.ajax({
-        url: url,
-        success: function(html){
-            $('#contentDiv').html(html);
-            $('#contentHeader').text(title);
-        }
+        $(window.parent.document.getElementById('contentDiv')).css('height', the_height);
+        $(window.parent.document.getElementById('contentDiv')).css('overflow', 'hidden');
     }); */
+
+    $('#contentDiv').attr('src', url);
+
+}
+
+
+//iframe height resize
+function resizeFrame() {
+    var the_height= document.body.scrollHeight;
+    $(window.parent.document.getElementById('contentDiv')).css('height', the_height);
+    $(window.parent.document.getElementById('contentDiv')).css('overflow', 'hidden');
 }
 
 //onPageLoadad();

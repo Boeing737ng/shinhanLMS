@@ -6,151 +6,215 @@ author : jybobo
 **********************************************
 -->
 
-<div class="row">
-  <div class="col-xl-12">
-    <div class="card shadow h-100 py-2">
-      <div class="card-body">
-        <div class="row no-gutters align-items-center">
 
-          <div>
-            <div class="searchComponentDiv">
-              <label>공개여부 : </label>
-              <select class="form-control" id="searchOpenYn" data-live-search="true" data-width="auto" data-size="5">
-                <option>Mustard</option>
-                <option>Ketchup</option>
-                <option>Relish</option>
-                <option>Relish</option>
-                <option>Relish</option>
-                <option>Relish</option>
-                <option>Relish</option>
-                <option>Relish</option>
-                <option>Relish</option>
-              </select>
-            </div>
-          </div>
+<!DOCTYPE html>
+<html lang="en">
 
-          <div>
-            <div class="searchComponentDiv">
-              <label>카테고리 : </label>
+<head>
 
-              <select class="form-control" id="searchCategory" data-live-search="true" data-width="auto" data-size="5">
-                <option>Mustard</option>
-                <option>Ketchup</option>
-                <option>Relish</option>
-                <option>Relish</option>
-                <option>Relish</option>
-                <option>Relish</option>
-                <option>Relish</option>
-                <option>Relish</option>
-                <option>Relish</option>
-              </select>
-            </div>
-          </div>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Shinple</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+  <!-- bootstrap select -->
+  <link href="/vendor/bootstrap-select/dist/css/bootstrap-select.css" rel="stylesheet" type="text/css" />
+  <!-- Custom styles for this template-->
+  <link href="/css/sb-admin-2.css" rel="stylesheet">
+  <!-- TOAST Grid -->
+  <link rel="stylesheet" href="/vendor/tui.grid-4.4.0/tui-grid.css" />
+  <!-- Common CSS -->
+  <link href="/css/lmsCommon.css" rel="stylesheet" type="text/css">
+
+  <!-- datepicker CSS -->
+  <link href="/vendor/jquery-ui-1.12.1.custom/jquery-ui.structure.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet" type="text/css">
 
 
-          <div>
-            <div class="searchComponentDiv">
-              <label>관련태그 : </label>
+  <!-- /* Bootstrap core JavaScript */ -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- /* Core plugin JavaScript */ -->
+  <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <!-- /* Custom scripts for all pages */ -->
+  <script src="/js/sb-admin-2.min.js"></script>
+  <!-- /* Page level plugins */ -->
+  <script src="/vendor/chart.js/Chart.min.js"></script>
+  <!-- /* firebase */ -->
+  <script src="https://www.gstatic.com/firebasejs/6.3.5/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-database.js"></script>
+  <script src="/js/firebaseConfig.js"></script>
+  <!-- /* bootstrap select */ -->
+  <script src="/vendor/bootstrap-select/dist/js/bootstrap-select.js"></script>
+  <!-- datepicker -->
+  <script src="/vendor/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+  <!-- TOAST Grid -->
+  <script src="/vendor/tui.grid-4.4.0/tui-grid.js"></script>
+  
+  <script src="/view/manageContents.js"></script>
+  <script src="/js/main.js"></script>
 
-              <select class="form-control" id="searhRelatedTag" data-live-search="true" data-width="auto" data-size="5">
-                <option>Mustard</option>
-                <option>Ketchup</option>
-                <option>Relish</option>
-                <option>Relish</option>
-                <option>Relish</option>
-                <option>Relish</option>
-                <option>Relish</option>
-                <option>Relish</option>
-                <option>Relish</option>
-              </select>
-            </div>
-          </div>
+</head>
 
-          <div>
-            <div class="searchComponentDiv">
-              <label>컨텐츠명 : </label>
-              <div class="dropdown bootstrap-select form-control">
-                <input type="text" class="form-control" />
+<body class="contentInnerBody">
+
+  <!-- Page Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h1 class="h3 mb-0 text-gray-800" id="contentHeader">컨텐츠 관리</h1>
+    </div>
+
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+
+            <div>
+              <div class="searchComponentDiv">
+                <label>공개여부 : </label>
+                <select class="form-control" id="searchOpenYn" data-live-search="true" data-width="auto" data-size="5">
+                  <option>Mustard</option>
+                  <option>Ketchup</option>
+                  <option>Relish</option>
+                  <option>Relish</option>
+                  <option>Relish</option>
+                  <option>Relish</option>
+                  <option>Relish</option>
+                  <option>Relish</option>
+                  <option>Relish</option>
+                </select>
               </div>
             </div>
-          </div>
 
-          <div>
-            <div class="searchComponentDiv">
-              <a href="#" class="btn btn-primary">
-                <span class="text">조회</span>
-              </a>
+            <div>
+              <div class="searchComponentDiv">
+                <label>카테고리 : </label>
+
+                <select class="form-control" id="searchCategory" data-live-search="true" data-width="auto"
+                  data-size="5">
+                  <option>Mustard</option>
+                  <option>Ketchup</option>
+                  <option>Relish</option>
+                  <option>Relish</option>
+                  <option>Relish</option>
+                  <option>Relish</option>
+                  <option>Relish</option>
+                  <option>Relish</option>
+                  <option>Relish</option>
+                </select>
+              </div>
             </div>
+
+
+            <div>
+              <div class="searchComponentDiv">
+                <label>관련태그 : </label>
+
+                <select class="form-control" id="searhRelatedTag" data-live-search="true" data-width="auto"
+                  data-size="5">
+                  <option>Mustard</option>
+                  <option>Ketchup</option>
+                  <option>Relish</option>
+                  <option>Relish</option>
+                  <option>Relish</option>
+                  <option>Relish</option>
+                  <option>Relish</option>
+                  <option>Relish</option>
+                  <option>Relish</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <div class="searchComponentDiv">
+                <label>컨텐츠명 : </label>
+                <div class="dropdown bootstrap-select form-control">
+                  <input type="text" class="form-control" />
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="searchComponentDiv">
+                <a href="#" class="btn btn-primary">
+                  <span class="text">조회</span>
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <style>
+
+  </style>
+
+
+  <div class="row searchResultDiv">
+    <div class="col-xl-12">
+      <div class="card shadow mb-4">
+        <!-- Card Header - Dropdown -->
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary">컨텐츠 리스트</h6>
+
+          <div class="moduleBtnDiv">
+            <ul>
+              <li id="btnAdd">
+                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                  <i class="fas fa-plus fa-sm text-white-50"></i> 추가
+                </a>
+              </li>
+              <li id="btnDel">
+                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                  <i class="fas fa-minus fa-sm text-white-50"></i> 삭제
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Card Body -->
+        <div class="card-body">
+          <div id="grid" class="lms-grid"></div>
+
+          <div class="moduleBtnDiv">
+            <ul>
+              <li id="btnSave">
+                <a href="#" class="btn btn-primary">
+                  저장
+                </a>
+              </li>
+            </ul>
           </div>
 
         </div>
 
+
       </div>
     </div>
   </div>
 
 
-</div>
+  <!-- <div class="spinner-border m-5" role="status">
+    <span class="sr-only">Loading...</span>
+  </div> -->
 
-<style>
+</body>
 
-</style>
-
-
-<div class="row searchResultDiv">
-  <div class="col-xl-12">
-    <div class="card shadow mb-4">
-      <!-- Card Header - Dropdown -->
-      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary">컨텐츠 리스트</h6>
-
-        <div class="moduleBtnDiv">
-            <ul>
-                <li id="btnAdd">
-                  <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                    <i class="fas fa-plus fa-sm text-white-50"></i> 추가
-                  </a>
-                </li>
-                <li id="btnDel">
-                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                      <i class="fas fa-minus fa-sm text-white-50"></i> 삭제
-                    </a>
-                  </li>
-              </ul>
-        </div>
-      </div>
-
-      <!-- Card Body -->
-      <div class="card-body">
-        <div id="grid" class="lms-grid"></div>
-
-        <div class="moduleBtnDiv">
-            <ul>
-                <li id="btnSave">
-                  <a href="#" class="btn btn-primary">
-                    저장
-                  </a>
-                </li>
-              </ul>
-        </div>
-
-      </div>
-
-      
-    </div>
-  </div>
-</div>
-
-
-<div class="spinner-border m-5" role="status">
-  <span class="sr-only">Loading...</span>
-</div>
-
-
-
-<!-- TOAST Grid -->
-<script src="/vendor/tui.grid-4.4.0/tui-grid.js"></script>
-<!-- /* bootstrap select */ -->
-<script src="/vendor/bootstrap-select/dist/js/bootstrap-select.js"></script>
-
-<script src="/view/manageContents.js"></script>
+</html>

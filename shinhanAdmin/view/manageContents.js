@@ -1,6 +1,6 @@
 
 
-$('#contentDiv').off('load').on('load', function () {
+$(document).ready(function () {
 
     /** start of components ***********************/
     $('#searchOpenYn').selectpicker();
@@ -61,7 +61,7 @@ $('#contentDiv').off('load').on('load', function () {
         rowHeaders: ['checkbox', 'rowNum'],
         data: [],
         bodyHeight: 500,
-        scrollX: false,
+        scrollX: true,
         scrollY: true,
         columns: [
             {
@@ -118,6 +118,19 @@ $('#contentDiv').off('load').on('load', function () {
     grid.on('edit', function() {
         console.log('changed');
     });
+
+
+    //ifame height resize
+    resizeFrame();
+
+
+    
+
+    //change the height of the iframe
+    //$('#contentDiv').css('height', the_height);
+
+    //document.getElementById('contentDiv').scrolling = "no";
+    //$('#contentDiv').css('overflow', 'hidden');
 
 
     /* var arr = [{
