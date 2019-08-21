@@ -64,3 +64,10 @@ function addJavascript(jsname) {
 	th.appendChild(s);
 
 }
+
+
+function resizeWindow() {
+    var the_height= document.body.scrollHeight;
+    $(window.parent.document.getElementById('contentDiv')).css('height', the_height);
+    $(window.parent.document.getElementById('contentDiv')).css('overflow', 'hidden');
+}

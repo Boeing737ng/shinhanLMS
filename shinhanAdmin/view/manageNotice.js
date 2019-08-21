@@ -1,4 +1,5 @@
 
+
 $('#contentDiv').off('load').on('load', function () {
 
     /** start of components ***********************/
@@ -7,17 +8,19 @@ $('#contentDiv').off('load').on('load', function () {
     $('#searhRelatedTag').selectpicker();
 
 
+    $('#searchRegDate').datepicker();
+
+
     //행추가 버튼
     $('#btnAdd').on('click', function(e) {
         e.preventDefault();
         
         grid.appendRow({
-            thumbnail: '',
             name: '',
-            artist: '',
             release: '',
-            type: '',
-            genre: ''
+            creator: '',
+            date: '',
+            participant: ''
         }, {focus: true});
     });
 
@@ -35,22 +38,6 @@ $('#contentDiv').off('load').on('load', function () {
             grid.removeCheckedRows();
         }
     });
-
-
-    //저장 버튼
-    $('#btnSave').on('click', function(e) {
-        e.preventDefault();
-        
-        if(!grid.isModified()) {
-            alert('저장할 데이터가 없습니다.');
-            return false;
-        }
-
-        if(confirm('저장하시겠습니까?')) {
-            var modifiedRecords = grid.getModifiedRows();
-            console.log(modifiedRecords);
-        }
-    });
     /** end of components *************************/
 
 
@@ -64,24 +51,9 @@ $('#contentDiv').off('load').on('load', function () {
         scrollY: true,
         columns: [
             {
-                header: '썸네일',
-                name: 'thumbnail',
-                minWidth: 120
-            },
-            {
-                header: '컨텐츠명',
-                name: 'artist',
-                minWidth: 120
-            },
-            {
-                header: '강사명',
+                header: '스터디명',
                 name: 'name',
                 minWidth: 100
-            },
-            {
-                header: '카테고리',
-                name: 'type',
-                minWidth: 120
             },
             {
                 header: '관련태그',
@@ -89,33 +61,21 @@ $('#contentDiv').off('load').on('load', function () {
                 minWidth: 120
             },
             {
-                header: '공개여부',
-                name: 'genre',
-                align: 'center',
-                minWidth: 70,
-                onBeforeChange(ev){
-					console.log('Before change:' + ev);
-				},
-				onAfterChange(ev){
-					console.log('After change:' + ev);
-				},
-				formatter: 'listItemText',
-				editor: {
-					type: 'select',
-					options: {
-						listItems: [
-							{ text: 'Y', value: 'Y' },
-							{ text: 'N', value: 'N' }
-						]
-					}
-				}
+                header: '개설자',
+                name: 'creator',
+                minWidth: 120
+            },
+            {
+                header: '등록일자',
+                name: 'date',
+                minWidth: 120
+            },
+            {
+                header: '참여자수',
+                name: 'participant',
+                minWidth: 70
             }
         ]
-    });
-
-
-    grid.on('edit', function() {
-        console.log('changed');
     });
 
 
@@ -130,9 +90,6 @@ $('#contentDiv').off('load').on('load', function () {
 
     
     /** end of grid *************************/
-
-
-    //function fnLoadGridData(url, )
 
 
 
