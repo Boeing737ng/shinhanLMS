@@ -1,0 +1,148 @@
+<!--
+**********************************************
+title : manageContents
+description : 스터디 관리
+author : jyyeun
+**********************************************
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>공지사항추가</title>
+
+
+  <!-- Custom fonts for this template-->
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+  <!-- bootstrap select -->
+  <link href="/vendor/bootstrap-select/dist/css/bootstrap-select.css" rel="stylesheet" type="text/css" />
+  <!-- Custom styles for this template-->
+  <link href="/css/sb-admin-2.css" rel="stylesheet">
+  <!-- TOAST Grid -->
+  <link rel="stylesheet" href="/vendor/tui.grid-4.4.0/tui-grid.css" />
+  <!-- Common CSS -->
+  <link href="/css/lmsCommon.css" rel="stylesheet" type="text/css">
+
+  <!-- datepicker CSS -->
+  <link href="/vendor/jquery-ui-1.12.1.custom/jquery-ui.structure.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet" type="text/css">
+
+
+  <!-- /* Bootstrap core JavaScript */ -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- /* Core plugin JavaScript */ -->
+  <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <!-- /* Custom scripts for all pages */ -->
+  <script src="/js/sb-admin-2.min.js"></script>
+  <!-- /* Page level plugins */ -->
+  <script src="/vendor/chart.js/Chart.min.js"></script>
+  <!-- /* firebase */ -->
+  <script src="https://www.gstatic.com/firebasejs/6.3.5/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-database.js"></script>
+  <script src="/js/firebaseConfig.js"></script>
+  <!-- /* bootstrap select */ -->
+  <script src="/vendor/bootstrap-select/dist/js/bootstrap-select.js"></script>
+  <!-- datepicker -->
+  <script src="/vendor/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+  <!-- TOAST Grid -->
+  <script src="/vendor/tui.grid-4.4.0/tui-grid.js"></script>
+  
+  <script src="/js/main.js"></script>
+
+  <style>
+    .searchComponentDiv {
+        margin: 10px
+    }
+  </style>
+
+  <style>
+    table{
+        margin: 100px;
+        border-top: 1px solid #444444;
+        border-collapse: collapse; 
+        margin-left: 10px
+    }
+    td {
+        border-bottom: 1px solid #444444;
+        padding: 10px;
+        text-align: center;
+      }
+  
+  </style>
+</head>
+
+
+<body>
+
+<table border="1">
+        <colgroup>
+          <col width="20%"/>
+          <col width="35%"/>
+          <col width="20%"/>
+          <col width="35%"/>
+        </colgroup>
+        <tbody>
+        <tr>
+            <td>작성자</td>
+            <td> <INPUT TYPE = "TEXT" NAME="name" SIZE="20"> </td>
+            <td>등록일자</td>
+            <td> <INPUT TYPE = "date" id="uploaddate"/> </td>
+        </tr>
+        <tr>
+            <td>제목</td>
+            <td colspan="3"> <INPUT TYPE = "TEXT" NAME="subject" SIZE="40">  </td>
+        </tr>
+        <tr>
+            <td>게시기간</td>
+            <td> <INPUT TYPE = "date" NAME="showstart" SIZE="10"> ~ <INPUT TYPE = "date" NAME="showfinish" SIZE="10"> </td>
+            <td>공개여부</td>
+            <td> <div>
+                <div class="searchComponentDiv">
+                  <select class="form-control" id="searchOpenYn" data-live-search="true" data-width="auto" data-size="5">
+                    <option>Yes</option>
+                    <option>No</option>
+                  </select>
+                </div>
+              </div></td>
+        </tr>
+        <tr>
+            <td>내용</td>
+            <td colspan="3"> <INPUT TYPE = "TEXT" NAME="subject" SIZE="40"> </td>
+        </tr>
+      </tbody>
+
+</table>
+
+
+<!-- Card Body -->
+<div class="card-body">
+
+    <div style="float: right;" class="m-0">
+        <a href="#" class="btn btn-primary">
+            <span class="text">저장</span>
+        </a>
+    </div>
+</div>
+
+
+
+
+
+
+
+</body>
+
+</html>
