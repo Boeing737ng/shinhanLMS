@@ -1,29 +1,23 @@
 
 
-$('#contentDiv').off('load').on('load', function () {
+$(document).ready(function () {
 
     /** start of components ***********************/
     $('#searchOpenYn').selectpicker();
     $('#searchCategory').selectpicker();
     $('#searhRelatedTag').selectpicker();
 
-
     $('#searchRegDate').datepicker();
 
 
-    //행추가 버튼
+    //행추가 버튼 -> 페이지 이동
     $('#btnAdd').on('click', function(e) {
         e.preventDefault();
         
-        grid.appendRow({
-            name: '',
-            release: '',
-            creator: '',
-            date: '',
-            participant: ''
-        }, {focus: true});
-    });
+        window.location.href = "/view/addNotice.html";
+        //location.replace("http://localhost/view/addNotice.html");
 
+    });
 
     //행삭제 버튼
     $('#btnDel').on('click', function(e) {
@@ -51,17 +45,12 @@ $('#contentDiv').off('load').on('load', function () {
         scrollY: true,
         columns: [
             {
-                header: '스터디명',
+                header: '제목',
                 name: 'name',
                 minWidth: 100
             },
             {
-                header: '관련태그',
-                name: 'release',
-                minWidth: 120
-            },
-            {
-                header: '개설자',
+                header: '작성자',
                 name: 'creator',
                 minWidth: 120
             },
@@ -71,8 +60,13 @@ $('#contentDiv').off('load').on('load', function () {
                 minWidth: 120
             },
             {
-                header: '참여자수',
-                name: 'participant',
+                header: '공개여부',
+                name: 'showYN',
+                minWidth: 120
+            },
+            {
+                header: '삭제',
+                name: 'delete',
                 minWidth: 70
             }
         ]
@@ -92,5 +86,7 @@ $('#contentDiv').off('load').on('load', function () {
     /** end of grid *************************/
 
 
+    //resize frame height
+    resizeFrame();
 
 });
