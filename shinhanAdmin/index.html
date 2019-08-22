@@ -12,26 +12,43 @@
   <title>Shinple</title>
 
   <!-- Custom fonts for this template-->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link
-    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-    rel="stylesheet">
-
-    <!-- bootstrap select -->
-    <link href="/vendor/bootstrap-select/dist/css/bootstrap-select.css" rel="stylesheet" type="text/css" />
-
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <!-- bootstrap select -->
+  <link href="/vendor/bootstrap-select/dist/css/bootstrap-select.css" rel="stylesheet" type="text/css" />
   <!-- Custom styles for this template-->
-  <link href="css/sb-admin-2.css" rel="stylesheet">
-
+  <link href="/css/sb-admin-2.css" rel="stylesheet">
   <!-- TOAST Grid -->
-<link rel="stylesheet" href="/vendor/tui.grid-4.4.0/dist/tui-grid.css" />
+  <link rel="stylesheet" href="/vendor/tui.grid-4.4.0/tui-grid.css" />
+  <!-- Common CSS -->
+  <link href="/css/lmsCommon.css" rel="stylesheet" type="text/css">
+
+  <!-- datepicker CSS -->
+  <link href="/vendor/jquery-ui-1.12.1.custom/jquery-ui.structure.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet" type="text/css">
 
 
-  <style>
-    .dummy {
-      display: none;
-    }
-  </style>
+  <!-- /* Bootstrap core JavaScript */ -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- /* Core plugin JavaScript */ -->
+  <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <!-- /* Custom scripts for all pages */ -->
+  <script src="/js/sb-admin-2.min.js"></script>
+  <!-- /* Page level plugins */ -->
+  <script src="/vendor/chart.js/Chart.min.js"></script>
+  <!-- /* firebase */ -->
+  <script src="https://www.gstatic.com/firebasejs/6.3.5/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-database.js"></script>
+  <script src="/js/firebaseConfig.js"></script>
+  <!-- /* bootstrap select */ -->
+  <script src="/vendor/bootstrap-select/dist/js/bootstrap-select.js"></script>
+  <!-- datepicker -->
+  <script src="/vendor/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+  <!-- TOAST Grid -->
+  <script src="/vendor/tui.grid-4.4.0/tui-grid.js"></script>
 
 </head>
 
@@ -118,24 +135,12 @@
       <div id="content">
 
         <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+        <nav class="navbar navbar-expand navbar-light bg-white topbar static-top shadow">
 
           <!-- Sidebar Toggle (Topbar) -->
           <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
             <i class="fa fa-bars"></i>
           </button>
-
-          <!-- Topbar Search -->
-          <!--<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
-              </div>
-            </div>
-          </form>-->
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
@@ -315,13 +320,11 @@
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
-          <!-- Page Heading -->
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800" id="contentHeader"></h1>
-          </div>
+          
 
           <!-- Page Content Div -->
-          <div id="contentDiv">
+          <div>
+            <iframe id="contentDiv"></iframe>
           </div>
 
         </div>
@@ -374,33 +377,10 @@
   </div>
 
 
-  <!-- /* Bootstrap core JavaScript */ -->
-  <script src="/vendor/jquery/jquery.min.js"></script>
-  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- /* Core plugin JavaScript */ -->
-  <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-  <!-- /* Custom scripts for all pages */ -->
-  <script src="/js/sb-admin-2.min.js"></script>
-
-  <!-- /* Page level plugins */ -->
-  <script src="/vendor/chart.js/Chart.min.js"></script>
-
-  <!-- /* firebase */ -->
-  <script src="https://www.gstatic.com/firebasejs/6.3.5/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-storage.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-database.js"></script>
-  <script src="/js/firebaseConfig.js"></script>
-
-
-  <!-- /* bootstrap select */ -->
-  <script src="/vendor/bootstrap-select/dist/js/bootstrap-select.js"></script>
+  
 
   <script src="/js/main.js"></script>
-
-
+  
 </body>
 
 </html>
