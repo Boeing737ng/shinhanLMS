@@ -19,6 +19,8 @@ class GroupCreate2ViewController: UIViewController, UIImagePickerControllerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        studyDetail.delegate = self
+        studyName.delegate = self
         picker.delegate = self
         // Do any additional setup after loading the view.
     }
@@ -39,20 +41,27 @@ class GroupCreate2ViewController: UIViewController, UIImagePickerControllerDeleg
         }
         dismiss(animated: true, completion: nil)
     }
-    
+    // 경고 메시지
+    func myAlert(_ title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        
+        let action = UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil)
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
+    }
+    //카메라 오픈
     func openCamera(){
         if(UIImagePickerController .isSourceTypeAvailable(.camera)){
             
             picker.sourceType = .camera
             present(picker, animated: false, completion: nil)
             
+        } else {
+            self.myAlert("camera inaccessable", message: "Application cannot access the camera")
         }
         
-        picker.sourceType = .camera
-        present(picker, animated: false, completion: nil)
-        
     }
-    
+     // 사진 가져오기
     @IBAction func studyAdd(_ sender: UIButton) {
         let alert =  UIAlertController(title: "사진 위치", message: "선택", preferredStyle: .actionSheet)
         
@@ -72,10 +81,7 @@ class GroupCreate2ViewController: UIViewController, UIImagePickerControllerDeleg
         
     }
     
-//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-//        let mediaType = info[UIImagePickerController
-//
-//    }
+
     
     @IBAction func onGoBack(_ sender: UIBarButtonItem) {
         let transition: CATransition = CATransition()

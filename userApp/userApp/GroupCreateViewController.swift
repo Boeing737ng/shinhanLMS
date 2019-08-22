@@ -14,7 +14,7 @@
 import UIKit
 
 class GroupCreateViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
+    //테스트용 변수들
     var img = ["fall.jpg", "fall.jpg", "fall.jpg", "fall.jpg", "fall.jpg"]
     var item = ["AWS", "AWS", "AWS", "AWS", "AWS"]
     
