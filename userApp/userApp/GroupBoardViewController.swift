@@ -9,7 +9,7 @@
 import UIKit
 
 class GroupBoardViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
