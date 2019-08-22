@@ -286,4 +286,11 @@ function resizeFrame() {
     $(window.parent.document.getElementById('contentDiv')).css('overflow', 'hidden');
 }
 
+
+function isEmpty(value) {
+    return (value == null || value == '' || value == undefined);
+}
+
+
+
 //onPageLoadad();
