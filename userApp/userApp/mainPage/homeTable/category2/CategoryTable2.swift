@@ -1,5 +1,5 @@
 //
-//  HomeTable.swift
+//  CategoryTable1.swift
 //  userApp
 //
 //  Created by Kihyun Choi on 21/08/2019.
@@ -8,7 +8,10 @@
 
 import UIKit
 
-class HomeTable: UITableView, UITableViewDelegate, UITableViewDataSource  {
+class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
+    
+    let textArray = ["Web","android","AWS"]
+    let authorArray = ["오강사","김강사","박강사"]
     
     override func awakeFromNib() {
         self.delegate = self
@@ -20,19 +23,15 @@ class HomeTable: UITableView, UITableViewDelegate, UITableViewDataSource  {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let row = indexPath.row
+        let cell = tableView.dequeueReusableCell(withIdentifier: "VideoCell2") as! VideoCell2
         
-        var cell:UITableViewCell = UITableViewCell.init()
-        if row == 0 {
-            cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell") as! CategoryCell
-        } else if row == 1 {
-            cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell1") as! CategoryCell1
-        }
+        cell.videoTitleLabel.text = textArray[indexPath.row]
+        cell.videoAuthorLabel.text = authorArray[indexPath.row]
+        
         return cell
     }
-    
 }
