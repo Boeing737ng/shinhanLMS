@@ -7,17 +7,20 @@ $(document).ready(function () {
     $('#searchCategory').selectpicker();
     $('#searhRelatedTag').selectpicker();
 
-    $('#searchRegDate').datepicker();
 
-
-    //행추가 버튼 -> 페이지 이동
+    //행추가 버튼
     $('#btnAdd').on('click', function(e) {
         e.preventDefault();
         
-        window.location.href = "/view/addNotice.html";
-        //location.replace("http://localhost/view/addNotice.html");
-
+        grid.appendRow({
+            name: '',
+            release: '',
+            creator: '',
+            date: '',
+            participant: ''
+        }, {focus: true});
     });
+
 
     //행삭제 버튼
     $('#btnDel').on('click', function(e) {
@@ -45,12 +48,17 @@ $(document).ready(function () {
         scrollY: true,
         columns: [
             {
-                header: '제목',
+                header: '스터디명',
                 name: 'name',
                 minWidth: 100
             },
             {
-                header: '작성자',
+                header: '관련태그',
+                name: 'release',
+                minWidth: 120
+            },
+            {
+                header: '개설자',
                 name: 'creator',
                 minWidth: 120
             },
@@ -60,13 +68,8 @@ $(document).ready(function () {
                 minWidth: 120
             },
             {
-                header: '공개여부',
-                name: 'showYN',
-                minWidth: 120
-            },
-            {
-                header: '삭제',
-                name: 'delete',
+                header: '참여자수',
+                name: 'participant',
                 minWidth: 70
             }
         ]
@@ -82,11 +85,11 @@ $(document).ready(function () {
       }];
     grid.resetData(arr); */
 
+
     
     /** end of grid *************************/
 
 
-    //resize frame height
     resizeFrame();
 
 });

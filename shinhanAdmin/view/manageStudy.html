@@ -61,17 +61,17 @@ author : jybobo
   <!-- TOAST Grid -->
   <script src="/vendor/tui.grid-4.4.0/tui-grid.js"></script>
   
-  <script src="/view/manageNotice.js"></script>
+  <script src="/view/manageStudy.js"></script>
   <script src="/js/main.js"></script>
 
 </head>
 
 <body class="contentInnerBody">
-    
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800" id="contentHeader">공지 사항 관리</h1>
-            </div>
 
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800" id="contentHeader">스터디 관리</h1>
+    </div>
+    
         <div class="row">
                 <div class="col-xl-12">
                     <div class="card shadow h-100 py-2">
@@ -81,7 +81,7 @@ author : jybobo
             
                                 <div>
                                     <div class="searchComponentDiv">
-                                        <label>제목 : </label>
+                                        <label>스터디명 : </label>
             
                                         <div class="dropdown bootstrap-select form-control"
                                             style="width:166px;float: none;margin-bottom: 0;padding: 0;border: none;">
@@ -92,7 +92,7 @@ author : jybobo
             
                                 <div>
                                     <div class="searchComponentDiv">
-                                        <label>등록일자</label> : </label>
+                                        <label>팀원명</label> : </label>
                                         <div class="dropdown bootstrap-select form-control"
                                             style="width:166px;float: none;margin-bottom: 0;padding: 0;border: none;">
                                             <input type="text" id="searchRegDate" class="form-control" style="float: left;" />
@@ -117,42 +117,50 @@ author : jybobo
             
             </div>
             
-            
-            <div class="row" style="margin-top: 20px;">
-                <div class="col-xl-12">
-                    <div class="card shadow mb-4">
+            <div class="row searchResultDiv">
+                    <div class="col-xl-12">
+                      <div class="card shadow mb-4">
                         <!-- Card Header - Dropdown -->
                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-primary">공지사항 리스트</h6>
-            
-                            <div style="float: right" class="m-0">
-                                <ul style="list-style:none;" class="modulBtnUl m-0">
-                                    <li id="btnAdd" style="float: left">
-                                        <a style="float: right; margin-right: 5px;" href="#"
-                                            class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                                            <i class="fas fa-plus fa-sm text-white-50"></i> 신규
-                                        </a>
-                                    </li>
-                                    <li id="btnDel" style="float: left">
-                                        <a style="float: right; margin-right: 5px;" href="#"
-                                            class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                                            <i class="fas fa-minus fa-sm text-white-50"></i> 삭제
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+                          <h6 class="m-0 font-weight-bold text-primary">스터디 리스트</h6>
+                
+                          <div class="moduleBtnDiv">
+                            <ul>
+                              <li id="btnAdd">
+                                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                                  <i class="fas fa-plus fa-sm text-white-50"></i> 추가
+                                </a>
+                              </li>
+                              <li id="btnDel">
+                                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                                  <i class="fas fa-minus fa-sm text-white-50"></i> 삭제
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
                         </div>
-            
+                
                         <!-- Card Body -->
                         <div class="card-body">
-                            <div id="grid" style="margin-bottom: 20px;"></div>
-            
-                            <div style="float: right;" class="m-0">
+                          <div id="grid" class="lms-grid"></div>
+                
+                          <div class="moduleBtnDiv">
+                            <ul>
+                              <li id="btnSave">
                                 <a href="#" class="btn btn-primary">
-                                    <span class="text">저장</span>
+                                  저장
                                 </a>
-                            </div>
+                              </li>
+                            </ul>
+                          </div>
+                
                         </div>
+                
+                
+                      </div>
+                    </div>
+                  </div>
+        
             
             
                     </div>
@@ -160,3 +168,10 @@ author : jybobo
             </div>
 
 </body>
+
+
+
+
+
+
+

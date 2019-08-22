@@ -1,7 +1,7 @@
 <!--
 **********************************************
-title : manageContents
-description : 컨텐츠 관리
+title : manageDash
+description : 대쉬보드관리
 author : jybobo
 **********************************************
 -->
@@ -61,7 +61,7 @@ author : jybobo
   <!-- TOAST Grid -->
   <script src="/vendor/tui.grid-4.4.0/tui-grid.js"></script>
   
-  <script src="/view/manageNotice.js"></script>
+  <script src="/view/manageDash.js"></script>
   <script src="/js/main.js"></script>
 
 </head>
@@ -69,44 +69,30 @@ author : jybobo
 <body class="contentInnerBody">
     
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800" id="contentHeader">공지 사항 관리</h1>
+                <h1 class="h3 mb-0 text-gray-800" id="contentHeader">대쉬보드</h1>
             </div>
 
         <div class="row">
-                <div class="col-xl-12">
+                <div class="col-md-6">
                     <div class="card shadow h-100 py-2">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
+                                text-align:center;
+                                <h7 class="h7 mb-0 text-gray-800" id="studyHeader">스터디 관리</h7>
             
             
-                                <div>
-                                    <div class="searchComponentDiv">
-                                        <label>제목 : </label>
+                            </div>
             
-                                        <div class="dropdown bootstrap-select form-control"
-                                            style="width:166px;float: none;margin-bottom: 0;padding: 0;border: none;">
-                                            <input type="text" class="form-control" style="float: left;" />
-                                        </div>
-                                    </div>
-                                </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <h7 class="h7 mb-0 text-gray-800" id="noticeHeader">공지사항 관리</h7>
             
-                                <div>
-                                    <div class="searchComponentDiv">
-                                        <label>등록일자</label> : </label>
-                                        <div class="dropdown bootstrap-select form-control"
-                                            style="width:166px;float: none;margin-bottom: 0;padding: 0;border: none;">
-                                            <input type="text" id="searchRegDate" class="form-control" style="float: left;" />
-                                        </div>
-                                    </div>
-                                </div>
-            
-                                <div>
-                                    <div class="searchComponentDiv">
-                                        <a href="#" class="btn btn-primary">
-                                            <span class="text">검색</span>
-                                        </a>
-                                    </div>
-                                </div>
             
                             </div>
             
