@@ -38,42 +38,37 @@ $(document).ready(function () {
     /** end of components *************************/
 
 
-    /** start of grid ***********************/
-    var grid = new tui.Grid({
-        el: document.getElementById('grid'),
-        rowHeaders: ['checkbox', 'rowNum'],
-        data: [],
-        bodyHeight: 500,
-        scrollX: false,
-        scrollY: true,
-        columns: [
-            {
-                header: '스터디명',
-                name: 'name',
-                minWidth: 100
-            },
-            {
-                header: '관련태그',
-                name: 'release',
-                minWidth: 120
-            },
-            {
-                header: '개설자',
-                name: 'creator',
-                minWidth: 120
-            },
-            {
-                header: '등록일자',
-                name: 'date',
-                minWidth: 120
-            },
-            {
-                header: '참여자수',
-                name: 'participant',
-                minWidth: 70
-            }
-        ]
-    });
+   /** start of grid ***********************/
+   $("#grid").jsGrid({
+    width: "100%",
+    height: "500px",
+    //inserting: true,
+    //editing: true,
+    sorting: true,
+    paging: false,
+    //filtering: true,
+    data: [],
+
+    insertcss: 'editRow',
+
+    //data: clients,
+
+    
+
+    fields: [
+        //{ name: "Name", type: "text", width: 150, validate: "required" },
+    
+        { name: "number", title: '스터디번호', type: "text", width: 100, editing: false, align: "center" },
+        { name: "name", title: '스터디명', type: "text", width: 120, editing: false, align: "center" },
+        { name: "tags", title: "관련태그", type: 'text', width: 200, editing: false, align: "center" },
+        { name: "creator", title: "개설자", type: 'text', width: 150, editing: false, align: "center" },
+        { name: "date", title: "등록일자", type: 'text', width: 150, editing: false, align: "center" },
+        { name: "participant", title: "참여자수", type: 'text', width: 100, editing: false, align: "center" }
+
+        //{ type: "control" } //edit control
+    ]
+});
+
 
 
     /* var arr = [{

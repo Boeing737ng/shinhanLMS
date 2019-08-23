@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+    $('#searchCompany').selectpicker();
+
  /** start of grid ***********************/
  var mainGrid = new tui.Grid({
     el: document.getElementById('mainGrid'),
@@ -11,6 +13,11 @@ $(document).ready(function () {
     columns: [
         {
             header: '사번',
+            name: 'name',
+            minWidth: 100
+        },
+        {
+            header: '회사명',
             name: 'name',
             minWidth: 100
         },

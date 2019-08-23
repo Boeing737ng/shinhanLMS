@@ -29,8 +29,10 @@ author : jybobo
   <link href="/vendor/bootstrap-select/dist/css/bootstrap-select.css" rel="stylesheet" type="text/css" />
   <!-- Custom styles for this template-->
   <link href="/css/sb-admin-2.css" rel="stylesheet">
-  <!-- TOAST Grid -->
-  <link rel="stylesheet" href="/vendor/tui.grid-4.4.0/tui-grid.css" />
+
+  <link rel="stylesheet" href="/vendor/jsgrid/jsgrid.css">
+  <link rel="stylesheet" href="/vendor/jsgrid/jsgrid-theme.css">
+
   <!-- Common CSS -->
   <link href="/css/lmsCommon.css" rel="stylesheet" type="text/css">
 
@@ -46,8 +48,7 @@ author : jybobo
   <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
   <!-- /* Custom scripts for all pages */ -->
   <script src="/js/sb-admin-2.min.js"></script>
-  <!-- /* Page level plugins */ -->
-  <script src="/vendor/chart.js/Chart.min.js"></script>
+ 
   <!-- /* firebase */ -->
   <script src="https://www.gstatic.com/firebasejs/6.3.5/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-auth.js"></script>
@@ -58,8 +59,12 @@ author : jybobo
   <script src="/vendor/bootstrap-select/dist/js/bootstrap-select.js"></script>
   <!-- datepicker -->
   <script src="/vendor/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
-  <!-- TOAST Grid -->
-  <script src="/vendor/tui.grid-4.4.0/tui-grid.js"></script>
+
+  <script src="/vendor/jsgrid/jsgrid.js"></script>
+
+  <!-- dropzone -->
+  <script src="/vendor/dropzone/dist/dropzone.js"></script>
+  <script src="/js/attachFileUtil.js"></script>
   
   <script src="/view/manageContents.js"></script>
   <script src="/js/main.js"></script>
@@ -82,16 +87,10 @@ author : jybobo
             <div>
               <div class="searchComponentDiv">
                 <label>공개여부 : </label>
-                <select class="form-control" id="searchOpenYn" data-live-search="true" data-width="auto" data-size="5">
-                  <option>Mustard</option>
-                  <option>Ketchup</option>
-                  <option>Relish</option>
-                  <option>Relish</option>
-                  <option>Relish</option>
-                  <option>Relish</option>
-                  <option>Relish</option>
-                  <option>Relish</option>
-                  <option>Relish</option>
+                <select class="form-control" id="searchOpenYn" data-live-search="true" data-width="auto">
+                    <option value="">전체</option>
+                  <option value="Y">Y</option>
+                  <option value="N">N</option>
                 </select>
               </div>
             </div>
@@ -102,6 +101,7 @@ author : jybobo
 
                 <select class="form-control" id="searchCategory" data-live-search="true" data-width="auto"
                   data-size="5">
+                  <option value="">전체</option>
                   <option>Mustard</option>
                   <option>Ketchup</option>
                   <option>Relish</option>
@@ -122,6 +122,7 @@ author : jybobo
 
                 <select class="form-control" id="searhRelatedTag" data-live-search="true" data-width="auto"
                   data-size="5">
+                  <option value="">전체</option>
                   <option>Mustard</option>
                   <option>Ketchup</option>
                   <option>Relish</option>
@@ -139,14 +140,14 @@ author : jybobo
               <div class="searchComponentDiv">
                 <label>컨텐츠명 : </label>
                 <div class="dropdown bootstrap-select form-control">
-                  <input type="text" class="form-control" />
+                  <input type="text" class="form-control" id="searchTitle" />
                 </div>
               </div>
             </div>
 
             <div>
               <div class="searchComponentDiv">
-                <a href="#" class="btn btn-primary">
+                <a href="#" class="btn btn-primary" id="btnSearch">
                   <span class="text">조회</span>
                 </a>
               </div>
@@ -177,7 +178,7 @@ author : jybobo
             <ul>
               <li id="btnAdd">
                 <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                  <i class="fas fa-plus fa-sm text-white-50"></i> 추가
+                  신규등록
                 </a>
               </li>
               <li id="btnDel">
@@ -191,7 +192,14 @@ author : jybobo
 
         <!-- Card Body -->
         <div class="card-body">
+          <div style="text-align: center; background-color: black;">
+              <video id="video" style="width: 60%; height: calc(30%); max-height: 237px; cursor: pointer; background-color: black" controls>
+                  이 브라우저는 지원 안함
+              </video>
+          </div>
+          
           <div id="grid" class="lms-grid"></div>
+          <div id="grid##"></div>
 
           <div class="moduleBtnDiv">
             <ul>
@@ -214,6 +222,89 @@ author : jybobo
   <!-- <div class="spinner-border m-5" role="status">
     <span class="sr-only">Loading...</span>
   </div> -->
+
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="contentModal" tabindex="-1" role="dialog" aria-labelledby="contentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 700px;" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="contentModalLabel">상세</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row" style="padding: 20px;">
+          <table class="registerTable">
+            <colgroup>
+              <col width="25%"/>
+              <col width="25%"/>
+              <col width="25%"/>
+              <col width="25%"/>
+            </colgroup>
+            <tbody>
+              <tr>
+                <th><span>작성자</span></th>
+                <td>
+                  <span></span>
+                </td>
+                <th><span>등록일자</span></th>
+                <td>
+                  <span></span>
+                </td>
+              </tr>
+              <tr>
+                <th class="required"><span>컨텐츠명</span></th>
+                <td colspan="3">
+                  <input type="text" class="form-control" style="width:100%"/>
+                </td>
+              </tr>
+              <tr>
+                <th class="required"><span>카테고리</span></th>
+                <td>
+                    <select class="category" data-live-search="true" data-width="144px">
+                      <option value="Y">Y</option>
+                      <option value="N">N</option>
+                    </select>
+                </td>
+                <th class="required"><span>공개여부</span></th>
+                <td>
+                  <select class="releaseYn" data-live-search="true" data-width="144px">
+                    <option value="Y">Y</option>
+                    <option value="N">N</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <th class="required"><span>관련태그</span></th>
+                <td colspan="3">
+                  <input type="text" class="form-control" style="width:100%"/>
+                </td>
+              </tr>
+              <tr>
+                <th class="required"><span>썸네일</span></th>
+                <td colspan="3">
+                  <div class="dropzone" url="test" style="height: 100px;"></div>
+                </td>
+              </tr>
+              <tr>
+                <th><span>상세설명</span></th>
+                <td colspan="3">
+                  <textarea class="form-control" style="width:100%"></textarea>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" href="view/login.html">저장</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </body>
 
