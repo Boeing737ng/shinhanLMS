@@ -25,8 +25,7 @@ class HomeTable: UITableView, UITableViewDelegate, UITableViewDataSource  {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = indexPath.row
-        
-        var cell:UITableViewCell = UITableViewCell.init()
+        var cell:UITableViewCell
         if row == 0 {
             cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell") as! CategoryCell
         } else if row == 1 {
