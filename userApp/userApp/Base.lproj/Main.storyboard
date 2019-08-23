@@ -307,15 +307,19 @@
                                                                                         <nil key="textColor"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
-                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="최강사" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Sf-l8-8Jv">
-                                                                                        <rect key="frame" x="8" y="46" width="26" height="12"/>
-                                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="최강사" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Sf-l8-8Jv">
+                                                                                        <rect key="frame" x="8" y="46" width="227" height="12"/>
                                                                                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
                                                                                 </subviews>
                                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="bottom" secondItem="3Sf-l8-8Jv" secondAttribute="bottom" constant="32" id="DS2-gk-EX7"/>
+                                                                                    <constraint firstItem="3Sf-l8-8Jv" firstAttribute="width" secondItem="HlX-92-Wdv" secondAttribute="width" multiplier="0.8" id="fgK-Xb-y8D"/>
+                                                                                    <constraint firstItem="3Sf-l8-8Jv" firstAttribute="leading" secondItem="HlX-92-Wdv" secondAttribute="leading" constant="8" id="pug-th-MXN"/>
+                                                                                </constraints>
                                                                             </view>
                                                                         </subviews>
                                                                         <constraints>
@@ -436,15 +440,19 @@
                                                                                         <nil key="textColor"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
-                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="최강사" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8VF-UH-WhV">
-                                                                                        <rect key="frame" x="8" y="46" width="26" height="12"/>
-                                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="최강사" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8VF-UH-WhV">
+                                                                                        <rect key="frame" x="8" y="46" width="227" height="12"/>
                                                                                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
                                                                                 </subviews>
                                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                <constraints>
+                                                                                    <constraint firstItem="8VF-UH-WhV" firstAttribute="leading" secondItem="MTj-Xa-3oo" secondAttribute="leading" constant="8" id="NQC-k2-Eid"/>
+                                                                                    <constraint firstItem="8VF-UH-WhV" firstAttribute="width" secondItem="MTj-Xa-3oo" secondAttribute="width" multiplier="0.8" id="yAt-BV-t8S"/>
+                                                                                    <constraint firstAttribute="bottom" secondItem="8VF-UH-WhV" secondAttribute="bottom" constant="32" id="zMy-He-GQu"/>
+                                                                                </constraints>
                                                                             </view>
                                                                         </subviews>
                                                                         <constraints>
@@ -466,6 +474,7 @@
                                                             </tableViewCellContentView>
                                                             <connections>
                                                                 <outlet property="videoAuthorLabel" destination="8VF-UH-WhV" id="7W5-Mh-Elk"/>
+                                                                <outlet property="videoThumbnail" destination="P3U-eX-ffe" id="diI-aA-6qB"/>
                                                                 <outlet property="videoTitleLabel" destination="Hbu-vW-cdH" id="ZKs-bB-N5n"/>
                                                             </connections>
                                                         </tableViewCell>
