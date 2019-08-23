@@ -17,70 +17,72 @@ import Firebase
 
 class HomePageViewController: UIViewController {
     
-    var playingTitleArray = Array<String>()
-    var playingAuthorArray = Array<String>()
-    var playingThumbnailArray = Array<String>()
-    
-    var recommendedTitleArray = Array<String>()
-    var recommendedAuthorArray = Array<String>()
-    var recommendedThumbnailArray = Array<String>()
+//    var playingTitleArray = Array<String>()
+//    var playingAuthorArray = Array<String>()
+//    var playingThumbnailArray = Array<String>()
+//    
+//    var recommendedTitleArray = Array<String>()
+//    var recommendedAuthorArray = Array<String>()
+//    var recommendedThumbnailArray = Array<String>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        getVideoInfoFromDB()
+        //getVideoInfoFromDB()
         // Do any additional setup after loading the view.
     }
     
     
-    func getVideoInfoFromDB() {
-        print("DB function called")
-        var ref: DatabaseReference!
-        ref = Database.database().reference()
-        ref.child("user/201302493/playList").observeSingleEvent(of: .value, with: { (snapshot) in
-            // Get user value
-            let value = snapshot.value as? NSDictionary
-            
-            for item in value! {
-                let stringKey = (item.key as AnyObject).description
-               
-                if stringKey == "playing" {
-                    let categoryDict = item.value as! Dictionary<String, Any>;()
-                    for video in categoryDict {
-                        let videoDict = video.value as! Dictionary<String, Any>;()
-                        let title = (video.key as AnyObject).description
-                        let author = videoDict["author"] as! String
-                        let thumbnailUrl = videoDict["thumbnail"] as! String
-                        
-                        self.playingTitleArray.append(title!)
-                        self.playingAuthorArray.append(author)
-                        self.playingThumbnailArray.append(thumbnailUrl)
-                        
-                    }
-                } else {
-                    let categoryDict = item.value as! Dictionary<String, Any>;()
-                    for video in categoryDict {
-                        let videoDict = video.value as! Dictionary<String, Any>;()
-                        let title = (video.key as AnyObject).description
-                        let author = videoDict["author"] as! String
-                        let thumbnailUrl = videoDict["thumbnail"] as! String
-                        
-                        self.recommendedTitleArray.append(title!)
-                        self.recommendedAuthorArray.append(author)
-                        self.recommendedThumbnailArray.append(thumbnailUrl)
-                        
-                    }
-                }
-//                var dict = item.value as! Dictionary<String, Any>;()
-//                print(dict["author"]!)
-//                print(dict["thumbnail"]!)
-            }
-            print(self.playingTitleArray)
-            print(self.recommendedTitleArray)
-            print("========================================================================")
-        }) { (error) in
-            print(error.localizedDescription)
-        }
-    }
+//    func getVideoInfoFromDB() {
+//        print("DB function called")
+//        var ref: DatabaseReference!
+//        ref = Database.database().reference()
+//        ref.child("user/201302493/playList").observeSingleEvent(of: .value, with: { (snapshot) in
+//            // Get user value
+//            let value = snapshot.value as? NSDictionary
+//
+//            for item in value! {
+//                let stringKey = (item.key as AnyObject).description
+//
+//                if stringKey == "playing" {
+//                    let categoryDict = item.value as! Dictionary<String, Any>;()
+//                    for video in categoryDict {
+//                        let videoDict = video.value as! Dictionary<String, Any>;()
+//                        let title = (video.key as AnyObject).description
+//                        let author = videoDict["author"] as! String
+//                        let thumbnailUrl = videoDict["thumbnail"] as! String
+//
+//                        self.playingTitleArray.append(title!)
+//                        self.playingAuthorArray.append(author)
+//                        self.playingThumbnailArray.append(thumbnailUrl)
+//
+//                    }
+//                } else {
+//                    let categoryDict = item.value as! Dictionary<String, Any>;()
+//                    for video in categoryDict {
+//                        let videoDict = video.value as! Dictionary<String, Any>;()
+//                        let title = (video.key as AnyObject).description
+//                        let author = videoDict["author"] as! String
+//                        let thumbnailUrl = videoDict["thumbnail"] as! String
+//
+//                        self.recommendedTitleArray.append(title!)
+//                        self.recommendedAuthorArray.append(author)
+//                        self.recommendedThumbnailArray.append(thumbnailUrl)
+//
+//                    }
+//                }
+////                var dict = item.value as! Dictionary<String, Any>;()
+////                print(dict["author"]!)
+////                print(dict["thumbnail"]!)
+//            }
+//            print(self.playingTitleArray)
+//            print(self.recommendedTitleArray)
+//
+//
+//            print("========================================================================")
+//        }) { (error) in
+//            print(error.localizedDescription)
+//        }
+//    }
     
 
     /*
