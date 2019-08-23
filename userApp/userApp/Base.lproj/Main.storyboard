@@ -336,6 +336,7 @@
                                                             </tableViewCellContentView>
                                                             <connections>
                                                                 <outlet property="videoAuthorLabel" destination="3Sf-l8-8Jv" id="h5W-H0-Tm9"/>
+                                                                <outlet property="videoThumbnail" destination="f6h-tH-bIM" id="TLQ-Zd-ImY"/>
                                                                 <outlet property="videoTitleLabel" destination="UEu-Pu-uSo" id="RzD-ww-CoG"/>
                                                             </connections>
                                                         </tableViewCell>
