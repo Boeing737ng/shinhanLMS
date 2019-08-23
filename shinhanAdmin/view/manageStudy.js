@@ -71,11 +71,6 @@ function fnRetrieve() {
                 //console.log(obj);
                 
                 if( 
-                    //((searchCompany == '') || (searchCompany == studyObj['searchCompany'])) &&
-     
-                     //((searchCat == '') || (searchCat == catObj['category'])) &&
-                     //((searchTag == '') || (trgtTagArr.indexOf(searchTag) > -1)) &&
-     
                      ((searchStudy== '') || (studyObj['studyname'] == searchStudy)) &&
                      ((searchMember == '') || (Object.keys(studyObj['member']).indexOf(searchMember)) > -1)
      
