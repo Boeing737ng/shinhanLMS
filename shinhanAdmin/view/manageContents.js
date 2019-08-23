@@ -120,11 +120,11 @@ $(document).ready(function () {
                 align: "center",
                 width: 50
             },
-            { name: "title", title: '컨텐츠명', type: "text", width: 150, editing: false },
-            { name: "author", title: '강사명', type: "text", width: 120, editing: false },
-            { name: "category", title: "카테고리", type: 'text', width: 200, editing: false },
-            { name: "tags", title: "관련태그", type: 'text', width: 200, editing: false },
-            { name: "releaseYn", title: "공개여부", type: 'select', items: ['Y', 'N'], width: 100 },
+            { name: "title", title: '컨텐츠명', type: "text", width: 150, editing: false, align: "center" },
+            { name: "author", title: '강사명', type: "text", width: 120, editing: false, align: "center" },
+            { name: "category", title: "카테고리", type: 'text', width: 200, editing: false, align: "center" },
+            { name: "tags", title: "관련태그", type: 'text', width: 200, editing: false, align: "center" },
+            { name: "releaseYn", title: "공개여부", type: 'select', items: ['Y', 'N'], width: 100, align: "center" },
             { type: "control" } //edit control
         ]
     });
