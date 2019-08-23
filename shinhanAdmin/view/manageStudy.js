@@ -67,25 +67,22 @@ function fnRetrieve() {
 
             console.log(catArr);
             
-            $.each(studyObj, function(idx, value) {
-                //console.log(obj);
+            //console.log(studyObj);
                 
-                if( 
-                    //((searchCompany == '') || (searchCompany == studyObj['searchCompany'])) &&
-     
-                     //((searchCat == '') || (searchCat == catObj['category'])) &&
-                     //((searchTag == '') || (trgtTagArr.indexOf(searchTag) > -1)) &&
-     
-                     ((searchStudy== '') || (studyObj['studyname'] == searchStudy)) &&
-                     ((searchMember == '') || (Object.keys(studyObj['member']).indexOf(searchMember)) > -1)
-     
-                 ) {
-                     var mbrCnt = Object.keys(studyObj['member']).length+1;
-                     studyObj['participant'] = mbrCnt;
-                     rsltArr.push(studyObj);
-                 }
-                
-            });
+            if( 
+                //((searchCompany == '') || (searchCompany == studyObj['searchCompany'])) &&
+ 
+                 //((searchCat == '') || (searchCat == catObj['category'])) &&
+                 //((searchTag == '') || (trgtTagArr.indexOf(searchTag) > -1)) &&
+ 
+                 ((searchStudy== '') || (studyObj['studyname'] == searchStudy)) &&
+                 ((searchMember == '') || (Object.keys(studyObj['member']).indexOf(searchMember)) > -1)
+ 
+             ) {
+                 var mbrCnt = Object.keys(studyObj['member']).length+1;
+                 studyObj['participant'] = mbrCnt;
+                 rsltArr.push(studyObj);
+             }
             
         });
 

@@ -86,6 +86,14 @@ $(document).ready(function () {
         //insertcss: 'editRow',
         //data: clients,
 
+        onItemUpdated: function(args) { //수정
+            console.log(args);
+            /* fnUpdateDatabase(rowId, paramObj, function() {
+                alert('수정되었습니다.');
+            }); */
+            console.log('onItemUpdated');
+        },
+
         rowClick: function(args) {
             //showDetailsDialog("Edit", args.item);
             var arr = $('#grid').jsGrid('option', 'data');
@@ -222,6 +230,28 @@ $(document).ready(function () {
  
         selectedItems = [];
     };
+
+
+    function fnUpdateDatabase(rowId, paramObj, callback) {
+
+        firebase.database().ref('videos/' + rowId + '/').update({
+            downloadURL: paramObj['downloadURL'],
+            author: paramObj['author'],
+            category: paramObj['category'],
+            tags: paramObj['tags'],
+            description: paramObj['description'],
+            date: paramObj['date'],
+            thumbnail: paramObj['thumbnail'],
+            title: paramObj['title'],
+            releaseYn: paramObj['releaseYn']
+        }).then(function onSuccess(res) {
+            if(callback != null && callback != undefined) {
+                callback();
+            }
+        }).catch(function onError(err) {
+            console.log("ERROR!!!! " + err);
+        });
+    }
 
 
     function fnGetCommonCmb(option, selector) {
