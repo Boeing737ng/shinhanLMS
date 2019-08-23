@@ -13,8 +13,9 @@ $(document).ready(function () {
     });
 
 
+
    /** start of grid ***********************/
-   $("#grid").jsGrid({
+   $("#grid1").jsGrid({
     width: "100%",
     height: "500px",
     //inserting: true,
@@ -27,8 +28,6 @@ $(document).ready(function () {
     insertcss: 'editRow',
 
     //data: clients,
-
-    
 
     fields: [
         //{ name: "Name", type: "text", width: 150, validate: "required" },
@@ -49,6 +48,38 @@ $(document).ready(function () {
     ]
 });
 
+
+   /** start of grid ***********************/
+   $("#grid2").jsGrid({
+    width: "100%",
+    height: "500px",
+    //inserting: true,
+    //editing: true,
+    sorting: true,
+    paging: false,
+    //filtering: true,
+    data: [],
+
+    insertcss: 'editRow',
+
+    //data: clients,
+    rowClick: function(args) {
+        //showDetailsDialog("Edit", args.item);
+        var arr = $('#grid1').jsGrid('option', 'data');
+        e.preventDefault();
+    },
+
+    fields: [
+        //{ name: "Name", type: "text", width: 150, validate: "required" },
+        { name: "creator", title: "개설자", type: 'text', width: 150, editing: false, align: "center" },
+    
+        { name: "member", title: '참여자 명단', type: "text", width: 100, editing: false, align: "center" }
+
+        //{ type: "control" } //edit control
+
+    ]
+});
+
 //조회
 function fnRetrieve() {
     var searchStudy = $('#stduyname').val() || '';//스터디명
@@ -62,6 +93,7 @@ function fnRetrieve() {
         var catArr = snapshot.val();
         var rsltArr = [];
 
+        
         
         $.each(catArr, function(company, studyObj) {
 
@@ -88,10 +120,13 @@ function fnRetrieve() {
 
         console.log(rsltArr);
 
-        $("#grid").jsGrid("option", "data", rsltArr);
+        $("#grid1").jsGrid("option", "data", rsltArr);
         //$("#grid").jsGrid("refresh");
     });
 }
+
+
+
 
     resizeFrame();
 
