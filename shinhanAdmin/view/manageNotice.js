@@ -86,6 +86,11 @@ $(document).ready(function () {
     /** end of grid *************************/
 
 
+    var ref = firebase.database().ref();                           
+    ref.on("value", function(snapshot){
+        output.innerHTML = JSON.stringify(snapshot.val(), null, 2);
+    });
+
     //resize frame height
     resizeFrame();
 

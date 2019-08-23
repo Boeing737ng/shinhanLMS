@@ -115,9 +115,7 @@ $(document).ready(function () {
     $('#btnSave').on('click', function(e) {
         e.preventDefault();
         
-        var errMsg = fnValidate();
-        if(!isEmpty(errMsg)) {
-            alert(errMsg);
+        if(!fnValidate()) {
             return false;
         }
 
@@ -141,7 +139,7 @@ $(document).ready(function () {
     /** start of functions ***********************/
     //목록 이동
     function fnGoList() {
-        
+        window.location.href = '/view/manageContents.html';
     }
     
     
@@ -305,12 +303,47 @@ $(document).ready(function () {
     }
 
 
+    //validataion
+    function fnValidate() {
+        var errMsg = '';
+        var param = '';
+        var target;
+
+        if($('#video > source').length == 0) {
+            param = '동영상';
+            target = $('#video');
+        }else if(isEmpty($('#title').val())) {
+            param = '컨텐츠명';
+            target = $('#title');
+        }else if(isEmpty($('#author').val())) {
+            param = '강사명';
+            target = $('#author');
+        }else if(isEmpty($('#releaseYn').val())) {
+            param = '공개여부';
+            target = $('#releaseYn');
+        }else if(isEmpty($('#category').val())) {
+            param = '카테고리';
+            target = $('#category');
+        }else if($('#relatedTags').tagsinput('items').length == 0) {
+            param = '관련태그';
+            target = $('#relatedTags');
+        }
+
+        if(!isEmpty(param)) {
+            errMsg = param + ' 은(는) 필수입력 입니다.';
+            alert(errMsg);
+            $(target).focus();
+            return false;
+        }
+
+        return true;
+    }
+
+
     //저장
     function fnSave(callback) {
         
         (function() {
-
-            
             var thumbnailPath = '';
             var videoPath = '';
             var rowId = fnGetPrimaryKey($('#title').val()); //id 채번
@@ -352,6 +385,21 @@ $(document).ready(function () {
             });
 
         })();
+    }
+    
+
+    function setTagDatabase(contentTagArr, callback) {
+        for(var i=0; i<contentTagArr.length; i++) {
+            firebase.database().ref('tag/' + contentTagArr[i] + '/').update({
+                'tag': contentTagArr[i]
+            }).then(function onSuccess(res) {
+                if(callback != null && callback != undefined) {
+                    callback();
+                }
+            }).catch(function onError(err) {
+                console.log("ERROR!!!! " + err);
+            });
+        }
     }
 
 

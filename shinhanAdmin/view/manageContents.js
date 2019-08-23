@@ -5,10 +5,12 @@ $(document).ready(function () {
     /** start of components ***********************/
     $('#searchOpenYn').selectpicker();
     $('#searchCategory').selectpicker();
-    $('#searhRelatedTag').selectpicker();
+    //$('#searhRelatedTag').selectpicker();
 
     $('#contentModal select.releaseYn').selectpicker();
     $('#contentModal select.category').selectpicker();
+
+    fnGetCommonCmb('tag', '#searhRelatedTag');
     
 
     //검색 버튼
@@ -42,7 +44,7 @@ $(document).ready(function () {
 
         alert('TO DO');
         return;
-        
+
         if(grid.getCheckedRows().length == 0) {
             alert('선택된 데이터가 없습니다.');
             return false;
@@ -76,15 +78,12 @@ $(document).ready(function () {
     $("#grid").jsGrid({
         width: "100%",
         height: "500px",
-        inserting: true,
         editing: true,
         sorting: true,
         paging: false,
         //filtering: true,
         data: [],
-
-        insertcss: 'editRow',
- 
+        //insertcss: 'editRow',
         //data: clients,
 
         rowClick: function(args) {
@@ -93,6 +92,10 @@ $(document).ready(function () {
             var videoUrl = arr[args.itemIndex]['downloadURL'];
             fnLoadVideo(videoUrl);
         },
+
+        /* editRowRenderer: function(item, itemIndex) {
+            console.log(item);
+        }, */
  
         fields: [
             //{ name: "Name", type: "text", width: 150, validate: "required" },
@@ -120,11 +123,21 @@ $(document).ready(function () {
                 align: "center",
                 width: 50
             },
-            { name: "title", title: '컨텐츠명', type: "text", width: 150, editing: false },
-            { name: "author", title: '강사명', type: "text", width: 120, editing: false },
-            { name: "category", title: "카테고리", type: 'text', width: 200, editing: false },
-            { name: "tags", title: "관련태그", type: 'text', width: 200, editing: false },
-            { name: "releaseYn", title: "공개여부", type: 'select', items: ['Y', 'N'], width: 100 },
+            { name: "title", title: '컨텐츠명', type: "text", width: 150, editing: false, align: "center" },
+            { name: "author", title: '강사명', type: "text", width: 120, editing: false, align: "center" },
+            { name: "category", title: "카테고리", type: 'text', width: 200, editing: false, align: "center" },
+            { name: "tags", title: "관련태그", type: 'text', width: 200, editing: false, align: "center", cellRenderer: function(item, value){
+                var rslt = $("<td>").addClass("my-row-custom-class");
+                var div = $('<div></div>');
+                $(rslt).append(div);
+
+                var arr = item.split(' ');
+                for(var i=0; i<arr.length; i++) {
+                    $(div).append($('<span class="tag label label-info" style="margin-right:5px; display:inline-block;">'+arr[i]+'</span>'));
+                }
+                return rslt; 
+              } },
+            { name: "releaseYn", title: "공개여부", type: 'select', items: ['Y', 'N'], width: 100, editing: true, align: "center" },
             { type: "control" } //edit control
         ]
     });
@@ -211,31 +224,34 @@ $(document).ready(function () {
     };
 
 
-    function fnGetCommonCmb(path, selector) {
+    function fnGetCommonCmb(option, selector) {
 
-        firebase.database().ref('/admin_menu/').once('value')
-        .then(function (snapshot) {
-            var menuArr = snapshot.val();
-            var firstFlag = true;
+        $('' + selector).html('');
+        $('' + selector).html('<option value="">전체</option>');
 
-            $.each(menuArr, function(idx, menuObj) {
-                var newLi = $('#accordionSidebar li.nav-item.dummy').clone();
-                $(newLi).find('span').text(menuObj['title']);
-                $(newLi).find('i').addClass(menuObj['icon']);
-                $(newLi).find('a').attr('data-url', menuObj['url']);
+        switch(option) {
+            case 'tag':
+                firebase.database().ref('/tags/').once('value')
+                .then(function (snapshot) {
+                    var tagArr = snapshot.val();
+                    var optionArr = [];
+                
+                    $.each(tagArr, function(idx, tagObj) {
+                        var newOption = $('<option></option>');
+                        $(newOption).attr('value', tagArr[idx].value);
+                        $(newOption).text(tagArr[idx].value);
+                        $(''+selector).append($(newOption));
+                    });
 
-                $(newLi).removeClass('dummy');
-                $(newLi).insertBefore('#accordionSidebar hr.sidebar-divider.d-none');
+                    $(''+selector).selectpicker();
+                });    
+                break;
 
-                if(firstFlag) {
-                    $(newLi).addClass('active'); 
-                    firstFlag = false;
-                    //fnLoadPage(menuObj['title'], menuObj['url']);
-                }
-            });
-        });
 
-        $('' + selector).selectpicker();
+            case 'category':
+
+                break; 
+        }
     }
 
 
