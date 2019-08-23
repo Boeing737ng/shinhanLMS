@@ -79,7 +79,7 @@ function fnRetrieve() {
                  ((searchMember == '') || (Object.keys(studyObj['member']).indexOf(searchMember)) > -1)
  
              ) {
-                 var mbrCnt = Object.keys(studyObj['member']).length+1;
+                 var mbrCnt = Object.keys(studyObj['member'] || []).length+1;
                  studyObj['participant'] = mbrCnt;
                  rsltArr.push(studyObj);
              }
