@@ -63,16 +63,16 @@ class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
         
         cell.videoTitleLabel.text = textArray[indexPath.row]
         cell.videoAuthorLabel.text = authorArray[indexPath.row]
-//        if dataReceived {
-//            let url = URL(string: urlArray[indexPath.row])
-//            if let data = try? Data(contentsOf: url!)
-//            {
-//                let image: UIImage = UIImage(data: data)!
-//                cell.videoThumbnail.image = image
-//            }
-//        } else {
-//            cell.videoThumbnail.image = UIImage(named: "white.jpg")
-//        }
+        if dataReceived {
+            let url = URL(string: urlArray[indexPath.row])
+            if let data = try? Data(contentsOf: url!)
+            {
+                let image: UIImage = UIImage(data: data)!
+                cell.videoThumbnail.image = image
+            }
+        } else {
+            cell.videoThumbnail.image = UIImage(named: "white.jpg")
+        }
         
         return cell
     }

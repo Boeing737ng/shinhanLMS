@@ -67,12 +67,7 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
         cell.videoTitleLabel.text = textArray[indexPath.row]
         cell.videoAuthorLabel.text = authorArray[indexPath.row]
         if dataReceived {
-            let url = URL(string: urlArray[indexPath.row])
-            if let data = try? Data(contentsOf: url!)
-            {
-                let image: UIImage = UIImage(data: data)!
-                cell.videoThumbnail.image = image
-            }
+            cell.videoThumbnail.image = CachedImageView().loadCacheImage(urlKey: "https://firebasestorage.googleapis.com/v0/b/shinhanlms.appspot.com/o/thumbnail%2Fsnow.jpg?alt=media&token=89359fd8-a285-40fd-b217-674a06094472")
         } else {
             cell.videoThumbnail.image = UIImage(named: "white.jpg")
         }

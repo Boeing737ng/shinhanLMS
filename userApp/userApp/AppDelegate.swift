@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         UserDefaults.standard.set(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
+        downloadImage()
         FirebaseApp.configure()
         return true
     }
@@ -43,7 +44,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
+    
+    func downloadImage() {
+        let imageURL = URL(string: "https://firebasestorage.googleapis.com/v0/b/shinhanlms.appspot.com/o/thumbnail%2Fsnow.jpg?alt=media&token=89359fd8-a285-40fd-b217-674a06094472")
+        URLSession.shared.dataTask(with: imageURL!) { data, response, error in
+            guard let data = data else { return }
+            let image = UIImage(data: data)!
+            CachedImageView().setImageCache(item: image, urlKey: "https://firebasestorage.googleapis.com/v0/b/shinhanlms.appspot.com/o/thumbnail%2Fsnow.jpg?alt=media&token=89359fd8-a285-40fd-b217-674a06094472")
+            }.resume()
+    }
 }
-
