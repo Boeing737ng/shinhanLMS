@@ -1,5 +1,4 @@
 
-
 $('#contentDiv').off('load').on('load', function () {
 
     /** start of components ***********************/
@@ -13,6 +12,7 @@ $('#contentDiv').off('load').on('load', function () {
         e.preventDefault();
         
         grid.appendRow({
+            thumbnail: '',
             name: '',
             artist: '',
             release: '',
@@ -35,6 +35,22 @@ $('#contentDiv').off('load').on('load', function () {
             grid.removeCheckedRows();
         }
     });
+
+
+    //저장 버튼
+    $('#btnSave').on('click', function(e) {
+        e.preventDefault();
+        
+        if(!grid.isModified()) {
+            alert('저장할 데이터가 없습니다.');
+            return false;
+        }
+
+        if(confirm('저장하시겠습니까?')) {
+            var modifiedRecords = grid.getModifiedRows();
+            console.log(modifiedRecords);
+        }
+    });
     /** end of components *************************/
 
 
@@ -48,14 +64,19 @@ $('#contentDiv').off('load').on('load', function () {
         scrollY: true,
         columns: [
             {
-                header: '컨텐츠번호',
-                name: 'name',
-                minWidth: 100
+                header: '썸네일',
+                name: 'thumbnail',
+                minWidth: 120
             },
             {
                 header: '컨텐츠명',
                 name: 'artist',
                 minWidth: 120
+            },
+            {
+                header: '강사명',
+                name: 'name',
+                minWidth: 100
             },
             {
                 header: '카테고리',
@@ -70,9 +91,31 @@ $('#contentDiv').off('load').on('load', function () {
             {
                 header: '공개여부',
                 name: 'genre',
-                minWidth: 70
+                align: 'center',
+                minWidth: 70,
+                onBeforeChange(ev){
+					console.log('Before change:' + ev);
+				},
+				onAfterChange(ev){
+					console.log('After change:' + ev);
+				},
+				formatter: 'listItemText',
+				editor: {
+					type: 'select',
+					options: {
+						listItems: [
+							{ text: 'Y', value: 'Y' },
+							{ text: 'N', value: 'N' }
+						]
+					}
+				}
             }
         ]
+    });
+
+
+    grid.on('edit', function() {
+        console.log('changed');
     });
 
 
@@ -87,6 +130,9 @@ $('#contentDiv').off('load').on('load', function () {
 
     
     /** end of grid *************************/
+
+
+    //function fnLoadGridData(url, )
 
 
 

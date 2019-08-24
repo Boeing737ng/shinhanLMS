@@ -23,6 +23,7 @@ class GroupBoardViewController: UIViewController, UITableViewDelegate, UITableVi
         return cell}
     
     @IBOutlet weak var table: UITableView!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()

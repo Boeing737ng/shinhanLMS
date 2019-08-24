@@ -13,13 +13,41 @@
 
 import UIKit
 
-class GroupCreateViewController: UIViewController {
-
+class GroupCreateViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    //테스트용 변수들
+    var img = ["fall.jpg", "fall.jpg", "fall.jpg", "fall.jpg", "fall.jpg"]
+    var item = ["AWS", "AWS", "AWS", "AWS", "AWS"]
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return item.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //let cell = UITableViewCell()
+        //return cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "gCell", for: indexPath)
+        cell.textLabel?.text = item[(indexPath as NSIndexPath).row]
+        cell.imageView?.image = UIImage(named: img[(indexPath as NSIndexPath).row])
+        
+        return cell
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        tableView.deselectRow(at: indexPath, animated: false)
+//    }
+//    
+    @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
+    
     @IBAction func onGoBack(_ sender: UIBarButtonItem) {
         let transition: CATransition = CATransition()
         transition.duration = 0.5
@@ -30,7 +58,7 @@ class GroupCreateViewController: UIViewController {
         self.dismiss(animated: false, completion: nil)
     }
     
-
+    
     /*
     // MARK: - Navigation
 

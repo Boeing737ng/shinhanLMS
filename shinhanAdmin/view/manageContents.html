@@ -6,171 +6,306 @@ author : jybobo
 **********************************************
 -->
 
-<style>
-  .searchComponentDiv {
-    margin: 10px
-  }
 
-  .bootstrap-select > .dropdown-toggle {
-    border: 1px solid #d1d3e2;
-    border-top-color: rgb(209, 211, 226);
-    border-top-style: solid;
-    border-top-width: 1px;
-    border-right-color: rgb(209, 211, 226);
-    border-right-style: solid;
-    border-right-width: 1px;
-    border-bottom-color: rgb(209, 211, 226);
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-    border-left-color: rgb(209, 211, 226);
-    border-left-style: solid;
-    border-left-width: 1px;
-    border-image-source: initial;
-    border-image-slice: initial;
-    border-image-width: initial;
-    border-image-outset: initial;
-    border-image-repeat: initial;
-  }
-</style>
+<!DOCTYPE html>
+<html lang="en">
 
-<div class="row">
-  <div class="col-xl-12">
-    <div class="card shadow h-100 py-2">
-      <div class="card-body">
-        <div class="row no-gutters align-items-center">
+<head>
 
-          <div>
-            <div class="searchComponentDiv">
-              <label>공개여부 : </label>
-              <select class="form-control" id="searchOpenYn" data-live-search="true" data-width="auto" data-size="5">
-                <option>Mustard</option>
-                <option>Ketchup</option>
-                <option>Relish</option>
-                <option>Relish</option>
-                <option>Relish</option>
-                <option>Relish</option>
-                <option>Relish</option>
-                <option>Relish</option>
-                <option>Relish</option>
-              </select>
-            </div>
-          </div>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-          <div>
-            <div class="searchComponentDiv">
-              <label>카테고리 : </label>
+  <title>Shinple</title>
 
-              <select class="form-control" id="searchCategory" data-live-search="true" data-width="auto" data-size="5">
-                <option>Mustard</option>
-                <option>Ketchup</option>
-                <option>Relish</option>
-                <option>Relish</option>
-                <option>Relish</option>
-                <option>Relish</option>
-                <option>Relish</option>
-                <option>Relish</option>
-                <option>Relish</option>
-              </select>
-            </div>
-          </div>
+  <!-- Custom fonts for this template-->
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+  <!-- bootstrap select -->
+  <link href="/vendor/bootstrap-select/dist/css/bootstrap-select.css" rel="stylesheet" type="text/css" />
+  <!-- Custom styles for this template-->
+  <link href="/css/sb-admin-2.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="/vendor/jsgrid/jsgrid.css">
+  <link rel="stylesheet" href="/vendor/jsgrid/jsgrid-theme.css">
+
+  <!-- Common CSS -->
+  <link href="/css/lmsCommon.css" rel="stylesheet" type="text/css">
+
+  <!-- datepicker CSS -->
+  <link href="/vendor/jquery-ui-1.12.1.custom/jquery-ui.structure.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet" type="text/css">
 
 
-          <div>
-            <div class="searchComponentDiv">
-              <label>관련태그 : </label>
+  <!-- /* Bootstrap core JavaScript */ -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- /* Core plugin JavaScript */ -->
+  <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <!-- /* Custom scripts for all pages */ -->
+  <script src="/js/sb-admin-2.min.js"></script>
+ 
+  <!-- /* firebase */ -->
+  <script src="https://www.gstatic.com/firebasejs/6.3.5/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-database.js"></script>
+  <script src="/js/firebaseConfig.js"></script>
+  <!-- /* bootstrap select */ -->
+  <script src="/vendor/bootstrap-select/dist/js/bootstrap-select.js"></script>
+  <!-- datepicker -->
+  <script src="/vendor/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 
-              <select class="form-control" id="searhRelatedTag" data-live-search="true" data-width="auto" data-size="5">
-                <option>Mustard</option>
-                <option>Ketchup</option>
-                <option>Relish</option>
-                <option>Relish</option>
-                <option>Relish</option>
-                <option>Relish</option>
-                <option>Relish</option>
-                <option>Relish</option>
-                <option>Relish</option>
-              </select>
-            </div>
-          </div>
+  <script src="/vendor/jsgrid/jsgrid.js"></script>
 
-          <div>
-            <div class="searchComponentDiv">
-              <label>컨텐츠명 : </label>
+  <!-- dropzone -->
+  <script src="/vendor/dropzone/dist/dropzone.js"></script>
+  <script src="/js/attachFileUtil.js"></script>
+  
+  <script src="/view/manageContents.js"></script>
+  <script src="/js/main.js"></script>
 
-              <div class="dropdown bootstrap-select form-control"
-                style="width:166px;float: none;margin-bottom: 0;padding: 0;border: none;">
-                <input type="text" class="form-control" style="float: left;" />
+</head>
+
+<body class="contentInnerBody">
+
+  <!-- Page Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h1 class="h3 mb-0 text-gray-800" id="contentHeader">컨텐츠 관리</h1>
+    </div>
+
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+
+            <div>
+              <div class="searchComponentDiv">
+                <label>공개여부 : </label>
+                <select class="form-control" id="searchOpenYn" data-live-search="true" data-width="auto">
+                    <option value="">전체</option>
+                  <option value="Y">Y</option>
+                  <option value="N">N</option>
+                </select>
               </div>
             </div>
-          </div>
 
-          <div>
-            <div class="searchComponentDiv">
-              <a href="#" class="btn btn-primary">
-                <span class="text">조회</span>
-              </a>
+            <div>
+              <div class="searchComponentDiv">
+                <label>카테고리 : </label>
+
+                <select class="form-control" id="searchCategory" data-live-search="true" data-width="auto"
+                  data-size="5">
+                  <option value="">전체</option>
+                  <option>Mustard</option>
+                  <option>Ketchup</option>
+                  <option>Relish</option>
+                  <option>Relish</option>
+                  <option>Relish</option>
+                  <option>Relish</option>
+                  <option>Relish</option>
+                  <option>Relish</option>
+                  <option>Relish</option>
+                </select>
+              </div>
             </div>
+
+
+            <div>
+              <div class="searchComponentDiv">
+                <label>관련태그 : </label>
+
+                <select class="form-control" id="searhRelatedTag" data-live-search="true" data-width="auto"
+                  data-size="5">
+                  <option value="">전체</option>
+                  <option>Mustard</option>
+                  <option>Ketchup</option>
+                  <option>Relish</option>
+                  <option>Relish</option>
+                  <option>Relish</option>
+                  <option>Relish</option>
+                  <option>Relish</option>
+                  <option>Relish</option>
+                  <option>Relish</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <div class="searchComponentDiv">
+                <label>컨텐츠명 : </label>
+                <div class="dropdown bootstrap-select form-control">
+                  <input type="text" class="form-control" id="searchTitle" />
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="searchComponentDiv">
+                <a href="#" class="btn btn-primary" id="btnSearch">
+                  <span class="text">조회</span>
+                </a>
+              </div>
+            </div>
+
           </div>
 
         </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <style>
+
+  </style>
+
+
+  <div class="row searchResultDiv">
+    <div class="col-xl-12">
+      <div class="card shadow mb-4">
+        <!-- Card Header - Dropdown -->
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary">컨텐츠 리스트</h6>
+
+          <div class="moduleBtnDiv">
+            <ul>
+              <li id="btnAdd">
+                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                  신규등록
+                </a>
+              </li>
+              <li id="btnDel">
+                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                  <i class="fas fa-minus fa-sm text-white-50"></i> 삭제
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Card Body -->
+        <div class="card-body">
+          <div style="text-align: center; background-color: black;">
+              <video id="video" style="width: 60%; height: calc(30%); max-height: 237px; cursor: pointer; background-color: black" controls>
+                  이 브라우저는 지원 안함
+              </video>
+          </div>
+          
+          <div id="grid" class="lms-grid"></div>
+          <div id="grid##"></div>
+
+          <!-- <div class="moduleBtnDiv">
+            <ul>
+              <li id="btnSave">
+                <a href="#" class="btn btn-primary">
+                  저장
+                </a>
+              </li>
+            </ul>
+          </div> -->
+
+        </div>
+
 
       </div>
     </div>
   </div>
 
 
-</div>
+  <!-- <div class="spinner-border m-5" role="status">
+    <span class="sr-only">Loading...</span>
+  </div> -->
 
 
-<div class="row" style="margin-top: 20px;">
-  <div class="col-xl-12">
-    <div class="card shadow mb-4">
-      <!-- Card Header - Dropdown -->
-      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary">컨텐츠 리스트</h6>
-
-        <div style="float: right" class="m-0">
-            <ul style="list-style:none;" class="modulBtnUl m-0">
-                <li id="btnAdd" style="float: left">
-                  <a style="float: right; margin-right: 5px;" href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                    <i class="fas fa-plus fa-sm text-white-50"></i> 추가
-                  </a>
-                </li>
-                <li id="btnDel" style="float: left">
-                    <a style="float: right; margin-right: 5px;" href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                      <i class="fas fa-minus fa-sm text-white-50"></i> 삭제
-                    </a>
-                  </li>
-              </ul>
+  <!-- Logout Modal-->
+  <div class="modal fade" id="contentModal" tabindex="-1" role="dialog" aria-labelledby="contentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 700px;" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="contentModalLabel">상세</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row" style="padding: 20px;">
+          <table class="registerTable">
+            <colgroup>
+              <col width="25%"/>
+              <col width="25%"/>
+              <col width="25%"/>
+              <col width="25%"/>
+            </colgroup>
+            <tbody>
+              <tr>
+                <th><span>작성자</span></th>
+                <td>
+                  <span></span>
+                </td>
+                <th><span>등록일자</span></th>
+                <td>
+                  <span></span>
+                </td>
+              </tr>
+              <tr>
+                <th class="required"><span>컨텐츠명</span></th>
+                <td colspan="3">
+                  <input type="text" class="form-control" style="width:100%"/>
+                </td>
+              </tr>
+              <tr>
+                <th class="required"><span>카테고리</span></th>
+                <td>
+                    <select class="category" data-live-search="true" data-width="144px">
+                      <option value="Y">Y</option>
+                      <option value="N">N</option>
+                    </select>
+                </td>
+                <th class="required"><span>공개여부</span></th>
+                <td>
+                  <select class="releaseYn" data-live-search="true" data-width="144px">
+                    <option value="Y">Y</option>
+                    <option value="N">N</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <th class="required"><span>관련태그</span></th>
+                <td colspan="3">
+                  <input type="text" class="form-control" style="width:100%"/>
+                </td>
+              </tr>
+              <tr>
+                <th class="required"><span>썸네일</span></th>
+                <td colspan="3">
+                  <div class="dropzone" url="test" style="height: 100px;"></div>
+                </td>
+              </tr>
+              <tr>
+                <th><span>상세설명</span></th>
+                <td colspan="3">
+                  <textarea class="form-control" style="width:100%"></textarea>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" href="view/login.html">저장</a>
         </div>
       </div>
-
-      <!-- Card Body -->
-      <div class="card-body">
-        <div id="grid" style="margin-bottom: 20px;"></div>
-
-        <div style="float: right" class="m-0">
-            <ul style="list-style:none;" class="modulBtnUl m-0">
-                <li id="btnSave" style="float: left">
-                  <a style="float: right; margin-right: 5px;" href="#" class="btn btn-primary">
-                    저장
-                  </a>
-                </li>
-              </ul>
-        </div>
-
-      </div>
-
-      
     </div>
   </div>
-</div>
 
+</body>
 
-
-<!-- TOAST Grid -->
-<script src="/vendor/tui.grid-4.4.0/dist/tui-grid.js"></script>
-<!-- /* bootstrap select */ -->
-<script src="/vendor/bootstrap-select/dist/js/bootstrap-select.js"></script>
-
-<script src="/view/manageContents.js"></script>
+</html>

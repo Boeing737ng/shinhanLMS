@@ -1,0 +1,214 @@
+<!--
+**********************************************
+title : manageContents
+description : 컨텐츠 관리
+author : jybobo
+**********************************************
+-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Shinple</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+  <!-- bootstrap select -->
+  <link href="/vendor/bootstrap-select/dist/css/bootstrap-select.css" rel="stylesheet" type="text/css" />
+  <!-- Custom styles for this template-->
+  <link href="/css/sb-admin-2.css" rel="stylesheet">
+  <!-- TOAST Grid -->
+  <link rel="stylesheet" href="/vendor/tui.grid-4.4.0/tui-grid.css" />
+  <!-- Common CSS -->
+  <link href="/css/lmsCommon.css" rel="stylesheet" type="text/css">
+
+  <!-- datepicker CSS -->
+  <link href="/vendor/jquery-ui-1.12.1.custom/jquery-ui.structure.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet" type="text/css">
+
+
+  <!-- /* Bootstrap core JavaScript */ -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- /* Core plugin JavaScript */ -->
+  <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <!-- /* Custom scripts for all pages */ -->
+  <script src="/js/sb-admin-2.min.js"></script>
+  <!-- /* Page level plugins */ -->
+  <script src="/vendor/chart.js/Chart.min.js"></script>
+  <!-- /* firebase */ -->
+  <script src="https://www.gstatic.com/firebasejs/6.3.5/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-database.js"></script>
+  <script src="/js/firebaseConfig.js"></script>
+  <!-- /* bootstrap select */ -->
+  <script src="/vendor/bootstrap-select/dist/js/bootstrap-select.js"></script>
+  <!-- datepicker -->
+  <script src="/vendor/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+  <!-- TOAST Grid -->
+  <script src="/vendor/tui.grid-4.4.0/tui-grid.js"></script>
+  <script src="/js/main.js"></script>
+
+  <script src="/view/manageUser.js"></script>
+</head>
+
+<body class="contentInnerBody">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800" id="contentHeader">사용자 조회</h1>
+    </div>
+
+        <div class="row">
+                <div class="col-xl-12">
+                    <div class="card shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+
+                                
+                                        <div>
+                                                <div class="searchComponentDiv">
+                                                  <label>회사명 : </label>
+                                                  <select class="form-control" id="searchCompany" data-live-search="true" data-width="auto"
+                                                    data-size="5">
+                                                    <option value="">신한은행</option>
+                                                    <option>신한카드</option>
+                                                    <option>신한금융투자</option>
+                                                    <option>신한생명</option>
+                                                    <option>오렌지라이프</option>
+                                                    <option>신한비엔피파리바</option>
+                                                    <option>신한캐피탈</option>
+                                                    <option>제주은행</option>
+                                                    <option>신한저축은행</option>
+                                                    <option>아시아신탁</option>
+                                                    <option>신한DS</option>
+                                                    <option>신한아이타스</option>
+                                                    <option>신한신용정보</option>
+                                                    <option>신한대체투자운용</option>
+                                                    <option>신한리츠운용</option>
+                                                    <option>SHC매니지먼트</option>
+                                                
+
+
+                                            
+                                                  </select>
+                                                </div>
+                                            </div>
+
+                                <div>
+                                    <div class="searchComponentDiv">
+                                        <label>사용자 이름 : </label>
+                                        <div class="dropdown bootstrap-select form-control"
+                                            style="width:166px;float: none;margin-bottom: 0;padding: 0;border: none;">
+                                            <input type="text" class="form-control" style="float: left;" />
+                                        </div>
+                                    </div>
+                                </div>
+            
+
+                                <div>
+                                    <div class="searchComponentDiv">
+                                        <label>사번</label> : </label>
+                                        <div class="dropdown bootstrap-select form-control"
+                                            style="width:166px;float: none;margin-bottom: 0;padding: 0;border: none;">
+                                            <input type="text" id="searchRegDate" class="form-control" style="float: left;" />
+                                        </div>
+                                    </div>
+                                </div>
+            
+                                <div>
+                                    <div class="searchComponentDiv">
+                                        <a href="#" class="btn btn-primary">
+                                            <span class="text">검색</span>
+                                        </a>
+                                    </div>
+                                </div>
+            
+                            </div>
+            
+                        </div>
+                    </div>
+                </div>
+            
+            
+            </div>
+
+
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-xl-12">
+                    <div class="card shadow mb-4">
+                        <!-- Card Header - Dropdown -->
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-primary">사용자 목록</h6>
+                        </div>
+            
+                        <!-- Card Body -->
+                        <div class="card-body">
+                            <div id="mainGrid" style="margin-bottom: 20px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-xl-12">
+                    <div class="card shadow mb-4">
+                        <!-- Card Header - Dropdown -->
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-primary">수강과목 상세</h6>
+            
+      
+                        </div>
+            
+                        <!-- Card Body -->
+                        <div class="card-body">
+                            <div id="detailGrid" style="margin-bottom: 20px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="row searchResultDiv">
+                    <div class="col-xl-12">
+                      <div class="card shadow mb-4">
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                          <h6 class="m-0 font-weight-bold text-primary">사용자 목록</h6>
+                
+                
+                        <div class="card-body">
+                            <div id="mainGrid" class="lms-grid"></div>
+                          <div id="detailGrid" class="lms-grid"></div>
+                
+                        </div>
+                
+                
+                      </div>
+                    </div>
+                  </div>
+        
+            
+            
+                    </div> -->
+                </div>
+            </div>
+
+</body>
+
+
+
+
+
+
+

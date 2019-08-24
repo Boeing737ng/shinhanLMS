@@ -1,0 +1,9 @@
+Dropzone.autoDiscover = false;
+
+
+
+
+
+
+
+
