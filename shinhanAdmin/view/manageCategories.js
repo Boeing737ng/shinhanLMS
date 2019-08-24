@@ -1,139 +1,45 @@
 
-$('#contentDiv').off('load').on('load', function () {
+$(document).ready(function () {
 
-    /** start of components ***********************/
-    $('#searchOpenYn').selectpicker();
+ 
+    $('#date').datepicker();
     $('#searchCategory').selectpicker();
-    $('#searhRelatedTag').selectpicker();
 
-
-    //행추가 버튼
-    $('#btnAdd').on('click', function(e) {
-        e.preventDefault();
-        
-        grid.appendRow({
-            thumbnail: '',
-            name: '',
-            artist: '',
-            release: '',
-            type: '',
-            genre: ''
-        }, {focus: true});
+    $.datepicker.setDefaults({
+        dateFormat: 'yy-mm-dd' //Input Display Format 변경
     });
 
-
-    //행삭제 버튼
-    $('#btnDel').on('click', function(e) {
-        e.preventDefault();
-
-        if(grid.getCheckedRows().length == 0) {
-            alert('선택된 데이터가 없습니다.');
-            return false;
-        }
-
-        if(confirm("삭제하시겠습니까?")) {
-            grid.removeCheckedRows();
-        }
-    });
-
-
-    //저장 버튼
-    $('#btnSave').on('click', function(e) {
-        e.preventDefault();
-        
-        if(!grid.isModified()) {
-            alert('저장할 데이터가 없습니다.');
-            return false;
-        }
-
-        if(confirm('저장하시겠습니까?')) {
-            var modifiedRecords = grid.getModifiedRows();
-            console.log(modifiedRecords);
-        }
-    });
-    /** end of components *************************/
-
-
-    /** start of grid ***********************/
-    var grid = new tui.Grid({
-        el: document.getElementById('grid'),
-        rowHeaders: ['checkbox', 'rowNum'],
+    $("#grid").jsGrid({
+        width: "100%",
+        height: "500px",
+        //inserting: true,
+        //editing: true,
+        sorting: true,
+        paging: false,
+        //filtering: true,
         data: [],
-        bodyHeight: 500,
-        scrollX: false,
-        scrollY: true,
-        columns: [
-            {
-                header: '썸네일',
-                name: 'thumbnail',
-                minWidth: 120
-            },
-            {
-                header: '컨텐츠명',
-                name: 'artist',
-                minWidth: 120
-            },
-            {
-                header: '강사명',
-                name: 'name',
-                minWidth: 100
-            },
-            {
-                header: '카테고리',
-                name: 'type',
-                minWidth: 120
-            },
-            {
-                header: '관련태그',
-                name: 'release',
-                minWidth: 120
-            },
-            {
-                header: '공개여부',
-                name: 'genre',
-                align: 'center',
-                minWidth: 70,
-                onBeforeChange(ev){
-					console.log('Before change:' + ev);
-				},
-				onAfterChange(ev){
-					console.log('After change:' + ev);
-				},
-				formatter: 'listItemText',
-				editor: {
-					type: 'select',
-					options: {
-						listItems: [
-							{ text: 'Y', value: 'Y' },
-							{ text: 'N', value: 'N' }
-						]
-					}
-				}
-            }
-        ]
-    });
-
-
-    grid.on('edit', function() {
-        console.log('changed');
-    });
-
-
-    /* var arr = [{
-        name: 'Beautiful Lies',
-        artist: 'Birdy',
-        release: '2016.03.26',
-        type: 'Deluxe',
-        genre: 'Pop'
-      }];
-    grid.resetData(arr); */
-
     
-    /** end of grid *************************/
+        insertcss: 'editRow',
+    
+        //data: clients,
+    
+        rowClick: function(args) {
+            //showDetailsDialog("Edit", args.item);
+            var arr = $('#grid').jsGrid('option', 'data');
+            var videoUrl = arr[args.itemIndex]['downloadURL'];
+            fnLoadVideo(videoUrl);
+        },
+        fields: [
+            { name: "name", title: '카테고리번호', type: "text", width: 120, editing: false, align: "center" },
+            { name: "creator", title: "카테고리명", type: 'text', width: 150, editing: false, align: "center" },
+            { name: "date", title: "수강신청", type: 'text', width: 150, editing: false, align: "center" },
+            { name: "date", title: "삭제", type: 'text', width: 150, editing: false, align: "center" }
+          
+        ]
+        
+    });
 
 
-    //function fnLoadGridData(url, )
-
-
-
+    resizeFrame();
+ 
 });
