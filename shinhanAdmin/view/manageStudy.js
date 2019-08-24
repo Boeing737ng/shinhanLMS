@@ -9,6 +9,7 @@ $(document).ready(function () {
     //검색 버튼
      $('#btnSearch').on('click', function(e) {
         e.preventDefault();
+        $('#grid2').jsGrid("option", "data", []);
         fnRetrieve();
     });
 
@@ -17,7 +18,7 @@ $(document).ready(function () {
    /** start of grid ***********************/
    $("#grid1").jsGrid({
     width: "100%",
-    height: "500px",
+    height: "300px",
     //inserting: true,
     //editing: true,
     sorting: true,
@@ -25,17 +26,22 @@ $(document).ready(function () {
     //filtering: true,
     data: [],
 
-    insertcss: 'editRow',
+    rowClick: function(args) {
+        //showDetailsDialog("Edit", args.item);
+        var arr = $('#grid1').jsGrid('option', 'data');
+        
+        var memberObj = arr[args.itemIndex]['member'];
+
+        fnRetrieveDetail(memberObj);
+    },
 
     //data: clients,
 
     fields: [
-        //{ name: "Name", type: "text", width: 150, validate: "required" },
-    
         { name: "number", title: '스터디번호', type: "text", width: 100, editing: false, align: "center" },
-        { name: "studyname", title: '스터디명', type: "text", width: 120, editing: false, align: "center" },
-        { name: "tags", title: "관련태그", type: 'text', width: 200, editing: false, align: "center" },
-        { name: "creator", title: "개설자", type: 'text', width: 150, editing: false, align: "center" },
+        { name: "studyname", title: '스터디명', type: "text", width: 120, editing: false, align: "left" },
+        { name: "tags", title: "관련태그", type: 'text', width: 200, editing: false, align: "left" },
+        { name: "creator", title: "개설자", type: 'text', width: 150, editing: false, align: "left" },
         { name: "date", title: "등록일자", type: 'text', width: 150, editing: false, align: "center", cellRenderer: function(item, value){
             var rslt = $("<td>").addClass("my-row-custom-class");
             var date = moment(item, 'YYYYMMDDHHmmss').format('YYYY-MM-DD');
@@ -43,40 +49,31 @@ $(document).ready(function () {
             return rslt; 
           } },
         { name: "participant", title: "참여자수", type: 'text', width: 100, editing: false, align: "center" }
-
-        //{ type: "control" } //edit control
     ]
 });
+
+
+function fnRetrieveDetail(memeberObj) {
+    var memArr = [];
+
+    $.each(memeberObj, function(idx, value) {
+        memArr.push({empNo: idx, empName: value});
+    });
+
+    $("#grid2").jsGrid("option", "data", memArr);
+}
 
 
    /** start of grid ***********************/
    $("#grid2").jsGrid({
     width: "100%",
-    height: "500px",
-    //inserting: true,
-    //editing: true,
+    height: "200px",
     sorting: true,
     paging: false,
-    //filtering: true,
     data: [],
-
-    insertcss: 'editRow',
-
-    //data: clients,
-    rowClick: function(args) {
-        //showDetailsDialog("Edit", args.item);
-        var arr = $('#grid1').jsGrid('option', 'data');
-        e.preventDefault();
-    },
-
     fields: [
-        //{ name: "Name", type: "text", width: 150, validate: "required" },
-        { name: "creator", title: "개설자", type: 'text', width: 150, editing: false, align: "center" },
-    
-        { name: "member", title: '참여자 명단', type: "text", width: 100, editing: false, align: "center" }
-
-        //{ type: "control" } //edit control
-
+        { name: "empNo", title: "사번", type: 'text', width: 100, editing: false, align: "center" },
+        { name: "empName", title: '성명', type: "text", width: 200, editing: false, align: "left" }
     ]
 });
 
@@ -93,23 +90,11 @@ function fnRetrieve() {
         var catArr = snapshot.val();
         var rsltArr = [];
 
-        
-        
         $.each(catArr, function(company, studyObj) {
 
-            console.log(catArr);
-            
-            //console.log(studyObj);
-                
             if( 
-                //((searchCompany == '') || (searchCompany == studyObj['searchCompany'])) &&
- 
-                 //((searchCat == '') || (searchCat == catObj['category'])) &&
-                 //((searchTag == '') || (trgtTagArr.indexOf(searchTag) > -1)) &&
- 
                  ((searchStudy== '') || (studyObj['studyname'] == searchStudy)) &&
                  ((searchMember == '') || (Object.keys(studyObj['member']).indexOf(searchMember)) > -1)
- 
              ) {
                  var mbrCnt = Object.keys(studyObj['member'] || []).length+1;
                  studyObj['participant'] = mbrCnt;
@@ -118,10 +103,7 @@ function fnRetrieve() {
             
         });
 
-        console.log(rsltArr);
-
         $("#grid1").jsGrid("option", "data", rsltArr);
-        //$("#grid").jsGrid("refresh");
     });
 }
 
