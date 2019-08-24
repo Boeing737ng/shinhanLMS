@@ -34,26 +34,46 @@ class MyPageViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return item.count
+        if tableView == thirdTable{
+            return item.count
+        }
+        else if tableView == fourthTable{
+            return item2.count
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //let cell = UITableViewCell()
         //return cell
-        let cell = tableView.dequeueReusableCell(withIdentifier: "classCell", for: indexPath)
-        cell.textLabel?.text = item[(indexPath as NSIndexPath).row]
-        cell.imageView?.image = UIImage(named: img[(indexPath as NSIndexPath).row])
-
         
-        return cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "classCell", for: indexPath)
+
+        if tableView == thirdTable{
+            cell.textLabel?.text = item[(indexPath as NSIndexPath).row]
+            cell.imageView?.image = UIImage(named: img[(indexPath as NSIndexPath).row])
+        }
+        else if tableView == fourthTable{
+            cell.textLabel?.text = item2[(indexPath as NSIndexPath).row]
+        }
+            return cell
+
     }
 
     @IBOutlet weak var secondCollection: UICollectionView!
     @IBOutlet weak var thirdTable: UITableView!
+    @IBOutlet weak var fourthTable: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+//        thirdTable.delegate = self
+//        thirdTable.dataSource = self
+//        thirdTable.register(UITableViewCell.self, forCellReuseIdentifier: "classCell")
+//
+//        fourthTable.delegate = self
+//        fourthTable.dataSource = self
+//        fourthTable.register(UITableViewCell.self, forCellReuseIdentifier: "studyCell")
         // Do any additional setup after loading the view.
     }
     

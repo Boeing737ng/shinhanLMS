@@ -59,6 +59,8 @@ author : jybobo
   <!-- datepicker -->
   <script src="/vendor/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
   <script src="/vendor/jsgrid/jsgrid.js"></script>
+
+  <script src="/vendor/moment/moment.min.js"></script>
   
   <script src="/view/manageStudy.js"></script>
   <script src="/js/main.js"></script>
@@ -69,22 +71,49 @@ author : jybobo
 
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800" id="contentHeader">스터디 관리</h1>
-    </div>
+        </div>
+  
     
         <div class="row">
                 <div class="col-xl-12">
                     <div class="card shadow h-100 py-2">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
-            
-            
+                              
                                 <div>
+                                    <div class="searchComponentDiv">
+                                      <label>회사명 : </label>
+
+                                      <select class="form-control" id="searchCompany" data-live-search="true" data-width="auto"
+                                        data-size="5">
+                                        <option>신한은행</option>
+                                        <option>신한카드</option>
+                                        <option>신한금융투자</option>
+                                        <option>신한생명</option>
+                                        <option>오렌지라이프</option>
+                                        <option>신한비엔피파리바</option>
+                                        <option>신한캐피탈</option>
+                                        <option>제주은행</option>
+                                        <option>신한저축은행</option>
+                                        <option>아시아신탁</option>
+                                        <option>신한ds</option>
+                                        <option>신한아이타스</option>
+                                        <option>신한신용정보</option>
+                                        <option>신한대체투자운용</option>
+                                        <option>신한리츠운용</option>
+                                        <option>shc매니지먼트</option>
+                                
+                                      </select>
+                                    </div>
+                                </div>
+                               
+                              <div>
                                     <div class="searchComponentDiv">
                                         <label>스터디명 : </label>
             
                                         <div class="dropdown bootstrap-select form-control"
                                             style="width:166px;float: none;margin-bottom: 0;padding: 0;border: none;">
-                                            <input type="text" class="form-control" style="float: left;" />
+                                            <input type="text" class="form-control" style="float: left;" id="studyname" />
                                         </div>
                                     </div>
                                 </div>
@@ -94,14 +123,14 @@ author : jybobo
                                         <label>팀원명</label> : </label>
                                         <div class="dropdown bootstrap-select form-control"
                                             style="width:166px;float: none;margin-bottom: 0;padding: 0;border: none;">
-                                            <input type="text" id="searchRegDate" class="form-control" style="float: left;" />
+                                            <input type="text" id="searchRegDate" class="form-control" style="float: left;" id="member" />
                                         </div>
                                     </div>
                                 </div>
             
                                 <div>
                                     <div class="searchComponentDiv">
-                                        <a href="#" class="btn btn-primary">
+                                        <a href="#" class="btn btn-primary" id="btnSearch">
                                             <span class="text">검색</span>
                                         </a>
                                     </div>
@@ -124,15 +153,34 @@ author : jybobo
                 <div class="card shadow mb-4">
                   <!-- Card Header - Dropdown -->
                   <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">스터디 리스트</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">스터디 리스트</h6></div>
           
                     
+                    <div class="card-body">
+                        <div id="grid1" class="lms-grid"></div>
+                      </div>
+                 
+               </div>
+              </div>
+           </div>
           
-                
+           <div class="row searchResultDiv">
+              <div class="col-xl-12">
+                <div class="card shadow mb-4">
+                  <!-- Card Header - Dropdown -->
+                  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">팀원 리스트</h6></div>
+
+                  <!-- Card Body -->
+                        <div class="card-body">
+                          <div id="grid2" class="lms-grid"></div>
+                        </div>
+                   
+                 </div>
                 </div>
               </div>
               
-              </div>
+              
         
             
             

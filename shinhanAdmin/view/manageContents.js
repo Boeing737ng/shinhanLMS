@@ -24,17 +24,6 @@ $(document).ready(function () {
     $('#btnAdd').on('click', function(e) {
         e.preventDefault();
         window.location.href = "/view/registerContent.html";
-        
-        /* 
-        
-        grid.appendRow({
-            thumbnail: '',
-            author: '',
-            title: '',
-            tags: '',
-            category: '',
-            releaseYn: ''
-        }, {focus: true}); */
     });
 
 
@@ -55,22 +44,6 @@ $(document).ready(function () {
             //grid.removeCheckedRows();
         }
     });
-
-
-    //저장 버튼
-    $('#btnSave').on('click', function(e) {
-        e.preventDefault();
-        
-        if(!grid.isModified()) {
-            alert('저장할 데이터가 없습니다.');
-            return false;
-        }
-
-        if(confirm('저장하시겠습니까?')) {
-            var modifiedRecords = grid.getModifiedRows();
-            console.log(modifiedRecords);
-        }
-    });
     /** end of components *************************/
 
 
@@ -81,10 +54,39 @@ $(document).ready(function () {
         editing: true,
         sorting: true,
         paging: false,
-        //filtering: true,
         data: [],
-        //insertcss: 'editRow',
-        //data: clients,
+
+        onItemUpdating: function(args) {
+            if(!confirm('수정하시겠습니까?')) {
+                args.cancel = true;
+            }
+        },
+
+        onItemUpdated: function(args) { //수정
+            var rowKey = args.item.rowKey;
+            var item = args.item;
+            delete item['rowKey']; 
+            
+            fnUpdateDatabase(rowKey, item, function() {
+                alert('수정되었습니다.');
+                fnRetrieve();
+            });
+        },
+
+        onItemDeleting: function(args) {
+            if(!confirm('삭제하시겠습니까?')) {
+                args.cancel = true;
+            }
+        },
+
+        onItemDeleted: function(args) {
+            var rowKey = args.item.rowKey;
+            
+            fnDeleteDatabase(rowKey, function() {
+                alert('삭제되었습니다.');
+                fnRetrieve();
+            });
+        },
 
         rowClick: function(args) {
             //showDetailsDialog("Edit", args.item);
@@ -92,26 +94,9 @@ $(document).ready(function () {
             var videoUrl = arr[args.itemIndex]['downloadURL'];
             fnLoadVideo(videoUrl);
         },
-
-        /* editRowRenderer: function(item, itemIndex) {
-            console.log(item);
-        }, */
  
         fields: [
-            //{ name: "Name", type: "text", width: 150, validate: "required" },
             {
-                /* headerTemplate: function() {
-                    return $("<input>").attr("type", "checkbox").text("X")
-                    .on("change", function () {
-                        if($(this).is(":checked")) {
-                            $('tr.jsgrid-row input[type=checkbox].selectionCheckbox').each(function() {
-                                console.log('ss');
-                                $(this).prop('checked', true);
-                                $(this).trigger('change');
-                            });
-                        }
-                    });
-                }, */
                 itemTemplate: function(_, item) {
                     return $("<input>").attr("type", "checkbox")
                             .addClass('selectionCheckbox')
@@ -121,13 +106,33 @@ $(document).ready(function () {
                             });
                 },
                 align: "center",
-                width: 50
+                width: 30
             },
-            { name: "title", title: '컨텐츠명', type: "text", width: 150, editing: false, align: "center" },
-            { name: "author", title: '강사명', type: "text", width: 120, editing: false, align: "center" },
-            { name: "category", title: "카테고리", type: 'text', width: 200, editing: false, align: "center" },
-            { name: "tags", title: "관련태그", type: 'text', width: 200, editing: false, align: "center", cellRenderer: function(item, value){
-                var rslt = $("<td>").addClass("my-row-custom-class");
+            { name: "thumbnail", title: '썸네일', width: 80, editing: false, align: "center", cellRenderer: function(item, value) {
+                var rslt = $("<td>").addClass("jsgrid-cell");
+                var img = $('<img/>');
+                
+                $(img).css('width', '60px');
+                $(img).css('height', '45px');
+                $(img).attr('src', item);
+                $(rslt).append(img);
+                
+                return rslt;
+            }, editTemplate: function(item, value) {
+                
+                var img = $('<img/>');
+                
+                $(img).css('width', '60px');
+                $(img).css('height', '45px');
+                $(img).attr('src', item);
+                
+                return img;
+            } },
+            { name: "title", title: '컨텐츠명', type: "text", width: 150, editing: false, align: "left" },
+            { name: "author", title: '강사명', type: "text", width: 120, editing: false, align: "left" },
+            { name: "category", title: "카테고리", type: 'text', width: 200, editing: false, align: "left" },
+            { name: "tags", title: "관련태그", type: 'text', width: 200, editing: false, align: "left", cellRenderer: function(item, value){
+                var rslt = $("<td>").addClass("jsgrid-cell");
                 var div = $('<div></div>');
                 $(rslt).append(div);
 
@@ -137,7 +142,14 @@ $(document).ready(function () {
                 }
                 return rslt; 
               } },
-            { name: "releaseYn", title: "공개여부", type: 'select', items: ['Y', 'N'], width: 100, editing: true, align: "center" },
+            { name: "releaseYn", title: "공개여부", type: 'select', items: [
+                { Name: "전체", Id: "" },
+                { Name: "Y", Id: "Y" },
+                { Name: "N", Id: "N" }
+            ],valueField: "Id", textField: "Name", width: 100, editing: true, validate: {
+                validator: 'required', 
+                message: '공개여부 는 필수입력 입니다.'
+            }, align: "center" },
             { type: "control" } //edit control
         ]
     });
@@ -187,12 +199,12 @@ $(document).ready(function () {
                     ((searchTag == '') || (trgtTagArr.indexOf(searchTag) > -1)) &&
                     ((searchTitle == '') || (catObj['title'].indexOf(searchTitle)) > -1)
                 ) {
+                    catObj['rowKey'] = idx;
                     rsltArr.push(catObj);
                 }
             });
 
             $("#grid").jsGrid("option", "data", rsltArr);
-            //$("#grid").jsGrid("refresh");
         });
     }
 
@@ -207,7 +219,7 @@ $(document).ready(function () {
         selectedItems = $.grep(selectedItems, function(i) {
             return i !== item;
         });
-    };
+    }
 
 
     function deleteSelectedItems() {
@@ -221,9 +233,46 @@ $(document).ready(function () {
         $grid.jsGrid("loadData");
  
         selectedItems = [];
-    };
+    }
 
 
+    //삭제
+    function fnDeleteDatabase(rowKey, callback) {
+
+        firebase.database().ref('videos/' + rowKey + '/').remove().then(function onSuccess(res) {
+            if(callback != null && callback != undefined) {
+                callback();
+            }
+        }).catch(function onError(err) {
+            console.log("ERROR!!!! " + err);
+        });
+    }
+
+
+    //수정
+    function fnUpdateDatabase(rowKey, paramObj, callback) {
+
+        firebase.database().ref('videos/' + rowKey + '/').update({
+            downloadURL: paramObj['downloadURL'],
+            author: paramObj['author'],
+            category: paramObj['category'],
+            tags: paramObj['tags'],
+            description: paramObj['description'],
+            date: paramObj['date'],
+            thumbnail: paramObj['thumbnail'],
+            title: paramObj['title'],
+            releaseYn: paramObj['releaseYn']
+        }).then(function onSuccess(res) {
+            if(callback != null && callback != undefined) {
+                callback();
+            }
+        }).catch(function onError(err) {
+            console.log("ERROR!!!! " + err);
+        });
+    }
+
+
+    //combo 구성
     function fnGetCommonCmb(option, selector) {
 
         $('' + selector).html('');

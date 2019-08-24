@@ -15,7 +15,7 @@ import Firebase
 import AVKit
 
 class VideoDetailViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -63,6 +63,16 @@ class VideoDetailViewController: UIViewController {
         
         present(playerViewController, animated: true) {
             player.play()
+        }
+    }
+    
+    @IBAction func seg(_ sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex == 0 {
+//            self.segView.addSubview()
+        }
+        else if sender.selectedSegmentIndex == 1 {
+        }
+        else if sender.selectedSegmentIndex == 2 {
         }
     }
     
