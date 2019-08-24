@@ -3,7 +3,7 @@
 $(document).ready(function () {
 
     /** start of components ***********************/
-    $('#searchOpenYn').selectpicker();
+    $('#searchReleaseYn').selectpicker();
     $('#searchCategory').selectpicker();
     //$('#searhRelatedTag').selectpicker();
 
@@ -107,6 +107,15 @@ $(document).ready(function () {
                 this.editItem($(args.event.target).closest("tr"));
             } */
         },
+
+        rowDoubleClick: function(args) {
+            fnGo('/view/updateContent.html', {
+                'searchReleaseYn' : $('#searchReleaseYn').val(),
+                'searchCategory' : $('#searchCategory').val(),
+                'searhRelatedTag': $('#searhRelatedTag').val(),
+                'searchTitle': $('#searchTitle').val()
+            });
+        },
  
         fields: [
             {
@@ -202,7 +211,7 @@ $(document).ready(function () {
     
     //조회
     function fnRetrieve() {
-        var searchReleaseYn = $('#searchOpenYn').val() || '';
+        var searchReleaseYn = $('#searchReleaseYn').val() || '';
         var searchCat = $('#searchCategory').val() || '';
         var searchTag = $('#searhRelatedTag').val() || '';
         var searchTitle = $('#searchTitle').val() || '';
@@ -331,6 +340,24 @@ $(document).ready(function () {
 
                 break; 
         }
+    }
+
+
+    function fnGo(url, paramObj) {
+        var form = $('<form></form>');
+        $(form).attr('method', 'post');
+        $(form).attr('action', url);
+        
+        $.each(paramObj, function(key, value) {
+            var input = $('<input type="hidden"/>');
+            $(input).attr('name', key);
+            $(input).val(value);
+
+            $(form).append(input);
+        });
+
+        $('body').append(form);
+        $(form).submit();
     }
 
 
