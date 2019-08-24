@@ -31,17 +31,16 @@ $(document).ready(function () {
     $('#btnDel').on('click', function(e) {
         e.preventDefault();
 
-        alert('TO DO');
-        return;
-
-        if(grid.getCheckedRows().length == 0) {
+        if(selectedItems.length == 0) {
             alert('선택된 데이터가 없습니다.');
             return false;
         }
 
         if(confirm("삭제하시겠습니까?")) {
-            alert('TO DO');
-            //grid.removeCheckedRows();
+            removeCheckedRows(function() {
+                alert('삭제되었습니다.');
+                fnRetrieve();
+            });
         }
     });
     /** end of components *************************/
@@ -54,6 +53,7 @@ $(document).ready(function () {
         editing: true,
         sorting: true,
         paging: false,
+        selecting: true,
         data: [],
 
         onItemUpdating: function(args) {
@@ -93,6 +93,19 @@ $(document).ready(function () {
             var arr = $('#grid').jsGrid('option', 'data');
             var videoUrl = arr[args.itemIndex]['downloadURL'];
             fnLoadVideo(videoUrl);
+
+            var $row = this.rowByItem(args.item),
+            selectedRow = $("#grid").find('table tr.highlight');
+
+            if (selectedRow.length) {
+                selectedRow.toggleClass('highlight');
+            };
+            
+            $row.toggleClass("highlight");
+            
+            /* if(this.editing) {
+                this.editItem($(args.event.target).closest("tr"));
+            } */
         },
  
         fields: [
@@ -141,7 +154,16 @@ $(document).ready(function () {
                     $(div).append($('<span class="tag label label-info" style="margin-right:5px; display:inline-block;">'+arr[i]+'</span>'));
                 }
                 return rslt; 
-              } },
+              }, editTemplate: function(item, value) {
+                var div = $('<div></div>');
+                var arr = item.split(' ');
+                
+                for(var i=0; i<arr.length; i++) {
+                    $(div).append($('<span class="tag label label-info" style="margin-right:5px; display:inline-block;">'+arr[i]+'</span>'));
+                }
+
+                return div; 
+            } },
             { name: "releaseYn", title: "공개여부", type: 'select', items: [
                 { Name: "전체", Id: "" },
                 { Name: "Y", Id: "Y" },
@@ -222,17 +244,25 @@ $(document).ready(function () {
     }
 
 
-    function deleteSelectedItems() {
-        if(!selectedItems.length || !confirm("Are you sure?"))
-            return;
- 
-        deleteClientsFromDb(selectedItems);
- 
-        var $grid = $("#jsGrid");
-        $grid.jsGrid("option", "pageIndex", 1);
-        $grid.jsGrid("loadData");
- 
+    //체크된 건들 삭제
+    function removeCheckedRows(callback) {
+        for(var i=0; i<selectedItems.length; i++) {
+            var item = selectedItems[i];
+            var rowKey = item['rowKey'];
+            fnDeleteDatabase(rowKey, null)
+        }
+
+        if(callback != null && callback != undefined) {
+            callback();
+        }
+
         selectedItems = [];
+    }
+
+
+    function getCheckedRows() {
+        var cnt = $('#grid').find('input[type=checkbox].selectionCheckbox').length;
+        return cnt;
     }
 
 

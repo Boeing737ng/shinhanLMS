@@ -166,6 +166,9 @@ table.registerTable td {
     background-color: #5bc0de;
 }
 
+tr.highlight td.jsgrid-cell {
+    background-color:#fdffe3;
+  }
 
 /* .jsgrid-header-row {
     text-align: center;
