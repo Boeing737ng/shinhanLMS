@@ -44,22 +44,6 @@ $(document).ready(function () {
             //grid.removeCheckedRows();
         }
     });
-
-
-    //저장 버튼
-    $('#btnSave').on('click', function(e) {
-        e.preventDefault();
-        
-        if(!grid.isModified()) {
-            alert('저장할 데이터가 없습니다.');
-            return false;
-        }
-
-        if(confirm('저장하시겠습니까?')) {
-            var modifiedRecords = grid.getModifiedRows();
-            console.log(modifiedRecords);
-        }
-    });
     /** end of components *************************/
 
 
@@ -110,31 +94,6 @@ $(document).ready(function () {
             var videoUrl = arr[args.itemIndex]['downloadURL'];
             fnLoadVideo(videoUrl);
         },
-
-        /* editRowRenderer: function(item, itemIndex) {
-            console.log(item);
-        }, */
-
-        editRowRenderer: function(item, itemIndex) {
-            var grid = this;
-            var $nameEditor = $("<input>").attr("type", "text").attr("name", "FirstName").val(item.Name);
-
-            var $updateButton = $("<input>").attr("type", "button").addClass("jsgrid-button jsgrid-update-button");
-            var $cancelButton = $("<input>").attr("type", "button").addClass("jsgrid-button jsgrid-cancel-button");
-            
-						$updateButton.on("click", function() {
-            	grid.updateItem(item, { Name: $nameEditor.val() });
-            });
-
-						$cancelButton.on("click", function() {
-            	grid.cancelEdit();
-            });
-
-            return $("<tr>")
-              .append($("<td>").append($nameEditor))
-              .append($updateButton)
-              .append($cancelButton);
-        },
  
         fields: [
             {
@@ -149,8 +108,8 @@ $(document).ready(function () {
                 align: "center",
                 width: 30
             },
-            { name: "thumbnail", title: '썸네일', type: "text", width: 80, editing: false, align: "center", cellRenderer: function(item, value) {
-                var rslt = $("<td>").addClass("my-row-custom-class");
+            { name: "thumbnail", title: '썸네일', width: 80, editing: false, align: "center", cellRenderer: function(item, value) {
+                var rslt = $("<td>").addClass("jsgrid-cell");
                 var img = $('<img/>');
                 
                 $(img).css('width', '60px');
@@ -173,7 +132,7 @@ $(document).ready(function () {
             { name: "author", title: '강사명', type: "text", width: 120, editing: false, align: "left" },
             { name: "category", title: "카테고리", type: 'text', width: 200, editing: false, align: "left" },
             { name: "tags", title: "관련태그", type: 'text', width: 200, editing: false, align: "left", cellRenderer: function(item, value){
-                var rslt = $("<td>").addClass("my-row-custom-class");
+                var rslt = $("<td>").addClass("jsgrid-cell");
                 var div = $('<div></div>');
                 $(rslt).append(div);
 
