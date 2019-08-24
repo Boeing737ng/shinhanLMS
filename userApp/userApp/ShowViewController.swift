@@ -1,26 +1,21 @@
 //
-//  WatchingVideoViewController.swift
+//  ShowViewController.swift
 //  userApp
 //
-//  Created by Kihyun Choi on 20/08/2019.
+//  Created by user on 24/08/2019.
 //  Copyright © 2019 sfo. All rights reserved.
 //
 
-//DATABASE READ::-----
-//Video Info upon user's list
-//- thumbnail image
-//- name
-//- download Url
-
 import UIKit
 
-class WatchingVideoViewController: UIViewController {
+class ShowViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
+    
     @IBAction func onGoBack(_ sender: UIBarButtonItem) {
         let transition: CATransition = CATransition()
         transition.duration = 0.5
@@ -30,7 +25,6 @@ class WatchingVideoViewController: UIViewController {
         self.view.window!.layer.add(transition, forKey: nil)
         self.dismiss(animated: false, completion: nil)
     }
-    
 
     /*
     // MARK: - Navigation
