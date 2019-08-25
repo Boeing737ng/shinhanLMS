@@ -13,12 +13,11 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
     
     var textArray = ["","",""]
     var authorArray = ["","",""]
-    var urlArray = ["","",""]
     var dataReceived:Bool = false
     
+    var playingVideoIdArray = Array<String>()
     var playingTitleArray = Array<String>()
     var playingAuthorArray = Array<String>()
-    var playingThumbnailArray = Array<String>()
     
     override func awakeFromNib() {
         self.delegate = self
@@ -31,19 +30,16 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
             let value = snapshot.value as? NSDictionary
             for video in value! {
                 let videoDict = video.value as! Dictionary<String, Any>;()
-                let title = (video.key as AnyObject).description
+                let videoId = video.key as! String
+                let title = videoDict["title"] as! String
                 let author = videoDict["author"] as! String
-                let thumbnailUrl = videoDict["thumbnail"] as! String
-                
-                self.playingTitleArray.append(title!)
+                print(videoId)
+                self.playingVideoIdArray.append(videoId)
+                self.playingTitleArray.append(title)
                 self.playingAuthorArray.append(author)
-                self.playingThumbnailArray.append(thumbnailUrl)
                 
             }
             self.dataReceived = true
-            self.textArray = self.playingTitleArray
-            self.authorArray = self.playingAuthorArray
-            self.urlArray = self.playingThumbnailArray
             self.reloadData()
         }) { (error) in
             print(error.localizedDescription)
@@ -59,16 +55,19 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return playingVideoIdArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "VideoCell1") as! VideoCell1
-        cell.videoTitleLabel.text = textArray[indexPath.row]
-        cell.videoAuthorLabel.text = authorArray[indexPath.row]
+        
         if dataReceived {
-            cell.videoThumbnail.image = CachedImageView().loadCacheImage(urlKey: "https://firebasestorage.googleapis.com/v0/b/shinhanlms.appspot.com/o/thumbnail%2Fsnow.jpg?alt=media&token=89359fd8-a285-40fd-b217-674a06094472")
+            cell.videoTitleLabel.text = playingTitleArray[indexPath.row]
+            cell.videoAuthorLabel.text = playingAuthorArray[indexPath.row]
+            cell.videoThumbnail.image = CachedImageView().loadCacheImage(urlKey: playingVideoIdArray[indexPath.row])
         } else {
+            cell.videoTitleLabel.text = textArray[indexPath.row]
+            cell.videoAuthorLabel.text = authorArray[indexPath.row]
             cell.videoThumbnail.image = UIImage(named: "white.jpg")
         }
         

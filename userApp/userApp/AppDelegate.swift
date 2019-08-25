@@ -13,13 +13,13 @@ import Firebase
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var urlDict = [String: String]()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         UserDefaults.standard.set(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
-        downloadImage()
         FirebaseApp.configure()
+        getThumbnailURL()
         return true
     }
 
@@ -45,12 +45,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    func downloadImage() {
-        let imageURL = URL(string: "https://firebasestorage.googleapis.com/v0/b/shinhanlms.appspot.com/o/thumbnail%2Fsnow.jpg?alt=media&token=89359fd8-a285-40fd-b217-674a06094472")
-        URLSession.shared.dataTask(with: imageURL!) { data, response, error in
-            guard let data = data else { return }
-            let image = UIImage(data: data)!
-            CachedImageView().setImageCache(item: image, urlKey: "https://firebasestorage.googleapis.com/v0/b/shinhanlms.appspot.com/o/thumbnail%2Fsnow.jpg?alt=media&token=89359fd8-a285-40fd-b217-674a06094472")
-            }.resume()
+    func getThumbnailURL() {
+        
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        ref.child("thumbnailUrl").observeSingleEvent(of: .value, with: { (snapshot) in
+            // Get user value
+            let value = snapshot.value as? NSDictionary
+            for video in value! {
+                //let videoDict = video.value as! Dictionary<String, Any>;()
+                let title = video.key as! String
+                let url = video.value as! String
+                self.urlDict[title] = url
+            }
+            self.setThumbnailCache()
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    func setThumbnailCache() {
+        print(urlDict)
+        for (id, url) in urlDict {
+            let imageURL = URL(string: url)
+            URLSession.shared.dataTask(with: imageURL!) { data, response, error in
+                guard let data = data else { return }
+                let image = UIImage(data: data)!
+                CachedImageView().setImageCache(item: image, urlKey: id)
+                }.resume()
+        }
     }
 }
