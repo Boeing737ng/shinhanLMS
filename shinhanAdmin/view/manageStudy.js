@@ -33,6 +33,15 @@ $(document).ready(function () {
         var memberObj = arr[args.itemIndex]['member'];
 
         fnRetrieveDetail(memberObj);
+
+        var $row = this.rowByItem(args.item),
+        selectedRow = $("#grid").find('table tr.highlight');
+        
+        if (selectedRow.length) {
+            selectedRow.toggleClass('highlight');
+        };
+        
+        $row.toggleClass("highlight");
     },
 
     //data: clients,
@@ -78,7 +87,7 @@ function fnRetrieveDetail(memeberObj) {
 });
 
 //조회
-function fnRetrieve() {
+function fnRetrieve(callback) {
     var searchStudy = $('#stduyname').val() || '';//스터디명
     var searchMember = $('#member').val() || '';//팀원명
     var searchCompany = $('#searchCompany').val() || '';
@@ -104,6 +113,7 @@ function fnRetrieve() {
         });
 
         $("#grid1").jsGrid("option", "data", rsltArr);
+
     });
 }
 
@@ -111,5 +121,6 @@ function fnRetrieve() {
 
 
     resizeFrame();
+    fnRetrieve();
 
 });

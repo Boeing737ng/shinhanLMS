@@ -3,14 +3,7 @@
 $(document).ready(function () {
 
     /** start of components ***********************/
-    $('#searchReleaseYn').selectpicker();
-    $('#searchCategory').selectpicker();
-    //$('#searhRelatedTag').selectpicker();
-
-    $('#contentModal select.releaseYn').selectpicker();
-    $('#contentModal select.category').selectpicker();
-
-    fnGetCommonCmb('tag', '#searhRelatedTag');
+    
     
 
     //검색 버튼
@@ -23,7 +16,13 @@ $(document).ready(function () {
     //행추가 버튼
     $('#btnAdd').on('click', function(e) {
         e.preventDefault();
-        window.location.href = "/view/registerContent.html";
+
+        fnGo('/view/registerContent.html', {
+            'searchReleaseYn' : $('#searchReleaseYn').val(),
+            'searchCategory' : $('#searchCategory').val(),
+            'searhRelatedTag': $('#searhRelatedTag').val(),
+            'searchTitle': $('#searchTitle').val()
+        });
     });
 
 
@@ -109,11 +108,14 @@ $(document).ready(function () {
         },
 
         rowDoubleClick: function(args) {
+            var arr = $('#grid').jsGrid('option', 'data');
+            
             fnGo('/view/updateContent.html', {
                 'searchReleaseYn' : $('#searchReleaseYn').val(),
                 'searchCategory' : $('#searchCategory').val(),
                 'searhRelatedTag': $('#searhRelatedTag').val(),
-                'searchTitle': $('#searchTitle').val()
+                'searchTitle': $('#searchTitle').val(),
+                'rowKey': arr[args.itemIndex]['rowKey']
             });
         },
  
@@ -173,6 +175,8 @@ $(document).ready(function () {
 
                 return div; 
             } },
+
+            //{ name: "description", title: "설명", type: 'textarea', align: "left", width: 200 },
             { name: "releaseYn", title: "공개여부", type: 'select', items: [
                 { Name: "전체", Id: "" },
                 { Name: "Y", Id: "Y" },
@@ -206,15 +210,57 @@ $(document).ready(function () {
     /** end of grid *************************/
 
 
-    fnRetrieve();
+    function getParams() {
+        var param = {};
+     
+        // 현재 페이지의 url
+        var url = decodeURIComponent(location.href);
+        url = decodeURIComponent(url);
+        
+        if(url.split('?').length > 1) {
+
+            var params = url.split('?')[1];
+
+            if(params.length == 0) {
+                return param;
+            }
+
+            params = params.split("&");
+
+            var size = params.length;
+            var key, value;
+
+            for(var i=0 ; i < size ; i++) {
+                key = params[i].split("=")[0];
+                value = params[i].split("=")[1];
+        
+                param[key] = value;
+            }
+        }
+        
+        return param;
+    }
 
     
     //조회
-    function fnRetrieve() {
-        var searchReleaseYn = $('#searchReleaseYn').val() || '';
-        var searchCat = $('#searchCategory').val() || '';
-        var searchTag = $('#searhRelatedTag').val() || '';
-        var searchTitle = $('#searchTitle').val() || '';
+    function fnRetrieve(searchParam) {
+        var varsearchReleaseYn;
+        var searchCat;
+        var searchTag;
+        var searchTitle;
+
+        if(!isEmpty(searchParam)) {
+            searchReleaseYn = searchParam['searchReleaseYn'] || '';
+            searchCat = searchParam['searchCategory'] || '';
+            searchTag = searchParam['searchRelatedTag'] || '';
+            searchTitle = searchParam['searchTitle'] || '';
+        }else {
+            searchReleaseYn = $('#searchReleaseYn').val() || '';
+            searchCat = $('#searchCategory').val() || '';
+            searchTag = $('#searhRelatedTag').val() || '';
+            searchTitle = $('#searchTitle').val() || '';
+        }
+        
 
         firebase.database().ref('/videos/').once('value').then(function(snapshot) {
 
@@ -312,7 +358,7 @@ $(document).ready(function () {
 
 
     //combo 구성
-    function fnGetCommonCmb(option, selector) {
+    function fnGetCommonCmb(option, selector, defaultValue) {
 
         $('' + selector).html('');
         $('' + selector).html('<option value="">전체</option>');
@@ -328,6 +374,11 @@ $(document).ready(function () {
                         var newOption = $('<option></option>');
                         $(newOption).attr('value', tagArr[idx].value);
                         $(newOption).text(tagArr[idx].value);
+
+                        if(tagArr[idx].value == defaultValue) {
+                            $(newOption).attr('selected', 'selected');
+                        }
+
                         $(''+selector).append($(newOption));
                     });
 
@@ -345,7 +396,7 @@ $(document).ready(function () {
 
     function fnGo(url, paramObj) {
         var form = $('<form></form>');
-        $(form).attr('method', 'post');
+        $(form).attr('method', 'get');
         $(form).attr('action', url);
         
         $.each(paramObj, function(key, value) {
@@ -361,7 +412,40 @@ $(document).ready(function () {
     }
 
 
+    function fnInit() {
+
+        $('#searchReleaseYn').selectpicker();
+        $('#searchCategory').selectpicker();
+
+        var searchParam = getParams();
+        
+        if(Object.keys(searchParam).length > 0) {
+            $('#searchReleaseYn').val(searchParam['searchReleaseYn']);
+            $('#searchReleaseYn').selectpicker('refresh');
+            
+            $('#searchCategory').val(searchParam['searchCategory']);
+            $('#searchCategory').selectpicker('refresh');
+            
+            $('#searchTitle').val(searchParam['searchTitle']);
+            
+            fnGetCommonCmb('tag', '#searhRelatedTag', searchParam['searhRelatedTag']);
+
+            fnRetrieve({
+                searchReleaseYn: searchParam['searchReleaseYn'],
+                searchCategory: searchParam['searchCategory'],
+                searchTitle: searchParam['searchTitle'],
+                searchRelatedTag: searchParam['searhRelatedTag'] 
+            });
+        }else {
+            fnGetCommonCmb('tag', '#searhRelatedTag');
+            fnRetrieve();
+        }
+
+    }
+
+
     //ifame height resize
     resizeFrame();
+    fnInit();
 
 });

@@ -12,8 +12,8 @@ $(document).ready(function () {
     $("#grid").jsGrid({
         width: "100%",
         height: "500px",
-        //inserting: true,
-        //editing: true,
+        inserting: true,
+        editing: true,
         sorting: true,
         paging: false,
         //filtering: true,
@@ -33,8 +33,7 @@ $(document).ready(function () {
             { name: "name", title: '카테고리번호', type: "text", width: 120, editing: false, align: "center" },
             { name: "creator", title: "카테고리명", type: 'text', width: 150, editing: false, align: "center" },
             { name: "date", title: "수강신청", type: 'text', width: 150, editing: false, align: "center" },
-            { name: "date", title: "삭제", type: 'text', width: 150, editing: false, align: "center" }
-          
+            { type: 'control'}
         ]
         
     });

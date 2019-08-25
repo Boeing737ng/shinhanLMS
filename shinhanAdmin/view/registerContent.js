@@ -89,16 +89,24 @@ $(document).ready(function () {
 
         submitVideoAttachFile = $('#videoAttachFile').clone();
         
-        var file = $('#videoAttachFile').prop("files")[0];
+        /* var file = $('#videoAttachFile').prop("files")[0];
+        var source = document.createElement('source')
         var blobURL = window.URL.createObjectURL(file);
 
         var source = document.createElement('source');
         source.type = 'video/' + ext;
         source.src = blobURL;
 
-
         video.innerHTML = '';
-        video.appendChild(source);
+        video.appendChild(source); */
+
+        var file = document.getElementById("videoAttachFile").files[0]
+        var type = file.type;
+        console.log(type);
+        var videoNode = document.querySelector('video')
+        var URL = window.URL || window.webkitURL;
+        var fileURL = URL.createObjectURL(file);
+        videoNode.src = fileURL;
     });
 
 
@@ -137,9 +145,62 @@ $(document).ready(function () {
 
 
     /** start of functions ***********************/
+    function getParams() {
+        var param = {}
+     
+        // 현재 페이지의 url
+        var url = decodeURIComponent(location.href);
+        url = decodeURIComponent(url);
+        
+        if(url.split('?').length > 1) {
+
+            var params = url.split('?')[1];
+
+            if(params.length == 0) {
+                return param;
+            }
+
+            params = params.split("&");
+
+            var size = params.length;
+            var key, value;
+
+            for(var i=0 ; i < size ; i++) {
+                key = params[i].split("=")[0];
+                value = params[i].split("=")[1];
+        
+                param[key] = value;
+            }
+        }
+        
+        return param;
+    }
+    
+    
     //목록 이동
     function fnGoList() {
-        window.location.href = '/view/manageContents.html';
+        var url = '/view/manageContents.html';
+        var paramObj = getParams();
+
+        fnGo(url, paramObj);
+    }
+
+
+    function fnGo(url, paramObj) {
+        var form = $('<form></form>');
+        $(form).attr('method', 'get');
+        $(form).attr('action', url);
+        
+        $.each(paramObj, function(key, value) {
+            var input = $('<input type="hidden"/>');
+            $(input).attr('name', key);
+            $(input).val(value);
+
+            $(form).append(input);
+        });
+
+        $('body').append(form);
+        $(form).submit();
     }
     
     
@@ -309,7 +370,7 @@ $(document).ready(function () {
         var param = '';
         var target;
 
-        if($('#video > source').length == 0) {
+        if(isEmpty($('#video').attr('src'))) {
             param = '동영상';
             target = $('#video');
         }else if(isEmpty($('#title').val())) {

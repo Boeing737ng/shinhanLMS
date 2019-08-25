@@ -73,7 +73,7 @@ author : jybobo
 
     <script src="/vendor/moment/moment.min.js"></script>
 
-    <script src="/view/registerContent.js"></script>
+    <script src="/view/updateContent.js"></script>
     <script src="/js/main.js"></script>
 
 
@@ -154,27 +154,16 @@ author : jybobo
                                 <th class="required"><span>동영상</span></th>
                                 <td>
                                     <input type="file" id="videoAttachFile"/>
-                                    <video id="video" style="width: 300px; height: 150px; cursor: pointer; background-color: black">
+                                    <video id="video" style="width: 300px; height: 150px; cursor: pointer; background-color: black" controls>
                                         이 브라우저는 지원 안함
                                     </video>
-                                    <div class="progress progress-sm">
-                                            <div class="progress-bar bg-info" role="progressbar" style="width: 0%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                          </div>
                                 </td>
                                 <th class="required"><span>썸네일</span></th>
                                 <td>
                                     <div>
-                                        <div id="output" style=""></div>
-                                        <!-- <form>
-                                            <input type="file" id="thumbnailFile" />
-                                            <div id="thumbnailImgPreview" data-placeholder="썸네일 upload">
-
-                                                <span>썸네일 upload</span>
-                                            </div>
-                                            <div class="progress progress-sm">
-                                                    <div class="progress-bar bg-info" role="progressbar" style="width: 0%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                                  </div>
-                                        </form> -->
+                                        <div id="output">
+                                            <canvas id="canvas" width="300" height="150"></canvas>
+                                        </div>
                                     </div>
 
                                 </td>

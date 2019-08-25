@@ -192,14 +192,18 @@ author : jybobo
 
         <!-- Card Body -->
         <div class="card-body">
-          <div style="text-align: center; background-color: black;">
-              <video id="video" style="width: 80%; height: calc(60%); max-height: 237px; cursor: pointer; background-color: black" controls>
-                  이 브라우저는 지원 안함
-              </video>
+          <div class="row">
+          <div style="float: left; width: 260px;">
+              <div style="text-align: center;">
+                  <video id="video" style="cursor: pointer; background-color: black; width: 240px; height: 180px;" controls>
+                      이 브라우저는 지원 안함
+                  </video>
+              </div>
           </div>
-          
-          <div id="grid" class="lms-grid"></div>
-          <div id="grid##"></div>
+          <div style="width: calc(100% - 260px)">
+              <div id="grid" class="lms-grid"></div>
+          </div>
+        </div>
 
           <!-- <div class="moduleBtnDiv">
             <ul>
@@ -212,11 +216,10 @@ author : jybobo
           </div> -->
 
         </div>
-
-
       </div>
     </div>
   </div>
+
 
 
   <!-- <div class="spinner-border m-5" role="status">
