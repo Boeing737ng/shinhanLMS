@@ -16,7 +16,6 @@ open class CachedImageView: UIImageView {
     public static let imageCache = NSCache<NSString, UIImage>()
     
     func setImageCache(item: UIImage, urlKey: String) {
-        print(urlKey)
         CachedImageView.imageCache.setObject(item, forKey: urlKey as NSString)
     }
     
