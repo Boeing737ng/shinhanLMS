@@ -33,7 +33,6 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
                 let videoId = video.key as! String
                 let title = videoDict["title"] as! String
                 let author = videoDict["author"] as! String
-                print(videoId)
                 self.playingVideoIdArray.append(videoId)
                 self.playingTitleArray.append(title)
                 self.playingAuthorArray.append(author)

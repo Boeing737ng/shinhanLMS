@@ -65,7 +65,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func setThumbnailCache() {
-        print(urlDict)
         for (id, url) in urlDict {
             let imageURL = URL(string: url)
             URLSession.shared.dataTask(with: imageURL!) { data, response, error in
