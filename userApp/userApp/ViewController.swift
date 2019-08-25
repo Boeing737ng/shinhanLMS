@@ -14,6 +14,8 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        userNo = "201302493"
+        userCompanyCode = "shinhan1"
         // Do any additional setup after loading the view.
     }
 }
