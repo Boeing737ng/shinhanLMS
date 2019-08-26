@@ -3,16 +3,19 @@
 $(document).ready(function () {
 
     /** start of components ***********************/
+    window.FakeLoader.init( );
+
+
     $('#searchCompany').selectpicker();
-    /** end of components *************************/
-    
+
+
     //검색 버튼
-     $('#btnSearch').on('click', function(e) {
+    $('#btnSearch').on('click', function(e) {
         e.preventDefault();
         $('#grid2').jsGrid("option", "data", []);
         fnRetrieve();
     });
-
+    /** end of components *************************/
 
 
    /** start of grid ***********************/
@@ -62,6 +65,9 @@ $(document).ready(function () {
 
 
 function fnRetrieveDetail(memeberObj) {
+    
+    window.FakeLoader.showOverlay();
+    
     var memArr = [];
 
     $.each(memeberObj, function(idx, value) {
@@ -69,6 +75,8 @@ function fnRetrieveDetail(memeberObj) {
     });
 
     $("#grid2").jsGrid("option", "data", memArr);
+
+    window.FakeLoader.hideOverlay();
 }
 
 
@@ -88,6 +96,8 @@ function fnRetrieveDetail(memeberObj) {
 
 //조회
 function fnRetrieve() {
+    window.FakeLoader.showOverlay();
+    
     var searchStudy = $('#studyname').val() || '';//스터디명
     var searchMember = $('#member').val() || '';//팀원명
     var searchCompany = $('#searchCompany').val() || '';
@@ -113,6 +123,9 @@ function fnRetrieve() {
         });
 
         $("#grid1").jsGrid("option", "data", rsltArr);
+
+        window.FakeLoader.hideOverlay();
+
         $('#grid1').find('tr.jsgrid-row:eq(0)').click(); //첫번째 row click
     });
 }

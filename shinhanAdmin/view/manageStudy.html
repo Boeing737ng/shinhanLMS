@@ -39,6 +39,9 @@ author : jybobo
   <link href="/vendor/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet" type="text/css">
 
 
+  <link href="/vendor/fakeloader-master/dist/fakeloader.css" rel="stylesheet" type="text/css">
+
+
   <!-- /* Bootstrap core JavaScript */ -->
   <script src="/vendor/jquery/jquery.min.js"></script>
   <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -62,12 +65,15 @@ author : jybobo
 
   <script src="/vendor/moment/moment.min.js"></script>
   
+  <script src="/vendor/fakeloader-master/dist/fakeLoader.min.js"></script>
   <script src="/view/manageStudy.js"></script>
   <script src="/js/main.js"></script>
 
 </head>
 
 <body class="contentInnerBody">
+
+    <div id="fakeloader-overlay" class="visible incoming"><div class="loader-wrapper-outer"><div class="loader-wrapper-inner"><div class="loader"></div></div></div></div>
 
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800" id="contentHeader">스터디 관리</h1>

@@ -1,6 +1,8 @@
 
 $(document).ready(function () {
 
+    window.FakeLoader.init( );
+
     /** start of grid ***********************/
     $("#grid").jsGrid({
         width: "100%",
@@ -194,6 +196,9 @@ $(document).ready(function () {
         var searchCompany = '신한은행';
         var searchCategory = $('#searchCategory').val() || '';
 
+
+        window.FakeLoader.showOverlay();
+
         firebase.database().ref('/'+ searchCompany+'/categories').once('value').then(function(snapshot) {
     
             var catArr = snapshot.val();
@@ -211,11 +216,12 @@ $(document).ready(function () {
                     catObj['contentCnt'] = contentCnt;
                     rsltArr.push(catObj);
                 }
-
-                
             });
 
             $("#grid").jsGrid("option", "data", rsltArr);
+
+            window.FakeLoader.hideOverlay();
+
             $('#grid').find('tr.jsgrid-row:eq(0)').click(); //첫번째 row click
         });
     }
@@ -224,6 +230,8 @@ $(document).ready(function () {
     //상세조회
     function fnRetrieveDetail(item) {
         var searchCompany = '신한은행';
+
+        window.FakeLoader.showOverlay();
 
         firebase.database().ref('/'+ searchCompany+'/categories/'+ item['rowKey'] + '/videos').once('value').then(function(snapshot) {
     
@@ -244,6 +252,8 @@ $(document).ready(function () {
             });
 
             $("#detailGrid").jsGrid("option", "data", rsltArr);
+
+            window.FakeLoader.hideOverlay();
         });
 
     }

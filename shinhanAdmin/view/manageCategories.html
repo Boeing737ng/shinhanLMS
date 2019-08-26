@@ -41,7 +41,7 @@ author : jybobo
   <!-- <link href="/vendor/bootstrap-treeview-master/dist/bootstrap-treeview.min.css" rel="stylesheet" type="text/css"> -->
   <link href="/vendor/jqTree/jqtree.css" rel="stylesheet" type="text/css">
 
-  
+  <link href="/vendor/fakeloader-master/dist/fakeloader.css" rel="stylesheet" type="text/css">
 
 
   <!-- /* Bootstrap core JavaScript */ -->
@@ -70,12 +70,17 @@ author : jybobo
   <!-- <script src="/vendor/bootstrap-treeview-master/dist/bootstrap-treeview.min.js"></script> -->
   <script src="/vendor/jqTree/tree.jquery.js"></script>
 
-  <script src="/view/manageCategories.js"></script>
+  <script src="/vendor/fakeloader-master/dist/fakeLoader.min.js"></script>
+
   <script src="/js/main.js"></script>
+  <script src="/view/manageCategories.js"></script>
+  
 
 </head>
 
 <body class="contentInnerBody">
+
+    <div id="fakeloader-overlay" class="visible incoming"><div class="loader-wrapper-outer"><div class="loader-wrapper-inner"><div class="loader"></div></div></div></div>
 
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800" id="contentHeader">카테고리 관리</h1>
