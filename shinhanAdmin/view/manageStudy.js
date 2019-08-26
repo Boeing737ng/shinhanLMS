@@ -86,20 +86,31 @@ function fnRetrieveDetail(memeberObj) {
     ]
 });
 
+
 //조회
 function fnRetrieve(callback) {
     var searchStudy = $('#studyname').val() || '';//스터디명
-    //var searchMember = $('#member').val() || '';//팀원명
+    var searchMember = $('#member').val() || '';//팀원명
     var searchCompany = $('#searchCompany').val() || '';
 
     searchCompany = searchCompany.toLowerCase();
 
-    firebase.database().ref('/study/' + searchCompany).once('value').then(function(snapshot) {
+    console.log(searchCompany)
+    console.log(searchStudy)
+
+    //firebase.database().ref('/study/' + searchCompany).once('value').then(function(snapshot)
+    firebase.database().ref('/' + searchCompany + '/study/').once('value').then(function(snapshot)
+    {
 
         var catArr = snapshot.val();
         var rsltArr = [];
 
-        $.each(catArr, function(company, studyObj) {
+        for(var i=0; i<catArr.length; i++) {
+            console.log(catArr[i]);
+        }
+    
+
+        /* $.each(catArr, function(idx, val) {
 
             if( 
                  ((searchStudy== '') || (studyObj['studyname'].indexOf(searchStudy) > -1))
@@ -110,7 +121,7 @@ function fnRetrieve(callback) {
                  rsltArr.push(studyObj);
              }
             
-        });
+        }); */
 
         $("#grid1").jsGrid("option", "data", rsltArr);
 
