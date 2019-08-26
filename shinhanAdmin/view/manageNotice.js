@@ -14,7 +14,7 @@ $(document).ready(function () {
     $('#btnAdd').on('click', function(e) {
         e.preventDefault();
         
-        window.location.href = "/view/addNotice.html";
+        window.location.href = "/view/registerNotice.html";
         //location.replace("http://localhost/view/addNotice.html");
 
     });
