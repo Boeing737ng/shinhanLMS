@@ -292,6 +292,17 @@ function isEmpty(value) {
 }
 
 
+firebase.auth().onAuthStateChanged(function(user) {
+    console.log(user);
+    if (user) {
+      // User is signed in.
+    } else {
+      // No user is signed in.
+    }
+  
+});
+
+
 
 
 //onPageLoadad();

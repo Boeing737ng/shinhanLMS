@@ -88,8 +88,8 @@ function fnRetrieveDetail(memeberObj) {
 
 //조회
 function fnRetrieve(callback) {
-    var searchStudy = $('#stduyname').val() || '';//스터디명
-    var searchMember = $('#member').val() || '';//팀원명
+    var searchStudy = $('#studyname').val() || '';//스터디명
+    //var searchMember = $('#member').val() || '';//팀원명
     var searchCompany = $('#searchCompany').val() || '';
 
     searchCompany = searchCompany.toLowerCase();
@@ -102,9 +102,9 @@ function fnRetrieve(callback) {
         $.each(catArr, function(company, studyObj) {
 
             if( 
-                 ((searchStudy== '') || (studyObj['studyname'] == searchStudy)) &&
-                 ((searchMember == '') || (Object.keys(studyObj['member']).indexOf(searchMember)) > -1)
+                 ((searchStudy== '') || (studyObj['studyname'].indexOf(searchStudy) > -1))
              ) {
+                 console.log('ss');
                  var mbrCnt = Object.keys(studyObj['member'] || []).length+1;
                  studyObj['participant'] = mbrCnt;
                  rsltArr.push(studyObj);

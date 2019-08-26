@@ -156,6 +156,10 @@ $(document).ready(function () {
             { name: "author", title: '강사명', type: "text", width: 120, editing: false, align: "left" },
             { name: "category", title: "카테고리", type: 'text', width: 200, editing: false, align: "left" },
             { name: "tags", title: "관련태그", type: 'text', width: 200, editing: false, align: "left", cellRenderer: function(item, value){
+                if(isEmpty(item)) {
+                    return;
+                }
+                
                 var rslt = $("<td>").addClass("jsgrid-cell");
                 var div = $('<div></div>');
                 $(rslt).append(div);
@@ -166,6 +170,10 @@ $(document).ready(function () {
                 }
                 return rslt; 
               }, editTemplate: function(item, value) {
+                if(isEmpty(item)) {
+                    return;
+                }
+                
                 var div = $('<div></div>');
                 var arr = item.split(' ');
                 
@@ -268,7 +276,7 @@ $(document).ready(function () {
             var rsltArr = [];
             
             $.each(catArr, function(idx, catObj) {
-                var trgtTagArr = catObj['tags'].split(' ');
+                var trgtTagArr = (catObj['tags'] || '').split(' ');
 
                 if( 
                     ((searchReleaseYn == '') || (searchReleaseYn == catObj['releaseYn'])) &&
