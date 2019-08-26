@@ -6,92 +6,141 @@ $(document).ready(function () {
     $('#searchOpenYn').selectpicker();
     $('#searchCategory').selectpicker();
     $('#searhRelatedTag').selectpicker();
-
+    $('#searchCompany').selectpicker();
     $('#searchRegDate').datepicker();
+    $('#date').datepicker();
 
+    $.datepicker.setDefaults({
+        dateFormat: 'yy-mm-dd' //Input Display Format 변경
+    });
+      
+      
 
     //행추가 버튼 -> 페이지 이동
     $('#btnAdd').on('click', function(e) {
         e.preventDefault();
-        
         window.location.href = "/view/registerNotice.html";
         //location.replace("http://localhost/view/addNotice.html");
 
     });
 
-    //행삭제 버튼
     $('#btnDel').on('click', function(e) {
         e.preventDefault();
 
-        if(grid.getCheckedRows().length == 0) {
+        if(selectedItems.length == 0) {
             alert('선택된 데이터가 없습니다.');
             return false;
         }
 
         if(confirm("삭제하시겠습니까?")) {
-            grid.removeCheckedRows();
+            removeCheckedRows(function() {
+                alert('삭제되었습니다.');
+                fnRetrieve();
+            });
         }
     });
-    /** end of components *************************/
 
-
-    /** start of grid ***********************/
-    var grid = new tui.Grid({
-        el: document.getElementById('grid'),
-        rowHeaders: ['checkbox', 'rowNum'],
-        data: [],
-        bodyHeight: 500,
-        scrollX: false,
-        scrollY: true,
-        columns: [
-            {
-                header: '제목',
-                name: 'name',
-                minWidth: 100
-            },
-            {
-                header: '작성자',
-                name: 'creator',
-                minWidth: 120
-            },
-            {
-                header: '등록일자',
-                name: 'date',
-                minWidth: 120
-            },
-            {
-                header: '공개여부',
-                name: 'showYN',
-                minWidth: 120
-            },
-            {
-                header: '삭제',
-                name: 'delete',
-                minWidth: 70
-            }
-        ]
+    //검색 버튼
+    $('#btnSearch').on('click', function(e) {
+        e.preventDefault();
+        $('#grid1').jsGrid("option", "data", []);
+        fnRetrieve();
     });
 
-
-    /* var arr = [{
-        name: 'Beautiful Lies',
-        artist: 'Birdy',
-        release: '2016.03.26',
-        type: 'Deluxe',
-        genre: 'Pop'
-      }];
-    grid.resetData(arr); */
 
     
-    /** end of grid *************************/
+   /** start of grid ***********************/
+   $("#grid").jsGrid({
+    width: "100%",
+    height: "300px",
+    sorting: true,
+    paging: false,
+    data: [],
 
+    rowClick: function(args) {
+        //showDetailsDialog("Edit", args.item);
+        var arr = $('#grid').jsGrid('option', 'data');
+        
+        var memberObj = arr[args.itemIndex]['member'];
 
-    var ref = firebase.database().ref();                           
-    ref.on("value", function(snapshot){
-        output.innerHTML = JSON.stringify(snapshot.val(), null, 2);
+        fnRetrieveDetail(memberObj);
+
+        var $row = this.rowByItem(args.item),
+        selectedRow = $("#grid").find('table tr.highlight');
+        
+        if (selectedRow.length) {
+            selectedRow.toggleClass('highlight');
+        };
+        
+        $row.toggleClass("highlight");
+    },
+
+    //data: clients,
+
+    fields: [
+        /*{
+            itemTemplate: function(_, item) {
+                return $("<input>").attr("type", "checkbox")
+                        .addClass('selectionCheckbox')
+                        .prop("checked", $.inArray(item, selectedItems) > -1)
+                        .on("change", function () {
+                            $(this).is(":checked") ? selectItem(item) : unselectItem(item);
+                        });
+            },
+            align: "center",
+            width: 30
+        },*/
+        { name: "title", title: '제목', type: "text", width: 120, editing: false, align: "left" },
+        { name: "writor", title: "작성자", type: 'text', width: 200, editing: false, align: "left" },
+        { name: "date", title: "등록일자", type: 'text', width: 150, editing: false, align: "center", cellRenderer: function(item, value){
+            var rslt = $("<td>").addClass("my-row-custom-class");
+            var date = moment(item, 'YYYYMMDDHHmmss').format('YYYY-MM-DD');
+            $(rslt).append(date);
+            return rslt; 
+          } },
+        { name: "creator", title: "공개여부", type: 'text', width: 150, editing: false, align: "left" },
+        
+    ]
+});
+
+//조회
+function fnRetrieve(callback) {
+    var searchTitle = $('#title').val() || '';
+    var searchWritor = $('#writor').val() || '';
+    var searchDate = $('#date').val() || '';
+
+    //searchCompany = searchCompany.toLowerCase();
+
+    console.log(searchTitle)
+   
+
+    firebase.database().ref('/'+ '신한은행'+'/notie').once('value').then(function(snapshot)
+    {   //log.console(searchㅅTitle)
+
+        var catArr = snapshot.val();
+        var rsltArr = [];
+
+        $.each(catArr, function(idx, studyObj) {
+
+            if( 
+                 ((searchTitle== '') || (studyObj['writor'].indexOf(search) > -1))
+             ) {
+                 var mbrCnt = Object.keys(studyObj['member'] || []).length+1;
+                 studyObj['participant'] = mbrCnt;
+                 rsltArr.push(studyObj);
+             }
+            
+        });
+
+        $("#grid").jsGrid("option", "data", rsltArr);
+
     });
+}
 
-    //resize frame height
+
+
+
     resizeFrame();
+    //fnRetrieve();
 
 });

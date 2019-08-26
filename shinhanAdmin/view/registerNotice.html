@@ -89,38 +89,7 @@ author : juyeun
             margin: 0;
         }
 
-        #thumbnailFile {
-            position: absolute;
-            top: 0px;
-            right: 0px;
-            width: 80px;
-            opacity: 0;
-        }
-
-        #thumbnailImgPreview {
-            /* width: 200px; */
-            width: 100%;
-            height: 100px;
-            display: table;
-            text-align: center;
-            border: 1px solid #d1d3e2;
-            background-color: black;
-            color: white;
-            cursor: pointer;
-        }
-
-        #thumbnailImgPreview span {
-            display: table-cell;
-            vertical-align: middle;
-        }
-
-        #videoAttachFile {
-            position: absolute;
-            top: 0px;
-            right: 0px;
-            width: 80px;
-            opacity: 0;
-        }
+    
     </style>
 </head>
 
@@ -154,28 +123,32 @@ author : juyeun
                           <tr>
                             <th class="required"><span>작성자</span></th>
                             <td>
-                                <input type="text" id="author" class="form-control" style="width:100%" />
+                                <input type="text" id="writor" class="form-control" style="width:100%" />
                             </td>
                             <th class="required"><span>등록일자</span></th>
                             <td>
                               <input type="text" id="date" class="form-control" style="width:100%" />
-                                </select>
+                      
                             </td>
                         </tr>
-
 
                             <tr>
                               <th class="required"><span>제목</span></th>
                               <td colspan="3">
-                                  <input type="text" id="relatedTags" data-role="tagsinput"/>
+                                <input type="text" id="title" class="form-control" style="width:100%" />
                               </td>
                           </tr>
 
                             <tr>
                                 <th class="required"><span>게시기간</span></th>
                                 <td>
-                                    <input type="text" id="author" class="form-control" style="width:100%" />
+                                    <input type="text" id="daterange" class="form-control" style="width:100%" />
+
+      
                                 </td>
+
+
+
                                 <th class="required"><span>공개여부</span></th>
                                 <td>
                                     <select id="releaseYn" class="releaseYn" data-live-search="true" data-width="144px">
@@ -186,7 +159,7 @@ author : juyeun
                             </tr>
 
                             <tr>
-                                <th><span>내용</span></th>
+                                <th class="required"><span>내용</span></th>
                                 <td colspan="3">
                                     <textarea id="description" class="form-control" style="width:100%"></textarea>
                                 </td>
@@ -194,6 +167,7 @@ author : juyeun
 
                         </tbody>
                     </table>
+
 
                     <div class="moduleBtnDiv">
                         <ul>

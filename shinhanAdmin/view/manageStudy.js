@@ -35,7 +35,7 @@ $(document).ready(function () {
         fnRetrieveDetail(memberObj);
 
         var $row = this.rowByItem(args.item),
-        selectedRow = $("#grid").find('table tr.highlight');
+        selectedRow = $("#grid1").find('table tr.highlight');
         
         if (selectedRow.length) {
             selectedRow.toggleClass('highlight');
@@ -94,9 +94,6 @@ function fnRetrieve(callback) {
     var searchCompany = $('#searchCompany').val() || '';
 
     searchCompany = searchCompany.toLowerCase();
-
-    console.log(searchCompany)
-    console.log(searchStudy)
 
     firebase.database().ref('/'+ searchCompany+'/study').once('value').then(function(snapshot)
     {
