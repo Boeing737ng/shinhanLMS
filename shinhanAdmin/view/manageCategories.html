@@ -38,6 +38,11 @@ author : jybobo
   <link href="/vendor/jquery-ui-1.12.1.custom/jquery-ui.structure.css" rel="stylesheet" type="text/css">
   <link href="/vendor/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet" type="text/css">
 
+  <!-- <link href="/vendor/bootstrap-treeview-master/dist/bootstrap-treeview.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="/vendor/jqTree/jqtree.css" rel="stylesheet" type="text/css">
+
+  
+
 
   <!-- /* Bootstrap core JavaScript */ -->
   <script src="/vendor/jquery/jquery.min.js"></script>
@@ -61,7 +66,10 @@ author : jybobo
   <script src="/vendor/jsgrid/jsgrid.js"></script>
 
   <script src="/vendor/moment/moment.min.js"></script>
-  
+
+  <!-- <script src="/vendor/bootstrap-treeview-master/dist/bootstrap-treeview.min.js"></script> -->
+  <script src="/vendor/jqTree/tree.jquery.js"></script>
+
   <script src="/view/manageCategories.js"></script>
   <script src="/js/main.js"></script>
 
@@ -69,94 +77,109 @@ author : jybobo
 
 <body class="contentInnerBody">
 
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800" id="contentHeader">카테고리 관리</h1>
-        </div>
-  
-    
-        <div class="row">
-                <div class="col-xl-12">
-                    <div class="card shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                              
-                                
-                                    <div class="searchComponentDiv">
-                                      <label>카테고리 : </label>
-                                      <select class="form-control" id="searchCategory" data-live-search="true" data-width="auto"
-                                        data-size="5">
-                                        <option>카테고리1</option>
-                                        <option>카테고리2</option>
-                                        <option>카테고리3</option>
-                                        <option>카테고리4</option>
-                                        <option>카테고리5</option>
-                                      </select>
-                                    </div>
-                                
-                               
-                              <div>
-                                    <div class="searchComponentDiv">
-                                        <label>등록일자 : </label>
-                                        <div class="dropdown bootstrap-select form-control"
-                                            style="width:166px;float: none;margin-bottom: 0;padding: 0;border: none;">
-                                            <input type="text" id="date" class="form-control" style="width:100%" />
-                                            <script>$("#date").datepicker();
-                                            </script>
-                                        </div>
-                                    </div>
-                                </div>
-            
-
-                                <div>
-                                    <div class="searchComponentDiv">
-                                        <a href="#" class="btn btn-primary" id="btnSearch">
-                                            <span class="text">검색</span>
-                                        </a>
-                                    </div>
-                                </div>
-            
-                            </div>
-            
-                        </div>
-                    </div>
-                </div>
-          
-            </div>
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800" id="contentHeader">카테고리 관리</h1>
+  </div>
 
 
-    
-            
-        
-            <div class="row searchResultDiv">
-              <div class="col-xl-12">
-                <div class="card shadow mb-4">
-                  <!-- Card Header - Dropdown -->
-                  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">카테고리 리스트</h6>
-                  </div>
-          
-                    <div class="card-body">
-                        <div id="grid" class="lms-grid"></div>
-                    </div>
-                 
-               </div>
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+
+
+            <div class="searchComponentDiv">
+              <label>카테고리명 : </label>
+              <div class="dropdown bootstrap-select form-control"
+                  style="width:166px;float: none;margin-bottom: 0;padding: 0;border: none;">
+                  <input type="text" class="form-control" style="float: left;" id="searchCategory" />
               </div>
-           </div>
-          
-              
-              
-        
-            
-            
-                    </div>
-                </div>
             </div>
+
+            <div>
+              <div class="searchComponentDiv">
+                <a href="#" class="btn btn-primary" id="btnSearch">
+                  <span class="text" id="btnSearch">검색</span>
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+  <div class="row searchResultDiv">
+      <div class="col-xl-12">
+        <div class="card shadow mb-4">
+          <!-- Card Header - Dropdown -->
+          <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">카테고리 리스트</h6>
+  
+            <div class="moduleBtnDiv">
+              <ul>
+                <li id="btnDel">
+                  <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                    <i class="fas fa-minus fa-sm text-white-50"></i> 삭제
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+  
+          <!-- Card Body -->
+          <div class="card-body">
+                <div id="grid" class="lms-grid"></div>
+          </div>
+  
+            <!-- <div class="moduleBtnDiv">
+              <ul>
+                <li id="btnSave">
+                  <a href="#" class="btn btn-primary">
+                    저장
+                  </a>
+                </li>
+              </ul>
+            </div> -->
+  
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row searchResultDiv">
+          <div class="col-xl-12">
+            <div class="card shadow mb-4">
+              <!-- Card Header - Dropdown -->
+              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">컨텐츠 리스트</h6>
+              </div>
+      
+              <!-- Card Body -->
+              <div class="card-body">
+                    <div id="detailGrid" class="lms-grid"></div>
+              </div>
+      
+                <!-- <div class="moduleBtnDiv">
+                  <ul>
+                    <li id="btnSave">
+                      <a href="#" class="btn btn-primary">
+                        저장
+                      </a>
+                    </li>
+                  </ul>
+                </div> -->
+      
+              </div>
+            </div>
+          </div>
+    </div>
+
 
 </body>
-
-
-
-
-
-
-

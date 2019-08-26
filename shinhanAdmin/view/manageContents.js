@@ -156,13 +156,13 @@ $(document).ready(function () {
             { name: "author", title: '강사명', type: "text", width: 120, editing: false, align: "left" },
             { name: "category", title: "카테고리", type: 'text', width: 200, editing: false, align: "left" },
             { name: "tags", title: "관련태그", type: 'text', width: 200, editing: false, align: "left", cellRenderer: function(item, value){
-                if(isEmpty(item)) {
-                    return;
-                }
-                
                 var rslt = $("<td>").addClass("jsgrid-cell");
                 var div = $('<div></div>');
                 $(rslt).append(div);
+
+                if(isEmpty(item)) {
+                    return rslt;
+                }
 
                 var arr = item.split(' ');
                 for(var i=0; i<arr.length; i++) {
@@ -170,11 +170,12 @@ $(document).ready(function () {
                 }
                 return rslt; 
               }, editTemplate: function(item, value) {
+                var div = $('<div></div>');
+                
                 if(isEmpty(item)) {
-                    return;
+                    return div;
                 }
                 
-                var div = $('<div></div>');
                 var arr = item.split(' ');
                 
                 for(var i=0; i<arr.length; i++) {
