@@ -47,7 +47,6 @@ $(document).ready(function () {
     //data: clients,
 
     fields: [
-        { name: "number", title: '스터디번호', type: "text", width: 100, editing: false, align: "center" },
         { name: "studyname", title: '스터디명', type: "text", width: 120, editing: false, align: "left" },
         { name: "tags", title: "관련태그", type: 'text', width: 200, editing: false, align: "left" },
         { name: "creator", title: "개설자", type: 'text', width: 150, editing: false, align: "left" },
@@ -88,7 +87,7 @@ function fnRetrieveDetail(memeberObj) {
 
 
 //조회
-function fnRetrieve(callback) {
+function fnRetrieve() {
     var searchStudy = $('#studyname').val() || '';//스터디명
     var searchMember = $('#member').val() || '';//팀원명
     var searchCompany = $('#searchCompany').val() || '';
@@ -114,7 +113,7 @@ function fnRetrieve(callback) {
         });
 
         $("#grid1").jsGrid("option", "data", rsltArr);
-
+        $('#grid1').find('tr.jsgrid-row:eq(0)').click(); //첫번째 row click
     });
 }
 
