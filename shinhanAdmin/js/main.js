@@ -92,28 +92,7 @@ $(document).ready(function () {
 });
 
 
-function onSignIn() {
-    initializeTimerInfo();
-    var email = getLoginId() + "@admin.com";
-    var password = getLoginPassword();
-    firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(function (success) {
-            document.getElementById('auth-text').innerHTML = "Logout";
-            $('#email-text').val("");
-            $('#password-text').val("");
-            this.displayMenu();
-            this.addContentsData();
-            this.runTimer(deadLine);
-            console.log(success);
-        })
-        .catch(function (error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            console.log(errorCode);
-            console.log(errorMessage);
-        });
-}
+
 
 function onSignOut() {
     clearInterval(timeinterval);
@@ -254,7 +233,7 @@ function fnLoadMenu() {
                 if(firstFlag) {
                     $(newLi).addClass('active'); 
                     firstFlag = false;
-                    //fnLoadPage(menuObj['title'], menuObj['url']);
+                    fnLoadPage(menuObj['title'], menuObj['url']);
                 }
             });
         });
@@ -293,11 +272,12 @@ function isEmpty(value) {
 
 
 firebase.auth().onAuthStateChanged(function(user) {
-    console.log(user);
     if (user) {
       // User is signed in.
     } else {
       // No user is signed in.
+      alert('Session is not found.');
+      window.location.href = '/login.html';
     }
   
 });
