@@ -98,30 +98,23 @@ function fnRetrieve(callback) {
     console.log(searchCompany)
     console.log(searchStudy)
 
-    //firebase.database().ref('/study/' + searchCompany).once('value').then(function(snapshot)
-    firebase.database().ref('/' + searchCompany + '/study/').once('value').then(function(snapshot)
+    firebase.database().ref('/'+ searchCompany+'/study').once('value').then(function(snapshot)
     {
 
         var catArr = snapshot.val();
         var rsltArr = [];
 
-        for(var i=0; i<catArr.length; i++) {
-            console.log(catArr[i]);
-        }
-    
-
-        /* $.each(catArr, function(idx, val) {
+        $.each(catArr, function(idx, studyObj) {
 
             if( 
                  ((searchStudy== '') || (studyObj['studyname'].indexOf(searchStudy) > -1))
              ) {
-                 console.log('ss');
                  var mbrCnt = Object.keys(studyObj['member'] || []).length+1;
                  studyObj['participant'] = mbrCnt;
                  rsltArr.push(studyObj);
              }
             
-        }); */
+        });
 
         $("#grid1").jsGrid("option", "data", rsltArr);
 
