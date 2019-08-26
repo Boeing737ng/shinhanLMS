@@ -1,12 +1,11 @@
-
-
 $(document).ready(function () {
 
     /** start of components ***********************/
     $('#searchCompany').selectpicker();
     /** end of components *************************/
     
-    //검색 버튼
+
+     //검색 버튼
      $('#btnSearch').on('click', function(e) {
         e.preventDefault();
         $('#grid2').jsGrid("option", "data", []);
@@ -14,103 +13,83 @@ $(document).ready(function () {
     });
 
 
-
-   /** start of grid ***********************/
-   $("#grid1").jsGrid({
-    width: "100%",
-    height: "300px",
-    sorting: true,
-    paging: false,
-    //filtering: true,
-    data: [],
-
-    rowClick: function(args) {
-        //showDetailsDialog("Edit", args.item);
-        var arr = $('#grid1').jsGrid('option', 'data');
+      /** start of grid ***********************/
+      $("#grid1").jsGrid({
+        width: "100%",
+        height: "500px",
+        //inserting: true,
+        //editing: false,
+        sorting: true,
+        paging: false,
+        //filtering: true,
+        data: [],
+    
+        //data: clients,
+    
+        rowClick: function(args) {
+            //showDetailsDialog("Edit", args.item);
+            var arr = $('#grid').jsGrid('option', 'data');
+        },
+        fields: [
+            { name: "empNo", title: '사번', type: "text", width: 120, editing: false, align: "center" },
+            { name: "empNm", title: "성명", type: 'text', width: 150, editing: false, align: "center" },
+            { name: "interestedTag", title: "관심태그", type: 'text', width: 150, editing: false, align: "center" },
+            { name: "mail", title: "이메일", type: 'text', width: 150, editing: false, align: "center" },
+            { name: "listenClass", title: "수강강좌수", type: 'text', width: 150, editing: false, align: "center" }
+        ]
         
-        var memberObj = arr[args.itemIndex]['member'];
-
-        fnRetrieveDetail(memberObj);
-
-        var $row = this.rowByItem(args.item),
-        selectedRow = $("#grid").find('table tr.highlight');
-        
-        if (selectedRow.length) {
-            selectedRow.toggleClass('highlight');
-        };
-        
-        $row.toggleClass("highlight");
-    },
-
-    //data: clients,
-
-    fields: [
-        { name: "number", title: '스터디번호', type: "text", width: 100, editing: false, align: "center" },
-        { name: "studyname", title: '스터디명', type: "text", width: 120, editing: false, align: "left" },
-        { name: "tags", title: "관련태그", type: 'text', width: 200, editing: false, align: "left" },
-        { name: "creator", title: "개설자", type: 'text', width: 150, editing: false, align: "left" },
-        { name: "date", title: "등록일자", type: 'text', width: 150, editing: false, align: "center", cellRenderer: function(item, value){
-            var rslt = $("<td>").addClass("my-row-custom-class");
-            var date = moment(item, 'YYYYMMDDHHmmss').format('YYYY-MM-DD');
-            $(rslt).append(date);
-            return rslt; 
-          } },
-        { name: "participant", title: "참여자수", type: 'text', width: 100, editing: false, align: "center" }
-    ]
-});
-
-
-function fnRetrieveDetail(memeberObj) {
-    var memArr = [];
-
-    $.each(memeberObj, function(idx, value) {
-        memArr.push({empNo: idx, empName: value});
     });
+    //data: clients,
+      /** start of grid ***********************/
 
-    $("#grid2").jsGrid("option", "data", memArr);
-}
-
-
-
-   /** start of grid ***********************/
-   $("#grid2").jsGrid({
-    width: "100%",
-    height: "200px",
-    sorting: true,
-    paging: false,
-    data: [],
-    fields: [
-        { name: "empNo", title: "사번", type: 'text', width: 100, editing: false, align: "center" },
-        { name: "empName", title: '성명', type: "text", width: 200, editing: false, align: "left" }
-    ]
-});
-
-
-//조회
+      $("#grid2").jsGrid({
+        width: "100%",
+        height: "300px",
+        sorting: true,
+        paging: false,
+        //filtering: true,
+        data: [],
+    
+        //data: clients,
+    
+        rowClick: function(args) {
+            //showDetailsDialog("Edit", args.item);
+            var arr = $('#grid').jsGrid('option', 'data');
+        },
+        fields: [
+            { name: "listenName", title: '수강과목명', type: "text", width: 120, editing: false, align: "center" },
+            { name: "category", title: "카테고리", type: "text", width: 150, editing: false, align: "center" },
+            { name: "relatedTag", title: "관련태그", type: 'text', width: 150, editing: false, align: "center" },
+            { name: "teacherName", title: "강사명", type: 'text', width: 150, editing: false, align: "center" }
+        ]
+        
+    });
+ 
+    //조회
 function fnRetrieve(callback) {
-    var searchStudy = $('#studyname').val() || '';//스터디명
-    var searchMember = $('#member').val() || '';//팀원명
-    var searchCompany = $('#searchCompany').val() || '';
-
+    var searchCompany = $('#searchCompany').val() || '';//회사명
+    var searchempNm = $('#empNm').val() || '';//사용자이름
+    var searchempNo= $('#empNo').val() || '';//사번
+    
     searchCompany = searchCompany.toLowerCase();
 
-    console.log(searchCompany)
-    console.log(searchStudy)
+    
 
-    firebase.database().ref('/'+ searchCompany+'/study').once('value').then(function(snapshot)
+    firebase.database().ref('/'+ searchCompany+'/user').once('value').then(function(snapshot)
     {
 
         var catArr = snapshot.val();
         var rsltArr = [];
-
+        console.log(searchempNo)
         $.each(catArr, function(idx, studyObj) {
 
             if( 
-                 ((searchStudy== '') || (studyObj['studyname'].indexOf(searchStudy) > -1))
-             ) {
-                 var mbrCnt = Object.keys(studyObj['member'] || []).length+1;
+                 ((searchempNm== '') || (studyObj['empNm'].indexOf(searchempNm) > -1))
+            ) {
+                 /*var mbrCnt = Object.keys(studyObj['member'] || []).length+1;
                  studyObj['participant'] = mbrCnt;
-                 rsltArr.push(studyObj);
+                 rsltArr.push(studyObj);*/
+                 
              }
             
         });
@@ -119,7 +98,6 @@ function fnRetrieve(callback) {
 
     });
 }
-
 
 
 

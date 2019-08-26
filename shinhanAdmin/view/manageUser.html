@@ -29,8 +29,8 @@ author : jybobo
   <link href="/vendor/bootstrap-select/dist/css/bootstrap-select.css" rel="stylesheet" type="text/css" />
   <!-- Custom styles for this template-->
   <link href="/css/sb-admin-2.css" rel="stylesheet">
-  <!-- TOAST Grid -->
-  <link rel="stylesheet" href="/vendor/tui.grid-4.4.0/tui-grid.css" />
+  <link rel="stylesheet" href="/vendor/jsgrid/jsgrid.css">
+  <link rel="stylesheet" href="/vendor/jsgrid/jsgrid-theme.css">
   <!-- Common CSS -->
   <link href="/css/lmsCommon.css" rel="stylesheet" type="text/css">
 
@@ -58,12 +58,15 @@ author : jybobo
   <script src="/vendor/bootstrap-select/dist/js/bootstrap-select.js"></script>
   <!-- datepicker -->
   <script src="/vendor/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
-  <!-- TOAST Grid -->
-  <script src="/vendor/tui.grid-4.4.0/tui-grid.js"></script>
+  <script src="/vendor/jsgrid/jsgrid.js"></script>
+
+  <script src="/vendor/moment/moment.min.js"></script>
+  
+  <script src="/view/manageUser.js"></script>
   <script src="/js/main.js"></script>
 
-  <script src="/view/manageUser.js"></script>
 </head>
+
 
 <body class="contentInnerBody">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -108,7 +111,7 @@ author : jybobo
                                         <label>사용자 이름 : </label>
                                         <div class="dropdown bootstrap-select form-control"
                                             style="width:166px;float: none;margin-bottom: 0;padding: 0;border: none;">
-                                            <input type="text" class="form-control" style="float: left;" />
+                                            <input type="text" id="empNm" class="form-control" style="float: left;" />
                                         </div>
                                     </div>
                                 </div>
@@ -119,14 +122,14 @@ author : jybobo
                                         <label>사번</label> : </label>
                                         <div class="dropdown bootstrap-select form-control"
                                             style="width:166px;float: none;margin-bottom: 0;padding: 0;border: none;">
-                                            <input type="text" id="searchRegDate" class="form-control" style="float: left;" />
+                                            <input type="text" id="empNo" class="form-control" style="float: left;" />
                                         </div>
                                     </div>
                                 </div>
             
                                 <div>
                                     <div class="searchComponentDiv">
-                                        <a href="#" class="btn btn-primary">
+                                        <a href="#" class="btn btn-primary" id="btnSearch">
                                             <span class="text">검색</span>
                                         </a>
                                     </div>
