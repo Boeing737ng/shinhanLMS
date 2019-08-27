@@ -7,7 +7,20 @@ $(document).ready(function () {
     /** start of components ***********************/
     $('#releaseYn').selectpicker();
     $('#category').selectpicker();
+    $('#regDate').text(moment().format('YYYY-MM-DD'));
+    var userInfo = JSON.parse(window.sessionStorage.getItem('userInfo'));
 
+   
+
+    $('#daterange').daterangepicker({
+        opens: 'right',
+        minDate: moment(),
+        locale: {
+            format: 'YYYY-MM-DD'
+        }
+    }, function(start, end) {
+        $('#daterange span').html(start.format('YYYY-MM-DD') + ' ~ ' + end.format('YYYY-MM-DD'));
+    });
 
     //저장 버튼
     $('#btnSave').on('click', function(e) {
@@ -31,33 +44,26 @@ $(document).ready(function () {
         e.preventDefault();
         fnGoList();
     });
+
+   
+
+  
     /** end of components *************************/
 
 
     /** start of functions ***********************/
     function fnRetrieve() {
         
-        parent.database.ref('/videos/' + ROW_KEY).once('value').then(function(snapshot) {
+        parent.database.ref('/'+ '신한은행'+'/notie/' + ROW_KEY).once('value').then(function(snapshot) {
 
             var obj = snapshot.val();
             
             $('#title').val(obj['title']);
-            $('#author').val(obj['author']);
+            $('#writor').val(obj['writor']);
             $('#description').val(obj['description']);
-
-            var tagArr = obj['tags'].split(' ');
-            for(var i=0; i<tagArr.length; i++) {
-                $('#relatedTags').tagsinput('add', tagArr[i]);    
-            }
-            
             $('#releaseYn').val(obj['releaseYn']);
             $('#releaseYn').selectpicker('refresh');
 
-            $('#category').val(obj['category']);
-            $('#category').selectpicker('refresh');
-
-            fnLoadVideo(obj['downloadURL']);
-            drawCanvas(obj['thumbnail']);
         });
     }
 
@@ -134,7 +140,7 @@ $(document).ready(function () {
             param = ' 제목';
             target = $('#title');
         }
-        else if(isEmpty($('#daterange').val())) {
+        else if(isEmpty(($('#daterange > span').text()))) {
             param = '게시기간';
             target = $('#daterange');
         }
@@ -157,36 +163,42 @@ $(document).ready(function () {
     }
 
 
-    //저장
-    function fnSave(callback) {
+     //저장
+     function fnSave(callback) {
 
-        var contentAuthor = $('#author').val();
-        var contentCategory = $('#category').val();
-        
-        var contentTagArr = $('#relatedTags').tagsinput('items');
-        for(var i=0; i<contentTagArr.length; i++) {
-            contentTagArr[i] = replaceBlankSpace(contentTagArr[i]);
-        }
-        
-        var contentTag = contentTagArr.join(' ');
-        var downloadURL = $('#video > source').attr('src');
-        var thumbnailPath = $('#canvas').attr('data-url');
-        var contentDescription = $('#description').val();
-        var contentAddedTime = moment().unix();
-        var title = $('#title').val();
+        var contentWritor = $('#writor').text();
+        var contentTitle=$('#title').val();
+        var dateRangeFrom = $('#daterange').data('daterangepicker').startDate.format('YYYYMMDD');
+        var dateRangeTo = $('#daterange').data('daterangepicker').endDate.format('YYYYMMDD');
         var releaseYn = $('#releaseYn').val();
-
-
-        parent.database.ref('videos/' + ROW_KEY + '/').update({
-            downloadURL: downloadURL,
-            author: contentAuthor,
-            category: contentCategory,
-            tags: contentTag,
+        var contentDescription = $('#description').val();
+                   
+        setNotieDatabase({
+            writor: contentWritor,
             description: contentDescription,
-            date: contentAddedTime,
-            thumbnail: thumbnailPath,
-            title: title,
-            releaseYn: releaseYn
+            date: moment().format('YYYYMMDD'),
+            title: contentTitle,
+            releaseYn: releaseYn,
+            postingPeriodFrom: dateRangeFrom,
+            postingPeriodTo: dateRangeTo
+        }, callback);
+    }
+
+
+    function setNotieDatabase(paramObj, callback) {
+
+        //var row
+        var rowKey = 'notie_' + moment().unix(); 
+        parent.database.ref('/'+ '신한은행'+'/notie/' + rowKey).set({
+        
+            writor: paramObj['writor'],
+            date: paramObj['date'],
+            title: paramObj['title'],
+            postingPeriodFrom: paramObj['postingPeriodFrom'],
+            postingPeriodTo: paramObj['postingPeriodTo'],
+            releaseYn: paramObj['releaseYn'],
+            description: paramObj['description']
+           
         }).then(function onSuccess(res) {
             if(callback != null && callback != undefined) {
                 callback();
@@ -195,21 +207,8 @@ $(document).ready(function () {
             console.log("ERROR!!!! " + err);
         });
     }
-    
 
-    function setTagDatabase(contentTagArr, callback) {
-        for(var i=0; i<contentTagArr.length; i++) {
-            parent.database.ref('tag/' + contentTagArr[i] + '/').update({
-                'tag': contentTagArr[i]
-            }).then(function onSuccess(res) {
-                if(callback != null && callback != undefined) {
-                    callback();
-                }
-            }).catch(function onError(err) {
-                console.log("ERROR!!!! " + err);
-            });
-        }
-    }
+   
 
 
    

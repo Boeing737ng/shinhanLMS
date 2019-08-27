@@ -134,8 +134,6 @@ $(document).ready(function () {
             
             fnGo('/view/updateNotice.html', {
                 'searchReleaseYn' : $('#searchReleaseYn').val(),
-                'searchCategory' : $('#searchCategory').val(),
-                'searhRelatedTag': $('#searhRelatedTag').val(),
                 'searchTitle': $('#searchTitle').val(),
                 'rowKey': arr[args.itemIndex]['rowKey']
             });
