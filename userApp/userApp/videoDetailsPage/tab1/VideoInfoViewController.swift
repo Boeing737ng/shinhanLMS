@@ -8,14 +8,17 @@
 
 import UIKit
 import XLPagerTabStrip
+import Firebase
+
+var videoDescription:String = ""
 
 class VideoInfoViewController: UIViewController {
     
+    @IBOutlet weak var videoDescriptionLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
+        getVideoDescriptionFromDB()
 //        self.tv.layer.borderWidth = 1.0
 //        self.tv.layer.borderColor = UIColor.black.cgColor
 //        self.tv.layer.cornerRadius = 4
@@ -23,6 +26,17 @@ class VideoInfoViewController: UIViewController {
         
         
         // Do any additional setup after loading the view.
+    }
+    
+    func getVideoDescriptionFromDB() {
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        ref.child("videos/" + selectedVideoId).observeSingleEvent(of: .value, with: { (snapshot) in
+            let videoInfo = snapshot.value as! Dictionary<String, Any>;()
+            self.videoDescriptionLabel.text = videoInfo["description"]! as? String
+        }) { (error) in
+            print(error.localizedDescription)
+        }
     }
     
 }

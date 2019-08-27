@@ -15,12 +15,18 @@ import Firebase
 import AVKit
 
 var selectedVideoId:String = ""
+var videoURL:String = ""
 
 class VideoDetailViewController: UIViewController {
     
+    @IBOutlet weak var videoTitle: UILabel!
+    @IBOutlet weak var videoAuthor: UILabel!
+    @IBOutlet weak var videoViewCount: UILabel!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        getVideoInfoFromDB()
         // Do any additional setup after loading the view.
     }
     @IBAction func onGoBack(_ sender: UIBarButtonItem) {
@@ -34,23 +40,17 @@ class VideoDetailViewController: UIViewController {
     }
     
     func getVideoInfoFromDB() {
-        print("DB function called")
+        LoadingView().startLoading(self)
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child("videos").observeSingleEvent(of: .value, with: { (snapshot) in
-            // Get user value
-            let value = snapshot.value as? NSDictionary
-            
-            for item in value! {
-                print(item.key)
-                var dict = item.value as! Dictionary<String, Any>;()
-                print(dict["author"]!)
-                print(dict["category"]!)
-                print(dict["date"]!)
-                print(dict["description"]!)
-                print(dict["downloadURL"]!)
-                print(dict["tags"]!)
-            }
+        ref.child("videos/" + selectedVideoId).observeSingleEvent(of: .value, with: { (snapshot) in
+            let videoInfo = snapshot.value as! Dictionary<String, Any>;()
+            videoURL = videoInfo["downloadURL"] as! String
+            videoDescription = videoInfo["description"]! as! String
+            self.videoTitle.text = videoInfo["title"]! as? String
+            self.videoAuthor.text = videoInfo["author"]! as? String
+            self.videoViewCount.text = videoInfo["view"] as? String
+            LoadingView().stopLoading()
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -58,7 +58,7 @@ class VideoDetailViewController: UIViewController {
     
     // get URL dynamically
     func playVideo() {
-        let url = "https://firebasestorage.googleapis.com/v0/b/shinhanlms.appspot.com/o/videos%2FTween_app_instruction.MP4?alt=media&token=ef53ac22-6729-4056-a9d8-a3f0e0c0b849"
+        let url = videoURL
         let player = AVPlayer(url: URL(string: url)!)
         let playerViewController = AVPlayerViewController()
         playerViewController.player = player
@@ -77,15 +77,4 @@ class VideoDetailViewController: UIViewController {
         else if sender.selectedSegmentIndex == 2 {
         }
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
