@@ -139,10 +139,10 @@
 
         var sessionStorage = window.sessionStorage;
 
-        sessionStorage.setItem('userInfo', {
+        /* sessionStorage.setItem('userInfo', {
             'COMP_CD': 
 
-        });
+        }); */
     }
     
     /*==================================================================

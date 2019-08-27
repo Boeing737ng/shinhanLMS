@@ -69,7 +69,69 @@ $(document).ready(function () {
         sorting: true,
         paging: false,
         data: [],
-        //data: clients,
+    
+
+        onItemUpdating: function(args) {
+            if(!confirm('수정하시겠습니까?')) {
+                args.cancel = true;
+            }
+        },
+
+        onItemUpdated: function(args) { //수정
+            var rowKey = args.item.rowKey;
+            var item = args.item;
+            delete item['rowKey']; 
+            
+            fnUpdateDatabase(rowKey, item, function() {
+                alert('수정되었습니다.');
+                fnRetrieve();
+            });
+        },
+
+        onItemDeleting: function(args) {
+            if(!confirm('삭제하시겠습니까?')) {
+                args.cancel = true;
+            }
+        },
+
+        onItemDeleted: function(args) {
+            var rowKey = args.item.rowKey;
+            
+            fnDeleteDatabase(rowKey, function() {
+                alert('삭제되었습니다.');
+                fnRetrieve();
+            });
+        },
+
+        rowClick: function(args) {
+            //showDetailsDialog("Edit", args.item);
+            var arr = $('#grid').jsGrid('option', 'data');
+
+            var $row = this.rowByItem(args.item),
+            selectedRow = $("#grid").find('table tr.highlight');
+
+            if (selectedRow.length) {
+                selectedRow.toggleClass('highlight');
+            };
+            
+            $row.toggleClass("highlight");
+            
+            /* if(this.editing) {
+                this.editItem($(args.event.target).closest("tr"));
+            } */
+        },
+
+        rowDoubleClick: function(args) {
+            var arr = $('#grid').jsGrid('option', 'data');
+            
+            fnGo('/view/updateNotice.html', {
+                'searchReleaseYn' : $('#searchReleaseYn').val(),
+                'searchCategory' : $('#searchCategory').val(),
+                'searhRelatedTag': $('#searhRelatedTag').val(),
+                'searchTitle': $('#searchTitle').val(),
+                'rowKey': arr[args.itemIndex]['rowKey']
+            });
+        },
 
         fields: [
             {
@@ -100,6 +162,23 @@ $(document).ready(function () {
         ]
     });
 
+    function fnGo(url, paramObj) {
+        var form = $('<form></form>');
+        $(form).attr('method', 'get');
+        $(form).attr('action', url);
+        
+        $.each(paramObj, function(key, value) {
+            var input = $('<input type="hidden"/>');
+            $(input).attr('name', key);
+            $(input).val(value);
+
+            $(form).append(input);
+        });
+
+        $('body').append(form);
+        $(form).submit();
+    }
+    
     //조회
     function fnRetrieve(callback) {
         var searchTitle = $('#title').val() || '';
