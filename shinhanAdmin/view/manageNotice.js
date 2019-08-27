@@ -74,6 +74,18 @@ $(document).ready(function () {
         
         $row.toggleClass("highlight");
     },
+   
+    rowDoubleClick: function(args) {
+        var arr = $('#grid').jsGrid('option', 'data');
+        
+        fnGo('/view/updateNotice.html', {
+            'searchReleaseYn' : $('#searchReleaseYn').val(),
+            'searchCategory' : $('#searchCategory').val(),
+            'searhRelatedTag': $('#searhRelatedTag').val(),
+            'searchTitle': $('#searchTitle').val(),
+            'rowKey': arr[args.itemIndex]['rowKey']
+        });
+    },
 
     //data: clients,
 
@@ -102,6 +114,7 @@ $(document).ready(function () {
         
     ]
 });
+
 
 //조회
 function fnRetrieve(callback) {
