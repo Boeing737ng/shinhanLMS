@@ -12,5 +12,6 @@ class VideoCell: UICollectionViewCell {
     
     @IBOutlet weak var textLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
+    @IBOutlet weak var thumbnail: UIImageView!
     
 }

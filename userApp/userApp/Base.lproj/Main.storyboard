@@ -97,6 +97,7 @@
                                                     <connections>
                                                         <outlet property="authorLabel" destination="3FS-2t-Q7F" id="gFy-9X-kio"/>
                                                         <outlet property="textLabel" destination="EYt-LS-Fpb" id="bdU-of-zfP"/>
+                                                        <outlet property="thumbnail" destination="HRy-Qs-49F" id="9Gr-tI-aap"/>
                                                     </connections>
                                                 </collectionViewCell>
                                             </cells>
