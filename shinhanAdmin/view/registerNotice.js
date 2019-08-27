@@ -15,6 +15,9 @@ $(document).ready(function () {
     /** start of components ***********************/
     $('#releaseYn').selectpicker();
     $('#date').datepicker();
+    $('#daterange').daterangepicker();
+
+
     //목록 버튼
     $('#btnList').on('click', function(e) {
         e.preventDefault();

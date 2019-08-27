@@ -294,7 +294,13 @@ firebase.auth().onAuthStateChanged(function(user) {
     } else {
       // No user is signed in.
       alert('Session is not found.');
-      window.location.href = '/login.html';
+
+      if(parent && parent!=this) { //자식창 인 경우
+        parent.location.href = '/login.html';
+      }else { //부모창 인 경우
+        window.location.href = '/login.html';
+      }
+      
     }
   
 });
