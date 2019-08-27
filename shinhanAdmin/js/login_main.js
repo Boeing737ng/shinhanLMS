@@ -21,25 +21,6 @@
     [ Validate ]*/
     var input = $('.validate-input .input100');
 
-    $('.validate-form').on('submit',function(){
-        /* var check = true;
-
-        for(var i=0; i<input.length; i++) {
-            if(validate(input[i]) == false){
-                showValidate(input[i]);
-                check=false;
-            }
-        }
-
-        if(check) {
-            var loginId = $('input[name=loginId]').val();
-            var password = $('input[name=pass]').val();
-            onSignIn(loginId, password);
-        }
-
-        return check; */
-    });
-
 
     $('#btnLogin').on('click', function(e) {
         var check = true;
@@ -66,9 +47,6 @@
     });
 
     function validate (input) {
-        /* if($(input).val().trim() == ''){
-            return false;
-        } */
 
         if($(input).attr('name') == 'empNo') {
             if(($(input).val() || '').trim() == '') {
@@ -80,17 +58,6 @@
                 return false;
             }
         }
-        
-        /* if($(input).attr('type') == 'email' || $(input).attr('name') == 'email') {
-            if($(input).val().trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
-                return false;
-            }
-        }
-        else {
-            if($(input).val().trim() == ''){
-                return false;
-            }
-        } */
     }
 
     function showValidate(input) {
@@ -111,15 +78,9 @@
         var password = password;
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then(function (success) {
-                //document.getElementById('auth-text').innerHTML = "Logout";
-                //$('#email-text').val("");
-                //$('#password-text').val("");
-                //this.displayMenu();
-                //this.addContentsData();
-                //this.runTimer(deadLine);
-                console.log(success);
-
-                window.location.href = '/index.html';
+                setSessionUserInfo(loginId, function() {
+                    window.location.href = '/index.html';
+                });
             })
             .catch(function (error) {
                 // Handle Errors here.
@@ -135,14 +96,18 @@
 
 
     //세션스토리지에 세션정보 저장
-    function setSessionUserInfo(userId) {
+    function setSessionUserInfo(userId, callback) {
 
-        var sessionStorage = window.sessionStorage;
+        firebase.database().ref('/user/' + userId).once('value')
+        .then(function (snapshot) {
+            var userObj = snapshot.val();
+            var sessionStorage = window.sessionStorage;
+            sessionStorage.setItem('userInfo', JSON.stringify(userObj));
 
-        /* sessionStorage.setItem('userInfo', {
-            'COMP_CD': 
-
-        }); */
+            if(callback != null && callback != undefined) {
+                callback();
+            }
+        });
     }
     
     /*==================================================================
