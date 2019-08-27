@@ -24,7 +24,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cS4-Oj-jlp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2002.8985507246377" y="1014.5089285714286"/>
+            <point key="canvasLocation" x="1084" y="1003"/>
         </scene>
         <!--Home Table-->
         <scene sceneID="Ubb-tV-q0j">
@@ -419,13 +419,10 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="WmR-5b-AWj"/>
-                    <connections>
-                        <segue destination="QOc-2w-dqb" kind="show" identifier="testSegue" id="vZu-HK-afd"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kBV-N1-FvZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="571.01449275362324" y="1026.5625"/>
+            <point key="canvasLocation" x="-348" y="1015"/>
         </scene>
         <!--Notification-->
         <scene sceneID="XnS-D6-9MZ">
@@ -958,7 +955,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qj4-XT-IEX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-764" y="1783"/>
+            <point key="canvasLocation" x="-770" y="1771"/>
         </scene>
         <!--recommended-->
         <scene sceneID="JX7-Fh-oXF">
@@ -1008,7 +1005,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nnZ-dw-KRH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="78" y="1783"/>
+            <point key="canvasLocation" x="72" y="1771"/>
         </scene>
         <!--videoDetails-->
         <scene sceneID="aOA-HB-Agp">
@@ -1058,7 +1055,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bxN-rC-PYn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1330" y="1093"/>
+            <point key="canvasLocation" x="-349" y="2476"/>
         </scene>
         <!--createStudy-->
         <scene sceneID="ENA-jJ-jfK">
@@ -1170,7 +1167,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cWp-uE-NE0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2097" y="1783"/>
+            <point key="canvasLocation" x="2088" y="1771"/>
         </scene>
         <!--createStudy2-->
         <scene sceneID="6D9-99-N7R">
@@ -1282,7 +1279,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u1J-L1-Amb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2097" y="2488"/>
+            <point key="canvasLocation" x="2088" y="2476"/>
         </scene>
         <!--studyBoard-->
         <scene sceneID="PxP-b8-Hg2">
@@ -1332,7 +1329,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aWf-U2-pbx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2926" y="1783"/>
+            <point key="canvasLocation" x="2917" y="1771"/>
         </scene>
         <!--Login-->
         <scene sceneID="GRW-mP-p4e">
@@ -1809,7 +1806,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qce-id-17K" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3421.739130434783" y="1014.5089285714286"/>
+            <point key="canvasLocation" x="2503" y="1003"/>
         </scene>
     </scenes>
     <resources>
