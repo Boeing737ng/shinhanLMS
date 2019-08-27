@@ -2,6 +2,9 @@
 $(document).ready(function () {
 
     window.FakeLoader.init( );
+    var userObj = JSON.parse(window.sessionStorage.getItem('userInfo'));
+    var compCd = userObj['compCd'];
+    var compNm = userObj['compNm'];
 
     /** start of grid ***********************/
     $("#grid").jsGrid({
@@ -152,7 +155,7 @@ $(document).ready(function () {
     //삭제
     function fnDeleteDatabase(rowKey, callback) {
 
-        parent.database.ref('/' + '신한은행' + '/categories/' + rowKey + '/').remove().then(function onSuccess(res) {
+        parent.database.ref('/' + compCd + '/categories/' + rowKey + '/').remove().then(function onSuccess(res) {
             if(callback != null && callback != undefined) {
                 callback();
             }
@@ -164,7 +167,7 @@ $(document).ready(function () {
 
     //신규
     function fnCreate(item, callback) {
-        parent.database.ref( '/' + '신한은행' + '/categories/').push({
+        parent.database.ref( '/' + compCd + '/categories/').push({
             'title': item['title']
         }).then(function onSuccess(res) {
             if(callback != null && callback != undefined) {
@@ -183,7 +186,7 @@ $(document).ready(function () {
         var parentNodeId = parentNode ? parentNode.id : 'root';
 
 
-        parent.database.ref( '/' + '신한은행' + '/categories/').push({
+        parent.database.ref( '/' + compCd + '/categories/').push({
             'title': nodeName,
             'parent': parentNode.id,
             'sortNum': sortNum
@@ -200,7 +203,7 @@ $(document).ready(function () {
 
 
     function fnRetrieve() {
-        var searchCompany = '신한은행';
+        var searchCompany = compCd;
         var searchCategory = $('#searchCategory').val() || '';
 
 
@@ -236,7 +239,7 @@ $(document).ready(function () {
 
     //상세조회
     function fnRetrieveDetail(item) {
-        var searchCompany = '신한은행';
+        var searchCompany = compCd;
 
         window.FakeLoader.showOverlay();
 
@@ -264,22 +267,6 @@ $(document).ready(function () {
         });
 
     }
-
-
-    function fnValidate() {
-        var errMsg = '';
-        var param = '';
-        var target;
-        
-        if(isEmpty($('#nodeName').val())) {
-
-        }else if(isEmpty($('#parentNode').attr('data-id'))) {
-
-        }else if(isEmpty($('#sortNum').val())) {
-
-        }
-    }
-
 
 
     resizeFrame();

@@ -2,9 +2,13 @@
 
 $(document).ready(function () {
 
+    var userObj = JSON.parse(window.sessionStorage.getItem('userInfo'));
+    var compCd = userObj['compCd'];
+
+    
     /** start of components ***********************/
-    
-    
+    window.FakeLoader.init( );
+
 
     //검색 버튼
     $('#btnSearch').on('click', function(e) {
@@ -154,7 +158,7 @@ $(document).ready(function () {
             } },
             { name: "title", title: '컨텐츠명', type: "text", width: 150, editing: false, align: "left" },
             { name: "author", title: '강사명', type: "text", width: 120, editing: false, align: "left" },
-            { name: "category", title: "카테고리", type: 'text', width: 200, editing: false, align: "left" },
+            { name: "categoryNm", title: "카테고리", type: 'text', width: 200, editing: false, align: "left" },
             { name: "tags", title: "관련태그", type: 'text', width: 200, editing: false, align: "left", cellRenderer: function(item, value){
                 var rslt = $("<td>").addClass("jsgrid-cell");
                 var div = $('<div></div>');
@@ -253,6 +257,7 @@ $(document).ready(function () {
     
     //조회
     function fnRetrieve(searchParam) {
+        
         var varsearchReleaseYn;
         var searchCat;
         var searchTag;
@@ -269,9 +274,11 @@ $(document).ready(function () {
             searchTag = $('#searhRelatedTag').val() || '';
             searchTitle = $('#searchTitle').val() || '';
         }
+
+        window.FakeLoader.showOverlay();
         
 
-        parent.database.ref('/videos/').once('value').then(function(snapshot) {
+        parent.database.ref('/' + compCd + '/videos/').once('value').then(function(snapshot) {
 
             var catArr = snapshot.val();
             var rsltArr = [];
@@ -281,7 +288,7 @@ $(document).ready(function () {
 
                 if( 
                     ((searchReleaseYn == '') || (searchReleaseYn == catObj['releaseYn'])) &&
-                    ((searchCat == '') || (searchCat == catObj['category'])) &&
+                    ((searchCat == '') || (searchCat == catObj['categoryId'])) &&
                     ((searchTag == '') || (trgtTagArr.indexOf(searchTag) > -1)) &&
                     ((searchTitle == '') || (catObj['title'].indexOf(searchTitle)) > -1)
                 ) {
@@ -291,6 +298,7 @@ $(document).ready(function () {
             });
 
             $("#grid").jsGrid("option", "data", rsltArr);
+            window.FakeLoader.hideOverlay();
         });
     }
 
@@ -333,7 +341,7 @@ $(document).ready(function () {
     //삭제
     function fnDeleteDatabase(rowKey, callback) {
 
-        parent.database.ref('videos/' + rowKey + '/').remove().then(function onSuccess(res) {
+        parent.database.ref('/' + compCd + '/videos/' + rowKey + '/').remove().then(function onSuccess(res) {
             if(callback != null && callback != undefined) {
                 callback();
             }
@@ -346,10 +354,11 @@ $(document).ready(function () {
     //수정
     function fnUpdateDatabase(rowKey, paramObj, callback) {
 
-        parent.database.ref('videos/' + rowKey + '/').update({
+        parent.database.ref('/' + compCd + '/videos/' + rowKey + '/').update({
             downloadURL: paramObj['downloadURL'],
             author: paramObj['author'],
-            category: paramObj['category'],
+            categoryId: paramObj['categoryId'],
+            categoryNm: paramObj['categoryNm'],
             tags: paramObj['tags'],
             description: paramObj['description'],
             date: paramObj['date'],
@@ -374,7 +383,7 @@ $(document).ready(function () {
 
         switch(option) {
             case 'tag':
-                parent.database.ref('/tags/').once('value')
+                parent.database.ref('/' + compCd + '/tags/').once('value')
                 .then(function (snapshot) {
                     var tagArr = snapshot.val();
                     var optionArr = [];
@@ -397,7 +406,26 @@ $(document).ready(function () {
 
 
             case 'category':
+                    parent.database.ref('/' + compCd + '/categories/').once('value')
+                    .then(function (snapshot) {
+                        var catArr = snapshot.val();
+                        var optionArr = [];
+                    
+                        console.log(catArr)
+                        $.each(catArr, function(idx, catObj) {
+                            var newOption = $('<option></option>');
+                            $(newOption).attr('value', idx);
+                            $(newOption).text(catArr[idx].title);
 
+                            if(idx == defaultValue) {
+                                $(newOption).attr('selected', 'selected');
+                            }
+
+                            $(''+selector).append($(newOption));
+                        });
+    
+                        $(''+selector).selectpicker();
+                    });    
                 break; 
         }
     }
@@ -424,7 +452,6 @@ $(document).ready(function () {
     function fnInit() {
 
         $('#searchReleaseYn').selectpicker();
-        $('#searchCategory').selectpicker();
 
         var searchParam = getParams();
         
@@ -432,12 +459,13 @@ $(document).ready(function () {
             $('#searchReleaseYn').val(searchParam['searchReleaseYn']);
             $('#searchReleaseYn').selectpicker('refresh');
             
-            $('#searchCategory').val(searchParam['searchCategory']);
-            $('#searchCategory').selectpicker('refresh');
+            //$('#searchCategory').val(searchParam['searchCategory']);
+            //$('#searchCategory').selectpicker('refresh');
             
             $('#searchTitle').val(searchParam['searchTitle']);
             
             fnGetCommonCmb('tag', '#searhRelatedTag', searchParam['searhRelatedTag']);
+            fnGetCommonCmb('category', '#searchCategory', searchParam['searchCategory']);
 
             fnRetrieve({
                 searchReleaseYn: searchParam['searchReleaseYn'],
@@ -447,6 +475,7 @@ $(document).ready(function () {
             });
         }else {
             fnGetCommonCmb('tag', '#searhRelatedTag');
+            fnGetCommonCmb('category', '#searchCategory');
             fnRetrieve();
         }
 

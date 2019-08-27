@@ -4,15 +4,15 @@ $(document).ready(function () {
 
     var submitVideoAttachFile; //영상 - 실제 저장 시 이용될 file input
     var submitThumbnailAttachFile; //썸네일 - 실제 저장 시 이용될 file input
+    var userObj = JSON.parse(window.sessionStorage.getItem('userInfo'));
+    var compCd = userObj['compCd'];
+    var compNm = userObj['compNm'];
 
     /** start of components ***********************/
     $('#releaseYn').selectpicker();
-    $('#category').selectpicker();
+    //$('#category').selectpicker();
 
-
-    /* $('#relatedTags').on('change', function(e) {
-        var items = $("input").tagsinput('items');
-    }); */
+    fnGetCommonCmb('category', '#category');
 
 
     $('#thumbnailImgPreview').on('click', function(e) {
@@ -40,10 +40,6 @@ $(document).ready(function () {
             
             var img = document.createElement('img');
             img.src = blobURL;
-
-            console.log(blobURL);
-
-            //var canvas = capture('image', img);
 
             var canvas = document.createElement('canvas');
             canvas.width  = 300;
@@ -88,17 +84,6 @@ $(document).ready(function () {
         }
 
         submitVideoAttachFile = $('#videoAttachFile').clone();
-        
-        /* var file = $('#videoAttachFile').prop("files")[0];
-        var source = document.createElement('source')
-        var blobURL = window.URL.createObjectURL(file);
-
-        var source = document.createElement('source');
-        source.type = 'video/' + ext;
-        source.src = blobURL;
-
-        video.innerHTML = '';
-        video.appendChild(source); */
 
         var file = document.getElementById("videoAttachFile").files[0]
         var type = file.type;
@@ -286,7 +271,6 @@ $(document).ready(function () {
     function fnUploadVideo(rowId, callback) {
 
         var contentFile = $(submitVideoAttachFile).prop('files')[0];
-        
         var uploadTask = firebase.storage().ref('videos/' + rowId).put(contentFile, {contentType: null});
 
         uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
@@ -407,7 +391,7 @@ $(document).ready(function () {
         (function() {
             var thumbnailPath = '';
             var videoPath = '';
-            var rowId = fnGetPrimaryKey($('#title').val()); //id 채번
+            var rowId = fnGetPrimaryKey(); //id 채번
             
 
             fnUploadVideo(rowId, function(downloadURL) {
@@ -419,6 +403,7 @@ $(document).ready(function () {
 
                     var contentAuthor = $('#author').val();
                     var contentCategory = $('#category').val();
+                    var categoryNm = $('#category > option:selected').text();
                     
                     var contentTagArr = $('#relatedTags').tagsinput('items');
                     for(var i=0; i<contentTagArr.length; i++) {
@@ -427,14 +412,14 @@ $(document).ready(function () {
                     
                     var contentTag = contentTagArr.join(' ');
                     var contentDescription = $('#description').val();
-                    var contentAddedTime = moment().unix();
                     var title = $('#title').val();
                     var releaseYn = $('#releaseYn').val();
 
                     setVideoDatabase(rowId, {
                         downloadURL: videoPath,
                         author: contentAuthor,
-                        category: contentCategory,
+                        categoryId: contentCategory,
+                        categoryNm: categoryNm,
                         tags: contentTag,
                         thumbnail: thumbnailPath,
                         description: contentDescription,
@@ -447,35 +432,22 @@ $(document).ready(function () {
 
         })();
     }
-    
-
-    function setTagDatabase(contentTagArr, callback) {
-        for(var i=0; i<contentTagArr.length; i++) {
-            parent.database.ref('tag/' + contentTagArr[i] + '/').update({
-                'tag': contentTagArr[i]
-            }).then(function onSuccess(res) {
-                if(callback != null && callback != undefined) {
-                    callback();
-                }
-            }).catch(function onError(err) {
-                console.log("ERROR!!!! " + err);
-            });
-        }
-    }
 
 
     function setVideoDatabase(rowId, paramObj, callback) {
 
-        parent.database.ref('videos/' + rowId + '/').set({
+        parent.database.ref('/' + compCd + '/videos/' + rowId + '/').set({
             downloadURL: paramObj['downloadURL'],
             author: paramObj['author'],
-            category: paramObj['category'],
+            categoryId: paramObj['categoryId'],
+            categoryNm: paramObj['categoryNm'],
             tags: paramObj['tags'],
             description: paramObj['description'],
             date: paramObj['date'],
             thumbnail: paramObj['thumbnail'],
             title: paramObj['title'],
-            releaseYn: paramObj['releaseYn']
+            releaseYn: paramObj['releaseYn'],
+            view: 0
         }).then(function onSuccess(res) {
             if(callback != null && callback != undefined) {
                 callback();
@@ -492,8 +464,8 @@ $(document).ready(function () {
 
 
     //id 채번
-    function fnGetPrimaryKey(title) {
-        return replaceBlankSpace(title) + '_' + moment().unix();
+    function fnGetPrimaryKey() {
+        return 'video_' + moment().unix();
     }
 
 
@@ -529,6 +501,39 @@ $(document).ready(function () {
         return new Blob([uInt8Array], {
           type: contentType
         });
+    }
+
+
+    //combo 구성
+    function fnGetCommonCmb(option, selector, defaultValue) {
+
+        $('' + selector).html('');
+        $('' + selector).html('<option value="">전체</option>');
+
+        switch(option) {
+            case 'category':
+                    parent.database.ref('/' + compCd + '/categories/').once('value')
+                    .then(function (snapshot) {
+                        var catArr = snapshot.val();
+                        var optionArr = [];
+                    
+                        console.log(catArr)
+                        $.each(catArr, function(idx, catObj) {
+                            var newOption = $('<option></option>');
+                            $(newOption).attr('value', idx);
+                            $(newOption).text(catArr[idx].title);
+
+                            if(idx == defaultValue) {
+                                $(newOption).attr('selected', 'selected');
+                            }
+
+                            $(''+selector).append($(newOption));
+                        });
+    
+                        $(''+selector).selectpicker();
+                    });    
+                break; 
+        }
     }
     /** end of functions *************************/
 

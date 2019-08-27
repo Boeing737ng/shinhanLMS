@@ -2,6 +2,10 @@
 
 $(document).ready(function () {
 
+    var userInfo = JSON.parse(window.sessionStorage.getItem('userInfo'));
+    var compCd = userInfo['compCd'];
+    
+
     /** start of components ***********************/
     window.FakeLoader.init( );
 
