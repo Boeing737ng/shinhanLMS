@@ -5,7 +5,7 @@ $(document).ready(function () {
     //행추가 버튼 -> 페이지 이동
     $('#btnAdd').on('click', function(e) {
         e.preventDefault();
-        window.location.href = "/view/registerNotice.html";
+        window.location.href = "/view/manageNotice.html";
         //location.replace("http://localhost/view/addNotice.html");
     }); 
 
@@ -14,6 +14,7 @@ $(document).ready(function () {
     $('#releaseYn').selectpicker();
     $('#regDate').text(moment().format('YYYY-MM-DD'));
     var userInfo = JSON.parse(window.sessionStorage.getItem('userInfo'));
+    
     $('#writor').text(userInfo['empNm']);
 
     

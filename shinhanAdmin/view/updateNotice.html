@@ -37,6 +37,7 @@ author : juyeun
     <!-- datepicker CSS -->
     <link href="/vendor/jquery-ui-1.12.1.custom/jquery-ui.structure.css" rel="stylesheet" type="text/css">
     <link href="/vendor/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet" type="text/css">
+    <link href="/vendor/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css">
 
     <!-- dropzone CSS -->
     <link rel="stylesheet" href="/vendor/dropzone/dist/dropzone.css">
@@ -57,7 +58,7 @@ author : juyeun
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-storage.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-database.js"></script>
-    <script src="/js/firebaseConfig.js"></script>
+    
     <!-- /* bootstrap select */ -->
     <script src="/vendor/bootstrap-select/dist/js/bootstrap-select.js"></script>
     <!-- datepicker -->
@@ -72,8 +73,10 @@ author : juyeun
     <script src="/vendor/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.js"></script>
 
     <script src="/vendor/moment/moment.min.js"></script>
+    <script src="/vendor/daterangepicker/daterangepicker.js"></script>
 
-    <script src="/view/registerNotice.js"></script>
+
+    <script src="/view/updateNotice.js"></script>
     <script src="/js/main.js"></script>
 
 
@@ -121,14 +124,14 @@ author : juyeun
                         <tbody>
                            
                           <tr>
-                            <th class="required"><span>작성자</span></th>
+                            <th><span>작성자</span></th>
                             <td>
-                                <input type="text" id="writor" class="form-control" style="width:100%" />
+                                <span id="writor"></span>
                             </td>
-                            <th class="required"><span>등록일자</span></th>
+                            
+                            <th><span>등록일자</span></th>
                             <td>
-                              <input type="text" id="date" class="form-control" style="width:100%" />
-                      
+                                <span id="regDate"></span>
                             </td>
                         </tr>
 
@@ -142,8 +145,13 @@ author : juyeun
                             <tr>
                                 <th class="required"><span>게시기간</span></th>
                                 <td>
-                                    <input type="text" id="dateRange" class="form-control" style="width:100%" />
+                                        <div id="daterange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                                                <i class="fa fa-calendar"></i>&nbsp;
+                                                <span></span> <i class="fa fa-caret-down"></i>
+                                            </div>
+                                            
 
+      
                                 </td>
 
 
