@@ -1900,10 +1900,10 @@
             </objects>
             <point key="canvasLocation" x="371" y="2378"/>
         </scene>
-        <!--Tab One View Controller-->
+        <!--Video Info View Controller-->
         <scene sceneID="b4q-JG-xfo">
             <objects>
-                <viewController storyboardIdentifier="TableOne" id="Vbc-BR-5EN" customClass="TabOneViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TableOne" id="Vbc-BR-5EN" customClass="VideoInfoViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5YE-yc-yK7">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1959,10 +1959,10 @@
             </objects>
             <point key="canvasLocation" x="-274" y="2915"/>
         </scene>
-        <!--Table View Controller Two-->
+        <!--Video Review Table View Controller-->
         <scene sceneID="6KD-w1-dH6">
             <objects>
-                <tableViewController storyboardIdentifier="TableTwo" id="yZk-va-p1D" customClass="TableViewControllerTwo" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="TableTwo" id="yZk-va-p1D" customClass="VideoReviewTableViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="EHg-Hw-VMI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2033,10 +2033,10 @@
             </objects>
             <point key="canvasLocation" x="368" y="2915"/>
         </scene>
-        <!--Table View Controller Three-->
+        <!--Video QnA Table View Controller-->
         <scene sceneID="N8h-2Z-9uk">
             <objects>
-                <tableViewController storyboardIdentifier="TableThree" id="duf-Na-onh" customClass="TableViewControllerThree" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="TableThree" id="duf-Na-onh" customClass="VideoQnATableViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="vAd-wR-lGB">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
