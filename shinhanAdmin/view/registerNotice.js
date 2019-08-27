@@ -99,8 +99,8 @@ $(document).ready(function () {
 
         var contentWritor = $('#writor').text();
         var contentTitle=$('#title').val();
-        var dateRangeFrom = $('#daterange').data('daterangepicker').getStartDate();
-        var dateRangeTo = $('#daterange').data('daterangepicker').getEndDate();
+        var dateRangeFrom = $('#daterange').data('daterangepicker').startDate.format('YYYYMMDD');
+        var dateRangeTo = $('#daterange').data('daterangepicker').endDate.format('YYYYMMDD');
         var releaseYn = $('#releaseYn').val();
         var contentDescription = $('#description').val();
                    
@@ -117,21 +117,7 @@ $(document).ready(function () {
 
 
     function setNotieDatabase(paramObj, callback) {
-        
-        console.log({
-        
-            writor: paramObj['writor'],
-            date: paramObj['date'],
-            title: paramObj['title'],
-            postingPeriodFrom: paramObj['postingPeriodFrom'],
-            postingPeriodTo: paramObj['postingPeriodTo'],
-            releaseYn: paramObj['releaseYn'],
-            description: paramObj['description']
-           
-        });
 
-        return;
-        
         //var row
         var rowKey = 'notie_' + moment().unix(); 
         firebase.database().ref('/'+ '신한은행'+'/notie/' + rowKey).set({
