@@ -450,7 +450,14 @@
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </textAttributes>
                                 <items>
-                                    <navigationItem title="알림" id="FDr-wN-GYC"/>
+                                    <navigationItem title="알림" id="FDr-wN-GYC">
+                                        <barButtonItem key="leftBarButtonItem" title="back" id="72p-Y4-DdR">
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <connections>
+                                                <action selector="onGoBack:" destination="TDz-ij-i0p" id="0Hs-hI-FkA"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
                                 </items>
                             </navigationBar>
                         </subviews>
@@ -487,7 +494,14 @@
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </textAttributes>
                                         <items>
-                                            <navigationItem title="마이페이지" id="etu-Ha-lVK"/>
+                                            <navigationItem title="마이페이지" id="etu-Ha-lVK">
+                                                <barButtonItem key="leftBarButtonItem" title="back" id="eAw-ra-gaw">
+                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <connections>
+                                                        <action selector="onGoBack:" destination="007-dA-fRr" id="v5M-XX-K4C"/>
+                                                    </connections>
+                                                </barButtonItem>
+                                            </navigationItem>
                                         </items>
                                     </navigationBar>
                                 </subviews>
