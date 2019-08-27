@@ -123,14 +123,13 @@ author : juyeun
                         <tbody>
                            
                           <tr>
-                            <th class="required"><span>작성자</span></th>
+                            <th><span>작성자</span></th>
                             <td>
-                                <input type="text" id="writor" class="form-control" style="width:100%" />
+                                <span id="writor"></span>
                             </td>
-                            <th class="required"><span>등록일자</span></th>
+                            <th><span>등록일자</span></th>
                             <td>
-                              <input type="text" id="date" class="form-control" style="width:100%" />
-                      
+                                <span id="regDate"></span>
                             </td>
                         </tr>
 
@@ -144,7 +143,11 @@ author : juyeun
                             <tr>
                                 <th class="required"><span>게시기간</span></th>
                                 <td>
-                                    <input type="text" id="daterange" class="form-control" style="width:100%" />
+                                        <div id="daterange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                                                <i class="fa fa-calendar"></i>&nbsp;
+                                                <span></span> <i class="fa fa-caret-down"></i>
+                                            </div>
+                                            
 
       
                                 </td>
@@ -163,7 +166,7 @@ author : juyeun
                             <tr>
                                 <th class="required"><span>내용</span></th>
                                 <td colspan="3">
-                                    <textarea id="description" class="form-control" style="width:100%"></textarea>
+                                    <textarea id="description" class="form-control" style="width:100%; height: 200px;"></textarea>
                                 </td>
                             </tr>
 

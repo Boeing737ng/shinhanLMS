@@ -132,6 +132,18 @@
                 window.location.href = '/login.html';
             });
     }
+
+
+    //세션스토리지에 세션정보 저장
+    function setSessionUserInfo(userId) {
+
+        var sessionStorage = window.sessionStorage;
+
+        sessionStorage.setItem('userInfo', {
+            'COMP_CD': 
+
+        });
+    }
     
     /*==================================================================
     [ Show pass ]*/
