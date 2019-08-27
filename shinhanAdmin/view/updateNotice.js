@@ -59,10 +59,11 @@ $(document).ready(function () {
             var obj = snapshot.val();
             
             $('#title').val(obj['title']);
-            $('#writor').val(obj['writor']);
+            $('#writor').text(obj['writor']);
             $('#description').val(obj['description']);
             $('#releaseYn').val(obj['releaseYn']);
             $('#releaseYn').selectpicker('refresh');
+            //$('#daterange').
 
         });
     }
@@ -188,8 +189,7 @@ $(document).ready(function () {
     function setNotieDatabase(paramObj, callback) {
 
         //var row
-        var rowKey = 'notie_' + moment().unix(); 
-        parent.database.ref('/'+ '신한은행'+'/notie/' + rowKey).set({
+        parent.database.ref('/'+ '신한은행'+'/notie/' + ROW_KEY).set({
         
             writor: paramObj['writor'],
             date: paramObj['date'],
