@@ -7,23 +7,26 @@
 //
 
 import UIKit
+import XLPagerTabStrip
 
-class HomeTable: UITableView, UITableViewDelegate, UITableViewDataSource  {
+class HomeTable: UITableViewController  {
     
-    override func awakeFromNib() {
-        self.delegate = self
-        self.dataSource = self
+    func viewDidload() {
+        super.viewDidLoad()
+        print("yes")
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = indexPath.row
         var cell:UITableViewCell
         if row == 0 {
@@ -36,4 +39,9 @@ class HomeTable: UITableView, UITableViewDelegate, UITableViewDataSource  {
         return cell
     }
     
+}
+extension HomeTable : IndicatorInfoProvider{
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo{
+        return IndicatorInfo(title: "Home")
+    }
 }

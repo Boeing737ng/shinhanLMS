@@ -57,6 +57,12 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
         return playingVideoIdArray.count
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let videoId = playingVideoIdArray[indexPath.row]
+        selectedVideoId = videoId
+        TabViewController().goToDetailPage()
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "VideoCell1") as! VideoCell1
         

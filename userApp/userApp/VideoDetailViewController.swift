@@ -14,11 +14,13 @@ import UIKit
 import Firebase
 import AVKit
 
+var selectedVideoId: String = ""
+
 class VideoDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        print(selectedVideoId)
         // Do any additional setup after loading the view.
     }
     @IBAction func onGoBack(_ sender: UIBarButtonItem) {
