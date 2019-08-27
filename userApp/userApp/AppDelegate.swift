@@ -13,13 +13,11 @@ import Firebase
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var urlDict = [String: String]()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         UserDefaults.standard.set(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
         FirebaseApp.configure()
-        getThumbnailURL()
         return true
     }
 
@@ -43,35 +41,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    }
-    
-    func getThumbnailURL() {
-        
-        var ref: DatabaseReference!
-        ref = Database.database().reference()
-        ref.child("thumbnailUrl").observeSingleEvent(of: .value, with: { (snapshot) in
-            // Get user value
-            let value = snapshot.value as? NSDictionary
-            for video in value! {
-                //let videoDict = video.value as! Dictionary<String, Any>;()
-                let title = video.key as! String
-                let url = video.value as! String
-                self.urlDict[title] = url
-            }
-            self.setThumbnailCache()
-        }) { (error) in
-            print(error.localizedDescription)
-        }
-    }
-    
-    func setThumbnailCache() {
-        for (id, url) in urlDict {
-            let imageURL = URL(string: url)
-            URLSession.shared.dataTask(with: imageURL!) { data, response, error in
-                guard let data = data else { return }
-                let image = UIImage(data: data)!
-                CachedImageView().setImageCache(item: image, urlKey: id)
-                }.resume()
-        }
     }
 }
