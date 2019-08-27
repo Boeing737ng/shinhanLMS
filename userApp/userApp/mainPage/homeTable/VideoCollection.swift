@@ -26,6 +26,12 @@ class VideoCollection: UICollectionView, UICollectionViewDelegate, UICollectionV
         return 5
     }
     
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        let videoId = playingVideoIdArray[indexPath.row]
+//        selectedVideoId = videoId
+//        TabViewController().goToDetailPage()
+//    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoCell", for: indexPath) as! VideoCell
         
