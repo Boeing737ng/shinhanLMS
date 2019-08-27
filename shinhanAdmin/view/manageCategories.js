@@ -152,7 +152,7 @@ $(document).ready(function () {
     //삭제
     function fnDeleteDatabase(rowKey, callback) {
 
-        firebase.database().ref('/' + '신한은행' + '/categories/' + rowKey + '/').remove().then(function onSuccess(res) {
+        parent.database.ref('/' + '신한은행' + '/categories/' + rowKey + '/').remove().then(function onSuccess(res) {
             if(callback != null && callback != undefined) {
                 callback();
             }
@@ -164,7 +164,7 @@ $(document).ready(function () {
 
     //신규
     function fnCreate(item, callback) {
-        firebase.database().ref( '/' + '신한은행' + '/categories/').push({
+        parent.database.ref( '/' + '신한은행' + '/categories/').push({
             'title': item['title']
         }).then(function onSuccess(res) {
             if(callback != null && callback != undefined) {
@@ -183,7 +183,7 @@ $(document).ready(function () {
         var parentNodeId = parentNode ? parentNode.id : 'root';
 
 
-        firebase.database().ref( '/' + '신한은행' + '/categories/').push({
+        parent.database.ref( '/' + '신한은행' + '/categories/').push({
             'title': nodeName,
             'parent': parentNode.id,
             'sortNum': sortNum
@@ -206,7 +206,7 @@ $(document).ready(function () {
 
         window.FakeLoader.showOverlay();
 
-        firebase.database().ref('/'+ searchCompany+'/categories').once('value').then(function(snapshot) {
+        parent.database.ref('/'+ searchCompany+'/categories').once('value').then(function(snapshot) {
     
             var catArr = snapshot.val();
             var rsltArr = [];
@@ -240,7 +240,7 @@ $(document).ready(function () {
 
         window.FakeLoader.showOverlay();
 
-        firebase.database().ref('/'+ searchCompany+'/categories/'+ item['rowKey'] + '/videos').once('value').then(function(snapshot) {
+        parent.database.ref('/'+ searchCompany+'/categories/'+ item['rowKey'] + '/videos').once('value').then(function(snapshot) {
     
             var catArr = snapshot.val();
             var rsltArr = [];

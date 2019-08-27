@@ -120,7 +120,7 @@ $(document).ready(function () {
 
         //var row
         var rowKey = 'notie_' + moment().unix(); 
-        firebase.database().ref('/'+ '신한은행'+'/notie/' + rowKey).set({
+        parent.database.ref('/'+ '신한은행'+'/notie/' + rowKey).set({
         
             writor: paramObj['writor'],
             date: paramObj['date'],

@@ -37,7 +37,7 @@ $(document).ready(function () {
     /** start of functions ***********************/
     function fnRetrieve() {
         
-        firebase.database().ref('/videos/' + ROW_KEY).once('value').then(function(snapshot) {
+        parent.database.ref('/videos/' + ROW_KEY).once('value').then(function(snapshot) {
 
             var obj = snapshot.val();
             
@@ -203,7 +203,7 @@ $(document).ready(function () {
         var releaseYn = $('#releaseYn').val();
 
 
-        firebase.database().ref('videos/' + ROW_KEY + '/').update({
+        parent.database.ref('videos/' + ROW_KEY + '/').update({
             downloadURL: downloadURL,
             author: contentAuthor,
             category: contentCategory,
@@ -225,7 +225,7 @@ $(document).ready(function () {
 
     function setTagDatabase(contentTagArr, callback) {
         for(var i=0; i<contentTagArr.length; i++) {
-            firebase.database().ref('tag/' + contentTagArr[i] + '/').update({
+            parent.database.ref('tag/' + contentTagArr[i] + '/').update({
                 'tag': contentTagArr[i]
             }).then(function onSuccess(res) {
                 if(callback != null && callback != undefined) {
@@ -240,7 +240,7 @@ $(document).ready(function () {
 
     function setVideoDatabase(rowId, paramObj, callback) {
 
-        firebase.database().ref('videos/' + rowId + '/').set({
+        parent.database.ref('videos/' + rowId + '/').set({
             downloadURL: paramObj['downloadURL'],
             author: paramObj['author'],
             category: paramObj['category'],

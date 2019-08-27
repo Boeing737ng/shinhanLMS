@@ -104,7 +104,7 @@ function fnRetrieve() {
 
     searchCompany = searchCompany.toLowerCase();
 
-    firebase.database().ref('/'+ searchCompany+'/study').once('value').then(function(snapshot)
+    parent.database.ref('/'+ searchCompany+'/study').once('value').then(function(snapshot)
     {
 
         var catArr = snapshot.val();

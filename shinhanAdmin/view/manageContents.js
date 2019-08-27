@@ -271,7 +271,7 @@ $(document).ready(function () {
         }
         
 
-        firebase.database().ref('/videos/').once('value').then(function(snapshot) {
+        parent.database.ref('/videos/').once('value').then(function(snapshot) {
 
             var catArr = snapshot.val();
             var rsltArr = [];
@@ -333,7 +333,7 @@ $(document).ready(function () {
     //삭제
     function fnDeleteDatabase(rowKey, callback) {
 
-        firebase.database().ref('videos/' + rowKey + '/').remove().then(function onSuccess(res) {
+        parent.database.ref('videos/' + rowKey + '/').remove().then(function onSuccess(res) {
             if(callback != null && callback != undefined) {
                 callback();
             }
@@ -346,7 +346,7 @@ $(document).ready(function () {
     //수정
     function fnUpdateDatabase(rowKey, paramObj, callback) {
 
-        firebase.database().ref('videos/' + rowKey + '/').update({
+        parent.database.ref('videos/' + rowKey + '/').update({
             downloadURL: paramObj['downloadURL'],
             author: paramObj['author'],
             category: paramObj['category'],
@@ -374,7 +374,7 @@ $(document).ready(function () {
 
         switch(option) {
             case 'tag':
-                firebase.database().ref('/tags/').once('value')
+                parent.database.ref('/tags/').once('value')
                 .then(function (snapshot) {
                     var tagArr = snapshot.val();
                     var optionArr = [];

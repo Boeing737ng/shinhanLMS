@@ -156,7 +156,7 @@ $(document).ready(function () {
         var parentNodeId = parentNode ? parentNode.id : 'root';
 
 
-        firebase.database().ref( '/' + '신한은행' + '/categories/').push({
+        parent.database.ref( '/' + '신한은행' + '/categories/').push({
             'title': nodeName,
             'parent': parentNode.id,
             'sortNum': sortNum
@@ -175,7 +175,7 @@ $(document).ready(function () {
     function fnRetrieve() {
         var searchCompany = '신한은행';
 
-        firebase.database().ref('/'+ searchCompany+'/categories').once('value').then(function(snapshot) {
+        parent.database.ref('/'+ searchCompany+'/categories').once('value').then(function(snapshot) {
     
             var catArr = snapshot.val();
             var rsltArr = [];

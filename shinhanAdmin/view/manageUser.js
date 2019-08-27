@@ -75,7 +75,7 @@ function fnRetrieve(callback) {
 
     
 
-    firebase.database().ref('/'+ searchCompany+'/user').once('value').then(function(snapshot)
+    parent.database.ref('/'+ searchCompany+'/user').once('value').then(function(snapshot)
     {
 
         var catArr = snapshot.val();

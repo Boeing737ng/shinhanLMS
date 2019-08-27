@@ -197,13 +197,12 @@ $(document).ready(function () {
     //조회
     function fnRetrieve(callback) {
         var searchTitle = $('#title').val() || '';
-        var searchWritor = $('#writor').val() || '';
         var searchDate = $('#date').val() || '';
 
         window.FakeLoader.showOverlay();
 
 
-        firebase.database().ref('/' + '신한은행' + '/notie').once('value').then(function (snapshot) {   //log.console(searchㅅTitle)
+        parent.database.ref('/' + '신한은행' + '/notie').once('value').then(function (snapshot) {   //log.console(searchㅅTitle)
 
             var catArr = snapshot.val();
             var rsltArr = [];
@@ -269,7 +268,7 @@ $(document).ready(function () {
     //삭제
     function fnDeleteDatabase(rowKey, callback) {
 
-        firebase.database().ref('/' + '신한은행' + '/notie/' + rowKey + '/').remove().then(function onSuccess(res) {
+        parent.database.ref('/' + '신한은행' + '/notie/' + rowKey + '/').remove().then(function onSuccess(res) {
             if(callback != null && callback != undefined) {
                 callback();
             }
