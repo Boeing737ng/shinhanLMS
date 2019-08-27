@@ -2,19 +2,30 @@
 
 $(document).ready(function () {
 
- //행추가 버튼 -> 페이지 이동
- $('#btnAdd').on('click', function(e) {
-    e.preventDefault();
-    window.location.href = "/view/registerNotice.html";
-    //location.replace("http://localhost/view/addNotice.html");
-
-}); 
-
+    //행추가 버튼 -> 페이지 이동
+    $('#btnAdd').on('click', function(e) {
+        e.preventDefault();
+        window.location.href = "/view/registerNotice.html";
+        //location.replace("http://localhost/view/addNotice.html");
+    }); 
 
 
     /** start of components ***********************/
     $('#releaseYn').selectpicker();
-    $('#date').datepicker();
+    $('#regDate').text(moment().format('YYYY-MM-DD'));
+    //$('#date').datepicker();
+    
+    $('#daterange').daterangepicker({
+        opens: 'right',
+        minDate: moment(),
+        locale: {
+            format: 'YYYY-MM-DD'
+        }
+    }, function(start, end) {
+        $('#daterange span').html(start.format('YYYY-MM-DD') + ' ~ ' + end.format('YYYY-MM-DD'));
+    });
+
+
     //목록 버튼
     $('#btnList').on('click', function(e) {
         e.preventDefault();
@@ -31,6 +42,7 @@ $(document).ready(function () {
     function fnGoList() {
         var url = '/view/manageNotice.html';
     }
+
 
     //저장 버튼
     $('#btnSave').on('click', function(e) {
@@ -49,8 +61,6 @@ $(document).ready(function () {
             });
         }
     });
-
-    
     /** end of components *************************/
     rowDoubleClick: function(args) {
         var arr = $('#grid').jsGrid('option', 'data');
@@ -150,15 +160,7 @@ $(document).ready(function () {
         var param = '';
         var target;
 
-        if(isEmpty($('#writor').val())) {
-            param = '작성자';
-            target = $('#author');
-        }
-        else if(isEmpty($('#date').val())) {
-            param = '등록일자';
-            target = $('#date');  
-        }
-        else if(isEmpty($('#title').val())) {
+        if(isEmpty($('#title').val())) {
             param = ' 제목';
             target = $('#title');
         }
@@ -187,25 +189,25 @@ $(document).ready(function () {
     //저장
     function fnSave(callback) {
 
-                    var contentWritor = $('#writor').val();
-                    var contentDate = $('#date').val();
-                    var contentTitle=$('#title').val();
-                    var contentDaterange=$('#daterange').val();
-                    var releaseYn = $('#releaseYn').val();
-                    var contentDescription = $('#description').val();
+        var contentWritor = $('#writor').text();
+        var contentTitle=$('#title').val();
+        var dateRangeFrom = $('#daterange').data('daterangepicker').startDate;
+        var dateRangeTo = $('#daterange').data('daterangepicker').endDate;
+        var releaseYn = $('#releaseYn').val();
+        var contentDescription = $('#description').val();
                    
-            
-                     setNotieDatabase({
-                        writor: contentWritor,
-                        description: contentDescription,
-                        date: moment().format('YYYYMMDD'),
-                        title: contentTitle,
-                        releaseYn: releaseYn,
-                        daterange: contentDaterange
-                     }, callback);
-               
-      
+        setNotieDatabase({
+            writor: contentWritor,
+            description: contentDescription,
+            date: moment().format('YYYYMMDD'),
+            title: contentTitle,
+            releaseYn: releaseYn,
+            postingPeriodFrom: dateRangeFrom,
+            postingPeriodTo: dateRangeTo
+        }, callback);
     }
+
+
     function setNotieDatabase(paramObj, callback) {
         //var row
         var rowKey = 'notie_' + moment().unix(); 
@@ -214,10 +216,10 @@ $(document).ready(function () {
             writor: paramObj['writor'],
             date: paramObj['date'],
             title: paramObj['title'],
-            daterange: paramObj['daterange'],
+            postingPeriodFrom: dateRangeFrom,
+            postingPeriodTo: dateRangeTo,
             releaseYn: paramObj['releaseYn'],
             description: paramObj['description']
-            
            
         }).then(function onSuccess(res) {
             if(callback != null && callback != undefined) {

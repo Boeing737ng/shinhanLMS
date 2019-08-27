@@ -260,24 +260,15 @@ function fnLoadMenu() {
 
 //메뉴에 해당하는 페이지로 이동
 function fnLoadPage(title, url) {
-    
-    /* $(document.getElementById('contentDiv').contentWindow).on('windowLoad', function() {
-
-        var the_height= document.body.scrollHeight;
-        alert(the_height);
-
-        $(window.parent.document.getElementById('contentDiv')).css('height', the_height);
-        $(window.parent.document.getElementById('contentDiv')).css('overflow', 'hidden');
-    }); */
-
     $('#contentDiv').attr('src', url);
-
 }
 
 
 //iframe height resize
 function resizeFrame() {
-    var the_height= document.body.scrollHeight;
+    var scrollHeight = document.body.scrollHeight;
+    var the_height= (scrollHeight < 600) ? 600 : scrollHeight;
+    
     $(window.parent.document.getElementById('contentDiv')).css('height', the_height);
     $(window.parent.document.getElementById('contentDiv')).css('overflow', 'hidden');
 }
@@ -294,7 +285,13 @@ firebase.auth().onAuthStateChanged(function(user) {
     } else {
       // No user is signed in.
       alert('Session is not found.');
-      window.location.href = '/login.html';
+
+      if(parent && parent!=this) { //자식창 인 경우
+        parent.location.href = '/login.html';
+      }else { //부모창 인 경우
+        window.location.href = '/login.html';
+      }
+      
     }
   
 });

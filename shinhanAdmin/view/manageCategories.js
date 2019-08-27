@@ -149,9 +149,16 @@ $(document).ready(function () {
     }
 
 
-    function getCheckedRows() {
-        var cnt = $('#grid').find('input[type=checkbox].selectionCheckbox').length;
-        return cnt;
+    //삭제
+    function fnDeleteDatabase(rowKey, callback) {
+
+        firebase.database().ref('/' + '신한은행' + '/categories/' + rowKey + '/').remove().then(function onSuccess(res) {
+            if(callback != null && callback != undefined) {
+                callback();
+            }
+        }).catch(function onError(err) {
+            console.log("ERROR!!!! " + err);
+        });
     }
 
 
