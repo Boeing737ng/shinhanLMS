@@ -10,7 +10,9 @@ import UIKit
 
 class TableViewCellTwo: UITableViewCell {
 
+    @IBOutlet weak var lblWriter: UILabel!
     @IBOutlet weak var lblcontent: UILabel!
+    @IBOutlet weak var lblDate: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
