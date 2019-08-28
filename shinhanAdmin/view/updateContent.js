@@ -5,9 +5,16 @@ $(document).ready(function () {
     const ROW_KEY = getParams().rowKey;
     var userInfo = JSON.parse(window.sessionStorage.getItem('userInfo'));
     var compCd = userInfo['compCd'];
+    const MAX_TAGS_CNT = 5;
+    
 
     /** start of components ***********************/
-    
+    window.FakeLoader.init();
+
+
+    $('#relatedTags').tagsinput({
+        maxTags: MAX_TAGS_CNT
+    });
 
 
     //저장 버튼
@@ -37,6 +44,7 @@ $(document).ready(function () {
 
     /** start of functions ***********************/
     function fnRetrieve() {
+        window.FakeLoader.showOverlay();
         
         parent.database.ref('/' + compCd + '/videos/' + ROW_KEY).once('value').then(function(snapshot) {
 
@@ -60,8 +68,11 @@ $(document).ready(function () {
             $('#releaseYn').val(obj['releaseYn']);
             $('#releaseYn').selectpicker('refresh');
 
+            window.FakeLoader.hideOverlay();
+
             fnLoadVideo(obj['downloadURL']);
             drawCanvas(obj['thumbnail']);
+           
             
         });
     }
@@ -140,7 +151,7 @@ $(document).ready(function () {
             var ctx = document.getElementById('canvas').getContext("2d");
 
             //canvas.drawImage() 함수를 사용하여 이미지 출력
-            ctx.drawImage( imgClo , 0, 0, 300, 150);
+            ctx.drawImage( imgClo , 0, 0, 320, 180);
             $('#canvas').attr('data-url', imgUrl);
        
         },false);
@@ -191,6 +202,9 @@ $(document).ready(function () {
     //저장
     function fnSave(callback) {
 
+        window.FakeLoader.showOverlay();
+
+
         var contentAuthor = $('#author').val();
         
         var contentTagArr = $('#relatedTags').tagsinput('items');
@@ -223,11 +237,14 @@ $(document).ready(function () {
             releaseYn: releaseYn,
             view: view
         }).then(function onSuccess(res) {
+            window.FakeLoader.hideOverlay();
+            
             if(callback != null && callback != undefined) {
                 callback();
             }
         }).catch(function onError(err) {
             console.log("ERROR!!!! " + err);
+            window.FakeLoader.hideOverlay();
         });
     }
     

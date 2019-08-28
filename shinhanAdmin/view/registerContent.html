@@ -38,10 +38,8 @@ author : jybobo
     <link href="/vendor/jquery-ui-1.12.1.custom/jquery-ui.structure.css" rel="stylesheet" type="text/css">
     <link href="/vendor/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet" type="text/css">
 
-    <!-- dropzone CSS -->
-    <link rel="stylesheet" href="/vendor/dropzone/dist/dropzone.css">
-
     <link rel="stylesheet" href="/vendor/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.css">
+    <link href="/vendor/fakeloader-master/dist/fakeloader.css" rel="stylesheet" type="text/css">
 
     <!-- /* Bootstrap core JavaScript */ -->
     <script src="/vendor/jquery/jquery.min.js"></script>
@@ -73,6 +71,8 @@ author : jybobo
     <script src="/vendor/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.js"></script>
 
     <script src="/vendor/moment/moment.min.js"></script>
+
+    <script src="/vendor/fakeloader-master/dist/fakeLoader.min.js"></script>
 
     <script src="/view/registerContent.js"></script>
     <script src="/js/main.js"></script>
@@ -116,6 +116,8 @@ author : jybobo
 
 <body class="contentInnerBody">
 
+    <div id="fakeloader-overlay" class="visible incoming"><div class="loader-wrapper-outer"><div class="loader-wrapper-inner"><div class="loader"></div></div></div></div>
+
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800" id="contentHeader">컨텐츠 관리</h1>
@@ -144,7 +146,7 @@ author : jybobo
                                 <th class="required"><span>동영상</span></th>
                                 <td>
                                     <input type="file" id="videoAttachFile"/>
-                                    <video id="video" style="width: 300px; height: 150px; cursor: pointer; background-color: black">
+                                    <video id="video" style="width: 320px; height: 180px; cursor: pointer; background-color: black">
                                         이 브라우저는 지원 안함
                                     </video>
                                     <div class="progress progress-sm">
@@ -200,9 +202,11 @@ author : jybobo
                                 </td>
                             </tr>
                             <tr>
-                                <th class="required"><span>관련태그</span></th>
+                                <th class="required">
+                                    <span>관련태그</span>
+                                </th>
                                 <td colspan="3">
-                                    <input type="text" id="relatedTags" data-role="tagsinput"/>
+                                    <input type="text" id="relatedTags" class="tagsInput"/>
                                 </td>
                             </tr>
 

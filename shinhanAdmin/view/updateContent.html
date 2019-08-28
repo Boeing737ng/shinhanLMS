@@ -38,6 +38,8 @@ author : jybobo
 
     <link rel="stylesheet" href="/vendor/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.css">
 
+    <link href="/vendor/fakeloader-master/dist/fakeloader.css" rel="stylesheet" type="text/css">
+
     <!-- /* Bootstrap core JavaScript */ -->
     <script src="/vendor/jquery/jquery.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -61,6 +63,8 @@ author : jybobo
     <script src="/vendor/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.js"></script>
 
     <script src="/vendor/moment/moment.min.js"></script>
+
+    <script src="/vendor/fakeloader-master/dist/fakeLoader.min.js"></script>
 
     <script src="/view/updateContent.js"></script>
     <script src="/js/main.js"></script>
@@ -115,6 +119,8 @@ author : jybobo
 
 <body class="contentInnerBody">
 
+    <div id="fakeloader-overlay" class="visible incoming"><div class="loader-wrapper-outer"><div class="loader-wrapper-inner"><div class="loader"></div></div></div></div>
+
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800" id="contentHeader">컨텐츠 관리</h1>
@@ -140,18 +146,18 @@ author : jybobo
                         </colgroup>
                         <tbody>
                             <tr>
-                                <th class="required"><span>동영상</span></th>
+                                <th><span>동영상</span></th>
                                 <td>
                                     <input type="file" id="videoAttachFile"/>
-                                    <video id="video" style="width: 300px; height: 150px; cursor: pointer; background-color: black" controls>
+                                    <video id="video" style="width: 320px; height: 180px; cursor: pointer; background-color: black" controls>
                                         이 브라우저는 지원 안함
                                     </video>
                                 </td>
-                                <th class="required"><span>썸네일</span></th>
+                                <th><span>썸네일</span></th>
                                 <td>
                                     <div>
                                         <div id="output">
-                                            <canvas id="canvas" width="300" height="150"></canvas>
+                                            <canvas id="canvas" width="320" height="180"></canvas>
                                         </div>
                                     </div>
 
@@ -190,14 +196,14 @@ author : jybobo
                             <tr>
                                 <th class="required"><span>관련태그</span></th>
                                 <td colspan="3">
-                                    <input type="text" id="relatedTags" data-role="tagsinput"/>
+                                    <input type="text" id="relatedTags" class="tagsInput"/> <!-- data-role="tagsinput" -->
                                 </td>
                             </tr>
 
                             <tr>
                                 <th><span>상세설명</span></th>
                                 <td colspan="3">
-                                    <textarea id="description" class="form-control" style="width:100%"></textarea>
+                                    <textarea id="description" class="form-control" style="width:100%; height: 300px;"></textarea>
                                 </td>
                             </tr>
                         </tbody>

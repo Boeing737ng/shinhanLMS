@@ -7,11 +7,20 @@ $(document).ready(function () {
     var userObj = JSON.parse(window.sessionStorage.getItem('userInfo'));
     var compCd = userObj['compCd'];
     var compNm = userObj['compNm'];
+    const MAX_TAGS_CNT = 5;
+
 
     /** start of components ***********************/
-    $('#releaseYn').selectpicker();
-    //$('#category').selectpicker();
+    window.FakeLoader.init();
 
+    $('#relatedTags').tagsinput({
+        maxTags: MAX_TAGS_CNT
+    });
+    
+    
+    $('#releaseYn').selectpicker();
+
+    
     fnGetCommonCmb('category', '#category');
 
 
@@ -42,8 +51,8 @@ $(document).ready(function () {
             img.src = blobURL;
 
             var canvas = document.createElement('canvas');
-            canvas.width  = 300;
-            canvas.height = 150;
+            canvas.width  = 320;
+            canvas.height = 180;
 
             var ctx = canvas.getContext('2d');
             ctx.drawImage(img, 0, 0);
@@ -67,11 +76,6 @@ $(document).ready(function () {
     });
 
 
-    $('#videoAttachFile').on('click', function(e) {
-        console.log('click');
-    });
-
-
     $('#videoAttachFile').on('change', function(e) {
         if(document.getElementById("videoAttachFile").files.length == 0) {
             return false;
@@ -87,7 +91,6 @@ $(document).ready(function () {
 
         var file = document.getElementById("videoAttachFile").files[0]
         var type = file.type;
-        console.log(type);
         var videoNode = document.querySelector('video')
         var URL = window.URL || window.webkitURL;
         var fileURL = URL.createObjectURL(file);
@@ -113,7 +116,11 @@ $(document).ready(function () {
         }
 
         if(confirm('저장하시겠습니까?')) {
+            
+            window.FakeLoader.showOverlay();
+            
             fnSave(function() {
+                window.FakeLoader.hideOverlay();
                 alert('저장하였습니다');
                 fnGoList();
             });
@@ -208,8 +215,8 @@ $(document).ready(function () {
     function capture(option, content) {
         var canvas = document.createElement('canvas');
         canvas.id = 'canvas';
-        var w = 300;
-        var h = 150;
+        var w = 320;
+        var h = 180;
         canvas.width  = w;
         canvas.height = h;
 
@@ -217,7 +224,6 @@ $(document).ready(function () {
 
         switch(option) {
             case 'image':
-                console.log(content);
                 ctx.drawImage(content, 0, 0);
                 break;
             case 'video':
@@ -295,6 +301,8 @@ $(document).ready(function () {
                     case 'storage/unknown':
                         break;
                 }
+
+                window.FakeLoader.hideOverlay();
             }, function() {
                 uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
                     if(callback != null && callback != undefined) {
@@ -319,7 +327,6 @@ $(document).ready(function () {
             function(snapshot) {
                 //progressbar 갱신
                 var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log(progress);
 
                 switch (snapshot.state) {
                 case firebase.storage.TaskState.PAUSED:
@@ -337,6 +344,8 @@ $(document).ready(function () {
                     case 'storage/unknown':
                         break;
                 }
+
+                window.FakeLoader.hideOverlay();
             }, function() {
                 uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
                     if(callback != null && callback != undefined) {
@@ -454,6 +463,7 @@ $(document).ready(function () {
             }
         }).catch(function onError(err) {
             console.log("ERROR!!!! " + err);
+            window.FakeLoader.hideOverlay();
         });
     }
 
@@ -517,7 +527,6 @@ $(document).ready(function () {
                         var catArr = snapshot.val();
                         var optionArr = [];
                     
-                        console.log(catArr)
                         $.each(catArr, function(idx, catObj) {
                             var newOption = $('<option></option>');
                             $(newOption).attr('value', idx);
