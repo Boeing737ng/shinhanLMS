@@ -1278,6 +1278,8 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="lblDate" destination="kev-MT-yum" id="B1h-O9-Aeq"/>
+                                    <outlet property="lblWriter" destination="PZi-Iz-y83" id="ZT5-9a-iOR"/>
                                     <outlet property="lblcontent" destination="rAz-bW-CT2" id="3Mi-JK-kkz"/>
                                 </connections>
                             </tableViewCell>
