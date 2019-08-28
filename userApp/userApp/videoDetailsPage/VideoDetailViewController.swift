@@ -43,7 +43,7 @@ class VideoDetailViewController: UIViewController {
         LoadingView().startLoading(self)
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child("videos/" + selectedVideoId).observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child(userCompanyCode + "/videos/" + selectedVideoId).observeSingleEvent(of: .value, with: { (snapshot) in
             let videoInfo = snapshot.value as! Dictionary<String, Any>;()
             videoURL = videoInfo["downloadURL"] as! String
             videoDescription = videoInfo["description"]! as! String
