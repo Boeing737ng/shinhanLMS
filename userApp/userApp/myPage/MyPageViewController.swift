@@ -23,6 +23,11 @@ class MyPageViewController: UIViewController, UICollectionViewDelegate, UICollec
     var item2 = ["은행 서비스 1팀 스터디", "은행 서비스 2팀 스터디", "은행 서비스 3팀 스터디", "은행 서비스 4팀 스터디", "은행 서비스 5팀 스터디"]
     //@IBOutlet weak var taglbl: UILabel!
     
+    @IBOutlet weak var fieldlbl: UILabel!
+    @IBOutlet weak var namelbl: UILabel!
+    @IBOutlet weak var edLecture: UILabel!
+    @IBOutlet weak var imgLecture: UILabel!
+    @IBOutlet weak var questionlbl: UILabel!
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
