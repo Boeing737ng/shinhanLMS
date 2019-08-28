@@ -7,30 +7,18 @@
 //
 
 import UIKit
+import Firebase
 
-class NotificationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class NotificationViewController: UIViewController {
     
-    
-    var item = ["새로운 영상이 업로드되었습니다.", "답변이 등록되었습니다.", "관심강의가 등록되었습니다.", "새로운 영상이 업로드되었습니다.", "답변이 등록되었습니다.", "관심강의가 등록되었습니다."]
+    //var item = ["새로운 영상이 업로드되었습니다.", "답변이 등록되었습니다.", "관심강의가 등록되었습니다.", "새로운 영상이 업로드되었습니다.", "답변이 등록되었습니다.", "관심강의가 등록되었습니다."]
     
     @IBOutlet weak var table: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //getNoticeFromDB()
         // Do any additional setup after loading the view.
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return item.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath)
-        cell.textLabel?.text = item[(indexPath as NSIndexPath).row]
-        
-        return cell
-        
     }
     
     @IBAction func onGoBack(_ sender: UIBarButtonItem) {
@@ -42,6 +30,26 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         self.view.window!.layer.add(transition, forKey: nil)
         self.dismiss(animated: false, completion: nil)
     }
+    
+//    func getNoticeFromDB() {
+//        var ref: DatabaseReference!
+//        ref = Database.database().reference()
+//        ref.child("notice").observeSingleEvent(of: .value, with: { (snapshot) in
+//            let value = snapshot.value as? Dictionary<String,Any>;()
+//            for noti in value! {
+//                let noticeDict = noti.value as! Dictionary<String, Any>;()
+//                let text = noticeDict["text"] as! String
+//
+//                print(text)
+//
+//                self.noticeArray.append(text)
+//            }
+//            self.dataReceived = true
+//            //self.reloadData()
+//        }) { (error) in
+//            print(error.localizedDescription)
+//        }
+//    }
     
     /*
      // MARK: - Navigation
