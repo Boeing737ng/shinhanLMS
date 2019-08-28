@@ -20,7 +20,7 @@ class NotificationTableView: UITableView, UITableViewDelegate, UITableViewDataSo
         
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child("notice").observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child(userCompanyCode + "/notice").observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? Dictionary<String,Any>;()
             for noti in value! {
                 let noticeDict = noti.value as! Dictionary<String, Any>;()
