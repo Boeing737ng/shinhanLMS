@@ -195,7 +195,7 @@
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dhf-Fd-QoV" userLabel="category1 info container">
-                                                                <rect key="frame" x="5" y="0.0" width="404" height="82.333333333333329"/>
+                                                                <rect key="frame" x="5" y="8.6666666666666643" width="404" height="82.333333333333343"/>
                                                                 <subviews>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tsZ-i5-FIO" userLabel="videoImage">
                                                                         <rect key="frame" x="0.0" y="0.0" width="110" height="82.333333333333329"/>
@@ -239,9 +239,8 @@
                                                         </subviews>
                                                         <constraints>
                                                             <constraint firstItem="dhf-Fd-QoV" firstAttribute="leading" secondItem="nqB-TZ-luB" secondAttribute="leading" constant="5" id="4YF-Ao-2ni"/>
-                                                            <constraint firstAttribute="bottom" secondItem="dhf-Fd-QoV" secondAttribute="bottom" id="IGU-mA-mO9"/>
+                                                            <constraint firstItem="dhf-Fd-QoV" firstAttribute="centerY" secondItem="nqB-TZ-luB" secondAttribute="centerY" id="9N9-aI-G3y"/>
                                                             <constraint firstAttribute="trailing" secondItem="dhf-Fd-QoV" secondAttribute="trailing" constant="5" id="baL-L7-Aat"/>
-                                                            <constraint firstItem="dhf-Fd-QoV" firstAttribute="top" secondItem="nqB-TZ-luB" secondAttribute="top" id="pXr-IL-gBG"/>
                                                         </constraints>
                                                     </tableViewCellContentView>
                                                     <connections>
@@ -324,7 +323,7 @@
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j4M-ZQ-dCw" userLabel="category2 info container">
-                                                                <rect key="frame" x="5" y="0.0" width="404" height="82.333333333333329"/>
+                                                                <rect key="frame" x="5" y="8.6666666666666643" width="404" height="82.333333333333343"/>
                                                                 <subviews>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="d01-1a-AgA" userLabel="videoImage">
                                                                         <rect key="frame" x="0.0" y="0.0" width="110" height="82.333333333333329"/>
@@ -370,10 +369,6 @@
                                                             <constraint firstItem="j4M-ZQ-dCw" firstAttribute="centerY" secondItem="P6M-Uo-dhH" secondAttribute="centerY" id="Doa-zW-xst"/>
                                                             <constraint firstItem="j4M-ZQ-dCw" firstAttribute="centerX" secondItem="P6M-Uo-dhH" secondAttribute="centerX" id="GKW-OT-SA4"/>
                                                             <constraint firstAttribute="trailing" secondItem="j4M-ZQ-dCw" secondAttribute="trailing" constant="5" id="P6e-42-uDx"/>
-                                                            <constraint firstItem="j4M-ZQ-dCw" firstAttribute="top" secondItem="P6M-Uo-dhH" secondAttribute="top" id="Ye4-nW-5wH"/>
-                                                            <constraint firstItem="j4M-ZQ-dCw" firstAttribute="centerY" secondItem="P6M-Uo-dhH" secondAttribute="centerY" id="eJ9-B0-hei"/>
-                                                            <constraint firstAttribute="bottom" secondItem="j4M-ZQ-dCw" secondAttribute="bottom" id="jHv-Dt-cxt"/>
-                                                            <constraint firstItem="j4M-ZQ-dCw" firstAttribute="height" secondItem="P6M-Uo-dhH" secondAttribute="height" id="jnw-5Y-SHK"/>
                                                             <constraint firstItem="j4M-ZQ-dCw" firstAttribute="leading" secondItem="P6M-Uo-dhH" secondAttribute="leading" constant="5" id="mst-Wu-4T2"/>
                                                         </constraints>
                                                     </tableViewCellContentView>
@@ -527,7 +522,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="290" height="289.66666666666669"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shinple_logo" translatesAutoresizingMaskIntoConstraints="NO" id="ACA-qG-M47">
-                                                <rect key="frame" x="0.0" y="0.0" width="290.00000000000182" height="289.66666666666669"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="290" height="289.66666666666669"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="ACA-qG-M47" secondAttribute="height" multiplier="1:1" id="F8K-Dx-ZGB"/>
                                                 </constraints>
