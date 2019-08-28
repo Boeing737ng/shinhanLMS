@@ -31,10 +31,11 @@ $(document).ready(function () {
             var arr = $('#grid').jsGrid('option', 'data');
         },
         fields: [
+            { name: "companyNm", title: '회사명', type: "text", width: 120, editing: false, align: "center" },
+            { name: "departNm", title: '부서명', type: "text", width: 120, editing: false, align: "center" },
             { name: "empNo", title: '사번', type: "text", width: 120, editing: false, align: "center" },
             { name: "empNm", title: "성명", type: 'text', width: 150, editing: false, align: "center" },
-            { name: "interestedTag", title: "관심태그", type: 'text', width: 150, editing: false, align: "center" },
-            { name: "mail", title: "이메일", type: 'text', width: 150, editing: false, align: "center" },
+            { name: "interstedTag", title: "관심태그", type: 'text', width: 150, editing: false, align: "center" },
             { name: "listenClass", title: "수강강좌수", type: 'text', width: 150, editing: false, align: "center" }
         ]
         
@@ -58,8 +59,8 @@ $(document).ready(function () {
         },
         fields: [
             { name: "listenName", title: '수강과목명', type: "text", width: 120, editing: false, align: "center" },
-            { name: "category", title: "카테고리", type: "text", width: 150, editing: false, align: "center" },
-            { name: "relatedTag", title: "관련태그", type: 'text', width: 150, editing: false, align: "center" },
+            { name: "category", title: "강좌 카테고리", type: "text", width: 150, editing: false, align: "center" },
+            { name: "listenDay", title: "수강날짜", type: 'text', width: 150, editing: false, align: "center" },
             { name: "teacherName", title: "강사명", type: 'text', width: 150, editing: false, align: "center" }
         ]
         
