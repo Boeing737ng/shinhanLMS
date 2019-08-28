@@ -48,6 +48,7 @@
                                                         <subviews>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HRy-Qs-49F" userLabel="videoImage">
                                                                 <rect key="frame" x="5" y="5" width="120" height="90"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="90" id="JVJ-6P-rNo"/>
                                                                     <constraint firstAttribute="width" constant="120" id="Xja-Uf-G4u"/>
@@ -198,6 +199,7 @@
                                                                 <subviews>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tsZ-i5-FIO" userLabel="videoImage">
                                                                         <rect key="frame" x="0.0" y="0.0" width="110" height="82.333333333333329"/>
+                                                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" secondItem="tsZ-i5-FIO" secondAttribute="height" multiplier="4:3" id="GQu-LE-MZB"/>
                                                                             <constraint firstAttribute="width" constant="110" id="p1j-Ej-XGm"/>
@@ -326,6 +328,7 @@
                                                                 <subviews>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="d01-1a-AgA" userLabel="videoImage">
                                                                         <rect key="frame" x="0.0" y="0.0" width="110" height="82.333333333333329"/>
+                                                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="110" id="BUR-zJ-rTt"/>
                                                                             <constraint firstAttribute="width" secondItem="d01-1a-AgA" secondAttribute="height" multiplier="4:3" id="rJA-ad-lRx"/>
@@ -524,7 +527,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="290" height="289.66666666666669"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shinple_logo" translatesAutoresizingMaskIntoConstraints="NO" id="ACA-qG-M47">
-                                                <rect key="frame" x="0.0" y="0.0" width="290" height="289.66666666666669"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="290.00000000000182" height="289.66666666666669"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="ACA-qG-M47" secondAttribute="height" multiplier="1:1" id="F8K-Dx-ZGB"/>
                                                 </constraints>
@@ -1955,6 +1958,7 @@
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Mxt-d4-iBv" userLabel="videoImage">
                                                             <rect key="frame" x="0.0" y="0.0" width="110" height="82.333333333333329"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="Mxt-d4-iBv" secondAttribute="height" multiplier="4:3" id="y52-qx-i41"/>
                                                                 <constraint firstAttribute="width" constant="110" id="yZc-11-cTB"/>
