@@ -25,7 +25,7 @@ class VideoCollection: UICollectionView, UICollectionViewDelegate, UICollectionV
         var index = 0
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child("videos").queryLimited(toLast: 5).observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child(userCompanyCode + "/videos").queryLimited(toLast: 5).observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             let value = snapshot.value as? Dictionary<String,Any>;()
             for video in value! {

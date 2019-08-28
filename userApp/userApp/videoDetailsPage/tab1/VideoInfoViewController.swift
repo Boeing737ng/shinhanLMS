@@ -31,7 +31,7 @@ class VideoInfoViewController: UIViewController {
     func getVideoDescriptionFromDB() {
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child("videos/" + selectedVideoId).observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child(userCompanyCode + "/videos/" + selectedVideoId).observeSingleEvent(of: .value, with: { (snapshot) in
             let videoInfo = snapshot.value as! Dictionary<String, Any>;()
             self.videoDescriptionLabel.text = videoInfo["description"]! as? String
         }) { (error) in
