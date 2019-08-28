@@ -1,52 +1,88 @@
 //
-//  GroupCreateViewController.swift
+//  GroupCreate2ViewController.swift
 //  userApp
 //
-//  Created by Kihyun Choi on 20/08/2019.
+//  Created by user on 21/08/2019.
 //  Copyright © 2019 sfo. All rights reserved.
 //
 
-//DATABASE WRITE::-----
-//- Group Image
-//- Group Name
-//- Group's description
-
 import UIKit
 
-class GroupCreateViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    //테스트용 변수들
-    var img = ["fall.jpg", "fall.jpg", "fall.jpg", "fall.jpg", "fall.jpg"]
-    var item = ["AWS", "AWS", "AWS", "AWS", "AWS"]
+class GroupCreateViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return item.count
-    }
+    let picker = UIImagePickerController()
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //let cell = UITableViewCell()
-        //return cell
-        let cell = tableView.dequeueReusableCell(withIdentifier: "gCell", for: indexPath)
-        cell.textLabel?.text = item[(indexPath as NSIndexPath).row]
-        cell.imageView?.image = UIImage(named: img[(indexPath as NSIndexPath).row])
-        
-        return cell
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tableView.deselectRow(at: indexPath, animated: false)
-//    }
-//    
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var studyImg: UIImageView!
+    @IBOutlet weak var studyName: UITextField!
+    @IBOutlet weak var studyDetail: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        studyDetail.delegate = self
+        studyName.delegate = self
+        picker.delegate = self
         // Do any additional setup after loading the view.
+        keyboardHandling(studyDetail)
     }
+    
+    func openLibrary(){
+        
+        picker.sourceType = .photoLibrary
+        present(picker, animated: false, completion: nil)
+        
+    }
+    
+    //사진 이미지를 출력
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
+            studyImg.image = image
+            awakeFromNib()
+            print(info)
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    // 경고 메시지
+    func myAlert(_ title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        
+        let action = UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil)
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
+    }
+    //카메라 오픈
+    func openCamera(){
+        if(UIImagePickerController .isSourceTypeAvailable(.camera)){
+            
+            picker.sourceType = .camera
+            present(picker, animated: false, completion: nil)
+            
+        } else {
+            self.myAlert("camera inaccessable", message: "Application cannot access the camera")
+        }
+        
+    }
+    // 사진 가져오기
+    @IBAction func studyAdd(_ sender: UIButton) {
+        let alert =  UIAlertController(title: "사진 위치", message: "선택", preferredStyle: .actionSheet)
+        
+        let library =  UIAlertAction(title: "사진앨범", style: .default) { (action) in self.openLibrary()
+        }
+        
+        let camera =  UIAlertAction(title: "카메라", style: .default) { (action) in self.openCamera()
+            
+        }
+        
+        let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        
+        alert.addAction(library)
+        alert.addAction(camera)
+        alert.addAction(cancel)
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
+    
     
     @IBAction func onGoBack(_ sender: UIBarButtonItem) {
         let transition: CATransition = CATransition()
@@ -58,15 +94,50 @@ class GroupCreateViewController: UIViewController, UITableViewDelegate, UITableV
         self.dismiss(animated: false, completion: nil)
     }
     
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func keyboardHandling(_ sender:UITextField) {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    */
-
+    
+    
+    // 키보드 보여주고, 화면을 올려준다
+    @objc func keyboardWillShow(_ sender: Notification)
+    {
+        NSLog("===show===")
+        self.view.frame.origin.y = -150
+    }
+    // 키보드 숨기고, 화면을 원상태로
+    @objc func keyboardWillHide(_ sender: Notification){
+        NSLog("===hids===")
+        self.view.frame.origin.y = 0
+    }
+    
+    // 엔터로 키보드 숨기기
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        NSLog("==return==")
+        textField.resignFirstResponder()
+        return true
+    }
+    //여백 클릭 시 키보드 숨기기
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    // 이미지 둥글게 하는것
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        studyImg?.contentMode = UIView.ContentMode.scaleAspectFill
+        studyImg?.layer.cornerRadius = 20.0
+        studyImg?.layer.masksToBounds = true
+    }
+    
 }
