@@ -120,11 +120,6 @@ function fnRetrieve2() {
         $('#grid2').find('tr.jsgrid-row:eq(0)').click(); //첫번째 row click
     });
 }
-
-
-
-
-
     //resize frame height
     resizeFrame();
     
