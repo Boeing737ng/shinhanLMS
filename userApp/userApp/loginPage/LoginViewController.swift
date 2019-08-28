@@ -12,9 +12,12 @@ import Firebase
 class LoginViewController: UIViewController {
     
     var urlDict = [String: String]()
-
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        userNo = "201302493"
+        userCompanyCode = "58"
+        
         LoadingView().setLoadingStyle(self)
         getThumbnailURL()
         // Do any additional setup after loading the view.
@@ -35,7 +38,7 @@ class LoginViewController: UIViewController {
         LoadingView().startLoading(self)
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child("thumbnailUrl").observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child(userCompanyCode + "/thumbnailUrl").observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             let value = snapshot.value as? NSDictionary
             for video in value! {

@@ -9,6 +9,8 @@
 import UIKit
 import Firebase
 
+var selectedCategoryIndex:Int = 0
+
 class VideoTableView: UITableView, UITableViewDelegate, UITableViewDataSource{
     
     var textArray = ["","",""]
@@ -22,10 +24,28 @@ class VideoTableView: UITableView, UITableViewDelegate, UITableViewDataSource{
     override func awakeFromNib() {
         self.delegate = self
         self.dataSource = self
+        getDataFromDB()
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTable), name: NSNotification.Name(rawValue: "load"), object: nil)
+        // Uncomment the following line to preserve selection between presentations
+        // self.clearsSelectionOnViewWillAppear = false
+
+        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    func getDataFromDB() {
+        clearArrays()
+        var dataURL:String = ""
+        if selectedCategoryIndex == 0 {
+            dataURL = userCompanyCode + "/videos"
+        } else {
+            dataURL = userCompanyCode + "/categories/" + categoryDict[selectedCategoryIndex]! + "/videos/"
+        }
         
+        print(dataURL)
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child("videos").observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             let value = snapshot.value as? Dictionary<String,Any>;()
             for video in value! {
@@ -37,17 +57,25 @@ class VideoTableView: UITableView, UITableViewDelegate, UITableViewDataSource{
                 self.databaseTitleArray.append(title)
                 self.databaseAuthorArray.append(author)
             }
+            print(self.databaseTitleArray)
             self.dataReceived = true
-            self.reloadData()
+            DispatchQueue.main.async {
+                self.reloadData()
+            }
         }) { (error) in
             print(error.localizedDescription)
         }
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    func clearArrays() {
+        videoIdArray.removeAll()
+        databaseTitleArray.removeAll()
+        databaseAuthorArray.removeAll()
+    }
+    
+    @objc func reloadTable() {
+        getDataFromDB()
+        self.reloadData()
     }
 
     // MARK: - Table view data source
@@ -59,10 +87,12 @@ class VideoTableView: UITableView, UITableViewDelegate, UITableViewDataSource{
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
+        print("ROW NUMBER ", videoIdArray.count)
         return videoIdArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        print("CELL")
         let cell = tableView.dequeueReusableCell(withIdentifier: "VideoListCell") as! VideoListCell
         
         if dataReceived {
