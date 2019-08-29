@@ -17,9 +17,6 @@ class VideoQnATableViewController: UITableViewController {
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        
-        getQuestionFromDB()
-        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
@@ -27,11 +24,24 @@ class VideoQnATableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        getQuestionFromDB()
+    }
+    
     func getQuestionFromDB() {
+        self.keyArray.removeAll()
+        self.titleArray.removeAll()
+        self.contentArray.removeAll()
+        self.dateArray.removeAll()
+        self.writerArray.removeAll()
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child(userCompanyCode + "/videos/" + selectedVideoId + "/qnaBoard").observeSingleEvent(of: .value, with: { (snapshot) in
             let questionInfo = snapshot.value as? Dictionary<String,Any>;()
+            
+            if snapshot.childrenCount == 0 {
+                return
+            }
             
             for question in questionInfo! {
                 let questionDict = question.value as! Dictionary<String, Any>;()
@@ -39,7 +49,7 @@ class VideoQnATableViewController: UITableViewController {
                 let questionId = question.key
                 let title = questionDict["title"] as! String
                 let content = questionDict["content"] as! String
-                let date = String(questionDict["date"] as! Int)
+                let date = questionDict["date"] as! String
                 let writer = questionDict["writer"] as! String
                 
                 print(title)

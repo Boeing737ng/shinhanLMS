@@ -820,10 +820,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KvM-ua-jR8">
-                                <rect key="frame" x="0.0" y="44" width="407" height="818"/>
+                                <rect key="frame" x="3.6666666666666572" y="44" width="407" height="818"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="128" translatesAutoresizingMaskIntoConstraints="NO" id="F7u-14-CL8">
-                                        <rect key="frame" x="0.0" y="0.0" width="407" height="630"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="407" height="580"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UOE-1G-f7R" userLabel="Study Select Stack View">
                                                 <rect key="frame" x="16" y="16" width="375" height="150"/>
@@ -855,7 +855,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="CTg-s1-TCM">
-                                                <rect key="frame" x="16" y="210" width="375" height="410"/>
+                                                <rect key="frame" x="16" y="210" width="375" height="360"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Hg-p2-xj4">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="30"/>
@@ -881,7 +881,6 @@
                                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="8fJ-gb-B9W" customClass="GroupCurriculum" customModule="userApp" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="30" width="375" height="150"/>
                                                         <color key="backgroundColor" red="0.93362020810000002" green="0.93362020810000002" blue="0.93362020810000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="150" id="8EQ-by-rfx"/>
                                                         </constraints>
@@ -953,7 +952,6 @@
                                                     </label>
                                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="k2f-Ij-aoo" customClass="GroupMember" customModule="userApp" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="210" width="375" height="100"/>
-
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="100" id="eMs-bK-2Ho"/>
@@ -1396,6 +1394,9 @@
                                     <state key="normal" title="질문하기">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </state>
+                                    <connections>
+                                        <segue destination="Hlz-c5-l70" kind="show" id="t5b-M9-44X"/>
+                                    </connections>
                                 </button>
                             </subviews>
                         </stackView>
@@ -3179,7 +3180,7 @@
                                                 <barButtonItem key="leftBarButtonItem" title="취소" id="Bff-n9-WPG">
                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <connections>
-                                                        <action selector="btnCancel:" destination="Hlz-c5-l70" id="c2v-9I-O0l"/>
+                                                        <action selector="btnCancel:" destination="Hlz-c5-l70" id="fKi-9O-8HB"/>
                                                     </connections>
                                                 </barButtonItem>
                                                 <barButtonItem key="rightBarButtonItem" title="확인" id="qKt-iI-bk1">
@@ -3197,9 +3198,25 @@
                                     <constraint firstAttribute="height" constant="130" id="UzW-sK-R2q"/>
                                 </constraints>
                             </view>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="질문내용을 작성해주세요." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Mpa-FK-zJv">
-                                <rect key="frame" x="16" y="100" width="382" height="746"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="질문 제목을 작성해주세요." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="2w6-IM-X7s">
+                                <rect key="frame" x="16" y="100" width="382" height="30"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="pbi-J2-KV1"/>
+                                </constraints>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HKR-yL-lX2">
+                                <rect key="frame" x="16" y="140" width="382" height="1"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="qIu-zO-f1o"/>
+                                </constraints>
+                            </view>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="질문 내용을 작성해주세요." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Mpa-FK-zJv">
+                                <rect key="frame" x="16" y="151" width="414" height="691"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -3211,20 +3228,31 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="l34-FS-Qpx" firstAttribute="trailing" secondItem="HKR-yL-lX2" secondAttribute="trailing" constant="16" id="50h-7n-4Nv"/>
+                            <constraint firstItem="l34-FS-Qpx" firstAttribute="bottom" secondItem="Mpa-FK-zJv" secondAttribute="bottom" constant="20" id="5Ca-yR-fNV"/>
+                            <constraint firstItem="Mpa-FK-zJv" firstAttribute="leading" secondItem="l34-FS-Qpx" secondAttribute="leading" constant="16" id="Buj-Hb-qmX"/>
+                            <constraint firstItem="Mpa-FK-zJv" firstAttribute="top" secondItem="HKR-yL-lX2" secondAttribute="bottom" constant="10" id="Fn3-Ag-P0r"/>
+                            <constraint firstItem="2w6-IM-X7s" firstAttribute="top" secondItem="gyR-8S-PjJ" secondAttribute="bottom" constant="16" id="GJi-Ga-Sq2"/>
+                            <constraint firstItem="HKR-yL-lX2" firstAttribute="top" secondItem="2w6-IM-X7s" secondAttribute="bottom" constant="10" id="GNF-fC-dQy"/>
+                            <constraint firstItem="HKR-yL-lX2" firstAttribute="leading" secondItem="l34-FS-Qpx" secondAttribute="leading" constant="16" id="Iqd-YL-0zY"/>
+                            <constraint firstItem="2w6-IM-X7s" firstAttribute="leading" secondItem="l34-FS-Qpx" secondAttribute="leading" constant="16" id="PBd-UR-eWu"/>
                             <constraint firstItem="l34-FS-Qpx" firstAttribute="top" secondItem="gyR-8S-PjJ" secondAttribute="bottom" constant="-40" id="bF6-eC-GXK"/>
                             <constraint firstItem="gyR-8S-PjJ" firstAttribute="width" secondItem="l34-FS-Qpx" secondAttribute="width" id="bQ4-1l-D8p"/>
                             <constraint firstItem="gyR-8S-PjJ" firstAttribute="centerX" secondItem="l34-FS-Qpx" secondAttribute="centerX" id="cYj-rx-Rvr"/>
+                            <constraint firstItem="Mpa-FK-zJv" firstAttribute="trailing" secondItem="l34-FS-Qpx" secondAttribute="trailing" constant="16" id="mcL-Ci-ioK"/>
+                            <constraint firstItem="l34-FS-Qpx" firstAttribute="trailing" secondItem="2w6-IM-X7s" secondAttribute="trailing" constant="16" id="pMS-yC-6Ly"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="l34-FS-Qpx"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="myPage" id="SA7-YZ-eMm"/>
                     <connections>
-                        <outlet property="tvContent" destination="Mpa-FK-zJv" id="JDf-dR-ZF0"/>
+                        <outlet property="tvContent" destination="Mpa-FK-zJv" id="ePP-ui-FEI"/>
+                        <outlet property="tvTitle" destination="2w6-IM-X7s" id="LwY-17-lEc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b0G-Yv-2ey" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1003" y="3625"/>
+            <point key="canvasLocation" x="1002.8985507246377" y="3624.7767857142853"/>
         </scene>
     </scenes>
     <resources>
