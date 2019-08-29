@@ -17,6 +17,7 @@ $(document).ready(function () {
     $('#btnSearch').on('click', function(e) {
         e.preventDefault();
         $('#grid2').jsGrid("option", "data", []);
+        $('#grid3').jsGrid("option", "data", []);
         fnRetrieve();
     });
     /** end of components *************************/
@@ -37,9 +38,8 @@ $(document).ready(function () {
         //showDetailsDialog("Edit", args.item);
         var arr = $('#grid1').jsGrid('option', 'data');
         
-        var memberObj = arr[args.itemIndex]['member'];
-
-        fnRetrieveDetail(memberObj);
+        var memberObj = arr[args.itemIndex]['members'];
+        fnRetrieve2(memberObj);
 
         var $row = this.rowByItem(args.item),
         selectedRow = $("#grid1").find('table tr.highlight');
@@ -54,15 +54,16 @@ $(document).ready(function () {
     //data: clients,
 
     fields: [
-        { name: "studyname", title: '스터디명', type: "text", width: 120, editing: false, align: "left" },
-        { name: "tags", title: "관련태그", type: 'text', width: 200, editing: false, align: "left" },
-        { name: "creator", title: "개설자", type: 'text', width: 150, editing: false, align: "left" },
+       
+        { name: "studyName", title: '스터디명', type: "text", width: 120, editing: false, align: "left" },
+        /*{ name: "creator", title: "개설자", type: 'text', width: 150, editing: false, align: "left" },*/
         { name: "date", title: "등록일자", type: 'text', width: 150, editing: false, align: "center", cellRenderer: function(item, value){
             var rslt = $("<td>").addClass("my-row-custom-class");
             var date = moment(item, 'YYYYMMDDHHmmss').format('YYYY-MM-DD');
             $(rslt).append(date);
             return rslt; 
           } },
+        
         { name: "participant", title: "참여자수", type: 'text', width: 100, editing: false, align: "center" }
     ]
 });
@@ -79,12 +80,14 @@ function fnRetrieveDetail(memeberObj) {
     });
 
     $("#grid2").jsGrid("option", "data", memArr);
+    $("#grid3").jsGrid("option", "data", memArr);
 
     window.FakeLoader.hideOverlay();
 }
 
 
    /** start of grid ***********************/
+   /**스터디 참여자 리스트 **/
    $("#grid2").jsGrid({
     width: "100%",
     height: "200px",
@@ -92,40 +95,55 @@ function fnRetrieveDetail(memeberObj) {
     paging: false,
     data: [],
     fields: [
-        { name: "empNo", title: "사번", type: 'text', width: 100, editing: false, align: "center" },
-        { name: "empName", title: '성명', type: "text", width: 200, editing: false, align: "left" }
+        { name: "compNm", title: "회사명", type: 'text', width: 150, editing: false, align: "center" },
+        { name: "empNo", title: "사번", type: 'text', width: 150, editing: false, align: "center" },
+        { name: "empName", title: '성명', type: "text", width: 100, editing: false, align: "left" }
     ]
-});
+    });
+
+   /** start of grid ***********************/
+   /**스터디 커리큘럼 리스트 **/
+   $("#grid3").jsGrid({
+    width: "100%",
+    height: "200px",
+    sorting: true,
+    paging: false,
+    data: [],
+    fields: [
+        { name: "author", title: "강사명", type: 'text', width: 100, editing: false, align: "center" },
+        { name: "title", title: '컨텐츠명', type: "text", width: 200, editing: false, align: "left" }
+    ]
+    });
 
 
-//조회
-function fnRetrieve() {
+//grid 1조회 
+function fnRetrieve1() {
     window.FakeLoader.showOverlay();
     
-    var searchStudy = $('#studyname').val() || '';//스터디명
-    var searchMember = $('#member').val() || '';//팀원명
-    var searchCompany = $('#searchCompany').val() || '';
+    var searchStudy = $('#studyName').val() || '';//스터디명
+    var searchMember = $('#creator').val() || '';//개설자
+    var searchCompany = $('#date').val() || '';//등록일자
 
-    searchCompany = searchCompany.toLowerCase();
-
-    parent.database.ref('/'+ searchCompany+'/study').once('value').then(function(snapshot)
+    parent.database.ref('/'+ '신한은행'+'/study').once('value').then(function(snapshot)
     {
 
         var catArr = snapshot.val();
         var rsltArr = [];
 
         $.each(catArr, function(idx, studyObj) {
-
             if( 
                  ((searchStudy== '') || (studyObj['studyname'].indexOf(searchStudy) > -1))
+
+                 
              ) {
-                 var mbrCnt = Object.keys(studyObj['member'] || []).length+1;
+                 var mbrCnt = Object.keys(studyObj['members'] || []).length+1;
                  studyObj['participant'] = mbrCnt;
+
                  rsltArr.push(studyObj);
              }
             
         });
-
+       
         $("#grid1").jsGrid("option", "data", rsltArr);
 
         window.FakeLoader.hideOverlay();
@@ -135,9 +153,46 @@ function fnRetrieve() {
 }
 
 
+//grid 2조회 
+function fnRetrieve2(memberObj) {
+    window.FakeLoader.showOverlay();
+
+    console.log(memberObj);
+    
+
+    /* parent.database.ref('/'+ '신한은행'+'/study'+'/members').once('value').then(function(snapshot)
+    {
+
+        var catArr = snapshot.val();
+
+        console.log(catArr);
+
+        var rsltArr = [];
+
+        $.each(catArr, function(idx, studyObj) {
+
+                 rsltArr.push(studyObj);
+            
+        });
+       
+        $("#grid2").jsGrid("option", "data", rsltArr);
+
+        window.FakeLoader.hideOverlay();
+
+        $('#grid2').find('tr.jsgrid-row:eq(0)').click(); //첫번째 row click
+    }); */
+}
+
+
+
+
+
 
 
     resizeFrame();
-    fnRetrieve();
+    fnRetrieve1();
+    //fnRetrieve2();
+    //fnRetrieve3();
+
 
 });

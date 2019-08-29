@@ -17,14 +17,15 @@ $("#grid1").jsGrid({
     data: [],
     //data: clients,
     fields: [
-        { name: "studyname", title: '스터디명', type: "text", width: 120, editing: false, align: "center" },
-        { name: "creator", title: "개설자", type: 'text', width: 150, editing: false, align: "center" },
+        { name: "studyName", title: '스터디명', type: "text", width: 120, editing: false, align: "center" },
         { name: "date", title: "등록일자", type: 'text', width: 150, editing: false, align: "center", cellRenderer: function(item, value){
             var rslt = $("<td>").addClass("my-row-custom-class");
             var date = moment(item, 'YYYYMMDDHHmmss').format('YYYY-MM-DD');
             $(rslt).append(date);
             return rslt; 
-          } }
+          } },
+          { name: "participant", title: "참여자수", type: 'text', width: 100, editing: false, align: "center" }
+        
       
     ],
 
@@ -39,9 +40,10 @@ fnRetrieve1();
 function fnRetrieve1() {
     window.FakeLoader.showOverlay();
     
-    var searchStudy = $('#studyname').val() || '';//스터디명
-    var searchCreator = $('#creator').val() || '';//개설자
+    var searchStudy = $('#studyName').val() || '';//스터디명
     var searchDate = $('#date').val() || '';//등록일자
+    var searchCreator = $('#creator').val() || '';//참여인원
+    
 
     //searchCompany = searchCompany.toLowerCase();
 
@@ -50,10 +52,21 @@ function fnRetrieve1() {
 
         var catArr = snapshot.val();
         var rsltArr = [];
-        
+        console.log(searchStudy)
+
         $.each(catArr, function(idx, studyObj) {
-                 rsltArr.push(studyObj);
-        });
+          if( 
+               ((searchStudy== '') || (studyObj['studyName'].indexOf(searchStudy) > -1))
+
+               
+           ) {
+               var mbrCnt = Object.keys(studyObj['members'] || []).length+1;
+               studyObj['participant'] = mbrCnt;
+
+               rsltArr.push(studyObj);
+           }
+          
+      });
 
         $("#grid1").jsGrid("option", "data", rsltArr);
 
