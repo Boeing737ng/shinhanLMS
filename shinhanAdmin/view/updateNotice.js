@@ -7,20 +7,10 @@ $(document).ready(function () {
     /** start of components ***********************/
     $('#releaseYn').selectpicker();
     $('#category').selectpicker();
-    $('#regDate').text(moment().format('YYYY-MM-DD'));
+
     var userInfo = JSON.parse(window.sessionStorage.getItem('userInfo'));
+    var compCd = userInfo['compCd'];
 
-   
-
-    $('#daterange').daterangepicker({
-        opens: 'right',
-        minDate: moment(),
-        locale: {
-            format: 'YYYY-MM-DD'
-        }
-    }, function(start, end) {
-        $('#daterange span').html(start.format('YYYY-MM-DD') + ' ~ ' + end.format('YYYY-MM-DD'));
-    });
 
     //저장 버튼
     $('#btnSave').on('click', function(e) {
@@ -44,27 +34,20 @@ $(document).ready(function () {
         e.preventDefault();
         fnGoList();
     });
-
-   
-
-  
     /** end of components *************************/
 
 
     /** start of functions ***********************/
     function fnRetrieve() {
         
-        parent.database.ref('/'+ '신한은행'+'/notie/' + ROW_KEY).once('value').then(function(snapshot) {
+        parent.database.ref('/'+ compCd +'/notie/' + ROW_KEY).once('value').then(function(snapshot) {
 
             var obj = snapshot.val();
             
             $('#title').val(obj['title']);
             $('#writor').text(obj['writor']);
             $('#description').val(obj['description']);
-            $('#releaseYn').val(obj['releaseYn']);
-            $('#releaseYn').selectpicker('refresh');
-            //$('#daterange').
-
+            $('#regDate').text(moment(obj['date'], 'YYYYMMDD').format('YYYY-MM-DD'));
         });
     }
 
@@ -162,19 +145,14 @@ $(document).ready(function () {
 
         var contentWritor = $('#writor').text();
         var contentTitle=$('#title').val();
-        //var dateRangeFrom = $('#daterange').data('daterangepicker').startDate.format('YYYYMMDD');
-        //var dateRangeTo = $('#daterange').data('daterangepicker').endDate.format('YYYYMMDD');
-        //var releaseYn = $('#releaseYn').val();
         var contentDescription = $('#description').val();
+        var regDate = $('#regDate').text();
                    
         setNotieDatabase({
             writor: contentWritor,
             description: contentDescription,
-            date: moment().format('YYYYMMDD'),
+            date: moment(regDate, 'YYYY-MM-DD').format('YYYYMMDD'),
             title: contentTitle
-            //releaseYn: releaseYn,
-            //postingPeriodFrom: dateRangeFrom,
-            //postingPeriodTo: dateRangeTo
         }, callback);
     }
 
@@ -182,17 +160,7 @@ $(document).ready(function () {
     function setNotieDatabase(paramObj, callback) {
 
         //var row
-        parent.database.ref('/'+ '신한은행'+'/notie/' + ROW_KEY).set({
-        
-            writor: paramObj['writor'],
-            date: paramObj['date'],
-            title: paramObj['title'],
-            //postingPeriodFrom: paramObj['postingPeriodFrom'],
-            //postingPeriodTo: paramObj['postingPeriodTo'],
-            //releaseYn: paramObj['releaseYn'],
-            description: paramObj['description']
-           
-        }).then(function onSuccess(res) {
+        parent.database.ref('/'+ '신한은행'+'/notie/' + ROW_KEY).set(paramObj).then(function onSuccess(res) {
             if(callback != null && callback != undefined) {
                 callback();
             }
@@ -202,21 +170,8 @@ $(document).ready(function () {
     }
 
    
-
-
-   
-
-
-
-
-  
-
-
-
-
     //ifame height resize
     resizeFrame();
-
     fnRetrieve();
 
 });
