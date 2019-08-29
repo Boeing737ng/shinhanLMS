@@ -50,28 +50,6 @@ function fnLoadMenu() {
 }
 
 
-function onSignOut() {
-    clearInterval(timeinterval);
-    firebase.auth().signOut()
-        .then(function (success) {
-            var option = document.getElementsByClassName('show-when-login');
-            for (var i = 0; i < option.length; i++) {
-                option[i].style.display = 'none';
-            }
-            $('section:eq("0")')
-                .stop()
-                .fadeIn(300, 'linear')
-                .siblings('section')
-                .stop()
-                .fadeOut(300, 'linear');
-            document.getElementById('auth-text').innerHTML = "Login";
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-}
-
-
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
         // User is signed in.
