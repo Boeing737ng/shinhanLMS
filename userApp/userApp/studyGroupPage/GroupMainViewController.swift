@@ -89,6 +89,6 @@ Swift, Objective-C, Xcode등 평소에 접하기 어려운 것들이 많아서 �
 }
 extension GroupMainViewController : IndicatorInfoProvider{
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo{
-        return IndicatorInfo(title: "스터디")
+        return IndicatorInfo(title: "CoP")
     }
 }

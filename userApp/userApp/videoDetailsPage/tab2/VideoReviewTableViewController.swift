@@ -8,29 +8,68 @@
 
 import UIKit
 import XLPagerTabStrip
+import Firebase
 
 class VideoReviewTableViewController: UITableViewController {
 
-    var items = ["김다인", "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요.  안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요", "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요.  안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요.  안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요.  안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요.  안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"]
+    var contentArray = Array<String>()
+    var dateArray = Array<String>()
+    var writerArray = Array<String>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        getReviewFromDB()
+    }
+    
+    func getReviewFromDB() {
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        ref.child(userCompanyCode + "/videos/" + selectedVideoId + "/review").observeSingleEvent(of: .value, with: { (snapshot) in
+            let reviewInfo = snapshot.value as? Dictionary<String,Any>;()
+            
+            for review in reviewInfo! {
+                let reviewDict = review.value as! Dictionary<String, Any>;()
+                let content = reviewDict["content"] as! String
+                let date = reviewDict["date"] as! String
+                let writer = reviewDict["writer"] as! String
+                
+//                print(content)
+//                print(date)
+//                print(writer)
+//                print("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n")
+                
+                self.contentArray.append(content)
+                self.dateArray.append(date)
+                self.writerArray.append(writer)
+            }
+            //self.dataReceived = true
+            self.tableView.reloadData()
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return contentArray.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CellTwo", for: indexPath) as! TableViewCellTwo
         
-         cell.lblcontent.text = items[(indexPath as NSIndexPath).row]
+        cell.lblcontent.text = contentArray[indexPath.row]
+        cell.lblDate.text = dateArray[indexPath.row]
+        cell.lblWriter.text = writerArray[indexPath.row]
         
         return cell
     }

@@ -8,31 +8,97 @@
 
 import UIKit
 import Firebase
+import BEMCheckBox
 
 class LoginViewController: UIViewController {
     
     var urlDict = [String: String]()
+    var autoLoginIsSelected = false
+    var id:String = ""
+    var pwd:String = ""
+    
+    @IBOutlet weak var idTextField: UITextField!
+    @IBOutlet weak var pwdTextField: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         userNo = "201302493"
+        userName = "최기현"
         userCompanyCode = "58"
+        userCompanyName = "신한은행"
+        userDeptCode = "5608"
+        userDeptName = "디지털사업부"
+    
+        // Do any additional setup after loading the view.
         
+        keyboardHandling(idTextField)
         LoadingView().setLoadingStyle(self)
         getThumbnailURL()
-        // Do any additional setup after loading the view.
+    }
+   
+    @IBAction func onClickLoginBtn(_ sender: UIButton) {
+        if idTextField.text == "" || pwdTextField.text == "" {
+            return
+        } else {
+            login(id:idTextField.text!, pwd:pwdTextField.text!)
+        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func checkLoginUser() {
+        if let userId = UserDefaults.standard.string(forKey: "id") {
+            self.id = userId
+            self.pwd = UserDefaults.standard.string(forKey: "pwd")!
+            login(id:userId, pwd: self.pwd)
+        }
     }
-    */
+    
+    // TODO:: Authentication funcion needs to be added
+    func login(id:String, pwd:String) {
+        if id == "201302493" && pwd == "1" {
+            //onSuccessLogin
+            if autoLoginIsSelected {
+                UserDefaults.standard.set(id, forKey: "id")
+                UserDefaults.standard.set(pwd, forKey: "pwd")
+            }
+            self.performSegue(withIdentifier: "onSuccessLogin", sender: self)
+        }
+    }
+    
+    func imageCachingCompleted() {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "imageCached"), object: nil)
+    }
+    
+    @IBAction func saveOnOff(_ sender: BEMCheckBox) {
+        if sender.on {
+            autoLoginIsSelected = true
+        } else {
+            autoLoginIsSelected = false
+        }
+    }
+    func keyboardHandling(_ sender: UITextField) {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func keyboardWillShow(_ sender: Notification) {
+        self.view.frame.origin.y = -30
+    }
+    
+    @objc func keyboardWillHide(_ sender: Notification) {
+        self.view.frame.origin.y = 0
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+
     
     func getThumbnailURL() {
         LoadingView().startLoading(self)
@@ -67,7 +133,10 @@ class LoginViewController: UIViewController {
     }
     
     func isCachingCompleted() {
-        LoadingView().stopLoading()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            self.checkLoginUser()
+            LoadingView().stopLoading()
+        }
     }
 
 }

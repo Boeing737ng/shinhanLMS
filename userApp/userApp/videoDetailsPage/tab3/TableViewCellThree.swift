@@ -11,6 +11,8 @@ import UIKit
 class TableViewCellThree: UITableViewCell {
     
     @IBOutlet weak var lblTitle: UILabel!
+    @IBOutlet weak var lblWriter: UILabel!
+    @IBOutlet weak var lblDate: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

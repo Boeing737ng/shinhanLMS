@@ -19,11 +19,6 @@ var videoURL:String = ""
 
 class VideoDetailViewController: UIViewController {
     
-    @IBOutlet weak var videoTitle: UILabel!
-    @IBOutlet weak var videoAuthor: UILabel!
-    @IBOutlet weak var videoViewCount: UILabel!
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         getVideoInfoFromDB()
@@ -46,10 +41,6 @@ class VideoDetailViewController: UIViewController {
         ref.child(userCompanyCode + "/videos/" + selectedVideoId).observeSingleEvent(of: .value, with: { (snapshot) in
             let videoInfo = snapshot.value as! Dictionary<String, Any>;()
             videoURL = videoInfo["downloadURL"] as! String
-            videoDescription = videoInfo["description"]! as! String
-            self.videoTitle.text = videoInfo["title"]! as? String
-            self.videoAuthor.text = videoInfo["author"]! as? String
-            self.videoViewCount.text = videoInfo["view"] as? String
             LoadingView().stopLoading()
         }) { (error) in
             print(error.localizedDescription)
