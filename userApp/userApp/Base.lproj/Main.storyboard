@@ -820,10 +820,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KvM-ua-jR8">
-                                <rect key="frame" x="0.0" y="44" width="407" height="818"/>
+                                <rect key="frame" x="3.6666666666666572" y="44" width="407" height="818"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="128" translatesAutoresizingMaskIntoConstraints="NO" id="F7u-14-CL8">
-                                        <rect key="frame" x="0.0" y="0.0" width="407" height="630"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="407" height="580"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UOE-1G-f7R" userLabel="Study Select Stack View">
                                                 <rect key="frame" x="16" y="16" width="375" height="150"/>
@@ -855,7 +855,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="CTg-s1-TCM">
-                                                <rect key="frame" x="16" y="210" width="375" height="410"/>
+                                                <rect key="frame" x="16" y="210" width="375" height="360"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Hg-p2-xj4">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="30"/>
@@ -881,7 +881,6 @@
                                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="8fJ-gb-B9W" customClass="GroupCurriculum" customModule="userApp" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="30" width="375" height="150"/>
                                                         <color key="backgroundColor" red="0.93362020810000002" green="0.93362020810000002" blue="0.93362020810000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="150" id="8EQ-by-rfx"/>
                                                         </constraints>
@@ -953,7 +952,6 @@
                                                     </label>
                                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="k2f-Ij-aoo" customClass="GroupMember" customModule="userApp" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="210" width="375" height="100"/>
-
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="100" id="eMs-bK-2Ho"/>
@@ -1115,27 +1113,9 @@
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X0x-5Y-Cju">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
-                                        <subviews>
-                                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="w7r-hl-KU4">
-                                                <rect key="frame" x="41.333333333333343" y="211" width="331.33333333333326" height="2"/>
-                                            </progressView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bIg-4L-Tcp">
-                                                <rect key="frame" x="187" y="96.333333333333343" width="40" height="40"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="40" id="3yM-BO-aGs"/>
-                                                    <constraint firstAttribute="height" constant="40" id="95G-ac-tri"/>
-                                                </constraints>
-                                                <state key="normal" image="iconmonstr-video-15-240"/>
-                                            </button>
-                                        </subviews>
                                         <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="w7r-hl-KU4" firstAttribute="centerX" secondItem="X0x-5Y-Cju" secondAttribute="centerX" id="EJd-6a-r6F"/>
-                                            <constraint firstItem="bIg-4L-Tcp" firstAttribute="centerX" secondItem="X0x-5Y-Cju" secondAttribute="centerX" id="HHh-hu-C8F"/>
                                             <constraint firstAttribute="width" secondItem="X0x-5Y-Cju" secondAttribute="height" multiplier="16:9" id="RVw-eM-iYK"/>
-                                            <constraint firstItem="bIg-4L-Tcp" firstAttribute="centerY" secondItem="X0x-5Y-Cju" secondAttribute="centerY" id="TLt-0h-osq"/>
-                                            <constraint firstItem="w7r-hl-KU4" firstAttribute="width" secondItem="X0x-5Y-Cju" secondAttribute="width" multiplier="0.8" id="uam-Ty-huH"/>
-                                            <constraint firstAttribute="bottom" secondItem="w7r-hl-KU4" secondAttribute="bottom" constant="20" id="zyC-RV-out"/>
                                         </constraints>
                                     </view>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="utY-dQ-plk">
@@ -1163,6 +1143,9 @@
                         <viewLayoutGuide key="safeArea" id="JDO-7p-JVo"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="home" id="XQg-mU-ybg"/>
+                    <connections>
+                        <outlet property="videoView" destination="X0x-5Y-Cju" id="kvs-Mb-ayG"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wKJ-yq-gL7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -3235,7 +3218,6 @@
         <image name="PW" width="240" height="240"/>
         <image name="alarm" width="240" height="240"/>
         <image name="iconmonstr-arrow-69-24" width="24" height="24"/>
-        <image name="iconmonstr-video-15-240" width="240" height="240"/>
         <image name="imgAdd.jpeg" width="144" height="147"/>
         <image name="loginBackground" width="724" height="364"/>
         <image name="shinple_logo" width="6553" height="5403"/>
