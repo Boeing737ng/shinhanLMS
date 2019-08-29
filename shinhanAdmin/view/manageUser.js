@@ -3,8 +3,6 @@ $(document).ready(function () {
     window.FakeLoader.init( );
 
     /** start of components ***********************/
-    //$('#searchCompany').selectpicker();
-
     fnGetCommonCmb('company', '#searchCompany');
     /** end of components *************************/
     
@@ -20,7 +18,7 @@ $(document).ready(function () {
       /** start of grid ***********************/
     $("#grid1").jsGrid({
         width: "100%",
-        height: "500px",
+        height: "300px",
         //inserting: true,
         //editing: false,
         sorting: true,
@@ -76,13 +74,10 @@ $(document).ready(function () {
 
       $("#grid2").jsGrid({
         width: "100%",
-        height: "300px",
+        height: "200px",
         sorting: true,
         paging: false,
-        //filtering: true,
         data: [],
-    
-        //data: clients,
     
         rowClick: function(args) {
             //showDetailsDialog("Edit", args.item);
@@ -105,8 +100,6 @@ $(document).ready(function () {
         var searchempNm = $('#empNm').val() || '';//사용자이름
         var searchempNo = $('#empNo').val() || '';//사번
 
-        //searchCompany = searchCompany.toLowerCase();
-
         parent.database.ref('/user').once('value').then(function(snapshot)
         {
 
@@ -117,8 +110,8 @@ $(document).ready(function () {
 
                 if( 
                     ((searchempNm == '') || (studyObj['name'].indexOf(searchempNm) > -1)) &&
-                    ((searchempNo == '') || (studyObj['empNo'] === searchempNo)) &&
-                    ((searchCompany == '') ||(studyObj['compCd'] === searchCompany)) &&
+                    ((searchempNo == '') || (studyObj['empNo'] == searchempNo)) &&
+                    ((searchCompany == '') ||(studyObj['compCd'] == searchCompany)) &&
                     (studyObj['roleCd'] != 'admin')
                 ) {
                    // var mbrCnt = Object.keys(studyObj['member'] || []).length+1;
@@ -129,7 +122,6 @@ $(document).ready(function () {
             });
 
             $("#grid1").jsGrid("option", "data", rsltArr);
-            console.log(rsltArr);
 
             window.FakeLoader.hideOverlay();
 
