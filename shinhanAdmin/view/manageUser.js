@@ -3,7 +3,9 @@ $(document).ready(function () {
     window.FakeLoader.init( );
 
     /** start of components ***********************/
-    $('#searchCompany').selectpicker();
+    //$('#searchCompany').selectpicker();
+
+    fnGetCommonCmb('company', '#searchCompany');
     /** end of components *************************/
     
 
@@ -46,12 +48,26 @@ $(document).ready(function () {
         },
 
         fields: [
-            { name: "companyNm", title: '회사명', type: "text", width: 120, editing: false, align: "center" },
-            { name: "departNm", title: '부서명', type: "text", width: 120, editing: false, align: "center" },
+            { name: "compNm", title: '회사명', type: "text", width: 120, editing: false, align: "center" },
+            { name: "department", title: '부서명', type: "text", width: 120, editing: false, align: "center" },
             { name: "empNo", title: '사번', type: "text", width: 120, editing: false, align: "center" },
-            { name: "empNm", title: "성명", type: 'text', width: 150, editing: false, align: "center" },
-            { name: "interstedTag", title: "관심태그", type: 'text', width: 150, editing: false, align: "center" },
-            { name: "listenClass", title: "수강강좌수", type: 'text', width: 150, editing: false, align: "center" }
+            { name: "name", title: "성명", type: 'text', width: 120, editing: false, align: "center" },
+            { name: "selectedTags", title: "관심태그", type: 'text', width: 150, editing: false, align: "left", cellRenderer: function(item, value){
+                var rslt = $("<td>").addClass("jsgrid-cell");
+                var div = $('<div></div>');
+                $(rslt).append(div);
+
+                if(isEmpty(item)) {
+                    return rslt;
+                }
+
+                var arr = item.split(' ');
+                for(var i=0; i<arr.length; i++) {
+                    $(div).append($('<span class="tag label label-info" style="margin-right:5px; display:inline-block;">'+arr[i]+'</span>'));
+                }
+                return rslt; 
+              } },
+            { name: "listenClass", title: "수강강좌수", type: 'text', width: 100, editing: false, align: "center" }
         ]
         
     });
@@ -85,13 +101,13 @@ $(document).ready(function () {
     function fnRetrieve() {
         window.FakeLoader.showOverlay();
         
-        var searchCompany = $('#companyNm').val() || '';//회사명
+        var searchCompany = $('#searchCompany').val() || '';//회사명
         var searchempNm = $('#empNm').val() || '';//사용자이름
         var searchempNo = $('#empNo').val() || '';//사번
 
         //searchCompany = searchCompany.toLowerCase();
 
-        parent.database.ref('/'+'신한은행' +'/user').once('value').then(function(snapshot)
+        parent.database.ref('/user').once('value').then(function(snapshot)
         {
 
             var catArr = snapshot.val();
@@ -100,7 +116,10 @@ $(document).ready(function () {
             $.each(catArr, function(idx, studyObj) {
 
                 if( 
-                    ((searchempNm== '') || (studyObj['empNm'].indexOf(searchempNm) > -1))
+                    ((searchempNm == '') || (studyObj['name'].indexOf(searchempNm) > -1)) &&
+                    ((searchempNo == '') || (studyObj['empNo'] === searchempNo)) &&
+                    ((searchCompany == '') ||(studyObj['compCd'] === searchCompany)) &&
+                    (studyObj['roleCd'] != 'admin')
                 ) {
                    // var mbrCnt = Object.keys(studyObj['member'] || []).length+1;
                     //studyObj['participant'] = mbrCnt;
@@ -110,6 +129,7 @@ $(document).ready(function () {
             });
 
             $("#grid1").jsGrid("option", "data", rsltArr);
+            console.log(rsltArr);
 
             window.FakeLoader.hideOverlay();
 
@@ -124,11 +144,40 @@ $(document).ready(function () {
         
         var memArr = [];
     
-       
-    
         $("#grid2").jsGrid("option", "data", memArr);
     
         window.FakeLoader.hideOverlay();
+    }
+
+
+    //combo 구성
+    function fnGetCommonCmb(option, selector, defaultValue) {
+
+        $('' + selector).html('');
+        $('' + selector).html('<option value="">전체</option>');
+
+        switch (option) {
+            case 'company':
+                parent.database.ref('/company/').once('value')
+                .then(function (snapshot) {
+                    var arr = snapshot.val();
+
+                    $.each(arr, function (idx, val) {
+                        var newOption = $('<option></option>');
+                        $(newOption).attr('value', idx);
+                        $(newOption).text(val);
+
+                        if (idx == defaultValue) {
+                            $(newOption).attr('selected', 'selected');
+                        }
+
+                        $('' + selector).append($(newOption));
+                    });
+
+                    $('' + selector).selectpicker();
+                });
+                break;
+        }
     }
 
 
