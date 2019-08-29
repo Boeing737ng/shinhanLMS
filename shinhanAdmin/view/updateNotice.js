@@ -141,14 +141,7 @@ $(document).ready(function () {
             param = ' 제목';
             target = $('#title');
         }
-        else if(isEmpty(($('#daterange > span').text()))) {
-            param = '게시기간';
-            target = $('#daterange');
-        }
-        else if(isEmpty($('#releaseYn').val())) {
-            param = '공개여부';
-            target = $('#releaseYn');
-        }else if($('#description').tagsinput('items').length == 0) {
+        else if($('#description').tagsinput('items').length == 0) {
             param = '내용';
             target = $('description');
         }
@@ -169,19 +162,19 @@ $(document).ready(function () {
 
         var contentWritor = $('#writor').text();
         var contentTitle=$('#title').val();
-        var dateRangeFrom = $('#daterange').data('daterangepicker').startDate.format('YYYYMMDD');
-        var dateRangeTo = $('#daterange').data('daterangepicker').endDate.format('YYYYMMDD');
-        var releaseYn = $('#releaseYn').val();
+        //var dateRangeFrom = $('#daterange').data('daterangepicker').startDate.format('YYYYMMDD');
+        //var dateRangeTo = $('#daterange').data('daterangepicker').endDate.format('YYYYMMDD');
+        //var releaseYn = $('#releaseYn').val();
         var contentDescription = $('#description').val();
                    
         setNotieDatabase({
             writor: contentWritor,
             description: contentDescription,
             date: moment().format('YYYYMMDD'),
-            title: contentTitle,
-            releaseYn: releaseYn,
-            postingPeriodFrom: dateRangeFrom,
-            postingPeriodTo: dateRangeTo
+            title: contentTitle
+            //releaseYn: releaseYn,
+            //postingPeriodFrom: dateRangeFrom,
+            //postingPeriodTo: dateRangeTo
         }, callback);
     }
 
@@ -194,9 +187,9 @@ $(document).ready(function () {
             writor: paramObj['writor'],
             date: paramObj['date'],
             title: paramObj['title'],
-            postingPeriodFrom: paramObj['postingPeriodFrom'],
-            postingPeriodTo: paramObj['postingPeriodTo'],
-            releaseYn: paramObj['releaseYn'],
+            //postingPeriodFrom: paramObj['postingPeriodFrom'],
+            //postingPeriodTo: paramObj['postingPeriodTo'],
+            //releaseYn: paramObj['releaseYn'],
             description: paramObj['description']
            
         }).then(function onSuccess(res) {
