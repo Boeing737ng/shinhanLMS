@@ -36,6 +36,9 @@ class VideoReviewTableViewController: UITableViewController {
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child(userCompanyCode + "/videos/" + selectedVideoId + "/review").observeSingleEvent(of: .value, with: { (snapshot) in
+            if snapshot.childrenCount == 0 {
+                return
+            }
             let reviewInfo = snapshot.value as? Dictionary<String,Any>;()
             
             for review in reviewInfo! {
