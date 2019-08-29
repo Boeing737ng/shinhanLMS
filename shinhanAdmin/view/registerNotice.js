@@ -73,14 +73,7 @@ $(document).ready(function () {
             param = ' 제목';
             target = $('#title');
         }
-        else if(isEmpty(($('#daterange > span').text()))) {
-            param = '게시기간';
-            target = $('#daterange');
-        }
-        else if(isEmpty($('#releaseYn').val())) {
-            param = '공개여부';
-            target = $('#releaseYn');
-        }else if(isEmpty($('#description').val())) {
+        else if(isEmpty($('#description').val())) {
             param = '내용';
             target = $('#description');
         }
