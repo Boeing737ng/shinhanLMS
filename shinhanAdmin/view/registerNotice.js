@@ -93,9 +93,9 @@ $(document).ready(function () {
 
         var contentWritor = $('#writor').text();
         var contentTitle=$('#title').val();
-        var dateRangeFrom = $('#daterange').data('daterangepicker').startDate.format('YYYYMMDD');
-        var dateRangeTo = $('#daterange').data('daterangepicker').endDate.format('YYYYMMDD');
-        var releaseYn = $('#releaseYn').val();
+        //var dateRangeFrom = $('#daterange').data('daterangepicker').startDate.format('YYYYMMDD');
+        //var dateRangeTo = $('#daterange').data('daterangepicker').endDate.format('YYYYMMDD');
+        //var releaseYn = $('#releaseYn').val();
         var contentDescription = $('#description').val();
                    
         setNotieDatabase({
@@ -103,9 +103,9 @@ $(document).ready(function () {
             description: contentDescription,
             date: moment().format('YYYYMMDD'),
             title: contentTitle,
-            releaseYn: releaseYn,
-            postingPeriodFrom: dateRangeFrom,
-            postingPeriodTo: dateRangeTo
+           // releaseYn: releaseYn,
+            //postingPeriodFrom: dateRangeFrom,
+            //postingPeriodTo: dateRangeTo
         }, callback);
     }
 
@@ -119,9 +119,9 @@ $(document).ready(function () {
             writor: paramObj['writor'],
             date: paramObj['date'],
             title: paramObj['title'],
-            postingPeriodFrom: paramObj['postingPeriodFrom'],
-            postingPeriodTo: paramObj['postingPeriodTo'],
-            releaseYn: paramObj['releaseYn'],
+            //gPeriodFrom: paramObj['postingPeriodFrom'],
+            //postingPeriodTo: paramObj['postingPeriodTo'],
+            //releaseYn: paramObj['releaseYn'],
             description: paramObj['description']
            
         }).then(function onSuccess(res) {
