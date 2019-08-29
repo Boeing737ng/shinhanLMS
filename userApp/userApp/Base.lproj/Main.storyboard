@@ -1233,7 +1233,7 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sit-7A-Vam">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                     <color key="backgroundColor" red="0.01188069116" green="0.43817669149999999" blue="0.79947966339999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <state key="normal" title="리뷰작성">
+                                    <state key="normal" title="수강후기 작성">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </state>
                                     <connections>
@@ -3035,7 +3035,7 @@
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </textAttributes>
                                         <items>
-                                            <navigationItem title="리뷰 작성" id="3cV-QG-bb2">
+                                            <navigationItem title="수강후기 작성" id="3cV-QG-bb2">
                                                 <barButtonItem key="leftBarButtonItem" title="취소" id="XlV-S9-85q">
                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <connections>
@@ -3057,7 +3057,7 @@
                                     <constraint firstAttribute="height" constant="130" id="Ceh-Jj-6km"/>
                                 </constraints>
                             </view>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="자유롭게 리뷰를 작성해주세요." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="wKX-0b-fzC">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="자유롭게 수강후기를 작성해주세요." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="wKX-0b-fzC">
                                 <rect key="frame" x="16" y="100" width="382" height="746"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

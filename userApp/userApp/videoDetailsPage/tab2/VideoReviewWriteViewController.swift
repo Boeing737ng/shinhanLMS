@@ -37,12 +37,12 @@ class VideoReviewWriteViewController: UIViewController, UITextViewDelegate {
     }
     
     func textViewSetupView() {
-        if tvContent.text == "자유롭게 리뷰를 작성해주세요." {
+        if tvContent.text == "자유롭게 수강후기를 작성해주세요." {
             tvContent.text = ""
             tvContent.textColor = UIColor.black
         }
         else if tvContent.text == "" {
-            tvContent.text = "자유롭게 리뷰를 작성해주세요."
+            tvContent.text = "자유롭게 수강후기를 작성해주세요."
             tvContent.textColor = UIColor.lightGray
         }
     }
