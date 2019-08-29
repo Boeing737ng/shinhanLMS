@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class VideoReviewWriteViewController: UIViewController {
+class VideoReviewWriteViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet weak var tvContent: UITextView!
     
@@ -17,6 +17,34 @@ class VideoReviewWriteViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        textViewSetupView()
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text == "" {
+            textViewSetupView()
+        }
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+        }
+        return true
+    }
+    
+    func textViewSetupView() {
+        if tvContent.text == "자유롭게 리뷰를 작성해주세요." {
+            tvContent.text = ""
+            tvContent.textColor = UIColor.black
+        }
+        else if tvContent.text == "" {
+            tvContent.text = "자유롭게 리뷰를 작성해주세요."
+            tvContent.textColor = UIColor.lightGray
+        }
     }
     
     func getCurrentDate() -> String {
