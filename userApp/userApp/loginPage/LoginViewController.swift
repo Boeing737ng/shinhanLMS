@@ -16,7 +16,11 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         
         userNo = "201302493"
+        userName = "최기현"
         userCompanyCode = "58"
+        userCompanyName = "신한은행"
+        userDeptCode = "5608"
+        userDeptName = "디지털사업부"
         
         LoadingView().setLoadingStyle(self)
         getThumbnailURL()
