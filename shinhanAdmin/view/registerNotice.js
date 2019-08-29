@@ -2,31 +2,14 @@
 
 $(document).ready(function () {
 
-    //행추가 버튼 -> 페이지 이동
-    $('#btnAdd').on('click', function(e) {
-        e.preventDefault();
-        window.location.href = "/view/manageNotice.html";
-        //location.replace("http://localhost/view/addNotice.html");
-    }); 
-
-
     /** start of components ***********************/
     $('#releaseYn').selectpicker();
     $('#regDate').text(moment().format('YYYY-MM-DD'));
+
     var userInfo = JSON.parse(window.sessionStorage.getItem('userInfo'));
+    var compCd = userInfo['compCd'];
     
     $('#writor').text(userInfo['name']);
-
-    
-    $('#daterange').daterangepicker({
-        opens: 'right',
-        minDate: moment(),
-        locale: {
-            format: 'YYYY-MM-DD'
-        }
-    }, function(start, end) {
-        $('#daterange span').html(start.format('YYYY-MM-DD') + ' ~ ' + end.format('YYYY-MM-DD'));
-    });
 
 
     //목록 버튼
@@ -36,12 +19,6 @@ $(document).ready(function () {
      
     });
     
-    
-    //목록 이동
-    function fnGoList() {
-        var url = '/view/manageNotice.html';
-    }
-
 
     //저장 버튼
     $('#btnSave').on('click', function(e) {
@@ -61,6 +38,12 @@ $(document).ready(function () {
         }
     });
     /** end of components *************************/
+
+
+    //목록 이동
+    function fnGoList() {
+        var url = '/view/manageNotice.html';
+    }
 
 
     //validataion
@@ -93,19 +76,13 @@ $(document).ready(function () {
 
         var contentWritor = $('#writor').text();
         var contentTitle=$('#title').val();
-        //var dateRangeFrom = $('#daterange').data('daterangepicker').startDate.format('YYYYMMDD');
-        //var dateRangeTo = $('#daterange').data('daterangepicker').endDate.format('YYYYMMDD');
-        //var releaseYn = $('#releaseYn').val();
         var contentDescription = $('#description').val();
                    
         setNotieDatabase({
             writor: contentWritor,
             description: contentDescription,
             date: moment().format('YYYYMMDD'),
-            title: contentTitle,
-           // releaseYn: releaseYn,
-            //postingPeriodFrom: dateRangeFrom,
-            //postingPeriodTo: dateRangeTo
+            title: contentTitle
         }, callback);
     }
 
@@ -114,17 +91,8 @@ $(document).ready(function () {
 
         //var row
         var rowKey = 'notie_' + moment().unix(); 
-        parent.database.ref('/'+ '신한은행'+'/notie/' + rowKey).set({
-        
-            writor: paramObj['writor'],
-            date: paramObj['date'],
-            title: paramObj['title'],
-            //gPeriodFrom: paramObj['postingPeriodFrom'],
-            //postingPeriodTo: paramObj['postingPeriodTo'],
-            //releaseYn: paramObj['releaseYn'],
-            description: paramObj['description']
-           
-        }).then(function onSuccess(res) {
+
+        parent.database.ref('/'+ compCd +'/notie/' + rowKey).set(paramObj).then(function onSuccess(res) {
             if(callback != null && callback != undefined) {
                 callback();
             }
@@ -132,8 +100,6 @@ $(document).ready(function () {
             console.log("ERROR!!!! " + err);
         });
     }
-
-
 
 
     //ifame height resize

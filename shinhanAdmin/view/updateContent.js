@@ -3,10 +3,18 @@
 $(document).ready(function () {
 
     const ROW_KEY = getParams().rowKey;
+    var userInfo = JSON.parse(window.sessionStorage.getItem('userInfo'));
+    var compCd = userInfo['compCd'];
+    const MAX_TAGS_CNT = 5;
+    
 
     /** start of components ***********************/
-    $('#releaseYn').selectpicker();
-    $('#category').selectpicker();
+    window.FakeLoader.init();
+
+
+    $('#relatedTags').tagsinput({
+        maxTags: MAX_TAGS_CNT
+    });
 
 
     //저장 버튼
@@ -35,30 +43,37 @@ $(document).ready(function () {
 
 
     /** start of functions ***********************/
-    //db에서 불러오는 함수 
     function fnRetrieve() {
+        window.FakeLoader.showOverlay();
         
-        firebase.database().ref('/videos/' + ROW_KEY).once('value').then(function(snapshot) {
+        parent.database.ref('/' + compCd + '/videos/' + ROW_KEY).once('value').then(function(snapshot) {
 
             var obj = snapshot.val();
             
             $('#title').val(obj['title']);
             $('#author').val(obj['author']);
             $('#description').val(obj['description']);
+            $('#view').val(obj['view']);
+
+            console.log(obj['view']);
 
             var tagArr = obj['tags'].split(' ');
             for(var i=0; i<tagArr.length; i++) {
                 $('#relatedTags').tagsinput('add', tagArr[i]);    
             }
             
+            $('#releaseYn').selectpicker();
+            fnGetCommonCmb('category', '#category', obj['categoryId']);
+
             $('#releaseYn').val(obj['releaseYn']);
             $('#releaseYn').selectpicker('refresh');
 
-            $('#category').val(obj['category']);
-            $('#category').selectpicker('refresh');
+            window.FakeLoader.hideOverlay();
 
             fnLoadVideo(obj['downloadURL']);
             drawCanvas(obj['thumbnail']);
+           
+            
         });
     }
 
@@ -136,7 +151,7 @@ $(document).ready(function () {
             var ctx = document.getElementById('canvas').getContext("2d");
 
             //canvas.drawImage() 함수를 사용하여 이미지 출력
-            ctx.drawImage( imgClo , 0, 0, 300, 150);
+            ctx.drawImage( imgClo , 0, 0, 320, 180);
             $('#canvas').attr('data-url', imgUrl);
        
         },false);
@@ -187,8 +202,10 @@ $(document).ready(function () {
     //저장
     function fnSave(callback) {
 
+        window.FakeLoader.showOverlay();
+
+
         var contentAuthor = $('#author').val();
-        var contentCategory = $('#category').val();
         
         var contentTagArr = $('#relatedTags').tagsinput('items');
         for(var i=0; i<contentTagArr.length; i++) {
@@ -202,55 +219,50 @@ $(document).ready(function () {
         var contentAddedTime = moment().unix();
         var title = $('#title').val();
         var releaseYn = $('#releaseYn').val();
+        var categoryId = $('#category').val();
+        var categoryNm = $('#category > option:selected').text();
+        var view = $('#view').val();
 
 
-        firebase.database().ref('videos/' + ROW_KEY + '/').update({
+        parent.database.ref('/' + compCd + '/videos/' + ROW_KEY + '/').update({
             downloadURL: downloadURL,
             author: contentAuthor,
-            category: contentCategory,
+            categoryId: categoryId,
+            categoryNm: categoryNm,
             tags: contentTag,
             description: contentDescription,
             date: contentAddedTime,
             thumbnail: thumbnailPath,
             title: title,
-            releaseYn: releaseYn
+            releaseYn: releaseYn,
+            view: view
         }).then(function onSuccess(res) {
+            window.FakeLoader.hideOverlay();
+            
             if(callback != null && callback != undefined) {
                 callback();
             }
         }).catch(function onError(err) {
             console.log("ERROR!!!! " + err);
+            window.FakeLoader.hideOverlay();
         });
     }
     
 
-    function setTagDatabase(contentTagArr, callback) {
-        for(var i=0; i<contentTagArr.length; i++) {
-            firebase.database().ref('tag/' + contentTagArr[i] + '/').update({
-                'tag': contentTagArr[i]
-            }).then(function onSuccess(res) {
-                if(callback != null && callback != undefined) {
-                    callback();
-                }
-            }).catch(function onError(err) {
-                console.log("ERROR!!!! " + err);
-            });
-        }
-    }
-
-
     function setVideoDatabase(rowId, paramObj, callback) {
 
-        firebase.database().ref('videos/' + rowId + '/').set({
+        parent.database.ref('/' + compCd + '/videos/' + rowId + '/').set({
             downloadURL: paramObj['downloadURL'],
             author: paramObj['author'],
-            category: paramObj['category'],
+            categoryId: paramObj['categoryId'],
+            categoryNm: paramObj['categoryNm'],
             tags: paramObj['tags'],
             description: paramObj['description'],
             date: paramObj['date'],
             thumbnail: paramObj['thumbnail'],
             title: paramObj['title'],
-            releaseYn: paramObj['releaseYn']
+            releaseYn: paramObj['releaseYn'],
+            view: paramObj['view']
         }).then(function onSuccess(res) {
             if(callback != null && callback != undefined) {
                 callback();
@@ -320,6 +332,62 @@ $(document).ready(function () {
         video.appendChild(source);
         
         video.load();
+    }
+
+
+    //combo 구성
+    function fnGetCommonCmb(option, selector, defaultValue) {
+
+        $('' + selector).html('');
+        $('' + selector).html('<option value="">전체</option>');
+
+        switch(option) {
+            case 'tag':
+                parent.database.ref('/' + compCd + '/tags/').once('value')
+                .then(function (snapshot) {
+                    var tagArr = snapshot.val();
+                    var optionArr = [];
+                
+                    $.each(tagArr, function(idx, tagObj) {
+                        var newOption = $('<option></option>');
+                        $(newOption).attr('value', tagArr[idx].value);
+                        $(newOption).text(tagArr[idx].value);
+
+                        if(tagArr[idx].value == defaultValue) {
+                            $(newOption).attr('selected', 'selected');
+                        }
+
+                        $(''+selector).append($(newOption));
+                    });
+
+                    $(''+selector).selectpicker();
+                });    
+                break;
+
+
+            case 'category':
+                    parent.database.ref('/' + compCd + '/categories/').once('value')
+                    .then(function (snapshot) {
+                        var catArr = snapshot.val();
+                        var optionArr = [];
+                    
+                        console.log(catArr)
+                        $.each(catArr, function(idx, catObj) {
+                            var newOption = $('<option></option>');
+                            $(newOption).attr('value', idx);
+                            $(newOption).text(catArr[idx].title);
+
+                            if(idx == defaultValue) {
+                                $(newOption).attr('selected', 'selected');
+                            }
+
+                            $(''+selector).append($(newOption));
+                        });
+    
+                        $(''+selector).selectpicker();
+                    });    
+                break; 
+        }
     }
     /** end of functions *************************/
 

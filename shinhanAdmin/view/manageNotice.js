@@ -2,28 +2,22 @@
 
 $(document).ready(function () {
 
+    var userObj = JSON.parse(window.sessionStorage.getItem('userInfo'));
+    var compCd = userObj['compCd'];
+
+
     /** start of components ***********************/
     window.FakeLoader.init();
 
-    $('#searchOpenYn').selectpicker();
-    $('#searchCategory').selectpicker();
-    $('#searhRelatedTag').selectpicker();
-    $('#searchCompany').selectpicker();
-    $('#searchRegDate').datepicker();
-    $('#date').datepicker();
-
-    $.datepicker.setDefaults({
+    $('#date').datepicker({
         dateFormat: 'yy-mm-dd' //Input Display Format 변경
     });
 
+    //fnGetCommonCmb('company', '#searchCompany');
 
-    var period = $('#searchPostingPeriod').daterangepicker({
-        locale: {
-            format: 'YYYY-MM-DD'
-        }
-    }, function(start, end) {
-        $('#searchPostingPeriod span').html(start.format('YYYY-MM-DD') + ' ~ ' + end.format('YYYY-MM-DD'));
-    });
+/*     $.datepicker.setDefaults({
+        dateFormat: 'yy-mm-dd' //Input Display Format 변경
+    }); */
 
 
     //행추가 버튼 -> 페이지 이동
@@ -68,6 +62,7 @@ $(document).ready(function () {
         $('#grid1').jsGrid("option", "data", []);
         fnRetrieve();
     });
+    /** end of components ***********************/
 
 
     /** start of grid ***********************/
@@ -133,8 +128,9 @@ $(document).ready(function () {
             var arr = $('#grid').jsGrid('option', 'data');
             
             fnGo('/view/updateNotice.html', {
-                'searchReleaseYn' : $('#searchReleaseYn').val(),
                 'searchTitle': $('#searchTitle').val(),
+                'searchDate': $('#date').val(),
+                'listUrl': '/view/manageNotice.html',
                 'rowKey': arr[args.itemIndex]['rowKey']
             });
         },
@@ -185,14 +181,14 @@ $(document).ready(function () {
     }
     
     //조회
-    function fnRetrieve(callback) {
+    function fnRetrieve() {
         var searchTitle = $('#title').val() || '';
         var searchDate = $('#date').val() || '';
 
         window.FakeLoader.showOverlay();
 
 
-        parent.database.ref('/' + '신한은행' + '/notie').once('value').then(function (snapshot) {   //log.console(searchㅅTitle)
+        parent.database.ref('/' + compCd + '/notie').once('value').then(function (snapshot) {   //log.console(searchㅅTitle)
 
             var catArr = snapshot.val();
             var rsltArr = [];
@@ -252,13 +248,44 @@ $(document).ready(function () {
     //삭제
     function fnDeleteDatabase(rowKey, callback) {
 
-        parent.database.ref('/' + '신한은행' + '/notie/' + rowKey + '/').remove().then(function onSuccess(res) {
+        parent.database.ref('/' + compCd + '/notie/' + rowKey + '/').remove().then(function onSuccess(res) {
             if(callback != null && callback != undefined) {
                 callback();
             }
         }).catch(function onError(err) {
             console.log("ERROR!!!! " + err);
         });
+    }
+
+
+    //combo 구성
+    function fnGetCommonCmb(option, selector, defaultValue) {
+
+        $('' + selector).html('');
+        $('' + selector).html('<option value="">전체</option>');
+
+        switch (option) {
+            case 'company':
+                parent.database.ref('/company/').once('value')
+                    .then(function (snapshot) {
+                        var arr = snapshot.val();
+
+                        $.each(arr, function (idx, val) {
+                            var newOption = $('<option></option>');
+                            $(newOption).attr('value', idx);
+                            $(newOption).text(val);
+
+                            if (idx == defaultValue) {
+                                $(newOption).attr('selected', 'selected');
+                            }
+
+                            $('' + selector).append($(newOption));
+                        });
+
+                        $('' + selector).selectpicker();
+                    });
+                break;
+        }
     }
     /** start of grid ***********************/
 
