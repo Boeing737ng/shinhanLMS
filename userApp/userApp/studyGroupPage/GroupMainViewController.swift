@@ -60,6 +60,6 @@ class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerV
 
 extension GroupMainViewController : IndicatorInfoProvider{
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo{
-        return IndicatorInfo(title: "스터디")
+        return IndicatorInfo(title: "CoP")
     }
 }
