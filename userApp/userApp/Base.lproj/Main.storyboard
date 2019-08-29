@@ -3138,8 +3138,9 @@
                                     <constraint firstAttribute="height" constant="130" id="UzW-sK-R2q"/>
                                 </constraints>
                             </view>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="질문내용을 작성해주세요." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Mpa-FK-zJv">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="질문내용을 작성해주세요." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Mpa-FK-zJv">
                                 <rect key="frame" x="16" y="100" width="382" height="746"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -3151,13 +3152,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Mpa-FK-zJv" firstAttribute="top" secondItem="gyR-8S-PjJ" secondAttribute="bottom" constant="16" id="2U9-SF-cdi"/>
-                            <constraint firstItem="l34-FS-Qpx" firstAttribute="bottom" secondItem="Mpa-FK-zJv" secondAttribute="bottom" constant="16" id="5QW-Lb-AIH"/>
-                            <constraint firstItem="l34-FS-Qpx" firstAttribute="trailing" secondItem="Mpa-FK-zJv" secondAttribute="trailing" constant="16" id="WgJ-dJ-YZx"/>
                             <constraint firstItem="l34-FS-Qpx" firstAttribute="top" secondItem="gyR-8S-PjJ" secondAttribute="bottom" constant="-40" id="bF6-eC-GXK"/>
                             <constraint firstItem="gyR-8S-PjJ" firstAttribute="width" secondItem="l34-FS-Qpx" secondAttribute="width" id="bQ4-1l-D8p"/>
                             <constraint firstItem="gyR-8S-PjJ" firstAttribute="centerX" secondItem="l34-FS-Qpx" secondAttribute="centerX" id="cYj-rx-Rvr"/>
-                            <constraint firstItem="Mpa-FK-zJv" firstAttribute="leading" secondItem="l34-FS-Qpx" secondAttribute="leading" constant="16" id="i9R-k2-HGY"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="l34-FS-Qpx"/>
                     </view>
