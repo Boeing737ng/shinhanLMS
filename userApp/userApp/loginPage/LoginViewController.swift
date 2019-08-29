@@ -29,12 +29,12 @@ class LoginViewController: UIViewController {
         userCompanyName = "신한은행"
         userDeptCode = "5608"
         userDeptName = "디지털사업부"
+    
+        // Do any additional setup after loading the view.
         
         keyboardHandling(idTextField)
-        
         LoadingView().setLoadingStyle(self)
         getThumbnailURL()
-        // Do any additional setup after loading the view.
     }
    
     @IBAction func onClickLoginBtn(_ sender: UIButton) {
@@ -52,7 +52,6 @@ class LoginViewController: UIViewController {
             login(id:userId, pwd: self.pwd)
         }
     }
-    
     
     // TODO:: Authentication funcion needs to be added
     func login(id:String, pwd:String) {
@@ -77,15 +76,6 @@ class LoginViewController: UIViewController {
             autoLoginIsSelected = false
         }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     func keyboardHandling(_ sender: UITextField) {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         
@@ -93,17 +83,14 @@ class LoginViewController: UIViewController {
     }
     
     @objc func keyboardWillShow(_ sender: Notification) {
-        NSLog("====== keyboardWillShow ======")
         self.view.frame.origin.y = -30
     }
     
     @objc func keyboardWillHide(_ sender: Notification) {
-        NSLog("====== keyboardWillShow ======")
         self.view.frame.origin.y = 0
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        NSLog("====== textFieldShouldReturn ======")
         textField.resignFirstResponder()
         return true
     }
@@ -146,8 +133,7 @@ class LoginViewController: UIViewController {
     }
     
     func isCachingCompleted() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { // Change `2.0` to the desired number of seconds.
-            // Code you want to be delayed
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             self.checkLoginUser()
             LoadingView().stopLoading()
         }
