@@ -33,6 +33,9 @@ class VideoReviewTableViewController: UITableViewController {
     }
     
     func getReviewFromDB() {
+        self.contentArray.removeAll()
+        self.dateArray.removeAll()
+        self.writerArray.removeAll()
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child(userCompanyCode + "/videos/" + selectedVideoId + "/review").observeSingleEvent(of: .value, with: { (snapshot) in
