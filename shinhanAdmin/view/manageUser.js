@@ -55,6 +55,8 @@ $(document).ready(function () {
         ]
         
     });
+  
+
     //data: clients,
       /** start of grid ***********************/
 

@@ -150,7 +150,7 @@ $(document).ready(function () {
                             });
                 },
                 align: "center",
-                width: 30
+                width: 15
             },
             { name: "title", title: '제목', type: "text", width: 200, editing: false, align: "left" },
             { name: "writor", title: "작성자", type: 'text', width: 100, editing: false, align: "left" },
@@ -161,16 +161,8 @@ $(document).ready(function () {
                     $(rslt).append(date);
                     return rslt;
                 }
-            },
-            { name: "postingPeriodFrom", title: "게시기간", type: 'text', width: 150, editing: false, align: "center", cellRenderer: function (item, value) {
-                var rslt = $("<td>").addClass("my-row-custom-class");
-                var startDate = moment(value['postingPeriodFrom'], 'YYYYMMDD').format('YYYY-MM-DD');
-                var endDate = moment(value['postingPeriodTo'], 'YYYYMMDD').format('YYYY-MM-DD');
-                
-                $(rslt).append(startDate + ' ~ ' + endDate);
-                return rslt;
-            } },
-            { name: "releaseYn", title: "공개여부", type: 'text', width: 100, editing: false, align: "center" }
+            }
+        
 
         ]
     });
@@ -204,20 +196,14 @@ $(document).ready(function () {
 
             var catArr = snapshot.val();
             var rsltArr = [];
-            var searchPostingPeriod = $('#searchPostingPeriod > span').text() || '';
-            var searchPostingPeriodFrom = $('#searchPostingPeriod').data('daterangepicker').startDate;
-            var searchPostingPeriodTo = $('#searchPostingPeriod').data('daterangepicker').endDate;
+
 
             $.each(catArr, function (idx, studyObj) {
 
                 if (
                     ((searchTitle == '') || (studyObj['title'].indexOf(searchTitle) > -1)) &&
-                    ((searchDate == '') || moment(studyObj['date'], 'YYYYMMDD').format('YYYYMMDD') == moment(searchDate, 'YYYY-MM-DD').format('YYYYMMDD')) &&
-                    (
-                        (searchPostingPeriod == '') || 
-                        (searchPostingPeriodFrom.isBefore(moment(studyObj['postingPeriodFrom'], 'YYYYMMDD')) && 
-                        searchPostingPeriodTo.isAfter(moment(studyObj['postingPeriodTo'], 'YYYYMMDD')))
-                    )
+                    ((searchDate == '') || moment(studyObj['date'], 'YYYYMMDD').format('YYYYMMDD') == moment(searchDate, 'YYYY-MM-DD').format('YYYYMMDD')) 
+
                 ) {
                     var mbrCnt = Object.keys(studyObj['member'] || []).length + 1;
                     studyObj['participant'] = mbrCnt;

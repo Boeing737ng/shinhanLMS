@@ -8,7 +8,7 @@ $(document).ready(function() {
 
 $("#grid1").jsGrid({
     width: "100%",
-    height: "248px",
+    height: "241px",
     //inserting: true,
     //editing: true,
     sorting: true,
@@ -66,7 +66,7 @@ function fnRetrieve1() {
 /*공지사항관리*/
 $("#grid2").jsGrid({
     width: "100%",
-    height: "248px",
+    height: "241px",
     //inserting: true,
     //editing: true,
     sorting: true,
@@ -121,7 +121,7 @@ function fnRetrieve2() {
         $('#grid2').find('tr.jsgrid-row:eq(0)').click(); //첫번째 row click
     });
 }
-
+/*************************차트***************************/
 
 // Set new default font family and font color to mimic Bootstrap's default styling
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
