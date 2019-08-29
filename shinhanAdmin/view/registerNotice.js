@@ -15,7 +15,7 @@ $(document).ready(function () {
     $('#regDate').text(moment().format('YYYY-MM-DD'));
     var userInfo = JSON.parse(window.sessionStorage.getItem('userInfo'));
     
-    $('#writor').text(userInfo['empNm']);
+    $('#writor').text(userInfo['name']);
 
     
     $('#daterange').daterangepicker({
