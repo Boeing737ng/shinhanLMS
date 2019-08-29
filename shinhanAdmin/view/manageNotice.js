@@ -23,7 +23,12 @@ $(document).ready(function () {
     //행추가 버튼 -> 페이지 이동
     $('#btnAdd').on('click', function(e) {
         e.preventDefault();
-        window.location.href = "/view/registerNotice.html";
+        
+        fnGo('/view/registerNotice.html', {
+            'searchTitle': $('#searchTitle').val(),
+            'searchDate': $('#date').val(),
+            'listUrl': '/view/manageNotice.html'
+        });
     });
 
 
@@ -287,12 +292,59 @@ $(document).ready(function () {
                 break;
         }
     }
+
+
+    function getParams() {
+        var param = {};
+     
+        // 현재 페이지의 url
+        var url = decodeURIComponent(location.href);
+        url = decodeURIComponent(url);
+        
+        if(url.split('?').length > 1) {
+
+            var params = url.split('?')[1];
+
+            if(params.length == 0) {
+                return param;
+            }
+
+            params = params.split("&");
+
+            var size = params.length;
+            var key, value;
+
+            for(var i=0 ; i < size ; i++) {
+                key = params[i].split("=")[0];
+                value = params[i].split("=")[1];
+        
+                param[key] = value;
+            }
+        }
+        
+        return param;
+    }
+
+
+    //초기화
+    function fnInit() {
+
+        var searchParam = getParams();
+        
+        if(Object.keys(searchParam).length > 0) {
+            $('#title').val(searchParam['searchTitle']);
+            $('#date').val(searchParam['searchDate']).trigger('change');
+        }
+
+        fnRetrieve();
+
+    }
     /** start of grid ***********************/
 
 
 
 
     resizeFrame();
-    fnRetrieve();
+    fnInit();
 
 });

@@ -8,15 +8,14 @@ $(document).ready(function () {
 
     var userInfo = JSON.parse(window.sessionStorage.getItem('userInfo'));
     var compCd = userInfo['compCd'];
-    
+
     $('#writor').text(userInfo['name']);
 
 
     //목록 버튼
     $('#btnList').on('click', function(e) {
         e.preventDefault();
-        window.location.href = "/view/manageNotice.html";
-     
+        fnGoList();
     });
     
 
@@ -40,9 +39,64 @@ $(document).ready(function () {
     /** end of components *************************/
 
 
+    function getParams() {
+        var param = {}
+     
+        // 현재 페이지의 url
+        var url = decodeURIComponent(location.href);
+        url = decodeURIComponent(url);
+        
+        if(url.split('?').length > 1) {
+
+            var params = url.split('?')[1];
+
+            if(params.length == 0) {
+                return param;
+            }
+
+            params = params.split("&");
+
+            var size = params.length;
+            var key, value;
+
+            for(var i=0 ; i < size ; i++) {
+                key = params[i].split("=")[0];
+                value = params[i].split("=")[1];
+        
+                param[key] = value;
+            }
+        }
+        
+        return param;
+    }
+    
+    
     //목록 이동
     function fnGoList() {
-        var url = '/view/manageNotice.html';
+        var paramObj = getParams();
+        var url = paramObj['listUrl'];
+
+        fnGo(url, paramObj);
+    }
+
+
+    function fnGo(url, paramObj) {
+        var form = $('<form></form>');
+        $(form).attr('method', 'get');
+        $(form).attr('action', url);
+        
+        $.each(paramObj, function(key, value) {
+            var input = $('<input type="hidden"/>');
+            $(input).attr('name', key);
+            $(input).val(value);
+
+            $(form).append(input);
+        });
+
+        console.log(paramObj);
+
+        $('body').append(form);
+        $(form).submit();
     }
 
 
