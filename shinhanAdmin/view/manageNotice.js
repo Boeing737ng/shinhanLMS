@@ -130,6 +130,7 @@ $(document).ready(function () {
             fnGo('/view/updateNotice.html', {
                 'searchTitle': $('#searchTitle').val(),
                 'searchDate': $('#date').val(),
+                'listUrl': '/view/manageNotice.html',
                 'rowKey': arr[args.itemIndex]['rowKey']
             });
         },

@@ -86,8 +86,8 @@ $(document).ready(function () {
     
     //목록 이동
     function fnGoList() {
-        var url = '/view/manageNotice.html';
         var paramObj = getParams();
+        var url = paramObj['listUrl'];
 
         fnGo(url, paramObj);
     }
