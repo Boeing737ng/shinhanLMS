@@ -2,6 +2,7 @@
 (function ($) {
     "use strict";
 
+    onSignOut();
 
     /*==================================================================
     [ Focus input ]*/
@@ -107,6 +108,16 @@
             if(callback != null && callback != undefined) {
                 callback();
             }
+        });
+    }
+
+
+    //세션 끊기
+    function onSignOut() {
+        firebase.auth().signOut().then(function (success) {
+            window.sessionStorage.setItem('userInfo', null); //세션스토리지에 있는 내용 삭제
+        }).catch(function (error) {
+            console.log(error);
         });
     }
     
