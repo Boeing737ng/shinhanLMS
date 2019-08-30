@@ -39,10 +39,15 @@ class VideoReviewTableViewController: UITableViewController {
         
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child(userCompanyCode + "/videos/" + selectedVideoId + "/review").observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child(userCompanyCode + "/videos/" + selectedVideoId + "/review").queryOrdered(byChild: "date").observeSingleEvent(of: .value, with: { (snapshot) in
+            
             if snapshot.childrenCount == 0 {
                 return
             }
+            
+            //print(snapshot)
+            
+            //var idx: Int = 0
             
             let reviewInfo = snapshot.value as? Dictionary<String,Any>;()
             
@@ -60,7 +65,7 @@ class VideoReviewTableViewController: UITableViewController {
                 let formattedDate = formatter.string(from: ts as Date)
                 
 //                print(content)
-//                print(date)
+//                print(review.key)
 //                print(writer)
 //                print("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n")
                 

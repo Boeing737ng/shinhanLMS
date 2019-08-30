@@ -19,15 +19,15 @@ class VideoReviewWriteViewController: UIViewController, UITextViewDelegate {
         // Do any additional setup after loading the view.
         
         
-//        let date = NSDate().timeIntervalSince1970
-//        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-//        print(date)
-//
-//        let myTimeInterval = TimeInterval(date)
-//        let time = NSDate(timeIntervalSince1970: TimeInterval(myTimeInterval))
-//
-//        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-//        print(time)
+        //        let date = NSDate().timeIntervalSince1970
+        //        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+        //        print(date)
+        //
+        //        let myTimeInterval = TimeInterval(date)
+        //        let time = NSDate(timeIntervalSince1970: TimeInterval(myTimeInterval))
+        //
+        //        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+        //        print(time)
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -58,13 +58,19 @@ class VideoReviewWriteViewController: UIViewController, UITextViewDelegate {
         }
     }
     
-//    func getCurrentDate() -> String {
-//        let date = Date()
-//        let dateFormat = DateFormatter()
-//        dateFormat.dateFormat = "yyyy/MM/dd"
-//        let dateString = dateFormat.string(from: date)
-//        return dateString
-//    }
+    //    func getCurrentDate() -> String {
+    //        let date = Date()
+    //        let dateFormat = DateFormatter()
+    //        dateFormat.dateFormat = "yyyy/MM/dd"
+    //        let dateString = dateFormat.string(from: date)
+    //        return dateString
+    //    }
+    
+    func getCurrentDate() -> String {
+        let date = NSDate().timeIntervalSince1970
+        let dateString = String(date)
+        return dateString
+    }
     
     func onGoBack() {
         let transition: CATransition = CATransition()
@@ -80,12 +86,13 @@ class VideoReviewWriteViewController: UIViewController, UITextViewDelegate {
         
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child(userCompanyCode + "/videos/" + selectedVideoId + "/review").childByAutoId().setValue([
+        ref.child(userCompanyCode + "/videos/" + selectedVideoId + "/review").child(String(UInt(NSDate().timeIntervalSince1970 * 1000000))).setValue([
             "content": tvContent.text as? String,
-            "date": NSDate().timeIntervalSince1970,
+            "date": Double(NSDate().timeIntervalSince1970),
             "writer": userName
             ])
         
+        //print(String(UInt(NSDate().timeIntervalSince1970 * 1000000)))
         onGoBack()
     }
     
