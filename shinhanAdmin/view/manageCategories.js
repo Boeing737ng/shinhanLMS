@@ -55,6 +55,7 @@ $(document).ready(function () {
                     return $("<input>").attr("type", "checkbox")
                             .addClass('selectionCheckbox')
                             .prop("checked", $.inArray(item, selectedItems) > -1)
+                            .prop('disabled', (item.rowKey == 'REQUIRED'))
                             .on("change", function () {
                                 $(this).is(":checked") ? selectItem(item) : unselectItem(item);
                             });
