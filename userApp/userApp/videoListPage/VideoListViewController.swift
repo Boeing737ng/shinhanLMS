@@ -38,13 +38,13 @@ class VideoListViewController: UIViewController {
     func setDropdownBarText() {
         var index:Int = 1
         var ref: DatabaseReference!
-        dropdownCategoryList.append("전체보기")
+        dropdownCategoryList.append("전체보기  ")
         ref = Database.database().reference()
         ref.child(userCompanyCode + "/categories").queryLimited(toLast: 5).observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? Dictionary<String,Any>;()
             for video in value! {
                 let categoryInfo = video.value as? Dictionary<String,Any>;()
-                dropdownCategoryList.append(categoryInfo!["title"] as! String)
+                dropdownCategoryList.append(categoryInfo!["title"] as! String + "  ")
                 categoryDict[index] = video.key
                 index += 1
             }
