@@ -18,7 +18,7 @@ $(document).ready(function () {
     });
     
     
-    $('#releaseYn').selectpicker();
+    $('#requireYn').selectpicker();
 
     
     fnGetCommonCmb('category', '#category');
@@ -372,9 +372,9 @@ $(document).ready(function () {
         }else if(isEmpty($('#author').val())) {
             param = '강사명';
             target = $('#author');
-        }else if(isEmpty($('#releaseYn').val())) {
-            param = '공개여부';
-            target = $('#releaseYn');
+        }else if(isEmpty($('#requireYn').val())) {
+            param = '필수강좌여부';
+            target = $('#requireYn');
         }else if(isEmpty($('#category').val())) {
             param = '카테고리';
             target = $('#category');
@@ -422,7 +422,7 @@ $(document).ready(function () {
                     var contentTag = contentTagArr.join(' ');
                     var contentDescription = $('#description').val();
                     var title = $('#title').val();
-                    var releaseYn = $('#releaseYn').val();
+                    var requireYn = $('#requireYn').val();
 
                     setVideoDatabase(rowId, {
                         downloadURL: videoPath,
@@ -434,7 +434,7 @@ $(document).ready(function () {
                         description: contentDescription,
                         date: moment().format('YYYYMMDDHHmmss'),
                         title: title,
-                        releaseYn: releaseYn
+                        requireYn: requireYn
                     }, callback);
                 });
             });
@@ -455,7 +455,7 @@ $(document).ready(function () {
             date: paramObj['date'],
             thumbnail: paramObj['thumbnail'],
             title: paramObj['title'],
-            releaseYn: paramObj['releaseYn'],
+            requireYn: paramObj['requireYn'],
             view: 0
         }).then(function onSuccess(res) {
             if(callback != null && callback != undefined) {

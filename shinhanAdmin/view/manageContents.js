@@ -22,7 +22,7 @@ $(document).ready(function () {
         e.preventDefault();
 
         fnGo('/view/registerContent.html', {
-            'searchReleaseYn' : $('#searchReleaseYn').val(),
+            'searchRequireYn' : $('#searchRequireYn').val(),
             'searchCategory' : $('#searchCategory').val(),
             'searhRelatedTag': $('#searhRelatedTag').val(),
             'searchTitle': $('#searchTitle').val()
@@ -115,7 +115,7 @@ $(document).ready(function () {
             var arr = $('#grid').jsGrid('option', 'data');
             
             fnGo('/view/updateContent.html', {
-                'searchReleaseYn' : $('#searchReleaseYn').val(),
+                'searchRequireYn' : $('#searchRequireYn').val(),
                 'searchCategory' : $('#searchCategory').val(),
                 'searhRelatedTag': $('#searhRelatedTag').val(),
                 'searchTitle': $('#searchTitle').val(),
@@ -190,13 +190,13 @@ $(document).ready(function () {
             } },
 
             //{ name: "description", title: "설명", type: 'textarea', align: "left", width: 200 },
-            { name: "releaseYn", title: "공개여부", type: 'select', items: [
+            { name: "requireYn", title: "필수강좌여부", type: 'select', items: [
                 { Name: "전체", Id: "" },
                 { Name: "Y", Id: "Y" },
                 { Name: "N", Id: "N" }
             ],valueField: "Id", textField: "Name", width: 100, editing: true, validate: {
                 validator: 'required', 
-                message: '공개여부 는 필수입력 입니다.'
+                message: '필수강좌여부 는 필수입력 입니다.'
             }, align: "center" },
             { type: "control" } //edit control
         ]
@@ -258,18 +258,18 @@ $(document).ready(function () {
     //조회
     function fnRetrieve(searchParam) {
         
-        var varsearchReleaseYn;
+        var searchRequireYn;
         var searchCat;
         var searchTag;
         var searchTitle;
 
         if(!isEmpty(searchParam)) {
-            searchReleaseYn = searchParam['searchReleaseYn'] || '';
+            searchRequireYn = searchParam['searchRequireYn'] || '';
             searchCat = searchParam['searchCategory'] || '';
             searchTag = searchParam['searchRelatedTag'] || '';
             searchTitle = searchParam['searchTitle'] || '';
         }else {
-            searchReleaseYn = $('#searchReleaseYn').val() || '';
+            searchRequireYn = $('#searchRequireYn').val() || '';
             searchCat = $('#searchCategory').val() || '';
             searchTag = $('#searhRelatedTag').val() || '';
             searchTitle = $('#searchTitle').val() || '';
@@ -287,7 +287,7 @@ $(document).ready(function () {
                 var trgtTagArr = (catObj['tags'] || '').split(' ');
 
                 if( 
-                    ((searchReleaseYn == '') || (searchReleaseYn == catObj['releaseYn'])) &&
+                    ((searchRequireYn == '') || (searchRequireYn == catObj['requireYn'])) &&
                     ((searchCat == '') || (searchCat == catObj['categoryId'])) &&
                     ((searchTag == '') || (trgtTagArr.indexOf(searchTag) > -1)) &&
                     ((searchTitle == '') || (catObj['title'].indexOf(searchTitle)) > -1)
@@ -364,7 +364,7 @@ $(document).ready(function () {
             date: paramObj['date'],
             thumbnail: paramObj['thumbnail'],
             title: paramObj['title'],
-            releaseYn: paramObj['releaseYn']
+            requireYn: paramObj['requireYn']
         }).then(function onSuccess(res) {
             if(callback != null && callback != undefined) {
                 callback();
@@ -451,13 +451,13 @@ $(document).ready(function () {
 
     function fnInit() {
 
-        $('#searchReleaseYn').selectpicker();
+        $('#searchRequireYn').selectpicker();
 
         var searchParam = getParams();
         
         if(Object.keys(searchParam).length > 0) {
-            $('#searchReleaseYn').val(searchParam['searchReleaseYn']);
-            $('#searchReleaseYn').selectpicker('refresh');
+            $('#searchRequireYn').val(searchParam['searchRequireYn']);
+            $('#searchRequireYn').selectpicker('refresh');
             
             //$('#searchCategory').val(searchParam['searchCategory']);
             //$('#searchCategory').selectpicker('refresh');
@@ -468,7 +468,7 @@ $(document).ready(function () {
             fnGetCommonCmb('category', '#searchCategory', searchParam['searchCategory']);
 
             fnRetrieve({
-                searchReleaseYn: searchParam['searchReleaseYn'],
+                searchRequireYn: searchParam['searchRequireYn'],
                 searchCategory: searchParam['searchCategory'],
                 searchTitle: searchParam['searchTitle'],
                 searchRelatedTag: searchParam['searhRelatedTag'] 

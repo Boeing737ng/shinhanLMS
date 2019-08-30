@@ -62,11 +62,11 @@ $(document).ready(function () {
                 $('#relatedTags').tagsinput('add', tagArr[i]);    
             }
             
-            $('#releaseYn').selectpicker();
+            $('#requireYn').selectpicker();
             fnGetCommonCmb('category', '#category', obj['categoryId']);
 
-            $('#releaseYn').val(obj['releaseYn']);
-            $('#releaseYn').selectpicker('refresh');
+            $('#requireYn').val(obj['requireYn']);
+            $('#requireYn').selectpicker('refresh');
 
             window.FakeLoader.hideOverlay();
 
@@ -177,9 +177,9 @@ $(document).ready(function () {
         }else if(isEmpty($('#author').val())) {
             param = '강사명';
             target = $('#author');
-        }else if(isEmpty($('#releaseYn').val())) {
-            param = '공개여부';
-            target = $('#releaseYn');
+        }else if(isEmpty($('#requireYn').val())) {
+            param = '필수강좌여부';
+            target = $('#requireYn');
         }else if(isEmpty($('#category').val())) {
             param = '카테고리';
             target = $('#category');
@@ -218,7 +218,7 @@ $(document).ready(function () {
         var contentDescription = $('#description').val();
         var contentAddedTime = moment().unix();
         var title = $('#title').val();
-        var releaseYn = $('#releaseYn').val();
+        var requireYn = $('#requireYn').val();
         var categoryId = $('#category').val();
         var categoryNm = $('#category > option:selected').text();
         var view = $('#view').val();
@@ -234,7 +234,7 @@ $(document).ready(function () {
             date: contentAddedTime,
             thumbnail: thumbnailPath,
             title: title,
-            releaseYn: releaseYn,
+            requireYn: requireYn,
             view: view
         }).then(function onSuccess(res) {
             window.FakeLoader.hideOverlay();
@@ -261,7 +261,7 @@ $(document).ready(function () {
             date: paramObj['date'],
             thumbnail: paramObj['thumbnail'],
             title: paramObj['title'],
-            releaseYn: paramObj['releaseYn'],
+            requireYn: paramObj['requireYn'],
             view: paramObj['view']
         }).then(function onSuccess(res) {
             if(callback != null && callback != undefined) {
