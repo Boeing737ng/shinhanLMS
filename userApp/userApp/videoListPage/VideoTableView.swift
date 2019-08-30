@@ -94,6 +94,12 @@ class VideoTableView: UITableView, UITableViewDelegate, UITableViewDataSource{
         return videoIdArray.count
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let videoId = videoIdArray[indexPath.row]
+        selectedVideoId = videoId
+        TabViewController().goToDetailPage()
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         print("CELL")
         let cell = tableView.dequeueReusableCell(withIdentifier: "VideoListCell") as! VideoListCell
