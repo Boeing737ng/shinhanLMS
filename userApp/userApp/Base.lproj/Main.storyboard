@@ -3220,7 +3220,7 @@
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WFF-N1-kBB">
                                 <rect key="frame" x="16" y="130" width="382" height="1"/>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" red="0.5961360710526481" green="0.5961360710526481" blue="0.5961360710526481" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="Db4-ez-Lx9"/>
                                 </constraints>
