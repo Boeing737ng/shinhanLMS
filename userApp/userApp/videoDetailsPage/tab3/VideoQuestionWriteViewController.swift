@@ -11,7 +11,7 @@ import Firebase
 
 class VideoQuestionWriteViewController: UIViewController, UITextViewDelegate {
     
-    @IBOutlet weak var tvTitle: UITextView!
+    @IBOutlet weak var tfTitle: UITextField!
     @IBOutlet weak var tvContent: UITextView!
     
     override func viewDidLoad() {
@@ -73,7 +73,7 @@ class VideoQuestionWriteViewController: UIViewController, UITextViewDelegate {
         ref.child(userCompanyCode + "/videos/" + selectedVideoId + "/qnaBoard").childByAutoId().setValue([
             "content": tvContent.text as? String,
             "date": getCurrentDate(),
-            "title": tvTitle.text as? String,
+            "title": tfTitle.text as? String,
             "writer": userName
             ])
         
