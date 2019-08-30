@@ -15,70 +15,114 @@
 //- User's Playlist
 
 import UIKit
+import Firebase
 
-class MyPageViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource{
+class MyPageViewController: UIViewController{
     
-    var img = ["fall.jpg", "fall.jpg", "fall.jpg", "fall.jpg", "fall.jpg"]
-    var item = ["AWS", "Java", "Swift", "C", "C++"]
-    var item2 = ["은행 서비스 1팀 스터디", "은행 서비스 2팀 스터디", "은행 서비스 3팀 스터디", "은행 서비스 4팀 스터디", "은행 서비스 5팀 스터디"]
+
+    
+    var textArray = ["","",""]
+    var authorArray = ["","",""]
+    var dataReceived:Bool = false
+    
+    var dbingArray = Array<String>()
+    var dbedArray = Array<String>()
+    var dbnameArray = Array<String>()
+    var dbfieldArray = Array<String>()
+    var dbgroupArray = Array<String>()
+
+    
     //@IBOutlet weak var taglbl: UILabel!
     
     @IBOutlet weak var fieldlbl: UILabel!
     @IBOutlet weak var namelbl: UILabel!
+    
     @IBOutlet weak var edLecture: UILabel!
     @IBOutlet weak var imgLecture: UILabel!
     @IBOutlet weak var questionlbl: UILabel!
+
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    var playnum: Int = 0
+    var plednum: Int = 0
+    
+    func getDataFromDB(){
+       clearArrays()
+//        var dataURL:String = "user" + userNo
+        var dataURL:String = "user/201302493/playList"
         
-        return item.count
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? Dictionary<String, Any>;()
+            for ing in value! {
+                let statusD = ing.value as! Dictionary<String, Any>;()
+                let status = statusD["state"] as! String
+                self.dbingArray.append(status)
+                
+                if status == "playing"{
+                   self.playnum += 1
+               }else{
+                   self.plednum += 1
+                }
+            }
+           self.imgLecture.text = "\(self.playnum)"
+            self.edLecture.text = "\(self.plednum)"
+            self.dataReceived = true
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+        }
+    
+    func getNamePartDB(){
+        clearArrays()
+        var dataURL:String = "user/201302493"
+//        var dataURL:String = ""
+//        dataURL = "user/" + userNo
+        
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? Dictionary<String, Any>;()
+            let nameD = value as! Dictionary<String, Any>;()
+            let partD = value as! Dictionary<String, Any>;()
+            let name = nameD["name"] as! String
+            let part = partD["department"] as! String
+            self.dbnameArray.append(name)
+            self.dbfieldArray.append(part)
+            
+            self.namelbl.text = "\(self.dbnameArray[0])"
+            self.fieldlbl.text = "\(self.dbfieldArray[0])"
+            
+            self.dataReceived = true
+        }) { (error) in
+            print(error.localizedDescription)
+        }
     }
     
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tagCell", for: indexPath)
-        //cell.bounds.size.width
-        let title = UILabel(frame: CGRect(x: 13, y: 15, width: 100, height: 40))
-        title.textColor = UIColor.white
-        title.backgroundColor = UIColor.blue
-        title.text = item[(indexPath as NSIndexPath).row]
-        title.textAlignment = .center
-        cell.contentView.addSubview(title)
-        
-        
-        //title.layer.cornerRadius = 100
-        //  let v = UIView()
-        //  v.frame.size(
-        
-        
-        return cell
+    func clearArrays() {
+        dbedArray.removeAll()
+        dbingArray.removeAll()
+        dbnameArray.removeAll()
+        dbfieldArray.removeAll()
+        dbgroupArray.removeAll()
     }
-    
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //        thirdTable.delegate = self
-        //        thirdTable.dataSource = self
-        //        thirdTable.register(UITableViewCell.self, forCellReuseIdentifier: "classCell")
-        //
-        //        fourthTable.delegate = self
-        //        fourthTable.dataSource = self
-        //        fourthTable.register(UITableViewCell.self, forCellReuseIdentifier: "studyCell")
-        // Do any additional setup after loading the view.
+        getDataFromDB()
+        getNamePartDB()
+//        self.imgLecture.text = "\(self.playnum)"
+//        RunLoop.current.add(timer, forMode: RunLoop.Mode.common)
+//        print("======================")
+//        print("======= \(dbingArray)")
+//        imgLecture.text = "\(dbingArray.count)"
+
     }
     
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
+    override func viewDidAppear(_ animated: Bool) {
+        print("======= \(dbingArray)")
+    }
+
 }
