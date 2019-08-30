@@ -185,8 +185,13 @@ $(document).ready(function () {
 
 
 
-  // 차트
-  var a = 15000;
+
+
+
+
+
+
+
   var ctx = document.getElementById("view_count_chart");
   var myBarChart = new Chart(ctx, {
     type: 'bar',
@@ -270,7 +275,13 @@ $(document).ready(function () {
   });
 
 
+
+
+
   //resize frame height
   resizeFrame();
+
+
+
 
 });
