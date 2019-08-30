@@ -118,7 +118,9 @@ $(document).ready(function () {
       $.each(catArr, function (idx, studyObj) {
         studyObj['rowKey'] = idx;
         rsltArr.push(studyObj);
+        console.log(studyObj);
       });
+      
 
       //등록일자 기준 내림차순
       rsltArr.sort(function(a, b) { 
@@ -188,10 +190,37 @@ $(document).ready(function () {
 
 
 
+/***************차트표현하는 함수**************** */
+
+  function fnRetrieve3() {
+
+    parent.database.ref('/' + compCd + '/notie').once('value').then(function (snapshot) {
+
+     
+      var catArr = snapshot.val();
+      var rsltArr = [];
+
+      $.each(catArr, function (idx, studyObj) {
+        studyObj['rowKey'] = idx;
+        rsltArr.push(studyObj);
+        console.log(studyObj);
+      });
+      
+
+      //등록일자 기준 내림차순
+      rsltArr.sort(function(a, b) { 
+        var bDate = moment(b.date, 'YYYYMMDD').unix();
+        var aDate = moment(a.date, 'YYYYMMDD').unix();  
+        return bDate - aDate;
+      });
 
 
+    });
 
 
+  
+
+  a=10000
   var ctx = document.getElementById("view_count_chart");
   var myBarChart = new Chart(ctx, {
     type: 'bar',
@@ -276,8 +305,8 @@ $(document).ready(function () {
 
 
 
-
-
+  }
+  fnRetrieve3();
   //resize frame height
   resizeFrame();
 
