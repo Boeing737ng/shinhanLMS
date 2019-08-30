@@ -25,18 +25,27 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
         
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child("user/201302493/playList/playing").observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child("user/201302493/playList/").observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             let value = snapshot.value as? NSDictionary
             for video in value! {
+                if self.playingVideoIdArray.count == 3 {
+                    print("-------ARRAY SIZE IS FULL------")
+                    break
+                }
                 let videoDict = video.value as! Dictionary<String, Any>;()
-                let videoId = video.key as! String
-                let title = videoDict["title"] as! String
-                let author = videoDict["author"] as! String
-                self.playingVideoIdArray.append(videoId)
-                self.playingTitleArray.append(title)
-                self.playingAuthorArray.append(author)
-                
+                print(videoDict)
+                let status = videoDict["status"] as! String
+                if status == "playing" {
+                    let videoId = video.key as! String
+                    let title = videoDict["title"] as! String
+                    let author = videoDict["author"] as! String
+                    self.playingVideoIdArray.append(videoId)
+                    self.playingTitleArray.append(title)
+                    self.playingAuthorArray.append(author)
+                } else {
+                    continue
+                }
             }
             self.dataReceived = true
             self.reloadData()
