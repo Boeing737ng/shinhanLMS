@@ -17,7 +17,7 @@ $(document).ready(function () {
     data: [],
 
     fields: [
-      { name: "studyName", title: '스터디명', type: "text", width: 120, editing: false, align: "center" },
+      { name: "studyname", title: '스터디명', type: "text", width: 120, editing: false, align: "center" },
       {
         name: "date", title: "등록일자", type: 'text', width: 150, editing: false, align: "center", cellRenderer: function (item, value) {
           var rslt = $("<td>").addClass("my-row-custom-class");
@@ -38,26 +38,26 @@ $(document).ready(function () {
   function fnRetrieve1() {
     window.FakeLoader.showOverlay();
 
-    var searchStudy = $('#studyName').val() || '';//스터디명
+    var searchStudy = $('#studyname').val() || '';//스터디명
     var searchDate = $('#date').val() || '';//등록일자
     var searchCreator = $('#creator').val() || '';//참여인원
 
 
     //searchCompany = searchCompany.toLowerCase();
 
-    parent.database.ref('/' + compCd + '/study').once('value').then(function (snapshot) {
+    parent.database.ref('/58' +'/study').once('value').then(function (snapshot) {
 
       var catArr = snapshot.val();
       var rsltArr = [];
 
       $.each(catArr, function (idx, studyObj) {
         if (
-          ((searchStudy == '') || (studyObj['studyName'].indexOf(searchStudy) > -1))
-
-
+          ((searchStudy == '') || (studyObj['studyname'].indexOf(searchStudy) > -1))
         ) {
-          var mbrCnt = Object.keys(studyObj['members'] || []).length + 1;
+          var mbrCnt = Object.keys(studyObj['member'] || []).length;
           studyObj['participant'] = mbrCnt;
+
+
 
           rsltArr.push(studyObj);
         }
@@ -114,13 +114,13 @@ $(document).ready(function () {
 
       var catArr = snapshot.val();
       var rsltArr = [];
-
+      
       $.each(catArr, function (idx, studyObj) {
         studyObj['rowKey'] = idx;
         rsltArr.push(studyObj);
-        console.log(studyObj);
       });
-      
+
+
 
       //등록일자 기준 내림차순
       rsltArr.sort(function(a, b) { 
@@ -130,7 +130,6 @@ $(document).ready(function () {
       });
 
       $("#grid2").jsGrid("option", "data", rsltArr);
-
       window.FakeLoader.hideOverlay();
 
     });
@@ -193,34 +192,33 @@ $(document).ready(function () {
 /***************차트표현하는 함수**************** */
 
   function fnRetrieve3() {
-
-    parent.database.ref('/' + compCd + '/notie').once('value').then(function (snapshot) {
-
-     
+  
+    parent.database.ref('/' + compCd + '/videos').once('value').then(function (snapshot) {
+      var view=[];
+      var title=[];
       var catArr = snapshot.val();
-      var rsltArr = [];
+      var chartArr = [];
 
-      $.each(catArr, function (idx, studyObj) {
-        studyObj['rowKey'] = idx;
-        rsltArr.push(studyObj);
-        console.log(studyObj);
-      });
       
 
-      //등록일자 기준 내림차순
-      rsltArr.sort(function(a, b) { 
+      $.each(catArr, function (idx, chartObj) {
+        chartObj['rowKey'] = idx;
+        
+        //chartArr.push(chartObj);
+
+        view.push(chartObj['view']); //조회수정보
+        title.push(chartObj['title']) //동영상조회수
+
+      });
+
+      //조회수기준 내림차순(기능구현안됨)
+      /*chartArr.sort(function(a, b) { 
         var bDate = moment(b.date, 'YYYYMMDD').unix();
         var aDate = moment(a.date, 'YYYYMMDD').unix();  
         return bDate - aDate;
-      });
-
-
-    });
-
-
+      });*/
   
 
-  a=10000
   var ctx = document.getElementById("view_count_chart");
   var myBarChart = new Chart(ctx, {
     type: 'bar',
@@ -231,7 +229,7 @@ $(document).ready(function () {
         backgroundColor: "#4e73df",
         hoverBackgroundColor: "#2e59d9",
         borderColor: "#4e73df",
-        data: [a, 5312, 6251, 7841, 9821, 14984],
+        data: view, 
       }],
     },
     options: {
@@ -245,42 +243,42 @@ $(document).ready(function () {
         }
       },
       scales: {
-        xAxes: [{
-          time: {
-            unit: 'month'
-          },
-          gridLines: {
-            display: false,
-            drawBorder: false
-          },
-          ticks: {
-            maxTicksLimit: 6
-          },
-          maxBarThickness: 25,
-        }],
-        yAxes: [{
-          ticks: {
-            min: 0,
-            max: 15000,
-            maxTicksLimit: 10,
-            padding: 10,
-            // Include a dollar sign in the ticks
-            callback: function (value, index, values) {
-              return number_format(value) + ' 회';
+          xAxes: [{
+            time: {
+              unit: 'month'
+            },
+            gridLines: {
+              display: false,
+              drawBorder: false
+            },
+            ticks: {
+              maxTicksLimit: 10
+            },
+            maxBarThickness: 25,
+          }],
+          yAxes: [{
+            ticks: {
+              min: 0,
+              max: 30000,
+              maxTicksLimit: 10,
+              padding: 10,
+              callback: function (value, index, values) {
+                return number_format(value) + ' 회'; //y축 단위 표시 
+              }
+            },
+            gridLines: {
+              color: "rgb(234, 236, 244)",
+              zeroLineColor: "rgb(234, 236, 244)",
+              drawBorder: false,
+              borderDash: [2],
+              zeroLineBorderDash: [2]
             }
-          },
-          gridLines: {
-            color: "rgb(234, 236, 244)",
-            zeroLineColor: "rgb(234, 236, 244)",
-            drawBorder: false,
-            borderDash: [2],
-            zeroLineBorderDash: [2]
-          }
-        }],
+          }],
       },
       legend: {
         display: false
       },
+      /** 마우스 가져다 대면 출력**/
       tooltips: {
         titleMarginBottom: 10,
         titleFontColor: '#6e707e',
@@ -293,6 +291,7 @@ $(document).ready(function () {
         yPadding: 15,
         displayColors: false,
         caretPadding: 10,
+
         callbacks: {
           label: function (tooltipItem, chart) {
             var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
@@ -304,7 +303,7 @@ $(document).ready(function () {
   });
 
 
-
+});
   }
   fnRetrieve3();
   //resize frame height

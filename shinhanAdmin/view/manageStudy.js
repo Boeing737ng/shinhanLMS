@@ -18,9 +18,11 @@ $(document).ready(function () {
         e.preventDefault();
         $('#grid2').jsGrid("option", "data", []);
         $('#grid3').jsGrid("option", "data", []);
-        fnRetrieve();
+        fnRetrieve1();
     });
     /** end of components *************************/
+
+
 
 
    /** start of grid ***********************/
@@ -38,8 +40,12 @@ $(document).ready(function () {
         //showDetailsDialog("Edit", args.item);
         var arr = $('#grid1').jsGrid('option', 'data');
         
-        var memberObj = arr[args.itemIndex]['members'];
-        fnRetrieve2(memberObj);
+
+        var studyNo = args.item['rowKey'];
+        //console.log(studyNo);
+
+        fnRetrieve2(studyNo);
+        fnRetrieve3(studyNo);
 
         var $row = this.rowByItem(args.item),
         selectedRow = $("#grid1").find('table tr.highlight');
@@ -50,12 +56,11 @@ $(document).ready(function () {
         
         $row.toggleClass("highlight");
     },
-
     //data: clients,
 
     fields: [
        
-        { name: "studyName", title: '스터디명', type: "text", width: 120, editing: false, align: "left" },
+        { name: "studyname", title: '스터디명', type: "text", width: 120, editing: false, align: "left" },
         /*{ name: "creator", title: "개설자", type: 'text', width: 150, editing: false, align: "left" },*/
         { name: "date", title: "등록일자", type: 'text', width: 150, editing: false, align: "center", cellRenderer: function(item, value){
             var rslt = $("<td>").addClass("my-row-custom-class");
@@ -69,23 +74,6 @@ $(document).ready(function () {
 });
 
 
-function fnRetrieveDetail(memeberObj) {
-    
-    window.FakeLoader.showOverlay();
-    
-    var memArr = [];
-
-    $.each(memeberObj, function(idx, value) {
-        memArr.push({empNo: idx, empName: value});
-    });
-
-    $("#grid2").jsGrid("option", "data", memArr);
-    $("#grid3").jsGrid("option", "data", memArr);
-
-    window.FakeLoader.hideOverlay();
-}
-
-
    /** start of grid ***********************/
    /**스터디 참여자 리스트 **/
    $("#grid2").jsGrid({
@@ -96,8 +84,8 @@ function fnRetrieveDetail(memeberObj) {
     data: [],
     fields: [
         { name: "compNm", title: "회사명", type: 'text', width: 150, editing: false, align: "center" },
-        { name: "empNo", title: "사번", type: 'text', width: 150, editing: false, align: "center" },
-        { name: "empName", title: '성명', type: "text", width: 100, editing: false, align: "left" }
+        { name: "department", title: "부서", type: 'text', width: 150, editing: false, align: "center" },
+        { name: "name", title: '성명', type: "text", width: 100, editing: false, align: "left" }
     ]
     });
 
@@ -116,15 +104,15 @@ function fnRetrieveDetail(memeberObj) {
     });
 
 
-//grid 1조회 
+//grid 1, 스터디리스트조회 
 function fnRetrieve1() {
     window.FakeLoader.showOverlay();
     
-    var searchStudy = $('#studyName').val() || '';//스터디명
-    var searchMember = $('#creator').val() || '';//개설자
+    var searchStudy = $('#studyname').val() || '';//스터디
+    var searchName =  $('#name').val() || '' //스터디원 이름
     var searchCompany = $('#date').val() || '';//등록일자
 
-    parent.database.ref('/'+ '신한은행'+'/study').once('value').then(function(snapshot)
+    parent.database.ref('/'+ '58'+'/study').once('value').then(function(snapshot)
     {
 
         var catArr = snapshot.val();
@@ -132,13 +120,15 @@ function fnRetrieve1() {
 
         $.each(catArr, function(idx, studyObj) {
             if( 
-                 ((searchStudy== '') || (studyObj['studyname'].indexOf(searchStudy) > -1))
-
-                 
-             ) {
-                 var mbrCnt = Object.keys(studyObj['members'] || []).length+1;
+                 ((searchStudy== '') || (studyObj['studyname'].indexOf(searchStudy) > -1))&&
+                 ((searchName== '') || (studyObj['name']==searchMember))
+             ) 
+             
+             {
+                 studyObj['rowKey'] = idx;
+                 //console.log(idx);
+                 var mbrCnt = Object.keys(studyObj['member'] || []).length;
                  studyObj['participant'] = mbrCnt;
-
                  rsltArr.push(studyObj);
              }
             
@@ -153,36 +143,64 @@ function fnRetrieve1() {
 }
 
 
-//grid 2조회 
-function fnRetrieve2(memberObj) {
+//grid 2, 스터디 참여자 리스트 조회 
+function fnRetrieve2(studyNo) {
+
+   
     window.FakeLoader.showOverlay();
-
-    console.log(memberObj);
     
-
-    /* parent.database.ref('/'+ '신한은행'+'/study'+'/members').once('value').then(function(snapshot)
-    {
-
+    parent.database.ref('/'+ '58'+'/study/'+studyNo+'/member').once('value').then(function(snapshot)
+    { 
+       // console.log(studyNo);
         var catArr = snapshot.val();
-
-        console.log(catArr);
-
         var rsltArr = [];
-
         $.each(catArr, function(idx, studyObj) {
 
-                 rsltArr.push(studyObj);
-            
+            { 
+                studyObj['rowKey'] = idx;
+                rsltArr.push(studyObj);   
+            }
+            console.log(rsltArr);
+
         });
-       
         $("#grid2").jsGrid("option", "data", rsltArr);
 
         window.FakeLoader.hideOverlay();
 
         $('#grid2').find('tr.jsgrid-row:eq(0)').click(); //첫번째 row click
-    }); */
+    });
 }
 
+
+//grid 3, 커리큘럼조회 
+function fnRetrieve3(studyNo) {
+    window.FakeLoader.showOverlay();
+
+
+    var searchstate = $('#state').val() || '';//사번
+
+    parent.database.ref('/'+ '58'+'/study/'+ studyNo+'/curriculum').once('value').then(function(snapshot)
+    {
+        var catArr = snapshot.val();
+        var rsltArr = [];
+        $.each(catArr, function(idx, studyObj) {
+
+            {  
+                studyObj['rowKey'] = idx;
+
+                rsltArr.push(studyObj);
+                
+            }
+        
+            
+        });
+        $("#grid3").jsGrid("option", "data", rsltArr);
+
+        window.FakeLoader.hideOverlay();
+
+        $('#grid3').find('tr.jsgrid-row:eq(0)').click(); //첫번째 row click
+    });
+}
 
 
 

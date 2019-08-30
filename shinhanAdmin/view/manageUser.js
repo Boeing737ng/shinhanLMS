@@ -31,9 +31,12 @@ $(document).ready(function () {
             //showDetailsDialog("Edit", args.item);
             var arr = $('#grid1').jsGrid('option', 'data');
             
-            var memberObj = arr[args.itemIndex]['member'];
-    
-            fnRetrieveDetail(memberObj);
+            //var memberObj = arr[args.itemIndex]['member'];
+            var memberObj = args.item;
+            var empNo = memberObj['empNo'];
+            fnRetrieveDetail(empNo);
+
+            //console.log(empNo);
     
             var $row = this.rowByItem(args.item),
             selectedRow = $("#grid1").find('table tr.highlight');
@@ -41,7 +44,6 @@ $(document).ready(function () {
             if (selectedRow.length) {
                 selectedRow.toggleClass('highlight');
             };
-            
             $row.toggleClass("highlight");
         },
 
@@ -86,25 +88,42 @@ $(document).ready(function () {
             var arr = $('#grid2').jsGrid('option', 'data');
         },
         fields: [
-            { name: "listenName", title: '수강과목명', type: "text", width: 120, editing: false, align: "center" },
-            { name: "category", title: "강좌 카테고리", type: "text", width: 150, editing: false, align: "center" },
-            { name: "listenDay", title: "수강날짜", type: 'text', width: 150, editing: false, align: "center" },
-            { name: "teacherName", title: "강사명", type: 'text', width: 150, editing: false, align: "center" }
+            { name: "title", title: '수강과목명', type: "text", width: 120, editing: false, align: "center" },
+            { name: "categoryNm", title: "강좌 카테고리", type: "text", width: 150, editing: false, align: "center" },
+            { name: "author", title: "강사명", type: 'text', width: 150, editing: false, align: "center" },
+            /*{
+                name: "state", title: "수강 상태", type: 'text', width: 150, editing: false, align: "center" , cellRenderer: function (item, value) {
+                    var rslt = $("<td>").addClass("my-row-custom-class");
+                    
+                    var txt = '';
+
+                    switch(txt) {
+                        case 'comp'
+                    }
+                    
+                    var date = moment(item, 'YYYYMMDDHHmmss').format('YYYY-MM-DD');
+                    $(rslt).append(date);
+                    return rslt;
+                }
+            }*/
+
+            
         ]
         
     });
  
     //조회
-    function fnRetrieve() {
+    function fnRetrieve(empNo) {
         window.FakeLoader.showOverlay();
         
-        var searchCompany = $('#searchCompany').val() || '';//회사명
-        var searchempNm = $('#empNm').val() || '';//사용자이름
+        var searchCompany = $('#compNm').val() || '';//회사명
+        var searchempNm = $('#name').val() || '';//사용자이름
         var searchempNo = $('#empNo').val() || '';//사번
-
+    
+       
+       
         parent.database.ref('/user').once('value').then(function(snapshot)
         {
-
             var catArr = snapshot.val();
             var rsltArr = [];
 
@@ -113,15 +132,24 @@ $(document).ready(function () {
                 if( 
                     ((searchempNm == '') || (studyObj['name'].indexOf(searchempNm) > -1)) &&
                     ((searchempNo == '') || (studyObj['empNo'] == searchempNo)) &&
-                    ((searchCompany == '') ||(studyObj['compCd'] == searchCompany)) &&
+                    ((searchCompany == '') ||(studyObj['compNm'] == searchCompany)) &&
                     (studyObj['roleCd'] != 'admin')
                 ) {
                    // var mbrCnt = Object.keys(studyObj['member'] || []).length+1;
                     //studyObj['participant'] = mbrCnt;
+                    studyObj['empNo'] = idx;
+
+                    //수강강좌수 카운트
+                    var mbrCnt = Object.keys(studyObj['playList'] || []).length;
+                    studyObj['listenClass'] = mbrCnt;
+            
                     rsltArr.push(studyObj);
+                
+                   
                 }
                 
-            });
+            }); 
+            
 
             $("#grid1").jsGrid("option", "data", rsltArr);
 
@@ -131,16 +159,35 @@ $(document).ready(function () {
         });
     }
 
+/****사용자 수강 상세 내역 출력*****/
+    function fnRetrieveDetail(empNo) {
 
-    function fnRetrieveDetail(memeberObj) {
-    
         window.FakeLoader.showOverlay();
-        
-        var memArr = [];
-    
-        $("#grid2").jsGrid("option", "data", memArr);
-    
-        window.FakeLoader.hideOverlay();
+
+
+        var searchstate = $('#state').val() || '';//사번
+
+        parent.database.ref('/user/' + empNo + '/playList').once('value').then(function(snapshot)
+        {
+            var catArr = snapshot.val();
+            var rsltArr = [];
+            $.each(catArr, function(idx, studyObj) {
+
+                {  
+                    studyObj['rowKey'] = idx;
+
+                    rsltArr.push(studyObj);
+                    
+                }
+            
+                
+            });
+            $("#grid2").jsGrid("option", "data", rsltArr);
+
+            window.FakeLoader.hideOverlay();
+
+            $('#grid2').find('tr.jsgrid-row:eq(0)').click(); //첫번째 row click
+        });
     }
 
 
@@ -177,6 +224,6 @@ $(document).ready(function () {
 
 
     resizeFrame();
-    fnRetrieve();
+    fnRetrieve(empNo);
 
 });
