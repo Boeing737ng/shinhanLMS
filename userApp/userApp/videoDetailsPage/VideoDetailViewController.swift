@@ -18,17 +18,24 @@ var selectedVideoId:String = ""
 var videoURL:String = ""
 
 class VideoDetailViewController: UIViewController {
-    
-    @IBOutlet weak var videoTitle: UILabel!
-    @IBOutlet weak var videoAuthor: UILabel!
-    @IBOutlet weak var videoViewCount: UILabel!
-    
+
+    @IBOutlet weak var videoView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         getVideoInfoFromDB()
         // Do any additional setup after loading the view.
     }
+    
+    func showVideoPlayer() {
+        if let keyWindow = UIApplication.shared.keyWindow {
+            let height = keyWindow.frame.width * 9 / 16
+            let videoPlayerFrame = CGRect(x: 0, y: 0, width: keyWindow.frame.width, height: height)
+            let videoPlayerView = VideoPlayerView(frame: videoPlayerFrame)
+            videoView.insertSubview(videoPlayerView, at: 0)
+        }
+    }
+    
     @IBAction func onGoBack(_ sender: UIBarButtonItem) {
         let transition: CATransition = CATransition()
         transition.duration = 0.5
@@ -46,11 +53,9 @@ class VideoDetailViewController: UIViewController {
         ref.child(userCompanyCode + "/videos/" + selectedVideoId).observeSingleEvent(of: .value, with: { (snapshot) in
             let videoInfo = snapshot.value as! Dictionary<String, Any>;()
             videoURL = videoInfo["downloadURL"] as! String
-            videoDescription = videoInfo["description"]! as! String
-            self.videoTitle.text = videoInfo["title"]! as? String
-            self.videoAuthor.text = videoInfo["author"]! as? String
-            self.videoViewCount.text = videoInfo["view"] as? String
             LoadingView().stopLoading()
+            self.showVideoPlayer()
+            //VideoLauncher().showVideoPlayer()
         }) { (error) in
             print(error.localizedDescription)
         }

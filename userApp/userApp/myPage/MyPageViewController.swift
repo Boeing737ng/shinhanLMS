@@ -125,4 +125,5 @@ class MyPageViewController: UIViewController{
         print("======= \(dbingArray)")
     }
 
+
 }

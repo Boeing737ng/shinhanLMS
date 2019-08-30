@@ -14,6 +14,9 @@ var videoDescription:String = ""
 
 class VideoInfoViewController: UIViewController {
     
+    @IBOutlet weak var videoTitle: UILabel!
+    @IBOutlet weak var videoViewCount: UILabel!
+    @IBOutlet weak var videoAuthor: UILabel!
     @IBOutlet weak var videoDescriptionLabel: UILabel!
     
     override func viewDidLoad() {
@@ -34,6 +37,9 @@ class VideoInfoViewController: UIViewController {
         ref.child(userCompanyCode + "/videos/" + selectedVideoId).observeSingleEvent(of: .value, with: { (snapshot) in
             let videoInfo = snapshot.value as! Dictionary<String, Any>;()
             self.videoDescriptionLabel.text = videoInfo["description"]! as? String
+            self.videoTitle.text = videoInfo["title"]! as? String
+            self.videoAuthor.text = videoInfo["author"]! as? String
+            self.videoViewCount.text = videoInfo["view"] as? String
         }) { (error) in
             print(error.localizedDescription)
         }

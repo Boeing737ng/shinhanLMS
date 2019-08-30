@@ -9,13 +9,29 @@
 import UIKit
 
 var userNo: String = ""
+var userName: String = ""
 var userCompanyCode: String = ""
+var userCompanyName: String = ""
+var userDeptCode: String = ""
+var userDeptName: String = ""
 
 class User {
     func getCurrentUserNo() -> String {
         return userNo
     }
+    func getCurrentUserName() -> String {
+        return userName
+    }
     func getCurrentUserCompanyCode() -> String {
+        return userCompanyCode
+    }
+    func getCurrentUserCompanyName() -> String {
+        return userCompanyCode
+    }
+    func getCurrentUserDeptCode() -> String {
+        return userCompanyCode
+    }
+    func getCurrentUserDeptName() -> String {
         return userCompanyCode
     }
 }

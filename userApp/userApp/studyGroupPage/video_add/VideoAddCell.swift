@@ -1,18 +1,18 @@
 //
-//  TableViewCellTwo.swift
-//  eeeeee
+//  VideoAddCell.swift
+//  userApp
 //
-//  Created by 강희승 on 22/08/2019.
-//  Copyright © 2019 강희승. All rights reserved.
+//  Created by user on 30/08/2019.
+//  Copyright © 2019 sfo. All rights reserved.
 //
 
 import UIKit
 
-class TableViewCellTwo: UITableViewCell {
+class VideoAddCell: UITableViewCell {
 
-    @IBOutlet weak var lblWriter: UILabel!
-    @IBOutlet weak var lblcontent: UILabel!
-    @IBOutlet weak var lblDate: UILabel!
+    @IBOutlet weak var videoThumbnail: UIImageView!
+    @IBOutlet weak var videoTitleLabel: UILabel!
+    @IBOutlet weak var videoAuthorLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
