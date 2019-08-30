@@ -47,6 +47,9 @@ class VideoTableView: UITableView, UITableViewDelegate, UITableViewDataSource{
         ref = Database.database().reference()
         ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
+            if snapshot.childrenCount == 0 {
+                return
+            }
             let value = snapshot.value as? Dictionary<String,Any>;()
             for video in value! {
                 let videoDict = video.value as! Dictionary<String, Any>;()
@@ -89,6 +92,12 @@ class VideoTableView: UITableView, UITableViewDelegate, UITableViewDataSource{
         // #warning Incomplete implementation, return the number of rows
         print("ROW NUMBER ", videoIdArray.count)
         return videoIdArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let videoId = videoIdArray[indexPath.row]
+        selectedVideoId = videoId
+        TabViewController().goToDetailPage()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
