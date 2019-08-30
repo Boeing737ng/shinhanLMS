@@ -14,6 +14,10 @@ $(document).ready(function () {
         $(this).parent('li').addClass('active');
     });
 
+    var userInfo = JSON.parse(window.sessionStorage.getItem('userInfo'));
+    var empNm = userInfo['name'];
+    $('#empProfileName').text(empNm);
+
 });
 
 
