@@ -5,28 +5,10 @@ $(document).ready(function () {
     const ROW_KEY = getParams().rowKey;
 
     /** start of components ***********************/
-    $('#releaseYn').selectpicker();
-    $('#category').selectpicker();
+    
 
     var userInfo = JSON.parse(window.sessionStorage.getItem('userInfo'));
     var compCd = userInfo['compCd'];
-
-
-    //저장 버튼
-    $('#btnSave').on('click', function(e) {
-        e.preventDefault();
-        
-        if(!fnValidate()) {
-            return false;
-        }
-
-        if(confirm('저장하시겠습니까?')) {
-            fnSave(function() {
-                alert('저장하였습니다');
-                fnGoList();
-            });
-        }
-    });
 
 
     //목록 버튼
@@ -44,9 +26,10 @@ $(document).ready(function () {
 
             var obj = snapshot.val();
             
-            $('#title').val(obj['title']);
+            $('#title').text(obj['title']);
             $('#writor').text(obj['writor']);
-            $('#description').val(obj['description']);
+            $('#description').text(obj['description'].split('\n').join('<br/>'));
+            console.log(obj['description']);
             $('#regDate').text(moment(obj['date'], 'YYYYMMDD').format('YYYY-MM-DD'));
         });
     }

@@ -111,7 +111,7 @@ author : juyeun
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">공지사항 수정</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">공지사항 상세</h6>
                 </div>
 
                 <!-- Card Body -->
@@ -138,18 +138,18 @@ author : juyeun
                         </tr>
 
                             <tr>
-                              <th class="required"><span>제목</span></th>
+                              <th><span>제목</span></th>
                               <td colspan="3">
-                                <input type="text" id="title" class="form-control" style="width:100%" />
+                                <span id="title"></span>
                               </td>
                           </tr>
 
                             
 
                             <tr>
-                                <th class="required"><span>내용</span></th>
+                                <th><span>내용</span></th>
                                 <td colspan="3">
-                                    <textarea id="description" class="form-control" style="width:100%; height: 300px; resize: none;"></textarea>
+                                    <div id="description" style="height: 300px; overflow: auto;"></div>
                                 </td>
                             </tr>
 
@@ -159,11 +159,11 @@ author : juyeun
 
                     <div class="moduleBtnDiv">
                         <ul>
-                            <li id="btnSave">
+<!--                             <li id="btnSave">
                                 <a href="#" class="btn btn-primary">
                                     저장
                                 </a>
-                            </li>
+                            </li> -->
                             <li id="btnList">
                                     <a href="#" class="btn btn-secondary">
                                         목록
