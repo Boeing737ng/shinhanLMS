@@ -522,7 +522,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="290" height="289.66666666666669"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shinple_logo" translatesAutoresizingMaskIntoConstraints="NO" id="ACA-qG-M47">
-                                                <rect key="frame" x="0.0" y="0.0" width="290" height="289.66666666666669"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="290.00000000000182" height="289.66666666666669"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="ACA-qG-M47" secondAttribute="height" multiplier="1:1" id="F8K-Dx-ZGB"/>
                                                 </constraints>
@@ -3183,56 +3183,55 @@
                                     <constraint firstAttribute="height" constant="130" id="UzW-sK-R2q"/>
                                 </constraints>
                             </view>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="질문 제목을 작성해주세요." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="2w6-IM-X7s">
-                                <rect key="frame" x="16" y="100" width="382" height="30"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="질문 제목을 작성해주세요." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zod-Wr-vxS">
+                                <rect key="frame" x="21" y="94" width="372" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="pbi-J2-KV1"/>
+                                    <constraint firstAttribute="height" constant="30" id="gWM-K7-u8P"/>
                                 </constraints>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HKR-yL-lX2">
-                                <rect key="frame" x="16" y="140" width="382" height="1"/>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WFF-N1-kBB">
+                                <rect key="frame" x="16" y="130" width="382" height="1"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="qIu-zO-f1o"/>
+                                    <constraint firstAttribute="height" constant="1" id="Db4-ez-Lx9"/>
                                 </constraints>
                             </view>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="질문 내용을 작성해주세요." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Mpa-FK-zJv">
-                                <rect key="frame" x="16" y="151" width="414" height="691"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="질문 내용을 작성해주세요." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Wd4-FE-jux">
+                                <rect key="frame" x="16" y="141" width="382" height="711"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" red="0.78024488687515259" green="0.780070960521698" blue="0.80069750547409058" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <connections>
-                                    <outlet property="delegate" destination="Hlz-c5-l70" id="BIa-xN-mOw"/>
+                                    <outlet property="delegate" destination="Hlz-c5-l70" id="hhB-Pf-GKC"/>
                                 </connections>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="l34-FS-Qpx" firstAttribute="trailing" secondItem="HKR-yL-lX2" secondAttribute="trailing" constant="16" id="50h-7n-4Nv"/>
-                            <constraint firstItem="l34-FS-Qpx" firstAttribute="bottom" secondItem="Mpa-FK-zJv" secondAttribute="bottom" constant="20" id="5Ca-yR-fNV"/>
-                            <constraint firstItem="Mpa-FK-zJv" firstAttribute="leading" secondItem="l34-FS-Qpx" secondAttribute="leading" constant="16" id="Buj-Hb-qmX"/>
-                            <constraint firstItem="Mpa-FK-zJv" firstAttribute="top" secondItem="HKR-yL-lX2" secondAttribute="bottom" constant="10" id="Fn3-Ag-P0r"/>
-                            <constraint firstItem="2w6-IM-X7s" firstAttribute="top" secondItem="gyR-8S-PjJ" secondAttribute="bottom" constant="16" id="GJi-Ga-Sq2"/>
-                            <constraint firstItem="HKR-yL-lX2" firstAttribute="top" secondItem="2w6-IM-X7s" secondAttribute="bottom" constant="10" id="GNF-fC-dQy"/>
-                            <constraint firstItem="HKR-yL-lX2" firstAttribute="leading" secondItem="l34-FS-Qpx" secondAttribute="leading" constant="16" id="Iqd-YL-0zY"/>
-                            <constraint firstItem="2w6-IM-X7s" firstAttribute="leading" secondItem="l34-FS-Qpx" secondAttribute="leading" constant="16" id="PBd-UR-eWu"/>
+                            <constraint firstItem="WFF-N1-kBB" firstAttribute="top" secondItem="Zod-Wr-vxS" secondAttribute="bottom" constant="6" id="0vA-nh-nGv"/>
+                            <constraint firstItem="l34-FS-Qpx" firstAttribute="trailing" secondItem="WFF-N1-kBB" secondAttribute="trailing" constant="16" id="4PF-sM-LxP"/>
+                            <constraint firstItem="Wd4-FE-jux" firstAttribute="top" secondItem="WFF-N1-kBB" secondAttribute="bottom" constant="10" id="6hZ-hu-web"/>
+                            <constraint firstItem="Wd4-FE-jux" firstAttribute="leading" secondItem="l34-FS-Qpx" secondAttribute="leading" constant="16" id="Fdv-6F-dFf"/>
+                            <constraint firstItem="l34-FS-Qpx" firstAttribute="bottom" secondItem="Wd4-FE-jux" secondAttribute="bottom" constant="10" id="JN5-bl-U3K"/>
+                            <constraint firstItem="Zod-Wr-vxS" firstAttribute="top" secondItem="gyR-8S-PjJ" secondAttribute="bottom" constant="10" id="PGC-sz-FXu"/>
+                            <constraint firstItem="WFF-N1-kBB" firstAttribute="leading" secondItem="l34-FS-Qpx" secondAttribute="leading" constant="16" id="QGQ-xd-QoE"/>
+                            <constraint firstItem="l34-FS-Qpx" firstAttribute="trailing" secondItem="Zod-Wr-vxS" secondAttribute="trailing" constant="21" id="Vau-zz-EYt"/>
                             <constraint firstItem="l34-FS-Qpx" firstAttribute="top" secondItem="gyR-8S-PjJ" secondAttribute="bottom" constant="-40" id="bF6-eC-GXK"/>
                             <constraint firstItem="gyR-8S-PjJ" firstAttribute="width" secondItem="l34-FS-Qpx" secondAttribute="width" id="bQ4-1l-D8p"/>
                             <constraint firstItem="gyR-8S-PjJ" firstAttribute="centerX" secondItem="l34-FS-Qpx" secondAttribute="centerX" id="cYj-rx-Rvr"/>
-                            <constraint firstItem="Mpa-FK-zJv" firstAttribute="trailing" secondItem="l34-FS-Qpx" secondAttribute="trailing" constant="16" id="mcL-Ci-ioK"/>
-                            <constraint firstItem="l34-FS-Qpx" firstAttribute="trailing" secondItem="2w6-IM-X7s" secondAttribute="trailing" constant="16" id="pMS-yC-6Ly"/>
+                            <constraint firstItem="l34-FS-Qpx" firstAttribute="trailing" secondItem="Wd4-FE-jux" secondAttribute="trailing" constant="16" id="hkI-0Y-xSv"/>
+                            <constraint firstItem="Zod-Wr-vxS" firstAttribute="leading" secondItem="l34-FS-Qpx" secondAttribute="leading" constant="21" id="lWO-k7-uCw"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="l34-FS-Qpx"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="myPage" id="SA7-YZ-eMm"/>
                     <connections>
-                        <outlet property="tvContent" destination="Mpa-FK-zJv" id="ePP-ui-FEI"/>
-                        <outlet property="tvTitle" destination="2w6-IM-X7s" id="LwY-17-lEc"/>
+                        <outlet property="tfTitle" destination="Zod-Wr-vxS" id="GCi-m1-D2P"/>
+                        <outlet property="tvContent" destination="Wd4-FE-jux" id="s56-Xv-gSP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b0G-Yv-2ey" userLabel="First Responder" sceneMemberID="firstResponder"/>

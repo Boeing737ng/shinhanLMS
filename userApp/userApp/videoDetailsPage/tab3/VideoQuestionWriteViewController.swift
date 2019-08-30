@@ -11,7 +11,7 @@ import Firebase
 
 class VideoQuestionWriteViewController: UIViewController, UITextViewDelegate {
     
-    @IBOutlet weak var tvTitle: UITextView!
+    @IBOutlet weak var tfTitle: UITextField!
     @IBOutlet weak var tvContent: UITextView!
     
     override func viewDidLoad() {
@@ -42,16 +42,8 @@ class VideoQuestionWriteViewController: UIViewController, UITextViewDelegate {
             tvContent.text = ""
             tvContent.textColor = UIColor.black
         }
-        else if tvTitle.text == "질문 제목을 작성해주세요." {
-            tvContent.text = ""
-            tvContent.textColor = UIColor.black
-        }
         else if tvContent.text == "" {
             tvContent.text = "질문 내용을 작성해주세요."
-            tvContent.textColor = UIColor.lightGray
-        }
-        else if tvTitle.text == "" {
-            tvContent.text = "질문 제목을 작성해주세요."
             tvContent.textColor = UIColor.lightGray
         }
     }
@@ -81,7 +73,7 @@ class VideoQuestionWriteViewController: UIViewController, UITextViewDelegate {
         ref.child(userCompanyCode + "/videos/" + selectedVideoId + "/qnaBoard").childByAutoId().setValue([
             "content": tvContent.text as? String,
             "date": getCurrentDate(),
-            "title": tvTitle.text as? String,
+            "title": tfTitle.text as? String,
             "writer": userName
             ])
         
