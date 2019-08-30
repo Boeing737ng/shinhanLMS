@@ -13,6 +13,7 @@ class VideoPlayerView: UIView {
     
     var player: AVPlayer?
     var isPlaying = false
+    var controllViewIsHidden = false
     
     let activityIndicatorView: UIActivityIndicatorView = {
         let aiv = UIActivityIndicatorView(style: .whiteLarge)
@@ -74,8 +75,8 @@ class VideoPlayerView: UIView {
             player?.play()
             pausePlayButton.setImage(UIImage(named: "pause"), for: .normal)
         }
-        
         isPlaying = !isPlaying
+        showOrHideControllView()
     }
     
     override init(frame: CGRect) {
@@ -116,10 +117,44 @@ class VideoPlayerView: UIView {
         videoSlider.leftAnchor.constraint(equalTo: currentTimeLabel.rightAnchor).isActive = true
         videoSlider.heightAnchor.constraint(equalToConstant: 30).isActive = true
         videoSlider.thumbTintColor = .red
+        
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(showOrHideControllView))
+        self.addGestureRecognizer(gesture)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc private func showOrHideControllView() {
+        if controllViewIsHidden == true {
+            showControllView()
+            hideControllView()
+        } else {
+            hideControllView()
+        }
+    }
+    
+    private func showControllView() {
+        UIView.animate(withDuration: 0, delay: 0, options: .curveEaseInOut, animations: {
+            self.controlsContainerView.alpha = 1.0
+        }, completion:  {
+            (value: Bool) in
+            self.controlsContainerView.isHidden = false
+            self.controllViewIsHidden = false
+        })
+    }
+    
+    private func hideControllView() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            UIView.animate(withDuration: 0.6, delay: 0, options: .curveEaseInOut, animations: {
+                self.controlsContainerView.alpha = 0.0
+            }, completion:  {
+                (value: Bool) in
+                self.controlsContainerView.isHidden = true
+                self.controllViewIsHidden = true
+            })
+        }
     }
     
     private func setupPlayerView() {
@@ -132,6 +167,7 @@ class VideoPlayerView: UIView {
             self.layer.addSublayer(playerLayer)
             playerLayer.frame = self.frame
             player?.play()
+            showOrHideControllView()
             player?.addObserver(self, forKeyPath: "currentItem.loadedTimeRanges", options: .new, context: nil)
             
             //track player progress
@@ -190,5 +226,6 @@ class VideoPlayerView: UIView {
                 
             })
         }
+        showOrHideControllView()
     }
 }
