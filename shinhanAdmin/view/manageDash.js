@@ -57,8 +57,6 @@ $(document).ready(function () {
           var mbrCnt = Object.keys(studyObj['member'] || []).length;
           studyObj['participant'] = mbrCnt;
 
-
-
           rsltArr.push(studyObj);
         }
 
@@ -184,11 +182,6 @@ $(document).ready(function () {
     return s.join(dec);
   }
 
-
-
-
-
-
 /***************차트표현하는 함수**************** */
 
   function fnRetrieve3() {
@@ -199,16 +192,12 @@ $(document).ready(function () {
       var catArr = snapshot.val();
       var chartArr = [];
 
-      
-
       $.each(catArr, function (idx, chartObj) {
         chartObj['rowKey'] = idx;
-        
         //chartArr.push(chartObj);
 
         view.push(chartObj['view']); //조회수정보
         title.push(chartObj['title']) //동영상조회수
-
       });
 
       //조회수기준 내림차순(기능구현안됨)
@@ -229,7 +218,7 @@ $(document).ready(function () {
         backgroundColor: "#4e73df",
         hoverBackgroundColor: "#2e59d9",
         borderColor: "#4e73df",
-        data: view, 
+        data: view
       }],
     },
     options: {
@@ -291,7 +280,6 @@ $(document).ready(function () {
         yPadding: 15,
         displayColors: false,
         caretPadding: 10,
-
         callbacks: {
           label: function (tooltipItem, chart) {
             var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
