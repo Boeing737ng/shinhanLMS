@@ -47,6 +47,9 @@ class VideoTableView: UITableView, UITableViewDelegate, UITableViewDataSource{
         ref = Database.database().reference()
         ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
+            if snapshot.childrenCount == 0 {
+                return
+            }
             let value = snapshot.value as? Dictionary<String,Any>;()
             for video in value! {
                 let videoDict = video.value as! Dictionary<String, Any>;()
