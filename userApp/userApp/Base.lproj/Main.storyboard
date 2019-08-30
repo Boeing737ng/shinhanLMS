@@ -2022,7 +2022,7 @@
                                             <constraint firstAttribute="width" constant="120" id="APJ-Lh-PWr"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                        <state key="normal" title=" Category  " image="iconmonstr-arrow-69-24">
+                                        <state key="normal" title=" Category  " image="selectBtn">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                     </button>
@@ -3443,6 +3443,7 @@
         <image name="iconmonstr-arrow-69-24" width="24" height="24"/>
         <image name="imgAdd.jpeg" width="144" height="147"/>
         <image name="loginBackground" width="724" height="364"/>
+        <image name="selectBtn" width="16" height="16"/>
         <image name="shinple_logo" width="6553" height="5403"/>
         <image name="userIcon" width="240" height="240"/>
     </resources>

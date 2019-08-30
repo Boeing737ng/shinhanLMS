@@ -40,7 +40,7 @@ class VideoListViewController: UIViewController {
         var ref: DatabaseReference!
         dropdownCategoryList.append("전체보기  ")
         ref = Database.database().reference()
-        ref.child(userCompanyCode + "/categories").queryLimited(toLast: 5).observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child(userCompanyCode + "/categories").observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? Dictionary<String,Any>;()
             for video in value! {
                 let categoryInfo = video.value as? Dictionary<String,Any>;()
