@@ -44,6 +44,9 @@ author : juyeun
 
     <link rel="stylesheet" href="/vendor/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.css">
 
+    <link rel="stylesheet" href="/vendor/jsgrid/jsgrid.css">
+    <link rel="stylesheet" href="/vendor/jsgrid/jsgrid-theme.css">
+
     <!-- /* Bootstrap core JavaScript */ -->
     <script src="/vendor/jquery/jquery.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -75,24 +78,12 @@ author : juyeun
     <script src="/vendor/moment/moment.min.js"></script>
     <script src="/vendor/daterangepicker/daterangepicker.js"></script>
 
+    <script src="/vendor/jsgrid/jsgrid.js"></script>
+
     <script src="/view/registerNotice.js"></script>
+    <script src="/view/popup/searchEmpListPopup.js"></script>
     <script src="/js/main.js"></script>
 
-
-    <style>
-        .dropzone {
-            /* width: 200px;  */
-            height: 100px;
-            min-height: 0px;
-            border: 1px solid #d1d3e2;
-        }
-
-        .dropzone .dz-message {
-            margin: 0;
-        }
-
-    
-    </style>
 </head>
 
 <body class="contentInnerBody">
@@ -104,7 +95,37 @@ author : juyeun
 
 
     <div class="row searchResultDiv">
+            <div class="col-xl-12">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">수신자 리스트</h6>
+                        <div class="moduleBtnDiv">
+                                <ul>
+                                    <li id="btnAddEmp">
+                                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                                        <i class="fas fa-plus fa-sm text-white-50"></i> 추가
+                                        </a>
+                                    </li>
+                                    <li id="btnLoadEmpNonWatch">
+                                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                                            필수강좌 미이수자 
+                                        </a>
+                                    </li>
+                                </ul>
+                                </div>
+                    </div>
+            
+            
+                    <div class="card-body">
+                        <div id="empGrid" class="lms-grid"></div>
+                    </div>
+            
+                </div>
+            </div>
+        
         <div class="col-xl-12">
+
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">

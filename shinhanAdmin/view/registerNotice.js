@@ -12,6 +12,24 @@ $(document).ready(function () {
     $('#writor').text(userInfo['name']);
 
 
+    $('#btnAddEmp').on('click', function(e) {
+
+        e.preventDefault();
+
+        var popup = SearchEmpListPopup.getInstance({
+            title: '사원 검색'
+        });
+
+        $(popup).off('submit').on('submit', function(e, param) {
+            var records = param['records'];
+            $('#empGrid').jsGrid('option', 'data', records);
+        });
+
+        popup.open();
+        
+    });
+
+
     //목록 버튼
     $('#btnList').on('click', function(e) {
         e.preventDefault();
@@ -37,6 +55,23 @@ $(document).ready(function () {
         }
     });
     /** end of components *************************/
+
+
+    /** start of grid ***********************/
+    $("#empGrid").jsGrid({
+        width: "100%",
+        height: "200px",
+        sorting: true,
+        paging: false,
+        data: [],
+        fields: [
+            { name: "empNo", title: '사번', type: "text", width: 100, editing: false, align: "center" },
+            { name: "name", title: '성명', type: "text", width: 100, editing: false, align: "left" },
+            { name: "compNm", title: "회사명", type: 'text', width: 150, editing: false, align: "left" },
+            { name: "department", title: '부서명', type: "text", width: 200, editing: false, align: "left" }
+        ]
+    });
+    /** end of grid *************************/
 
 
     function getParams() {
@@ -106,7 +141,13 @@ $(document).ready(function () {
         var param = '';
         var target;
 
-        if(isEmpty($('#title').val())) {
+        var empGridRowCnt = $('#empGrid').jsGrid('option', 'data').length;
+
+        if(empGridRowCnt == 0) {
+            param = '수신자 리스트';
+            target = $('#btnAddEmp');
+        }
+        else if(isEmpty($('#title').val())) {
             param = ' 제목';
             target = $('#title');
         }
@@ -131,12 +172,33 @@ $(document).ready(function () {
         var contentWritor = $('#writor').text();
         var contentTitle=$('#title').val();
         var contentDescription = $('#description').val();
-                   
+
+        var userRecords = $('#empGrid').jsGrid('option', 'data');
+        var targetUsers = {};
+
+        for(var i=0; i<userRecords.length; i++) {
+            var user = userRecords[i];
+            var empNo = user.empNo;
+            var empNm = user.name;
+            var compNm = user.compNm;
+            var deptNm = user.department;
+
+            var newObj = {
+                'name': empNm,
+                'compNm': compNm,
+                'department': deptNm,
+                'noticeId': moment().unix()
+            };
+
+            targetUsers[empNo] = newObj;
+        }
+
         setNotieDatabase({
             writor: contentWritor,
             description: contentDescription,
             date: moment().format('YYYYMMDD'),
-            title: contentTitle
+            title: contentTitle,
+            targetUsers: targetUsers
         }, callback);
     }
 

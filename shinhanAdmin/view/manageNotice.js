@@ -154,7 +154,7 @@ $(document).ready(function () {
                 width: 15
             },
             { name: "title", title: '제목', type: "text", width: 200, editing: false, align: "left" },
-            { name: "writor", title: "작성자", type: 'text', width: 100, editing: false, align: "left" },
+            { name: "writor", title: "작성자", type: 'text', width: 100, editing: false, align: "center" },
             {
                 name: "date", title: "등록일자", type: 'text', width: 100, editing: false, align: "center", cellRenderer: function (item, value) {
                     var rslt = $("<td>").addClass("my-row-custom-class");

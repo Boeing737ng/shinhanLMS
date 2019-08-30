@@ -62,11 +62,11 @@ $(document).ready(function () {
                 $('#relatedTags').tagsinput('add', tagArr[i]);    
             }
             
-            $('#requireYn').selectpicker();
+            //$('#requireYn').selectpicker();
             fnGetCommonCmb('category', '#category', obj['categoryId']);
 
-            $('#requireYn').val(obj['requireYn']);
-            $('#requireYn').selectpicker('refresh');
+            //$('#requireYn').val(obj['requireYn']);
+            //$('#requireYn').selectpicker('refresh');
 
             window.FakeLoader.hideOverlay();
 
@@ -177,9 +177,6 @@ $(document).ready(function () {
         }else if(isEmpty($('#author').val())) {
             param = '강사명';
             target = $('#author');
-        }else if(isEmpty($('#requireYn').val())) {
-            param = '필수강좌여부';
-            target = $('#requireYn');
         }else if(isEmpty($('#category').val())) {
             param = '카테고리';
             target = $('#category');
@@ -218,7 +215,7 @@ $(document).ready(function () {
         var contentDescription = $('#description').val();
         var contentAddedTime = moment().unix();
         var title = $('#title').val();
-        var requireYn = $('#requireYn').val();
+        var requireYn = $('#category').val() == 'REQUIRED' ? 'Y' : 'N';
         var categoryId = $('#category').val();
         var categoryNm = $('#category > option:selected').text();
         var view = $('#view').val();

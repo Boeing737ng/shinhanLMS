@@ -19,6 +19,23 @@ $(document).ready(function () {
     /** end of components *************************/
 
 
+    /** start of grid ***********************/
+    $("#empGrid").jsGrid({
+        width: "100%",
+        height: "200px",
+        sorting: true,
+        paging: false,
+        data: [],
+        fields: [
+            { name: "empNo", title: '사번', type: "text", width: 100, editing: false, align: "center" },
+            { name: "name", title: '성명', type: "text", width: 100, editing: false, align: "left" },
+            { name: "compNm", title: "회사명", type: 'text', width: 150, editing: false, align: "left" },
+            { name: "department", title: '부서명', type: "text", width: 200, editing: false, align: "left" }
+        ]
+    });
+    /** end of grid *************************/
+
+
     /** start of functions ***********************/
     function fnRetrieve() {
         
@@ -29,8 +46,18 @@ $(document).ready(function () {
             $('#title').text(obj['title']);
             $('#writor').text(obj['writor']);
             $('#description').html(obj['description'].split('\n').join('<br/>'));
-            console.log(obj['description']);
             $('#regDate').text(moment(obj['date'], 'YYYYMMDD').format('YYYY-MM-DD'));
+
+            var targetUsers = obj['targetUsers'];
+            var gridRecords = [];
+
+            $.each(targetUsers, function(idx, value) {
+                console.log(value);
+                value['empNo'] = idx;
+                gridRecords.push(value);
+            });
+
+            $('#empGrid').jsGrid('option', 'data', gridRecords);
         });
     }
 

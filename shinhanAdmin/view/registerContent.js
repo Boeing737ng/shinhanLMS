@@ -18,9 +18,6 @@ $(document).ready(function () {
     });
     
     
-    $('#requireYn').selectpicker();
-
-    
     fnGetCommonCmb('category', '#category');
 
 
@@ -372,9 +369,6 @@ $(document).ready(function () {
         }else if(isEmpty($('#author').val())) {
             param = '강사명';
             target = $('#author');
-        }else if(isEmpty($('#requireYn').val())) {
-            param = '필수강좌여부';
-            target = $('#requireYn');
         }else if(isEmpty($('#category').val())) {
             param = '카테고리';
             target = $('#category');
@@ -422,7 +416,7 @@ $(document).ready(function () {
                     var contentTag = contentTagArr.join(' ');
                     var contentDescription = $('#description').val();
                     var title = $('#title').val();
-                    var requireYn = $('#requireYn').val();
+                    var requireYn = $('#category').val() == 'REQUIRED' ? 'Y' : 'N';//$('#requireYn').val();
 
                     setVideoDatabase(rowId, {
                         downloadURL: videoPath,

@@ -1,0 +1,81 @@
+<!-- Logout Modal-->
+<div class="modal fade" id="modal-searchEmpList" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+
+                    <div class="card shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                    
+                                <div>
+                                    <div class="searchComponentDiv">
+                                        <label><span style="color:red;">*</span>회사명 : </label>
+                                        <div class="dropdown bootstrap-select form-control"
+                                            style="width:166px;float: none;margin-bottom: 0;padding: 0;border: none;">
+                                            <select class="form-control searchCompany" data-live-search="true"></select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div class="searchComponentDiv">
+                                        <label>부서명</label> : </label>
+                                        <div class="dropdown bootstrap-select form-control" style="width:166px;float: none;margin-bottom: 0;padding: 0;border: none;">
+                                            <select class="form-control searchDept" data-live-search="true"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                    
+                                <div>
+                                    <div class="searchComponentDiv">
+                                        <label>성명</label> : </label>
+                                        <div class="dropdown bootstrap-select form-control" style="width:166px;float: none;margin-bottom: 0;padding: 0;border: none;">
+                                            <input type="text" class="form-control searchNm" style="float: left;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                    
+                                <div>
+                                    <div class="searchComponentDiv">
+                                        <a href="#" class="btn btn-primary btnSearch">
+                                            <span class="text">검색</span>
+                                        </a>
+                                    </div>
+                                </div>
+                    
+                            </div>
+                    
+                        </div>
+                    </div>
+
+
+                    <div class="card shadow mb-4 searchResultDiv">
+                            <!-- Card Header - Dropdown -->
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">사원 리스트</h6>
+                            </div>
+                    
+                    
+                            <div class="card-body">
+                                <div class="lms-grid grid"></div>
+                            </div>
+                    
+                        </div>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+                <a class="btn btn-primary btnSubmit" href="#">확인</a>
+            </div>
+        </div>
+    </div>
+</div>
