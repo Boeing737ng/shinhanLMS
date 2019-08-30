@@ -1,6 +1,7 @@
 $(document).ready(function () {
 
-    window.FakeLoader.init( );
+    window.FakeLoader.init();
+
 
     /** start of components ***********************/
     fnGetCommonCmb('company', '#searchCompany');
@@ -88,24 +89,30 @@ $(document).ready(function () {
             var arr = $('#grid2').jsGrid('option', 'data');
         },
         fields: [
-            { name: "title", title: '수강과목명', type: "text", width: 120, editing: false, align: "center" },
-            { name: "categoryNm", title: "강좌 카테고리", type: "text", width: 150, editing: false, align: "center" },
-            { name: "author", title: "강사명", type: 'text', width: 150, editing: false, align: "center" },
-            /*{
-                name: "state", title: "수강 상태", type: 'text', width: 150, editing: false, align: "center" , cellRenderer: function (item, value) {
+            { name: "title", title: '수강과목명', type: "text", width: 150, editing: false, align: "left" },
+            { name: "categoryNm", title: "강좌 카테고리", type: "text", width: 150, editing: false, align: "left" },
+            { name: "author", title: "강사명", type: 'text', width: 100, editing: false, align: "center" },
+            {
+                name: "state", title: "수강상태", type: 'text', width: 100, editing: false, align: "center" , cellRenderer: function (item, value) {
                     var rslt = $("<td>").addClass("my-row-custom-class");
                     
+                    var span = $('<span></span>');
                     var txt = '';
 
-                    switch(txt) {
-                        case 'comp'
+                    switch(item) {
+                        case 'completed':
+                            txt = '수강완료';
+                            break;
+                        case 'playing':
+                            txt = '수강중';
+                            break; 
                     }
-                    
-                    var date = moment(item, 'YYYYMMDDHHmmss').format('YYYY-MM-DD');
-                    $(rslt).append(date);
+
+                    $(span).text(txt);
+                    $(rslt).append(span);
                     return rslt;
                 }
-            }*/
+            }
 
             
         ]
@@ -116,11 +123,10 @@ $(document).ready(function () {
     function fnRetrieve(empNo) {
         window.FakeLoader.showOverlay();
         
-        var searchCompany = $('#compNm').val() || '';//회사명
-        var searchempNm = $('#name').val() || '';//사용자이름
+        var searchCompany = $('#searchCompany').val() || '';//회사명
+        var searchempNm = $('#empNm').val() || '';//사용자이름
         var searchempNo = $('#empNo').val() || '';//사번
-    
-       
+
        
         parent.database.ref('/user').once('value').then(function(snapshot)
         {
@@ -131,8 +137,8 @@ $(document).ready(function () {
 
                 if( 
                     ((searchempNm == '') || (studyObj['name'].indexOf(searchempNm) > -1)) &&
-                    ((searchempNo == '') || (studyObj['empNo'] == searchempNo)) &&
-                    ((searchCompany == '') ||(studyObj['compNm'] == searchCompany)) &&
+                    ((searchempNo == '') || (searchempNo == idx)) &&
+                    ((searchCompany == '') ||(studyObj['compCd'] == searchCompany)) &&
                     (studyObj['roleCd'] != 'admin')
                 ) {
                    // var mbrCnt = Object.keys(studyObj['member'] || []).length+1;

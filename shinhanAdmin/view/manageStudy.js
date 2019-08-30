@@ -109,8 +109,8 @@ function fnRetrieve1() {
     window.FakeLoader.showOverlay();
     
     var searchStudy = $('#studyname').val() || '';//스터디
-    var searchName =  $('#name').val() || '' //스터디원 이름
-    var searchCompany = $('#date').val() || '';//등록일자
+    var searchName =  $('#searchName').val() || '' //스터디원 이름
+    //var searchCompany = $('#date').val() || '';//등록일자
 
     parent.database.ref('/'+ '58'+'/study').once('value').then(function(snapshot)
     {
@@ -118,12 +118,13 @@ function fnRetrieve1() {
         var catArr = snapshot.val();
         var rsltArr = [];
 
+        
+
         $.each(catArr, function(idx, studyObj) {
             if( 
                  ((searchStudy== '') || (studyObj['studyname'].indexOf(searchStudy) > -1))&&
-                 ((searchName== '') || (studyObj['name']==searchMember))
+                 ((searchName== '') || isMemberInStudy(studyObj['member'], searchName))
              ) 
-             
              {
                  studyObj['rowKey'] = idx;
                  //console.log(idx);
@@ -140,6 +141,23 @@ function fnRetrieve1() {
 
         $('#grid1').find('tr.jsgrid-row:eq(0)').click(); //첫번째 row click
     });
+}
+
+
+function isMemberInStudy(memberArr, searchNm) {
+
+    var keys = Object.keys(memberArr);
+
+    for(var i=0; i<keys.length; i++) {
+        var key = keys[i];
+        var obj = memberArr[key];
+
+        if(searchNm == obj['name']) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 
