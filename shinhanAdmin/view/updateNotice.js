@@ -28,7 +28,7 @@ $(document).ready(function () {
             
             $('#title').text(obj['title']);
             $('#writor').text(obj['writor']);
-            $('#description').text(obj['description'].split('\n').join('<br/>'));
+            $('#description').html(obj['description'].split('\n').join('<br/>'));
             console.log(obj['description']);
             $('#regDate').text(moment(obj['date'], 'YYYYMMDD').format('YYYY-MM-DD'));
         });
