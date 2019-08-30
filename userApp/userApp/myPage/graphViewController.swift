@@ -1,0 +1,121 @@
+//
+//  graphViewController.swift
+//  userApp
+//
+//  Created by user on 29/08/2019.
+//  Copyright © 2019 sfo. All rights reserved.
+//
+
+import UIKit
+import Charts
+import Firebase
+
+class graphViewController: UIViewController, ChartViewDelegate {
+
+    var months: [String]!
+
+    let copnum: Int = 0
+    let studyTime: Int = 0
+    var goalTime: Int = 20
+    
+    @IBOutlet weak var chartView: BarChartView!
+    @IBOutlet weak var timeStacklbl: UILabel!
+    @IBOutlet weak var copStacklbl: UILabel!
+    
+    @IBOutlet weak var cat1lbl: UILabel!
+    @IBOutlet weak var cat2lbl: UILabel!
+    @IBOutlet weak var cat3lbl: UILabel!
+    
+    @IBOutlet weak var teac1lbl: UILabel!
+    @IBOutlet weak var teac2lbl: UILabel!
+    @IBOutlet weak var teac3lbl: UILabel!
+    @IBOutlet weak var goalTimelbl: UILabel!
+    
+    let unitSold = [60, 20, 15, 25, 15, 45, 18]
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        months = ["월", "화", "수", "목", "금", "토", "일"]
+        
+        setChart(dataPoints: months, values: unitSold)
+        
+        timeStacklbl.text = "Shinple과 함께 \(studyTime)분을 학습했습니다"
+        copStacklbl.text = "\(copnum)개의 CoP에서 활동중"
+        goalTimelbl.text = "\(goalTime)분"
+        // Do any additional setup after loading the view.
+        
+    }
+    
+    @IBAction func setGoal(_ sender: UIButton) {
+        let timeA = UIAlertController(title: "목표 시간을 선택해 주세요", message: " ", preferredStyle: UIAlertController.Style.alert)
+        let A10 = UIAlertAction(title: "10분", style: UIAlertAction.Style.default, handler: {ACTION in self.goalTime = 10
+            self.setChart(dataPoints: self.months, values: self.unitSold)
+            self.goalTimelbl.text = "\(self.goalTime)분"
+        })
+        let A20 = UIAlertAction(title: "20분", style: UIAlertAction.Style.default, handler: {ACTION in self.goalTime = 20
+            self.setChart(dataPoints: self.months, values: self.unitSold)
+            self.goalTimelbl.text = "\(self.goalTime)분"
+        })
+        let A30 = UIAlertAction(title: "30분", style: UIAlertAction.Style.default, handler: {ACTION in self.goalTime = 30
+            self.setChart(dataPoints: self.months, values: self.unitSold)
+            self.goalTimelbl.text = "\(self.goalTime)분"
+        })
+        let A40 = UIAlertAction(title: "40분", style: UIAlertAction.Style.default, handler: {ACTION in self.goalTime = 40
+            self.setChart(dataPoints: self.months, values: self.unitSold)
+            self.goalTimelbl.text = "\(self.goalTime)분"
+        })
+        let A50 = UIAlertAction(title: "50분", style: UIAlertAction.Style.default, handler: {ACTION in self.goalTime = 50
+            self.setChart(dataPoints: self.months, values: self.unitSold)
+            self.goalTimelbl.text = "\(self.goalTime)분"
+        })
+        let A60 = UIAlertAction(title: "60분", style: UIAlertAction.Style.default, handler: {ACTION in self.goalTime = 60
+            self.setChart(dataPoints: self.months, values: self.unitSold)
+            self.goalTimelbl.text = "\(self.goalTime)분"
+        })
+        timeA.addAction(A10)
+        timeA.addAction(A20)
+        timeA.addAction(A30)
+        timeA.addAction(A40)
+        timeA.addAction(A50)
+        timeA.addAction(A60)
+        present(timeA, animated: true, completion: nil)
+        goalTimelbl.text = "\(goalTime)분"
+    }
+    
+    func setChart(dataPoints: [String], values: [Int]){
+        //        barChartView.noDataText = "you need to provide datafor the chart"
+        
+        var dataEntries: [BarChartDataEntry] = []
+        
+        for i in 0 ..< dataPoints.count{
+            let dataEntry = BarChartDataEntry(x: Double(Int(i)), y: Double(values[i]))
+            dataEntries.append(dataEntry)
+            
+            let chartDataSet = BarChartDataSet(entries: dataEntries, label: "학습량")
+            let chartData = BarChartData(dataSet: chartDataSet)
+            //            chartDataSet.colors = ChartColorTemplates.material()
+            chartView.data = chartData
+            
+            chartView.xAxis.labelPosition = .bottom
+            chartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: months)
+            //            barChartView.backgroundColor = UIColor(red: 189/255, green: 195/255, blue: 199/255, alpha: 1)
+            chartView.animate(xAxisDuration: 2, yAxisDuration: 2)
+            
+            let ll = ChartLimitLine(limit: Double(goalTime), label: "목표")
+            chartView.rightAxis.removeAllLimitLines()
+            chartView.rightAxis.addLimitLine(ll)
+            chartView.delegate = self
+        }
+        
+    }
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
+}

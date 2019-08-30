@@ -11,14 +11,47 @@ import Firebase
 
 class MyPagePreView: UITableView, UITableViewDelegate, UITableViewDataSource {
     
-    var img = ["imgAdd.jpeg", "imgAdd.jpeg", "imgAdd.jpeg", "imgAdd.jpeg", "imgAdd.jpeg"]
-    var item = ["AWS", "Java", "Swift", "C", "C++"]
+    var textArray = ["","",""]
+    var authorArray = ["","",""]
+    var dataReceived:Bool = false
+    
+    var playingVideoIdArray = Array<String>()
+    var playingTitleArray = Array<String>()
+    var playingAuthorArray = Array<String>()
+    
+    var img = ["imgAdd.jpeg", "imgAdd.jpeg", "imgAdd.jpeg", "imgAdd.jpeg", "imgAdd.jpeg","imgAdd.jpeg"]
+    var item = ["AWS", "Java", "Swift", "C", "C++", "swift"]
     
     override func awakeFromNib() {
         self.delegate = self
         self.dataSource = self
+
+        videoDataLoad()
+
     }
     
+    func videoDataLoad(){
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        ref.child("user/201302493/playList").observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            for video in value! {
+                let videoDict = video.value as! Dictionary<String, Any>;()
+                let videoId = video.key as! String
+                let title = videoDict["title"] as! String
+                let author = videoDict["author"] as! String
+                self.playingVideoIdArray.append(videoId)
+                self.playingTitleArray.append(title)
+                self.playingAuthorArray.append(author)
+                
+            }
+            self.dataReceived = true
+            self.reloadData()
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+        
+    }
     func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -26,21 +59,20 @@ class MyPagePreView: UITableView, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return item.count
+        return self.playingTitleArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //let cell = UITableViewCell()
-        //return cell
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! MyPagePreCell
-        
-//        cell.textLabel?.text = item[(indexPath as NSIndexPath).row]
-//        cell.imageView?.image = UIImage(named: img[(indexPath as NSIndexPath).row])
-        cell.tagLbl.text = item[(indexPath as NSIndexPath).row]
-        cell.tagImg.image = UIImage(named: img[(indexPath as NSIndexPath).row])
-        
-        return cell
+//        if dataReceived {
+//        cell.tagLbl.text = self.playingTitleArray[indexPath.row]
+//        cell.tagImg.image = CachedImageView().loadCacheImage(urlKey: playingVideoIdArray[indexPath.row])
+//        }else{
+            cell.tagLbl.text = item[indexPath.row]
+            cell.tagImg.image = UIImage(named: img[(indexPath as NSIndexPath).row])
+//        }
+            return cell
+            
         
     }
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -52,12 +84,5 @@ class MyPagePreView: UITableView, UITableViewDelegate, UITableViewDataSource {
             
         }
     }
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
 
 }

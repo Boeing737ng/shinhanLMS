@@ -49,19 +49,25 @@ class VideoQnATableViewController: UITableViewController {
                 let questionId = question.key
                 let title = questionDict["title"] as! String
                 let content = questionDict["content"] as! String
-                let date = questionDict["date"] as! String
                 let writer = questionDict["writer"] as! String
                 
-                print(title)
-                print(content)
-                print(date)
-                print(writer)
-                print("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n")
+                let date: Double = questionDict["date"] as! Double
+                let myTimeInterval = TimeInterval(date)
+                let ts = NSDate(timeIntervalSince1970: TimeInterval(myTimeInterval))
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yy/MM/dd HH:mm"
+                let formattedDate = formatter.string(from: ts as Date)
+                
+//                print(title)
+//                print(content)
+//                print(date)
+//                print(writer)
+//                print("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n")
                 
                 self.keyArray.append(questionId)
                 self.titleArray.append(title)
                 self.contentArray.append(content)
-                self.dateArray.append(date)
+                self.dateArray.append(formattedDate)
                 self.writerArray.append(writer)
             }
             //self.dataReceived = true
@@ -70,7 +76,6 @@ class VideoQnATableViewController: UITableViewController {
             print(error.localizedDescription)
         }
     }
-    
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return keyArray.count
