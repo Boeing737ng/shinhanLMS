@@ -35,7 +35,7 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
                 }
                 let videoDict = video.value as! Dictionary<String, Any>;()
                 print(videoDict)
-                let status = videoDict["status"] as! String
+                let status = videoDict["state"] as! String
                 if status == "playing" {
                     let videoId = video.key as! String
                     let title = videoDict["title"] as! String
