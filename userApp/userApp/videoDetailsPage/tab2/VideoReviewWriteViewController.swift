@@ -17,6 +17,17 @@ class VideoReviewWriteViewController: UIViewController, UITextViewDelegate {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        
+        
+//        let date = NSDate().timeIntervalSince1970
+//        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+//        print(date)
+//
+//        let myTimeInterval = TimeInterval(date)
+//        let time = NSDate(timeIntervalSince1970: TimeInterval(myTimeInterval))
+//
+//        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+//        print(time)
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -47,13 +58,13 @@ class VideoReviewWriteViewController: UIViewController, UITextViewDelegate {
         }
     }
     
-    func getCurrentDate() -> String {
-        let date = Date()
-        let dateFormat = DateFormatter()
-        dateFormat.dateFormat = "yyyy/MM/dd"
-        let dateString = dateFormat.string(from: date)
-        return dateString
-    }
+//    func getCurrentDate() -> String {
+//        let date = Date()
+//        let dateFormat = DateFormatter()
+//        dateFormat.dateFormat = "yyyy/MM/dd"
+//        let dateString = dateFormat.string(from: date)
+//        return dateString
+//    }
     
     func onGoBack() {
         let transition: CATransition = CATransition()
@@ -71,7 +82,7 @@ class VideoReviewWriteViewController: UIViewController, UITextViewDelegate {
         ref = Database.database().reference()
         ref.child(userCompanyCode + "/videos/" + selectedVideoId + "/review").childByAutoId().setValue([
             "content": tvContent.text as? String,
-            "date": getCurrentDate(),
+            "date": NSDate().timeIntervalSince1970,
             "writer": userName
             ])
         

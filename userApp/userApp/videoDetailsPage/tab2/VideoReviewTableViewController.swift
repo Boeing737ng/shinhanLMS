@@ -36,19 +36,28 @@ class VideoReviewTableViewController: UITableViewController {
         self.contentArray.removeAll()
         self.dateArray.removeAll()
         self.writerArray.removeAll()
+        
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child(userCompanyCode + "/videos/" + selectedVideoId + "/review").observeSingleEvent(of: .value, with: { (snapshot) in
             if snapshot.childrenCount == 0 {
                 return
             }
+            
             let reviewInfo = snapshot.value as? Dictionary<String,Any>;()
             
             for review in reviewInfo! {
                 let reviewDict = review.value as! Dictionary<String, Any>;()
+                
                 let content = reviewDict["content"] as! String
-                let date = reviewDict["date"] as! String
                 let writer = reviewDict["writer"] as! String
+                
+                let date: Double = reviewDict["date"] as! Double
+                let myTimeInterval = TimeInterval(date)
+                let ts = NSDate(timeIntervalSince1970: TimeInterval(myTimeInterval))
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yy/MM/dd HH:mm"
+                let formattedDate = formatter.string(from: ts as Date)
                 
 //                print(content)
 //                print(date)
@@ -56,7 +65,7 @@ class VideoReviewTableViewController: UITableViewController {
 //                print("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n")
                 
                 self.contentArray.append(content)
-                self.dateArray.append(date)
+                self.dateArray.append(formattedDate)
                 self.writerArray.append(writer)
             }
             //self.dataReceived = true

@@ -48,13 +48,13 @@ class VideoQuestionWriteViewController: UIViewController, UITextViewDelegate {
         }
     }
     
-    func getCurrentDate() -> String {
-        let date = Date()
-        let dateFormat = DateFormatter()
-        dateFormat.dateFormat = "yyyy/MM/dd"
-        let dateString = dateFormat.string(from: date)
-        return dateString
-    }
+//    func getCurrentDate() -> String {
+//        let date = Date()
+//        let dateFormat = DateFormatter()
+//        dateFormat.dateFormat = "yyyy/MM/dd"
+//        let dateString = dateFormat.string(from: date)
+//        return dateString
+//    }
     
     func onGoBack() {
         let transition: CATransition = CATransition()
@@ -72,7 +72,7 @@ class VideoQuestionWriteViewController: UIViewController, UITextViewDelegate {
         ref = Database.database().reference()
         ref.child(userCompanyCode + "/videos/" + selectedVideoId + "/qnaBoard").childByAutoId().setValue([
             "content": tvContent.text as? String,
-            "date": getCurrentDate(),
+            "date": NSDate().timeIntervalSince1970,
             "title": tfTitle.text as? String,
             "writer": userName
             ])
