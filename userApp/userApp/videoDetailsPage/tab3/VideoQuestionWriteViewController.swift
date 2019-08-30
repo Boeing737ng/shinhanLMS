@@ -42,8 +42,16 @@ class VideoQuestionWriteViewController: UIViewController, UITextViewDelegate {
             tvContent.text = ""
             tvContent.textColor = UIColor.black
         }
+        else if tvTitle.text == "질문 제목을 작성해주세요." {
+            tvContent.text = ""
+            tvContent.textColor = UIColor.black
+        }
         else if tvContent.text == "" {
             tvContent.text = "질문 내용을 작성해주세요."
+            tvContent.textColor = UIColor.lightGray
+        }
+        else if tvTitle.text == "" {
+            tvContent.text = "질문 제목을 작성해주세요."
             tvContent.textColor = UIColor.lightGray
         }
     }
