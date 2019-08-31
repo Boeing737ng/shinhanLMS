@@ -110,15 +110,13 @@ function fnRetrieve1() {
     
     var searchStudy = $('#studyname').val() || '';//스터디
     var searchName =  $('#searchName').val() || '' //스터디원 이름
-    //var searchCompany = $('#date').val() || '';//등록일자
+    var searchcompNo = $('#compNo').val() || '';//사번
 
     parent.database.ref('/'+ '58'+'/study').once('value').then(function(snapshot)
     {
 
         var catArr = snapshot.val();
         var rsltArr = [];
-
-        
 
         $.each(catArr, function(idx, studyObj) {
             if( 
@@ -127,7 +125,6 @@ function fnRetrieve1() {
              ) 
              {
                  studyObj['rowKey'] = idx;
-                 //console.log(idx);
                  var mbrCnt = Object.keys(studyObj['member'] || []).length;
                  studyObj['participant'] = mbrCnt;
                  rsltArr.push(studyObj);
@@ -151,15 +148,15 @@ function isMemberInStudy(memberArr, searchNm) {
     for(var i=0; i<keys.length; i++) {
         var key = keys[i];
         var obj = memberArr[key];
-
+        console.log(key)
         if(searchNm == obj['name']) {
             return true;
         }
+
     }
 
     return false;
 }
-
 
 //grid 2, 스터디 참여자 리스트 조회 
 function fnRetrieve2(studyNo) {
@@ -178,7 +175,7 @@ function fnRetrieve2(studyNo) {
                 studyObj['rowKey'] = idx;
                 rsltArr.push(studyObj);   
             }
-            console.log(rsltArr);
+            //console.log(rsltArr);
 
         });
         $("#grid2").jsGrid("option", "data", rsltArr);
