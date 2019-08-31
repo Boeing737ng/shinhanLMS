@@ -204,15 +204,26 @@ class VideoDetailViewController: UIViewController {
     }
     
     private func setFullScreenConstraint() {
-        videoLengthLabel.rightAnchor.constraint(equalTo: playerView.rightAnchor, constant: -30).isActive = true
-        videoLengthLabel.bottomAnchor.constraint(equalTo: playerView.bottomAnchor).isActive = true
-        videoLengthLabel.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        fullScreenButton.rightAnchor.constraint(equalTo: playerView.rightAnchor, constant: -25).isActive = true
+        fullScreenButton.bottomAnchor.constraint(equalTo: playerView.bottomAnchor, constant: -2).isActive = true
+        fullScreenButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        fullScreenButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        videoLengthLabel.rightAnchor.constraint(equalTo: fullScreenButton.leftAnchor, constant: -8).isActive = true
+        videoLengthLabel.bottomAnchor.constraint(equalTo: playerView.bottomAnchor, constant: -5).isActive = true
+        videoLengthLabel.widthAnchor.constraint(equalToConstant: 60).isActive = true
         videoLengthLabel.heightAnchor.constraint(equalToConstant: 24).isActive = true
         
-        currentTimeLabel.leftAnchor.constraint(equalTo: playerView.leftAnchor, constant: 80).isActive = true
-        currentTimeLabel.bottomAnchor.constraint(equalTo: playerView.bottomAnchor).isActive = true
-        currentTimeLabel.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        currentTimeLabel.leftAnchor.constraint(equalTo: playerView.leftAnchor, constant: 25).isActive = true
+        currentTimeLabel.bottomAnchor.constraint(equalTo: playerView.bottomAnchor, constant: -5).isActive = true
+        currentTimeLabel.widthAnchor.constraint(equalToConstant: 50).isActive = true
         currentTimeLabel.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        
+        videoSlider.rightAnchor.constraint(equalTo: videoLengthLabel.leftAnchor, constant: 10).isActive = true
+        videoSlider.bottomAnchor.constraint(equalTo: playerView.bottomAnchor).isActive = true
+        videoSlider.leftAnchor.constraint(equalTo: currentTimeLabel.rightAnchor).isActive = true
+        videoSlider.heightAnchor.constraint(equalToConstant: 35).isActive = true
+        videoSlider.thumbTintColor = .red
     }
     
     @objc private func setFullScreen() {
