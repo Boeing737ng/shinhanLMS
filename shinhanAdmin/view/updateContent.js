@@ -17,6 +17,11 @@ $(document).ready(function () {
     });
 
 
+    $('#category').on('change', function(e) {
+        $('#requireYn').text($('#category > option:selected').attr('data-requireYn') || 'N');
+    });
+
+
     //저장 버튼
     $('#btnSave').on('click', function(e) {
         e.preventDefault();
@@ -62,10 +67,9 @@ $(document).ready(function () {
                 $('#relatedTags').tagsinput('add', tagArr[i]);    
             }
             
-            //$('#requireYn').selectpicker();
             fnGetCommonCmb('category', '#category', obj['categoryId']);
 
-            //$('#requireYn').val(obj['requireYn']);
+            $('#requireYn').text(obj['requireYn']);
             //$('#requireYn').selectpicker('refresh');
 
             window.FakeLoader.hideOverlay();
@@ -215,7 +219,7 @@ $(document).ready(function () {
         var contentDescription = $('#description').val();
         var contentAddedTime = moment().unix();
         var title = $('#title').val();
-        var requireYn = $('#category').val() == 'REQUIRED' ? 'Y' : 'N';
+        var requireYn = $('#requireYn').text();
         var categoryId = $('#category').val();
         var categoryNm = $('#category > option:selected').text();
         var view = $('#view').val();
@@ -339,29 +343,6 @@ $(document).ready(function () {
         $('' + selector).html('<option value="">전체</option>');
 
         switch(option) {
-            case 'tag':
-                parent.database.ref('/' + compCd + '/tags/').once('value')
-                .then(function (snapshot) {
-                    var tagArr = snapshot.val();
-                    var optionArr = [];
-                
-                    $.each(tagArr, function(idx, tagObj) {
-                        var newOption = $('<option></option>');
-                        $(newOption).attr('value', tagArr[idx].value);
-                        $(newOption).text(tagArr[idx].value);
-
-                        if(tagArr[idx].value == defaultValue) {
-                            $(newOption).attr('selected', 'selected');
-                        }
-
-                        $(''+selector).append($(newOption));
-                    });
-
-                    $(''+selector).selectpicker();
-                });    
-                break;
-
-
             case 'category':
                     parent.database.ref('/' + compCd + '/categories/').once('value')
                     .then(function (snapshot) {
@@ -371,6 +352,7 @@ $(document).ready(function () {
                         console.log(catArr)
                         $.each(catArr, function(idx, catObj) {
                             var newOption = $('<option></option>');
+                            $(newOption).attr('data-requireYn', catObj['requireYn']);
                             $(newOption).attr('value', idx);
                             $(newOption).text(catArr[idx].title);
 

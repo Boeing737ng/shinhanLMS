@@ -55,7 +55,7 @@ $(document).ready(function () {
                     return $("<input>").attr("type", "checkbox")
                             .addClass('selectionCheckbox')
                             .prop("checked", $.inArray(item, selectedItems) > -1)
-                            .prop('disabled', (item.rowKey == 'REQUIRED'))
+                            //.prop('disabled', (item.rowKey == 'REQUIRED'))
                             .on("change", function () {
                                 $(this).is(":checked") ? selectItem(item) : unselectItem(item);
                             });
@@ -67,6 +67,14 @@ $(document).ready(function () {
                 validator: 'required', 
                 message: '공개여부 는 필수입력 입니다.'
             } },
+            { name: "requireYn", title: '필수강좌여부', type: "select", width: 50, align: "center", type: 'select', items: [
+                { Name: "전체", Id: "" },
+                { Name: "Y", Id: "Y" },
+                { Name: "N", Id: "N" }
+            ],valueField: "Id", textField: "Name", inserting: true, validate: {
+                validator: 'required', 
+                message: '필수강좌여부 는 필수입력 입니다.'
+            }, align: "center" },
             { name: "contentCnt", title: '컨텐츠수', type: "number", width: 50, align: "right", inserting: false, editing: false },
             { type: "control", editButton: false, deleteButton: false } //edit control
         ]
@@ -169,7 +177,8 @@ $(document).ready(function () {
     //신규
     function fnCreate(item, callback) {
         parent.database.ref( '/' + compCd + '/categories/').push({
-            'title': item['title']
+            'title': item['title'],
+            'requireYn': item['requireYn']
         }).then(function onSuccess(res) {
             if(callback != null && callback != undefined) {
                 callback();
@@ -177,29 +186,6 @@ $(document).ready(function () {
         }).catch(function onError(err) {
             console.log("ERROR!!!! " + err);
         });
-    }
-
-
-    function fnSave() {
-        var nodeName = $('#nodeName').val();
-        var parentNode = $("#tree").tree("getSelectedNode");
-        var sortNum = $('#sortNum').val();
-        var parentNodeId = parentNode ? parentNode.id : 'root';
-
-
-        parent.database.ref( '/' + compCd + '/categories/').push({
-            'title': nodeName,
-            'parent': parentNode.id,
-            'sortNum': sortNum
-        }).then(function onSuccess(res) {
-            if(callback != null && callback != undefined) {
-                callback();
-            }
-        }).catch(function onError(err) {
-            console.log("ERROR!!!! " + err);
-        });
-
-        //var parentNode = $("#tree").tree("getNodeById", parentIdx);
     }
 
 

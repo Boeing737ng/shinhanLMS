@@ -168,10 +168,7 @@ author : jybobo
                                 </td>
                             </tr>
                             <tr>
-                                <th class="required"><span>강사명</span></th>
-                                <td>
-                                    <input type="text" id="author" class="form-control" style="width:100%" />
-                                </td>
+
                                 <th class="required"><span>카테고리</span></th>
                                 <td>
                                     <select id="category" class="category" data-live-search="true" data-width="100%">
@@ -179,13 +176,10 @@ author : jybobo
                                         <option value="N">N</option>
                                     </select>
                                 </td>
-                                <!-- <th class="required"><span>필수강좌여부</span></th>
+                                <th class="required"><span>필수강좌여부</span></th>
                                 <td>
-                                    <select id="requireYn" data-live-search="true" data-width="144px">
-                                        <option value="Y">Y</option>
-                                        <option value="N">N</option>
-                                    </select>
-                                </td> -->
+                                    <span id="requireYn"></span>
+                                </td>
 
                             </tr>
 
@@ -202,8 +196,12 @@ author : jybobo
                                 <th class="required">
                                     <span>관련태그</span>
                                 </th>
-                                <td colspan="3">
+                                <td>
                                     <input type="text" id="relatedTags" class="tagsInput"/>
+                                </td>
+                                <th class="required"><span>강사명</span></th>
+                                <td>
+                                    <input type="text" id="author" class="form-control" style="width:100%" />
                                 </td>
                             </tr>
 

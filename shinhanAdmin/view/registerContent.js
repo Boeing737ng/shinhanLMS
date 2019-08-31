@@ -21,6 +21,11 @@ $(document).ready(function () {
     fnGetCommonCmb('category', '#category');
 
 
+    $('#category').on('change', function(e) {
+        $('#requireYn').text($('#category > option:selected').attr('data-requireYn') || 'N');
+    });
+
+
     $('#thumbnailImgPreview').on('click', function(e) {
         $('#thumbnailFile').click();
     });
@@ -416,7 +421,7 @@ $(document).ready(function () {
                     var contentTag = contentTagArr.join(' ');
                     var contentDescription = $('#description').val();
                     var title = $('#title').val();
-                    var requireYn = $('#category').val() == 'REQUIRED' ? 'Y' : 'N';//$('#requireYn').val();
+                    var requireYn = $('#requireYn').text();
 
                     setVideoDatabase(rowId, {
                         downloadURL: videoPath,
@@ -524,6 +529,7 @@ $(document).ready(function () {
                         $.each(catArr, function(idx, catObj) {
                             var newOption = $('<option></option>');
                             $(newOption).attr('value', idx);
+                            $(newOption).attr('data-requireYn', catObj['requireYn']);
                             $(newOption).text(catArr[idx].title);
 
                             if(idx == defaultValue) {
