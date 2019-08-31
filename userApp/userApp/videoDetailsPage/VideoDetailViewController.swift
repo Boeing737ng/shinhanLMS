@@ -21,6 +21,7 @@ class VideoDetailViewController: UIViewController {
 
     @IBOutlet weak var videoView: UIView!
     
+    var videoProgress:Float = 0.0
     var playerView:UIView = UIView()
     var player:AVPlayer?
     var isPlaying:Bool = false
@@ -101,7 +102,7 @@ class VideoDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         getVideoInfoFromDB()
-        // Do any additional setup after loading the view.
+        userDidStartWatchingVideo()
     }
     
     func showVideoPlayer() {
@@ -121,6 +122,14 @@ class VideoDetailViewController: UIViewController {
         transition.subtype = CATransitionSubtype.fromLeft
         self.view.window!.layer.add(transition, forKey: nil)
         self.dismiss(animated: false, completion: nil)
+    }
+    
+    private func userDidStartWatchingVideo() {
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        ref.child(userCompanyCode + "/videos/" + selectedVideoId + "/user/" + userNo).setValue([
+                "name": userName
+            ])
     }
     
     func getVideoInfoFromDB() {
@@ -302,8 +311,9 @@ class VideoDetailViewController: UIViewController {
                 //lets move the slider thumb
                 if let duration = self.player?.currentItem?.duration {
                     let durationSeconds = CMTimeGetSeconds(duration)
-                    
-                    self.videoSlider.value = Float(seconds / durationSeconds)
+                    let runningPercentage = Float(seconds / durationSeconds)
+                    self.videoSlider.value = runningPercentage
+                    self.videoProgress = runningPercentage
                 }
             })
         }
@@ -326,7 +336,6 @@ class VideoDetailViewController: UIViewController {
             isPlaying = true
             if let duration = player?.currentItem?.duration {
                 let seconds = CMTimeGetSeconds(duration)
-                
                 let secondsText = Int(seconds) % 60
                 let minutesText = String(format: "%02d", Int(seconds) / 60)
                 videoLengthLabel.text = "\(minutesText):\(secondsText)"
