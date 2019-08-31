@@ -39,10 +39,7 @@ $(document).ready(function () {
     rowClick: function(args) {
         //showDetailsDialog("Edit", args.item);
         var arr = $('#grid1').jsGrid('option', 'data');
-        
-
         var studyNo = args.item['rowKey'];
-        //console.log(studyNo);
 
         fnRetrieve2(studyNo);
         fnRetrieve3(studyNo);
@@ -83,9 +80,10 @@ $(document).ready(function () {
     paging: false,
     data: [],
     fields: [
-        { name: "compNm", title: "회사명", type: 'text', width: 150, editing: false, align: "center" },
-        { name: "department", title: "부서", type: 'text', width: 150, editing: false, align: "center" },
-        { name: "name", title: '성명', type: "text", width: 100, editing: false, align: "left" }
+        { name: "empNo", title: "사번", type: 'text', width: 100, editing: false, align: "center" },
+        { name: "compNm", title: "회사명", type: 'text', width: 120, editing: false, align: "left" },
+        { name: "department", title: "부서", type: 'text', width: 120, editing: false, align: "left" },
+        { name: "name", title: '성명', type: "text", width: 100, editing: false, align: "center" }
     ]
     });
 
@@ -110,7 +108,7 @@ function fnRetrieve1() {
     
     var searchStudy = $('#studyname').val() || '';//스터디
     var searchName =  $('#searchName').val() || '' //스터디원 이름
-    var searchcompNo = $('#compNo').val() || '';//사번
+    var searchEmpNo = $('#compNo').val() || '';//사번
 
     parent.database.ref('/'+ '58'+'/study').once('value').then(function(snapshot)
     {
@@ -120,8 +118,9 @@ function fnRetrieve1() {
 
         $.each(catArr, function(idx, studyObj) {
             if( 
-                 ((searchStudy== '') || (studyObj['studyname'].indexOf(searchStudy) > -1))&&
-                 ((searchName== '') || isMemberInStudy(studyObj['member'], searchName))
+                 ((searchStudy== '') || (studyObj['studyname'].indexOf(searchStudy) > -1)) &&
+                 ((searchName== '') || isMemberInStudy(studyObj['member'], 'name', searchName)) &&
+                 ((searchEmpNo== '') || isMemberInStudy(studyObj['member'], 'empNo', searchEmpNo))
              ) 
              {
                  studyObj['rowKey'] = idx;
@@ -141,18 +140,24 @@ function fnRetrieve1() {
 }
 
 
-function isMemberInStudy(memberArr, searchNm) {
+function isMemberInStudy(memberArr, option, searchNm, ) {
 
     var keys = Object.keys(memberArr);
-
+    
     for(var i=0; i<keys.length; i++) {
         var key = keys[i];
         var obj = memberArr[key];
-        console.log(key)
-        if(searchNm == obj['name']) {
-            return true;
-        }
 
+        if(option == 'name') {
+            if(obj[option].indexOf(searchNm) > -1) {
+                return true;
+            }
+        }else {
+            if(searchNm == key) {
+                return true;
+            }
+        }
+        
     }
 
     return false;
@@ -166,17 +171,14 @@ function fnRetrieve2(studyNo) {
     
     parent.database.ref('/'+ '58'+'/study/'+studyNo+'/member').once('value').then(function(snapshot)
     { 
-       // console.log(studyNo);
         var catArr = snapshot.val();
         var rsltArr = [];
         $.each(catArr, function(idx, studyObj) {
 
             { 
-                studyObj['rowKey'] = idx;
+                studyObj['empNo'] = idx;
                 rsltArr.push(studyObj);   
             }
-            //console.log(rsltArr);
-
         });
         $("#grid2").jsGrid("option", "data", rsltArr);
 
