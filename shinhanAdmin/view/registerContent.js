@@ -63,6 +63,8 @@ $(document).ready(function () {
             $(img).on('load', function(e) {
                 var canvas = capture('image', img);
                 output.innerHTML = '';
+                $(output).css('background-color', 'black');
+                $(output).css('background-image', '');
                 output.appendChild(canvas);
             });
 
@@ -92,6 +94,9 @@ $(document).ready(function () {
         }
 
         submitVideoAttachFile = $('#videoAttachFile').clone();
+        console.log('black');
+        $('#video').css('background-color', 'black');
+        $('#video').css('background-image', '');
 
         var file = document.getElementById("videoAttachFile").files[0]
         var type = file.type;
@@ -249,32 +254,6 @@ $(document).ready(function () {
         var canvas = capture('video', video);
         output.innerHTML = '';
         output.appendChild(canvas);
-
-
-        //var dataUrl = canvas.toDataURL('image/png');
-        //loadThumbnailImage(dataUrl);
-    }
-
-
-    function loadThumbnailImage(blobURL) {
-        $('#thumbnailImgPreview').css('background-image', 'url("' + blobURL + '")');
-        $('#thumbnailImgPreview').css('background-repeat', 'no-repeat');
-        $('#thumbnailImgPreview').css('background-size', 'cover');
-
-        $('#thumbnailImgPreview').css('text-align', 'right');
-        $('#thumbnailImgPreview span').css('display', 'inline');
-        $('#thumbnailImgPreview span').html('<a href="#" style="margin-top:5px; margin-right:5px;" class="btn btn-danger btn-circle btn-sm"><i class="fas fa-minus"></i></a>');
-
-        $('#thumbnailImgPreview span a').one('click', function (e) {
-            e.stopImmediatePropagation();
-            resetFormElement($(this)); //폼 초기화
-            $('#thumbnailFile').val('');
-
-            $('#thumbnailImgPreview').css('background-image', '');
-            $('#thumbnailImgPreview').css('text-align', 'center');
-            $('#thumbnailImgPreview span').css('display', 'table-cell');
-            $('#thumbnailImgPreview span').html($('#thumbnailImgPreview').attr('data-placeholder'));
-        });
     }
 
 
