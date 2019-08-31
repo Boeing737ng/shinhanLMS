@@ -62,7 +62,13 @@ $(document).ready(function () {
 
       });
 
-      $("#grid1").jsGrid("option", "data", rsltArr);
+      var arr = [];
+      var length = rsltArr.length > 5 ? 5 : rsltArr.length;
+      for(var i=0; i<length; i++) {
+        arr.push(rsltArr[i]);
+      }
+
+      $("#grid1").jsGrid("option", "data", arr);
 
       window.FakeLoader.hideOverlay();
 
@@ -118,8 +124,6 @@ $(document).ready(function () {
         rsltArr.push(studyObj);
       });
 
-
-
       //등록일자 기준 내림차순
       rsltArr.sort(function(a, b) { 
         var bDate = moment(b.date, 'YYYYMMDD').unix();
@@ -127,7 +131,13 @@ $(document).ready(function () {
         return bDate - aDate;
       });
 
-      $("#grid2").jsGrid("option", "data", rsltArr);
+      var arr = [];
+      var length = rsltArr.length > 5 ? 5 : rsltArr.length;
+      for(var i=0; i<length; i++) {
+        arr.push(rsltArr[i]);
+      }
+ 
+      $("#grid2").jsGrid("option", "data", arr);
       window.FakeLoader.hideOverlay();
 
     });
@@ -150,6 +160,30 @@ $(document).ready(function () {
     $('body').append(form);
     $(form).submit();
   }
+
+
+  $('#btnMoreStudy').on('click', function(e) {
+    e.preventDefault();
+
+    alert('s');
+    var sidebar = window.parent.document.getElementById('accordionSidebar');
+    $(sidebar).find('li.nav-item > a[data-url="view/manageStudy.html"]').click();
+
+        //메뉴 클릭 시
+        /* $(document).on('click', '#accordionSidebar li.nav-item > a', function (e) {
+          var title = $(this).find('span').text();
+          var url = $(this).attr('data-url');
+          fnLoadPage(title, url);
+  
+          $('#accordionSidebar li.nav-item').removeClass('active');
+          $(this).parent('li').addClass('active');
+      }); */
+  });
+
+
+  $('#btnMoreBbs').on('click', function(e) {
+
+  });
 
   /*************************차트***************************/
 
