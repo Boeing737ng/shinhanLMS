@@ -7,40 +7,103 @@
 //
 
 import UIKit
+import Firebase
 
 class VideoQuestionShowTableViewController: UITableViewController {
+    
+    var keyArray = Array<String>()
+    var dateArray = Array<String>()
+    var writerArray = Array<String>()
+    var contentArray = Array<String>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        //self.tableView.delegate = self
+        //self.tableView.dataSource = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        getQuestionCommentFromDB()
+    }
+    
+    func getQuestionCommentFromDB() {
+        self.keyArray.removeAll()
+        self.contentArray.removeAll()
+        self.dateArray.removeAll()
+        self.writerArray.removeAll()
+        
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        ref.child(userCompanyCode + "/videos/" + selectedVideoId + "/qnaBoard/" + selectedQuestionId + "/comment").observeSingleEvent(of: .value, with: { (snapshot) in
+            let commentInfo = snapshot.value as? Dictionary<String,Any>;()
+            
+            if snapshot.childrenCount == 0 {
+                return
+            }
+            
+            for comment in commentInfo! {
+                let commentDict = comment.value as! Dictionary<String, Any>;()
+                
+                let commentId = comment.key
+                let content = commentDict["content"] as! String
+                let writer = commentDict["writer"] as! String
+                
+                let date: Double = commentDict["date"] as! Double
+                let myTimeInterval = TimeInterval(date)
+                let ts = NSDate(timeIntervalSince1970: TimeInterval(myTimeInterval))
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yy/MM/dd HH:mm"
+                let formattedDate = formatter.string(from: ts as Date)
+                
+                //                print(title)
+                //                print(content)
+                //                print(date)
+                //                print(writer)
+                //                print("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n")
+                
+                self.keyArray.append(commentId)
+                self.contentArray.append(content)
+                self.dateArray.append(formattedDate)
+                self.writerArray.append(writer)
+            }
+            //self.dataReceived = true
+            self.tableView.reloadData()
+        }) { (error) in
+            print(error.localizedDescription)
+        }
     }
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
+//    override func numberOfSections(in tableView: UITableView) -> Int {
+//        // #warning Incomplete implementation, return the number of sections
+//        return 0
+//    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return keyArray.count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "commentCell", for: indexPath) as! CommentTableViewCell
+        
+        cell.lblWriter.text = writerArray[(indexPath as NSIndexPath).row]
+        cell.lblDate.text = dateArray[(indexPath as NSIndexPath).row]
+        cell.lblContent.text = contentArray[(indexPath as NSIndexPath).row]
+        
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.
