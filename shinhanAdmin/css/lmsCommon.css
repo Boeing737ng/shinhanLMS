@@ -170,6 +170,13 @@ tr.highlight td.jsgrid-cell {
     background-color:#fdffe3;
   }
 
+
+.modal-header {
+    background-color: #486dda;
+    color: #ffffff;
+}
+
+
 /* .jsgrid-header-row {
     text-align: center;
 } */
