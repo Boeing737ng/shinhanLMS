@@ -32,11 +32,9 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
             let value = snapshot.value as? NSDictionary
             for video in value! {
                 if self.playingVideoIdArray.count == 3 {
-                    print("-------ARRAY SIZE IS FULL------")
                     break
                 }
                 let videoDict = video.value as! Dictionary<String, Any>;()
-                print(videoDict)
                 let status = videoDict["state"] as! String
                 if status == "playing" {
                     let videoId = video.key as! String
