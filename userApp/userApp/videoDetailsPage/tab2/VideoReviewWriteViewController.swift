@@ -87,7 +87,7 @@ class VideoReviewWriteViewController: UIViewController, UITextViewDelegate {
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child(userCompanyCode + "/videos/" + selectedVideoId + "/review").child(String(UInt(NSDate().timeIntervalSince1970 * 1000000))).setValue([
-            "content": tvContent.text as? String,
+            "content": tvContent.text,
             "date": Double(NSDate().timeIntervalSince1970),
             "writer": userName
             ])
