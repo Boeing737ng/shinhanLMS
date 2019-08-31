@@ -127,9 +127,9 @@ class LoginViewController: UIViewController {
                 let image = UIImage(data: data)!
                 CachedImageView().setImageCache(item: image, urlKey: id)
                 }.resume()
-            print(id + " ---> Cached!")
         }
         completion()
+        print("Caching completed!!!")
     }
     
     func isCachingCompleted() {
