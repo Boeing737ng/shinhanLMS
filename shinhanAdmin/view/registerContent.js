@@ -26,7 +26,12 @@ $(document).ready(function () {
     });
 
 
-    $('#thumbnailImgPreview').on('click', function(e) {
+/*     $('#thumbnailImgPreview').on('click', function(e) {
+        $('#thumbnailFile').click();
+    }); */
+
+
+    $('#output').on('click', function(e) {
         $('#thumbnailFile').click();
     });
 
@@ -45,26 +50,23 @@ $(document).ready(function () {
             window.alert('이미지 파일이 아닙니다! (gif, png, jpg, jpeg 만 업로드 가능)');
         } else {
             submitThumbnailAttachFile = $('#thumbnailFile').clone();
-            
-            var file = $('#thumbnailFile').prop("files")[0];
-            var blobURL = window.URL.createObjectURL(file);
-            
-            var img = document.createElement('img');
-            img.src = blobURL;
-
-            var canvas = document.createElement('canvas');
-            canvas.width  = 320;
-            canvas.height = 180;
-
-            var ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0);
 
             var output = document.getElementById('output');
-            output.innerHTML = '';
-            output.appendChild(canvas);
-            
-            var dataUrl = canvas.toDataURL('image/png');
-            loadThumbnailImage(blobURL);
+            var filesArr = Array.prototype.slice.call(e.target.files);
+            var file = filesArr[0];
+            var blobURL = window.URL.createObjectURL(file);
+
+            var img = document.createElement('img');
+            img.width = 320;
+            img.height = 180;
+
+            $(img).on('load', function(e) {
+                var canvas = capture('image', img);
+                output.innerHTML = '';
+                output.appendChild(canvas);
+            });
+
+            img.src = blobURL;
         }
     });
 
@@ -226,7 +228,8 @@ $(document).ready(function () {
 
         switch(option) {
             case 'image':
-                ctx.drawImage(content, 0, 0);
+                ctx.drawImage(content, 0, 0, w, h);
+                console.log('?');
                 break;
             case 'video':
                 ctx.drawImage(content, 0, 0, w, h);
@@ -248,30 +251,30 @@ $(document).ready(function () {
         output.appendChild(canvas);
 
 
-        var dataUrl = canvas.toDataURL('image/png');
-        loadThumbnailImage(dataUrl);
+        //var dataUrl = canvas.toDataURL('image/png');
+        //loadThumbnailImage(dataUrl);
     }
 
 
     function loadThumbnailImage(blobURL) {
         $('#thumbnailImgPreview').css('background-image', 'url("' + blobURL + '")');
-            $('#thumbnailImgPreview').css('background-repeat', 'no-repeat');
-            $('#thumbnailImgPreview').css('background-size', 'cover');
+        $('#thumbnailImgPreview').css('background-repeat', 'no-repeat');
+        $('#thumbnailImgPreview').css('background-size', 'cover');
 
-            $('#thumbnailImgPreview').css('text-align', 'right');
-            $('#thumbnailImgPreview span').css('display', 'inline');
-            $('#thumbnailImgPreview span').html('<a href="#" style="margin-top:5px; margin-right:5px;" class="btn btn-danger btn-circle btn-sm"><i class="fas fa-minus"></i></a>');
-            
-            $('#thumbnailImgPreview span a').one('click', function(e) {
-                e.stopImmediatePropagation();
-                resetFormElement($(this)); //폼 초기화
-                $('#thumbnailFile').val('');
-                
-                $('#thumbnailImgPreview').css('background-image', '');
-                $('#thumbnailImgPreview').css('text-align', 'center');
-                $('#thumbnailImgPreview span').css('display', 'table-cell');
-                $('#thumbnailImgPreview span').html($('#thumbnailImgPreview').attr('data-placeholder'));
-            });
+        $('#thumbnailImgPreview').css('text-align', 'right');
+        $('#thumbnailImgPreview span').css('display', 'inline');
+        $('#thumbnailImgPreview span').html('<a href="#" style="margin-top:5px; margin-right:5px;" class="btn btn-danger btn-circle btn-sm"><i class="fas fa-minus"></i></a>');
+
+        $('#thumbnailImgPreview span a').one('click', function (e) {
+            e.stopImmediatePropagation();
+            resetFormElement($(this)); //폼 초기화
+            $('#thumbnailFile').val('');
+
+            $('#thumbnailImgPreview').css('background-image', '');
+            $('#thumbnailImgPreview').css('text-align', 'center');
+            $('#thumbnailImgPreview span').css('display', 'table-cell');
+            $('#thumbnailImgPreview span').html($('#thumbnailImgPreview').attr('data-placeholder'));
+        });
     }
 
 
