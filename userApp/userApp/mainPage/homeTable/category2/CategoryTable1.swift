@@ -13,11 +13,13 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
     
     var textArray = ["","",""]
     var authorArray = ["","",""]
+    var defaultProgress:Float = 0.0
     var dataReceived:Bool = false
     
     var playingVideoIdArray = Array<String>()
     var playingTitleArray = Array<String>()
     var playingAuthorArray = Array<String>()
+    var playingProgressArray = Array<Float>()
     
     override func awakeFromNib() {
         self.delegate = self
@@ -40,9 +42,11 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
                     let videoId = video.key as! String
                     let title = videoDict["title"] as! String
                     let author = videoDict["author"] as! String
+                    let progress = (videoDict["progress"] as! NSNumber)
                     self.playingVideoIdArray.append(videoId)
                     self.playingTitleArray.append(title)
                     self.playingAuthorArray.append(author)
+                    self.playingProgressArray.append(progress.floatValue)
                 } else {
                     continue
                 }
@@ -75,14 +79,17 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "VideoCell1") as! VideoCell1
         
+        cell.videoProgressBar.progress = 0.8
         if dataReceived {
             cell.videoTitleLabel.text = playingTitleArray[indexPath.row]
             cell.videoAuthorLabel.text = playingAuthorArray[indexPath.row]
             cell.videoThumbnail.image = CachedImageView().loadCacheImage(urlKey: playingVideoIdArray[indexPath.row])
+            cell.videoProgressBar.progress = playingProgressArray[indexPath.row]
         } else {
             cell.videoTitleLabel.text = textArray[indexPath.row]
             cell.videoAuthorLabel.text = authorArray[indexPath.row]
             cell.videoThumbnail.image = UIImage(named: "white.jpg")
+            cell.videoProgressBar.progress = defaultProgress
         }
         
         return cell
