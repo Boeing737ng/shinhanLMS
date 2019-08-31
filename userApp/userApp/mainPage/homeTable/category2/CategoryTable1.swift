@@ -13,6 +13,7 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
     
     var textArray = ["","",""]
     var authorArray = ["","",""]
+    var viewArray = ["","",""]
     var defaultProgress:Float = 0.0
     var dataReceived:Bool = false
     
@@ -20,6 +21,7 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
     var playingTitleArray = Array<String>()
     var playingAuthorArray = Array<String>()
     var playingProgressArray = Array<Float>()
+    var playingViewArray = Array<Int>()
     
     override func awakeFromNib() {
         self.delegate = self
@@ -41,10 +43,12 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
                     let title = videoDict["title"] as! String
                     let author = videoDict["author"] as! String
                     let progress = (videoDict["progress"] as! NSNumber)
+                    let view = videoDict["view"] as! Int
                     self.playingVideoIdArray.append(videoId)
                     self.playingTitleArray.append(title)
                     self.playingAuthorArray.append(author)
                     self.playingProgressArray.append(progress.floatValue)
+                    self.playingViewArray.append(view)
                 } else {
                     continue
                 }
@@ -83,11 +87,13 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
             cell.videoAuthorLabel.text = playingAuthorArray[indexPath.row]
             cell.videoThumbnail.image = CachedImageView().loadCacheImage(urlKey: playingVideoIdArray[indexPath.row])
             cell.videoProgressBar.progress = playingProgressArray[indexPath.row]
+            cell.videoViewLabel.text = String(playingViewArray[indexPath.row])
         } else {
             cell.videoTitleLabel.text = textArray[indexPath.row]
             cell.videoAuthorLabel.text = authorArray[indexPath.row]
             cell.videoThumbnail.image = UIImage(named: "white.jpg")
             cell.videoProgressBar.progress = defaultProgress
+            cell.videoViewLabel.text = viewArray[indexPath.row]
         }
         
         return cell

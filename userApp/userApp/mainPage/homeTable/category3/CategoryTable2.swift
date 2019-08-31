@@ -18,12 +18,14 @@ class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
     
     var textArray = ["","",""]
     var authorArray = ["","",""]
+    var viewArray = ["","",""]
     var dataReceived:Bool = false
     
     var popularVideoIdArray = Array<String>()
     var popularTitleArray = Array<String>()
     var popularAuthorArray = Array<String>()
     var popularViewArray = Array<Int>()
+    var playingViewArray = Array<Int>()
     
     override func awakeFromNib() {
         self.delegate = self
@@ -79,10 +81,12 @@ class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
             cell.videoTitleLabel.text = popularTitleArray[indexPath.row]
             cell.videoAuthorLabel.text = popularAuthorArray[indexPath.row]
             cell.videoThumbnail.image = CachedImageView().loadCacheImage(urlKey: popularVideoIdArray[indexPath.row])
+            cell.videoViewLabel.text = String(popularViewArray[indexPath.row])
         } else {
             cell.videoTitleLabel.text = textArray[indexPath.row]
             cell.videoAuthorLabel.text = authorArray[indexPath.row]
             cell.videoThumbnail.image = UIImage(named: "white.jpg")
+            cell.videoViewLabel.text = viewArray[indexPath.row]
         }
         
         return cell
