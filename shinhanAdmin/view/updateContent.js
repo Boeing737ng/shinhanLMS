@@ -222,7 +222,7 @@ $(document).ready(function () {
         var requireYn = $('#requireYn').text();
         var categoryId = $('#category').val();
         var categoryNm = $('#category > option:selected').text();
-        var view = $('#view').val();
+        var view = $('#view').val()/1;
 
 
         parent.database.ref('/' + compCd + '/videos/' + ROW_KEY + '/').update({
@@ -236,7 +236,7 @@ $(document).ready(function () {
             thumbnail: thumbnailPath,
             title: title,
             requireYn: requireYn,
-            view: view
+            view: view/1
         }).then(function onSuccess(res) {
             window.FakeLoader.hideOverlay();
             
