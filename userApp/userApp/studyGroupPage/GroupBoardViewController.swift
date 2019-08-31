@@ -8,27 +8,14 @@
 
 import UIKit
 
-class GroupBoardViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
-    var item = ["공부 좀 열심히 합시다.", "놀생각하지말고 공부합시다 좀.", "강의좀 들으세요"]
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return item.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "gCell", for: indexPath)
-        cell.textLabel?.text = item[(indexPath as NSIndexPath).row]
-        
-        return cell}
-    
-    @IBOutlet weak var table: UITableView!
+class GroupBoardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
     }
+    
     @IBAction func onGoBack(_ sender: UIBarButtonItem) {
         let transition: CATransition = CATransition()
         transition.duration = 0.5
