@@ -20,6 +20,7 @@ var videoURL:String = ""
 class VideoDetailViewController: UIViewController {
 
     @IBOutlet weak var videoView: UIView!
+    let notificationCenter = NotificationCenter.default
     
     var videoProgress:Float = 0.0
     var playerView:UIView = UIView()
@@ -101,8 +102,9 @@ class VideoDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
         getVideoInfoFromDB()
-        userDidStartWatchingVideo()
+        userDidStartWatching()
     }
     
     func showVideoPlayer() {
@@ -114,7 +116,13 @@ class VideoDetailViewController: UIViewController {
         }
     }
     
+    @objc func appMovedToBackground() {
+        print("App moved to background!")
+        userDidFinishWatching()
+    }
+    
     @IBAction func onGoBack(_ sender: UIBarButtonItem) {
+        userDidFinishWatching()
         let transition: CATransition = CATransition()
         transition.duration = 0.5
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
@@ -123,8 +131,24 @@ class VideoDetailViewController: UIViewController {
         self.view.window!.layer.add(transition, forKey: nil)
         self.dismiss(animated: false, completion: nil)
     }
+
+    private func userDidFinishWatching() {
+        var currentState:String = ""
+        if videoProgress == 1 {
+            currentState = "completed"
+        } else {
+            currentState = "playing"
+        }
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        ref.child("user/" + userNo + "/playList/" + selectedVideoId).updateChildValues([
+            "progress": videoProgress,
+            "state": currentState
+            ]
+        )
+    }
     
-    private func userDidStartWatchingVideo() {
+    private func userDidStartWatching() {
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child(userCompanyCode + "/videos/" + selectedVideoId + "/user/" + userNo).setValue([
