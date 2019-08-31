@@ -182,13 +182,17 @@ $(document).ready(function () {
     return s.join(dec);
   }
 
+
+
+
 /***************차트표현하는 함수**************** */
 
   function fnRetrieve3() {
-  
-    parent.database.ref('/' + compCd + '/videos').once('value').then(function (snapshot) {
       var view=[];
       var title=[];
+
+    
+    parent.database.ref('/' + compCd + '/videos').once('value').then(function (snapshot) {
       var catArr = snapshot.val();
       var chartArr = [];
 
@@ -198,75 +202,81 @@ $(document).ready(function () {
 
         view.push(chartObj['view']); //조회수정보
         title.push(chartObj['title']) //동영상조회수
-      });
 
-      //조회수기준 내림차순(기능구현안됨)
-      /*chartArr.sort(function(a, b) { 
-        var bDate = moment(b.date, 'YYYYMMDD').unix();
-        var aDate = moment(a.date, 'YYYYMMDD').unix();  
-        return bDate - aDate;
-      });*/
+      }); 
+     // console.log('정렬전:'+view);
+
+      function compare ( a , b ) 
+        {   
+          return  b-a;   
+        } 
+
+      view.sort(compare);
+
+      //console.log('정렬후:'+view);
+
+
   
 
   var ctx = document.getElementById("view_count_chart");
   var myBarChart = new Chart(ctx, {
     type: 'bar',
-    data: {
-      labels: ["1위", "2위", "3위", "4위", "5위", "6위", "7위", "8위", "9위", "10위"],
-      datasets: [{
-        label: "조회수 : ",
-        backgroundColor: "#4e73df",
-        hoverBackgroundColor: "#2e59d9",
-        borderColor: "#4e73df",
-        data: view
-      }],
-    },
+      data: {
+        labels: ["1위", "2위", "3위", "4위", "5위", "6위", "7위", "8위", "9위", "10위"],
+        datasets: [{
+          label: "조회수 : ",
+          backgroundColor: "#4e73df",
+          hoverBackgroundColor: "#2e59d9",
+          borderColor: "#4e73df",
+          data: view
+        }],
+      },
     options: {
       maintainAspectRatio: false,
-      layout: {
-        padding: {
-          left: 10,
-          right: 25,
-          top: 25,
-          bottom: 0
-        }
-      },
-      scales: {
-          xAxes: [{
-            time: {
-              unit: 'month'
-            },
-            gridLines: {
-              display: false,
-              drawBorder: false
-            },
-            ticks: {
-              maxTicksLimit: 10
-            },
-            maxBarThickness: 25,
-          }],
-          yAxes: [{
-            ticks: {
-              min: 0,
-              max: 30000,
-              maxTicksLimit: 10,
-              padding: 10,
-              callback: function (value, index, values) {
-                return number_format(value) + ' 회'; //y축 단위 표시 
+            layout: {
+                padding: {
+                  left: 10,
+                  right: 25,
+                  top: 25,
+                  bottom: 0
               }
             },
-            gridLines: {
-              color: "rgb(234, 236, 244)",
-              zeroLineColor: "rgb(234, 236, 244)",
-              drawBorder: false,
-              borderDash: [2],
-              zeroLineBorderDash: [2]
-            }
-          }],
-      },
-      legend: {
-        display: false
-      },
+            scales: {
+                xAxes: [{
+                  time: {
+                    unit: 'month'
+                  },
+                  gridLines: {
+                    display: false,
+                    drawBorder: false
+                  },
+                  ticks: {
+                    maxTicksLimit: 10
+                  },
+                  maxBarThickness: 25,
+                }],
+                yAxes: [{
+                  ticks: {
+                    min: 0,
+                    max: 30000,
+                    maxTicksLimit: 10,
+                    padding: 10,
+                    callback: function (value, index, values) {
+                      return number_format(value) + ' 회'; //y축 단위 표시 
+                    }
+                  },
+                  gridLines: {
+                    color: "rgb(234, 236, 244)",
+                    zeroLineColor: "rgb(234, 236, 244)",
+                    drawBorder: false,
+                    borderDash: [2],
+                    zeroLineBorderDash: [2]
+                  }          
+                }],
+              },
+                  legend: {
+                    display: false
+                  },
       /** 마우스 가져다 대면 출력**/
       tooltips: {
         titleMarginBottom: 10,
