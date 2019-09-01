@@ -1,7 +1,7 @@
 <!-- Logout Modal-->
 <div class="modal fade" id="modal-searchEmpListNonWatch" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog modal-xlg" role="document">
+    <div class="modal-dialog" role="document" style="width:870px;">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title"></h5>
@@ -35,33 +35,45 @@
                                     </div>
                                 </div>
 
-                                <div>
-                                    <div class="searchComponentDiv">
-                                        <label>회사명 : </label>
-                                        <div class="dropdown bootstrap-select form-control"
-                                            style="min-width:166px; float: none;margin-bottom: 0;padding: 0;border: none;">
-                                            <select class="form-control searchCompany" data-live-search="true" data-size="5"></select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <div class="searchComponentDiv">
-                                        <label>부서명 : </label>
-                                        <div class="dropdown bootstrap-select form-control" style="min-width:166px; float: none;margin-bottom: 0;padding: 0;border: none;">
-                                            <select class="form-control searchDept" data-live-search="true" data-size="5"></select>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                     
                                 <div>
                                     <div class="searchComponentDiv">
                                         <a href="#" class="btn btn-primary btnSearch">
                                             <span class="text">검색</span>
                                         </a>
+
+                                        <a href="#" class="btn btn-secondary btnDetailSearch" style="margin-left: 5px;">
+                                            <span class="text">상세검색</span>&nbsp;<i class="fas fa-chevron-down"></i>
+                                        </a>
                                     </div>
                                 </div>
-                    
+
+                            </div>
+
+                            <div class="toggleDiv" style="display:none;">
+                                <hr/>
+                                <div class="row no-gutters align-items-center">
+                                    
+                                    <div>
+                                            <div class="searchComponentDiv">
+                                                <label>회사명 : </label>
+                                                <div class="dropdown bootstrap-select form-control"
+                                                    style="min-width:166px; float: none;margin-bottom: 0;padding: 0;border: none;">
+                                                    <select class="form-control searchCompany" data-live-search="true" data-size="5"></select>
+                                                </div>
+                                            </div>
+                                        </div>
+        
+                                        <div>
+                                            <div class="searchComponentDiv">
+                                                <label>부서명 : </label>
+                                                <div class="dropdown bootstrap-select form-control" style="min-width:166px; float: none;margin-bottom: 0;padding: 0;border: none;">
+                                                    <select class="form-control searchDept" data-live-search="true" data-size="5"></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
                             </div>
                     
                         </div>
@@ -71,7 +83,7 @@
                     <div class="card shadow mb-4 searchResultDiv">
                             <!-- Card Header - Dropdown -->
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 class="m-0 font-weight-bold text-primary">사원 리스트</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">필수강좌 미이수자 리스트</h6>
                             </div>
                     
                     

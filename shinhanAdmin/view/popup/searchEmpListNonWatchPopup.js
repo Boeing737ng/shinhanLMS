@@ -86,6 +86,8 @@ var searchEmpListNonWatchPopup = (function() {
                             (videoId == searchContent) &&
                             (videoObj['state'] != 'completed') //아직 playing 상태라면
                         ) {
+                            empObj['videoId'] = videoId;
+                            empObj['title'] = videoObj['title'];
                             rsltArr.push(empObj);
                         }
                     });
@@ -274,6 +276,19 @@ var searchEmpListNonWatchPopup = (function() {
         });
 
 
+        $('#modal-searchEmpListNonWatch .btnDetailSearch').on('click', function(e) {
+            $( '#modal-searchEmpListNonWatch .toggleDiv' ).toggle();
+
+            if($(this).find('i').hasClass('fa-chevron-down')) {
+                $(this).find('i').removeClass('fa-chevron-down');
+                $(this).find('i').addClass('fa-chevron-up');
+            }else {
+                $(this).find('i').removeClass('fa-chevron-up');
+                $(this).find('i').addClass('fa-chevron-down');
+            }
+        });
+
+
         $('#modal-searchEmpListNonWatch .btnSubmit').on('click', function(e) {
             e.preventDefault();
 
@@ -330,8 +345,9 @@ var searchEmpListNonWatchPopup = (function() {
                 },
                 { name: "empNo", title: '사번', type: "text", width: 100, editing: false, align: "center" },
                 { name: "name", title: '성명', type: "text", width: 100, editing: false, align: "center" },
-                { name: "compNm", title: "회사명", type: 'text', width: 150, editing: false, align: "left" },
-                { name: "department", title: '부서명', type: "text", width: 200, editing: false, align: "left" }
+                { name: "compNm", title: "회사명", type: 'text', width: 100, editing: false, align: "left" },
+                { name: "department", title: '부서명', type: "text", width: 120, editing: false, align: "left" },
+                { name: "title", title: '미이수강좌명', type: "text", width: 200, editing: false, align: "left" }
             ]
         });
         /** end of grid *************************/
