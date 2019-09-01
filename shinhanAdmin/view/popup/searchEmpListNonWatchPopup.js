@@ -60,6 +60,7 @@ var searchEmpListNonWatchPopup = (function() {
     function fnRetrieve() {
 
         var searchContent = $('#modal-searchEmpListNonWatch select.searchRequiredContent').val() || '';
+        var searchContentNm = $('#modal-searchEmpListNonWatch select.searchRequiredContent > option:selected').text() || '';
         var searchCompany = $('#modal-searchEmpListNonWatch select.searchCompany').val() || '';
         var searchDept = $('#modal-searchEmpListNonWatch select.searchDept').val() || '';
 
@@ -79,18 +80,27 @@ var searchEmpListNonWatchPopup = (function() {
                 ) {
 
                     var playList = empObj['playList'];
+                    var videoKeys = Object.keys(playList);
 
-                    $.each(playList, function(videoId, videoObj) {
+                    if(videoKeys.indexOf(searchContent) == -1) { //헤당 강좌를 들은 기록이 없으면
+                        empObj['videoId'] = searchContent;
+                        empObj['title'] = searchContentNm;
+                        rsltArr.push(empObj);
+                    }else { //해당 강좌 수강기록이 있으면
+                        for(var i=0; i<videoKeys.length; i++) {
+                            var videoId = videoKeys[i];
+                            var videoObj = playList[videoId];
 
-                        if(
-                            (videoId == searchContent) &&
-                            (videoObj['state'] != 'completed') //아직 playing 상태라면
-                        ) {
-                            empObj['videoId'] = videoId;
-                            empObj['title'] = videoObj['title'];
-                            rsltArr.push(empObj);
+                            if(
+                                ((videoId == searchContent) && (videoObj['state'] != 'completed')) //아직 playing 상태라면
+                            ) {
+                                empObj['videoId'] = videoId;
+                                empObj['title'] = videoObj['title'];
+                                rsltArr.push(empObj);
+                                break;
+                            }
                         }
-                    });
+                    }
                 }
             });
 
@@ -260,7 +270,6 @@ var searchEmpListNonWatchPopup = (function() {
 
         $('#modal-searchEmpListNonWatch .searchRequiredCat').on('change', function(e) {
             var parentCd = $(this).val();
-            console.log(parentCd);
             fnGetCommonCmb('content', '#modal-searchEmpListNonWatch select.searchRequiredContent', parentCd);
         });
 
@@ -305,7 +314,7 @@ var searchEmpListNonWatchPopup = (function() {
         /** start of grid ***********************/
         grid = $("#modal-searchEmpListNonWatch .grid").jsGrid({
             width: "100%",
-            height: "200px",
+            height: "250px",
             sorting: true,
             paging: false,
             data: [],
