@@ -106,7 +106,6 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
                 cell.videoViewLabel.text = viewArray[indexPath.row]
             }
         } else {
-            print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             self.reloadData()
         }
         

@@ -12,7 +12,6 @@ class GroupCurriculum: UICollectionView, UICollectionViewDelegate, UICollectionV
     var recentAuthorArray = Array<String>()
     
     override func awakeFromNib() {
-        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
         self.delegate = self
         self.dataSource = self
         var index = 0
