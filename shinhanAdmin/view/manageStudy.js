@@ -58,7 +58,6 @@ $(document).ready(function () {
     fields: [
        
         { name: "studyname", title: '스터디명', type: "text", width: 150, editing: false, align: "left" },
-        /*{ name: "creator", title: "개설자", type: 'text', width: 150, editing: false, align: "left" },*/
         { name: "date", title: "등록일자", type: 'text', width: 80, editing: false, align: "center", cellRenderer: function(item, value){
             var rslt = $("<td>").addClass("my-row-custom-class");
             var date = moment(item, 'YYYYMMDDHHmmss').format('YYYY-MM-DD');
@@ -66,7 +65,7 @@ $(document).ready(function () {
             return rslt; 
           } },
         
-        { name: "participant", title: "참여자수", type: 'text', width: 80, editing: false, align: "center" }
+        { name: "participant", title: "참여자수", type: 'text', width: 80, editing: false, align: "right" }
     ]
 });
 

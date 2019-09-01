@@ -128,7 +128,7 @@ table.registerTable td {
 
 
 .label-info {
-    background-color: #5bc0de;
+    background-color: #0282ea;
 }
 
 
@@ -163,12 +163,45 @@ table.registerTable td {
 
 
 .editedRow {
-    background-color: #5bc0de;
+    background-color: #0282ea;
 }
 
 tr.highlight td.jsgrid-cell {
     background-color:#fdffe3;
   }
+
+
+.modal-header {
+    background-color: #0282ea;
+    color: #ffffff;
+}
+
+
+.bg-gradient-primary {
+    background: #0282ea;
+    /* background: -webkit-linear-gradient(left, #04acff, #0282ea);
+    background: -o-linear-gradient(left, #04acff, #0282ea);
+    background: -moz-linear-gradient(left, #04acff, #0282ea);
+    background: linear-gradient(left, #04acff, #0282ea); */
+}
+
+
+/* .bg-gradient-primary {
+    background: -webkit-linear-gradient(left, #04acff, #0282ea);
+    background: -o-linear-gradient(left, #04acff, #0282ea);
+    background: -moz-linear-gradient(left, #04acff, #0282ea);
+    background: linear-gradient(left, #04acff, #0282ea);
+}
+
+
+.btn-primary {
+    background: -webkit-linear-gradient(left, #04acff, #0282ea);
+    background: -o-linear-gradient(left, #04acff, #0282ea);
+    background: -moz-linear-gradient(left, #04acff, #0282ea);
+    background: linear-gradient(left, #04acff, #0282ea);
+    border: none;
+} */
+
 
 /* .jsgrid-header-row {
     text-align: center;

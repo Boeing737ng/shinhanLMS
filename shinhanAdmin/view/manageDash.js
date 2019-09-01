@@ -5,10 +5,21 @@ $(document).ready(function () {
   var userInfo = JSON.parse(window.sessionStorage.getItem('userInfo'));
   var compCd = userInfo['compCd'];
 
+  /** start of component ***********************/
+  $('#btnMoreStudy').on('click', function (e) {
+    e.preventDefault();
+    window.parent.$('#accordionSidebar').find('a[data-url="view/manageStudy.html"]').trigger('click');
+  });
+
+
+  $('#btnMoreBbs').on('click', function (e) {
+    window.parent.$('#accordionSidebar').find('a[data-url="view/manageNotice.html"]').trigger('click');
+  });
+  /** end of component *************************/
+
 
   /** start of grid ***********************/
   /*스터디관리*/
-
   $("#grid1").jsGrid({
     width: "100%",
     height: "241px",
@@ -17,23 +28,57 @@ $(document).ready(function () {
     data: [],
 
     fields: [
-      { name: "studyname", title: '스터디명', type: "text", width: 120, editing: false, align: "center" },
+      { name: "studyname", title: '스터디명', type: "text", width: 150, editing: false, align: "left" },
       {
-        name: "date", title: "등록일자", type: 'text', width: 150, editing: false, align: "center", cellRenderer: function (item, value) {
+        name: "date", title: "등록일자", type: 'text', width: 100, editing: false, align: "center", cellRenderer: function (item, value) {
           var rslt = $("<td>").addClass("my-row-custom-class");
           var date = moment(item, 'YYYYMMDDHHmmss').format('YYYY-MM-DD');
           $(rslt).append(date);
           return rslt;
         }
       },
-      { name: "participant", title: "참여자수", type: 'text', width: 100, editing: false, align: "center" }
+      { name: "participant", title: "참여자수", type: 'text', width: 100, editing: false, align: "right" }
     ]
 
   });
 
-  fnRetrieve1();
+
+  /*공지사항관리*/
+  $("#grid2").jsGrid({
+    width: "100%",
+    height: "241px",
+    sorting: true,
+    paging: false,
+    data: [],
+
+    rowDoubleClick: function (args) {
+      var item = args.item;
+      var rowKey = item['rowKey'];
+
+      fnGo('/view/updateNotice.html', {
+        'listUrl': '/view/manageDash.html',
+        'rowKey': rowKey
+      });
+    },
+
+    fields: [
+      { name: "title", title: '제목', type: "text", width: 150, editing: false, align: "left" },
+      { name: "writor", title: "작성자", type: 'text', width: 100, editing: false, align: "center" },
+      {
+        name: "date", title: "등록일자", type: 'text', width: 100, editing: false, align: "center", cellRenderer: function (item, value) {
+          var rslt = $("<td>").addClass("my-row-custom-class");
+          var date = moment(item, 'YYYYMMDDHHmmss').format('YYYY-MM-DD');
+          $(rslt).append(date);
+          return rslt;
+        }
+      }
+    ]
+
+  });
+  /** end of grid *************************/
 
 
+  /** start of function ***********************/
   /*조회->스터디*/
   function fnRetrieve1() {
     window.FakeLoader.showOverlay();
@@ -45,7 +90,7 @@ $(document).ready(function () {
 
     //searchCompany = searchCompany.toLowerCase();
 
-    parent.database.ref('/58' +'/study').once('value').then(function (snapshot) {
+    parent.database.ref('/58' + '/study').once('value').then(function (snapshot) {
 
       var catArr = snapshot.val();
       var rsltArr = [];
@@ -62,47 +107,19 @@ $(document).ready(function () {
 
       });
 
-      $("#grid1").jsGrid("option", "data", rsltArr);
+      var arr = [];
+      var length = rsltArr.length > 5 ? 5 : rsltArr.length;
+      for (var i = 0; i < length; i++) {
+        arr.push(rsltArr[i]);
+      }
+
+      $("#grid1").jsGrid("option", "data", arr);
 
       window.FakeLoader.hideOverlay();
 
     });
   }
 
-  /*공지사항관리*/
-  $("#grid2").jsGrid({
-    width: "100%",
-    height: "241px",
-    sorting: true,
-    paging: true,
-    data: [],
-
-    rowDoubleClick: function (args) {
-      var item = args.item;
-      var rowKey = item['rowKey'];
-
-      fnGo('/view/updateNotice.html', {
-        'listUrl': '/view/manageDash.html',
-        'rowKey': rowKey
-      });
-    },
-
-    fields: [
-      { name: "title", title: '제목', type: "text", width: 180, editing: false, align: "center" },
-      { name: "writor", title: "작성자", type: 'text', width: 80, editing: false, align: "center" },
-      {
-        name: "date", title: "등록일자", type: 'text', width: 100, editing: false, align: "center", cellRenderer: function (item, value) {
-          var rslt = $("<td>").addClass("my-row-custom-class");
-          var date = moment(item, 'YYYYMMDDHHmmss').format('YYYY-MM-DD');
-          $(rslt).append(date);
-          return rslt;
-        }
-      }
-    ]
-
-  });
-
-  fnRetrieve2();
 
   /*조회->공지사항*/
   function fnRetrieve2() {
@@ -112,22 +129,26 @@ $(document).ready(function () {
 
       var catArr = snapshot.val();
       var rsltArr = [];
-      
+
       $.each(catArr, function (idx, studyObj) {
         studyObj['rowKey'] = idx;
         rsltArr.push(studyObj);
       });
 
-
-
       //등록일자 기준 내림차순
-      rsltArr.sort(function(a, b) { 
+      rsltArr.sort(function (a, b) {
         var bDate = moment(b.date, 'YYYYMMDD').unix();
-        var aDate = moment(a.date, 'YYYYMMDD').unix();  
+        var aDate = moment(a.date, 'YYYYMMDD').unix();
         return bDate - aDate;
       });
 
-      $("#grid2").jsGrid("option", "data", rsltArr);
+      var arr = [];
+      var length = rsltArr.length > 5 ? 5 : rsltArr.length;
+      for (var i = 0; i < length; i++) {
+        arr.push(rsltArr[i]);
+      }
+
+      $("#grid2").jsGrid("option", "data", arr);
       window.FakeLoader.hideOverlay();
 
     });
@@ -150,12 +171,18 @@ $(document).ready(function () {
     $('body').append(form);
     $(form).submit();
   }
+  /** end of function *************************/
+
+
+
+
+
+
 
   /*************************차트***************************/
-
   // Set new default font family and font color to mimic Bootstrap's default styling
   Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-  Chart.defaults.global.defaultFontColor = '#858796';
+  Chart.defaults.global.defaultFontColor = '#595b67';
 
   function number_format(number, decimals, dec_point, thousands_sep) {
     // *     example: number_format(1234.56, 2, ',', ' ');
@@ -185,14 +212,13 @@ $(document).ready(function () {
 
 
 
-/***************차트표현하는 함수**************** */
+  /***************차트표현하는 함수**************** */
 
   function fnRetrieve3() {
-      var view=[];
-      var title=[];
-      var info={};
+    var view = [];
+    var title = [];
 
-    
+
     parent.database.ref('/' + compCd + '/videos').once('value').then(function (snapshot) {
       var catArr = snapshot.val();
       var chartArr = [];
@@ -204,112 +230,107 @@ $(document).ready(function () {
         view.push(chartObj['view']); //조회수정보
         title.push(chartObj['title']) //동영상조회수
 
-      }); 
-     // console.log('정렬전:'+view);
+      });
+      // console.log('정렬전:'+view);
 
-
-      function compare ( a , b ) 
-        {   
-          return  b-a;   
-        } 
+      function compare(a, b) {
+        return b - a;
+      }
 
       view.sort(compare);
 
-      //console.log('정렬후:'+view);
 
-
-  
-
-  var ctx = document.getElementById("view_count_chart");
-  var myBarChart = new Chart(ctx, {
-    type: 'bar',
-      data: {
-        labels: ["1위", "2위", "3위", "4위", "5위", "6위", "7위", "8위", "9위", "10위"],
-        datasets: [{
-          label: "조회수 : ",
-          backgroundColor: "#4e73df",
-          hoverBackgroundColor: "#2e59d9",
-          borderColor: "#4e73df",
-          data: view
-        }],
-      },
-    options: {
-      maintainAspectRatio: false,
-            layout: {
-                padding: {
-                  left: 10,
-                  right: 25,
-                  top: 25,
-                  bottom: 0
-              }
-            },
-            scales: {
-                xAxes: [{
-                  time: {
-                    unit: 'month'
-                  },
-                  gridLines: {
-                    display: false,
-                    drawBorder: false
-                  },
-                  ticks: {
-                    maxTicksLimit: 10
-                  },
-                  maxBarThickness: 25,
-                }],
-                yAxes: [{
-                  ticks: {
-                    min: 0,
-                    max: 30000,
-                    maxTicksLimit: 10,
-                    padding: 10,
-                    callback: function (value, index, values) {
-                      return number_format(value) + ' 회'; //y축 단위 표시 
-                    }
-                  },
-                  gridLines: {
-                    color: "rgb(234, 236, 244)",
-                    zeroLineColor: "rgb(234, 236, 244)",
-                    drawBorder: false,
-                    borderDash: [2],
-                    zeroLineBorderDash: [2]
-                  }          
-                }],
+      var ctx = document.getElementById("view_count_chart");
+      var myBarChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ["1위", "2위", "3위", "4위", "5위", "6위", "7위", "8위", "9위", "10위"],
+          datasets: [{
+            label: "조회수 : ",
+            backgroundColor: "#0282ea",
+            hoverBackgroundColor: "#2e59d9",
+            borderColor: "#0282ea",
+            data: view
+          }],
+        },
+        options: {
+          maintainAspectRatio: false,
+          layout: {
+            padding: {
+              left: 10,
+              right: 25,
+              top: 25,
+              bottom: 0
+            }
+          },
+          scales: {
+            xAxes: [{
+              time: {
+                unit: 'month'
               },
-                  legend: {
-                    display: false
-                  },
-      /** 마우스 가져다 대면 출력**/
-      tooltips: {
-        titleMarginBottom: 10,
-        titleFontColor: '#6e707e',
-        titleFontSize: 14,
-        backgroundColor: "rgb(255,255,255)",
-        bodyFontColor: "#858796",
-        borderColor: '#dddfeb',
-        borderWidth: 1,
-        xPadding: 15,
-        yPadding: 15,
-        displayColors: false,
-        caretPadding: 10,
-        callbacks: {
-          label: function (tooltipItem, chart) {
-            var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-            return datasetLabel + number_format(tooltipItem.yLabel) + ' 회';
-          }
+              gridLines: {
+                display: false,
+                drawBorder: false
+              },
+              ticks: {
+                maxTicksLimit: 10
+              },
+              maxBarThickness: 25,
+            }],
+            yAxes: [{
+              ticks: {
+                min: 0,
+                max: 30000,
+                maxTicksLimit: 10,
+                padding: 10,
+                callback: function (value, index, values) {
+                  return number_format(value) + ' 회'; //y축 단위 표시 
+                }
+              },
+              gridLines: {
+                color: "rgb(234, 236, 244)",
+                zeroLineColor: "rgb(234, 236, 244)",
+                drawBorder: false,
+                borderDash: [2],
+                zeroLineBorderDash: [2]
+              }
+            }],
+          },
+          legend: {
+            display: false
+          },
+          /** 마우스 가져다 대면 출력**/
+          tooltips: {
+            titleMarginBottom: 10,
+            titleFontColor: '#6e707e',
+            titleFontSize: 14,
+            backgroundColor: "rgb(255,255,255)",
+            bodyFontColor: "#595b67",
+            borderColor: '#dddfeb',
+            borderWidth: 1,
+            xPadding: 15,
+            yPadding: 15,
+            displayColors: false,
+            caretPadding: 10,
+            callbacks: {
+              label: function (tooltipItem, chart) {
+                var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                return datasetLabel + number_format(tooltipItem.yLabel) + ' 회';
+              }
+            }
+          },
         }
-      },
-    }
-  });
+      });
 
 
-});
+    });
   }
+
+
+  fnRetrieve1();
+  fnRetrieve2();
   fnRetrieve3();
   //resize frame height
   resizeFrame();
-
-
-
 
 });

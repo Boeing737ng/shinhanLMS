@@ -206,7 +206,7 @@ $(document).ready(function () {
         window.FakeLoader.showOverlay();
 
 
-        var contentAuthor = $('#author').val();
+        var contentAuthor = $('#author').val() || '';
         
         var contentTagArr = $('#relatedTags').tagsinput('items');
         for(var i=0; i<contentTagArr.length; i++) {
@@ -214,15 +214,15 @@ $(document).ready(function () {
         }
         
         var contentTag = contentTagArr.join(' ');
-        var downloadURL = $('#video > source').attr('src');
-        var thumbnailPath = $('#canvas').attr('data-url');
-        var contentDescription = $('#description').val();
+        var downloadURL = $('#video > source').attr('src') || '';
+        var thumbnailPath = $('#canvas').attr('data-url') || '';
+        var contentDescription = $('#description').val() || '';
         var contentAddedTime = moment().unix();
-        var title = $('#title').val();
-        var requireYn = $('#requireYn').text();
-        var categoryId = $('#category').val();
-        var categoryNm = $('#category > option:selected').text();
-        var view = $('#view').val();
+        var title = $('#title').val() || '';
+        var requireYn = $('#requireYn').text() || 'N';
+        var categoryId = $('#category').val() || '';
+        var categoryNm = $('#category > option:selected').text() || '';
+        var view = $('#view').val()/1;
 
 
         parent.database.ref('/' + compCd + '/videos/' + ROW_KEY + '/').update({
@@ -236,7 +236,7 @@ $(document).ready(function () {
             thumbnail: thumbnailPath,
             title: title,
             requireYn: requireYn,
-            view: view
+            view: view/1
         }).then(function onSuccess(res) {
             window.FakeLoader.hideOverlay();
             
@@ -253,16 +253,16 @@ $(document).ready(function () {
     function setVideoDatabase(rowId, paramObj, callback) {
 
         parent.database.ref('/' + compCd + '/videos/' + rowId + '/').set({
-            downloadURL: paramObj['downloadURL'],
-            author: paramObj['author'],
-            categoryId: paramObj['categoryId'],
-            categoryNm: paramObj['categoryNm'],
-            tags: paramObj['tags'],
-            description: paramObj['description'],
-            date: paramObj['date'],
-            thumbnail: paramObj['thumbnail'],
-            title: paramObj['title'],
-            requireYn: paramObj['requireYn'],
+            downloadURL: paramObj['downloadURL'] || '',
+            author: paramObj['author'] || '',
+            categoryId: paramObj['categoryId'] || '',
+            categoryNm: paramObj['categoryNm'] || '',
+            tags: paramObj['tags'] || '',
+            description: paramObj['description'] || '',
+            date: paramObj['date'] || '',
+            thumbnail: paramObj['thumbnail'] || '',
+            title: paramObj['title'] || '',
+            requireYn: paramObj['requireYn'] || '',
             view: paramObj['view']
         }).then(function onSuccess(res) {
             if(callback != null && callback != undefined) {
