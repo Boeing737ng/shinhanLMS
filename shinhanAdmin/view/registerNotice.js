@@ -30,6 +30,24 @@ $(document).ready(function () {
     });
 
 
+    $('#btnLoadEmpNonWatch').on('click', function(e) {
+
+        e.preventDefault();
+
+        var popup = SearchEmpListPopup.getInstance({
+            title: '사원 검색'
+        });
+
+        $(popup).off('submit').on('submit', function(e, param) {
+            var records = param['records'];
+            $('#empGrid').jsGrid('option', 'data', records);
+        });
+
+        popup.open();
+        
+    });
+
+
     //목록 버튼
     $('#btnList').on('click', function(e) {
         e.preventDefault();

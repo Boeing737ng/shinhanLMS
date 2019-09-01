@@ -1,6 +1,6 @@
 // Set new default font family and font color to mimic Bootstrap's default styling
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-Chart.defaults.global.defaultFontColor = '#858796';
+Chart.defaults.global.defaultFontColor = '#595b67';
 
 function number_format(number, decimals, dec_point, thousands_sep) {
   // *     example: number_format(1234.56, 2, ',', ' ');
@@ -35,9 +35,9 @@ var myBarChart = new Chart(ctx, {
     labels: ["지연", "February", "March", "April", "May", "June"],
     datasets: [{
       label: "Revenue",
-      backgroundColor: "#4e73df",
+      backgroundColor: "#0282ea",
       hoverBackgroundColor: "#2e59d9",
-      borderColor: "#4e73df",
+      borderColor: "#0282ea",
       data: [4215, 5312, 6251, 7841, 9821, 14984],
     }],
   },
@@ -93,7 +93,7 @@ var myBarChart = new Chart(ctx, {
       titleFontColor: '#6e707e',
       titleFontSize: 14,
       backgroundColor: "rgb(255,255,255)",
-      bodyFontColor: "#858796",
+      bodyFontColor: "#595b67",
       borderColor: '#dddfeb',
       borderWidth: 1,
       xPadding: 15,
