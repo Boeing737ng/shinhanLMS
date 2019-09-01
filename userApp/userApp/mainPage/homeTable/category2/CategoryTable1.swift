@@ -26,7 +26,10 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
     override func awakeFromNib() {
         self.delegate = self
         self.dataSource = self
-        
+        gerUserPlayingVieoInfoFromDB()
+    }
+    
+    func gerUserPlayingVieoInfoFromDB() {
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child("user/201302493/playList/").observeSingleEvent(of: .value, with: { (snapshot) in
@@ -43,18 +46,24 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
                     let title = videoDict["title"] as! String
                     let author = videoDict["author"] as! String
                     let progress = (videoDict["progress"] as! NSNumber)
-                    let view = videoDict["view"] as! Int
                     self.playingVideoIdArray.append(videoId)
                     self.playingTitleArray.append(title)
                     self.playingAuthorArray.append(author)
                     self.playingProgressArray.append(progress.floatValue)
-                    self.playingViewArray.append(view)
+                    
+                    ref.child(userCompanyCode + "/videos/" + videoId).observeSingleEvent(of: .value, with: { (snapshot) in
+                        let videoDict2 = snapshot.value as! Dictionary<String, Any>;()
+                        let view = videoDict2["view"] as! Int
+                        self.playingViewArray.append(view)
+                        self.dataReceived = true
+                        self.reloadData()
+                    }) { (error) in
+                        print(error.localizedDescription)
+                    }
                 } else {
                     continue
                 }
             }
-            self.dataReceived = true
-            self.reloadData()
         }) { (error) in
             print(error.localizedDescription)
         }
