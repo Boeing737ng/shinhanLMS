@@ -21,10 +21,13 @@ class GroupBoardTableView: UITableView, UITableViewDataSource, UITableViewDelega
     override func awakeFromNib() {
         self.delegate = self
         self.dataSource = self
-        
         getQuestionFromDB()
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadtable), name: NSNotification.Name(rawValue: "copboardadd"), object: nil)
     }
-    
+    @objc func reloadtable() {
+        getQuestionFromDB()
+        self.reloadData()
+    }
     
     func getQuestionFromDB() {
         self.keyArray.removeAll()
