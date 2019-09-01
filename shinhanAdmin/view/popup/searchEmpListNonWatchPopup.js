@@ -4,6 +4,7 @@ var searchEmpListNonWatchPopup = (function() {
     var instance;
     var grid;
     var selectedItems = [];
+    var COMP_CD = JSON.parse(window.sessionStorage.getItem('userInfo')).compCd;
  
 
     function selectItem(item) {
@@ -36,8 +37,8 @@ var searchEmpListNonWatchPopup = (function() {
         switch(option) {
             //조회
             case 'SEARCH':
-                if(isEmpty($('#modal-searchEmpListNonWatch select.searchCompany').val())) {
-                    alert('회사명 은 필수입력 입니다.');
+                if(isEmpty($('#modal-searchEmpListNonWatch select.searchRequiredContent').val())) {
+                    alert('필수강좌 는 필수입력 입니다.');
                     rslt = false;
                 }
                 break;
@@ -58,9 +59,9 @@ var searchEmpListNonWatchPopup = (function() {
     //조회
     function fnRetrieve() {
 
+        var searchContent = $('#modal-searchEmpListNonWatch select.searchRequiredContent').val() || '';
         var searchCompany = $('#modal-searchEmpListNonWatch select.searchCompany').val() || '';
         var searchDept = $('#modal-searchEmpListNonWatch select.searchDept').val() || '';
-        var searchEmpNm = $('#modal-searchEmpListNonWatch .searchNm').val() || '';
 
         parent.database.ref('/user/').once('value').then(function (snapshot) {
             
@@ -69,14 +70,25 @@ var searchEmpListNonWatchPopup = (function() {
 
             $.each(arr, function (empNo, empObj) {
 
+                empObj['empNo'] = empNo;
+
                 if(
                     (isEmpty(searchCompany) || searchCompany == empObj['compCd']) &&
                     (isEmpty(searchDept) || searchDept == empObj['deptCd']) &&
-                    (isEmpty(searchEmpNm) || searchEmpNm == empObj['name']) &&
                     (empObj['roleCd'] != 'admin')
                 ) {
-                    empObj['empNo'] = empNo;
-                    rsltArr.push(empObj);
+
+                    var playList = empObj['playList'];
+
+                    $.each(playList, function(videoId, videoObj) {
+
+                        if(
+                            (videoId == searchContent) &&
+                            (videoObj['state'] != 'completed') //아직 playing 상태라면
+                        ) {
+                            rsltArr.push(empObj);
+                        }
+                    });
                 }
             });
 
@@ -116,26 +128,33 @@ var searchEmpListNonWatchPopup = (function() {
 
         switch (option) {
             case 'company':
+                $('' + selector).append($('<option value="">전체</option>'));    
+            
                 parent.database.ref('/company/').once('value')
-                    .then(function (snapshot) {
-                        var arr = snapshot.val();
+                        .then(function (snapshot) {
+                            var arr = snapshot.val();
 
-                        $.each(arr, function (idx, val) {
-                            var newOption = $('<option></option>');
-                            $(newOption).attr('value', idx);
-                            $(newOption).text(val);
+                            $.each(arr, function (idx, val) {
+                                var newOption = $('<option></option>');
+                                $(newOption).attr('value', idx);
+                                $(newOption).text(val);
 
-                            $('' + selector).append($(newOption));
+                                $('' + selector).append($(newOption));
+                            });
+
+                            $('' + selector).selectpicker();
+                            $('' + selector).trigger('change');
                         });
-
-                        $('' + selector).selectpicker();
-                        $('' + selector).trigger('change');
-                    });
                 break;
 
             case 'department':
                 $('' + selector + ' > option').remove();
                 $('' + selector).append($('<option value="">전체</option>'));
+
+                if(isEmpty(parentCd)) {
+                    $('' + selector).selectpicker('refresh');
+                    break;
+                }
 
                 parent.database.ref('/department/' + parentCd).once('value')
                     .then(function (snapshot) {
@@ -155,11 +174,64 @@ var searchEmpListNonWatchPopup = (function() {
 
 
             case 'category':
-                //searchRequiredCat 
+                $('' + selector).append($('<option value="">전체</option>'));
+                parent.database.ref('/' + COMP_CD + '/categories/').once('value')
+                    .then(function (snapshot) {
+                        var arr = snapshot.val();
+
+                        $.each(arr, function (idx, val) {
+                           if(val['requireYn'] == 'Y') {
+                                var newOption = $('<option></option>');
+                                $(newOption).attr('value', idx);
+                                $(newOption).text(val['title']);
+
+                                $('' + selector).append($(newOption));
+                           }
+                        });
+
+                        $('' + selector).selectpicker();
+                        $('' + selector).trigger('change');
+                    });
                 break;
 
             case 'content':
-                //searchRequiredContent
+                $('' + selector + ' > option').remove();
+                $('' + selector).append($('<option value="">선택</option>'));
+                
+                if(isEmpty(parentCd)) {
+                    parent.database.ref('/' + COMP_CD + '/videos').once('value')
+                    .then(function (snapshot) {
+                        var arr = snapshot.val();
+
+                        $.each(arr, function (idx, val) {
+                           if(val['requireYn'] == 'Y') {
+                                var newOption = $('<option></option>');
+                                $(newOption).attr('value', idx);
+                                $(newOption).text(val['title']);
+
+                                $('' + selector).append($(newOption));
+                           }
+                        });
+
+                        $('' + selector).selectpicker('refresh');
+                    });
+                }else {
+                    parent.database.ref('/' + COMP_CD + '/categories/' + parentCd + '/videos').once('value')
+                    .then(function (snapshot) {
+                        var arr = snapshot.val();
+
+                        $.each(arr, function (idx, val) {
+                            var newOption = $('<option></option>');
+                            $(newOption).attr('value', idx);
+                            $(newOption).text(val['title']);
+
+                            $('' + selector).append($(newOption));
+                        });
+
+                        $('' + selector).selectpicker('refresh');
+                    });
+                }
+                
                 break;
         }
     }
@@ -173,12 +245,21 @@ var searchEmpListNonWatchPopup = (function() {
 
         /** start of component ***********************/
         fnGetCommonCmb('company', '#modal-searchEmpListNonWatch select.searchCompany');
+        fnGetCommonCmb('category', '#modal-searchEmpListNonWatch select.searchRequiredCat');
+
         $('#modal-searchEmpListNonWatch .searchDept').selectpicker();
+        $('#modal-searchEmpListNonWatch .searchRequiredContent').selectpicker();
 
 
         $('#modal-searchEmpListNonWatch .searchCompany').on('change', function(e) {
             var parentCd = $(this).val();
             fnGetCommonCmb('department', '#modal-searchEmpListNonWatch select.searchDept', parentCd);
+        });
+
+        $('#modal-searchEmpListNonWatch .searchRequiredCat').on('change', function(e) {
+            var parentCd = $(this).val();
+            console.log(parentCd);
+            fnGetCommonCmb('content', '#modal-searchEmpListNonWatch select.searchRequiredContent', parentCd);
         });
 
 
