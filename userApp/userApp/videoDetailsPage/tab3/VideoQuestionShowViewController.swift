@@ -12,7 +12,7 @@ import Firebase
 var selectedQuestionId: String = "-Ln_SeugMAsLj5l1HKMc"
 
 class VideoQuestionShowViewController: UIViewController {
-
+    
     @IBOutlet weak var commentTableView: UIView!
     @IBOutlet weak var commentView: UIView!
     @IBOutlet weak var lblTitle: UILabel!
@@ -23,7 +23,7 @@ class VideoQuestionShowViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         keyboardHandling(commentView)
         getQuestionFromDB()
@@ -113,15 +113,16 @@ class VideoQuestionShowViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
+
