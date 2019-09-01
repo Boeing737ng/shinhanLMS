@@ -77,10 +77,10 @@ class CoPBoardWriteViewController: UIViewController, UITextViewDelegate {
             "title": tfTitle.text as? String,
             "writer": userName
             ])
-        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "copboardadd"), object: nil)
         onGoBack()
     }
-    
+   
     @IBAction func btnCancel(_ sender: UIBarButtonItem) {
         onGoBack()
     }

@@ -47,7 +47,6 @@ class VideoCollection: UICollectionView, UICollectionViewDelegate, UICollectionV
             print(error.localizedDescription)
         }
     }
-    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
