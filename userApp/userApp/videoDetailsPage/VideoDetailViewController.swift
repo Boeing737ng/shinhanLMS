@@ -20,7 +20,9 @@ var videoURL:String = ""
 class VideoDetailViewController: UIViewController {
 
     @IBOutlet weak var videoView: UIView!
+    let notificationCenter = NotificationCenter.default
     
+    var videoProgress:Float = 0.0
     var playerView:UIView = UIView()
     var player:AVPlayer?
     var isPlaying:Bool = false
@@ -100,8 +102,9 @@ class VideoDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
         getVideoInfoFromDB()
-        // Do any additional setup after loading the view.
+        userDidStartWatching()
     }
     
     func showVideoPlayer() {
@@ -113,7 +116,13 @@ class VideoDetailViewController: UIViewController {
         }
     }
     
+    @objc func appMovedToBackground() {
+        print("App moved to background!")
+        userDidFinishWatching()
+    }
+    
     @IBAction func onGoBack(_ sender: UIBarButtonItem) {
+        userDidFinishWatching()
         let transition: CATransition = CATransition()
         transition.duration = 0.5
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
@@ -121,6 +130,30 @@ class VideoDetailViewController: UIViewController {
         transition.subtype = CATransitionSubtype.fromLeft
         self.view.window!.layer.add(transition, forKey: nil)
         self.dismiss(animated: false, completion: nil)
+    }
+
+    private func userDidFinishWatching() {
+        var currentState:String = ""
+        if videoProgress == 1 {
+            currentState = "completed"
+        } else {
+            currentState = "playing"
+        }
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        ref.child("user/" + userNo + "/playList/" + selectedVideoId).updateChildValues([
+            "progress": videoProgress,
+            "state": currentState
+            ]
+        )
+    }
+    
+    private func userDidStartWatching() {
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        ref.child(userCompanyCode + "/videos/" + selectedVideoId + "/user/" + userNo).setValue([
+                "name": userName
+            ])
     }
     
     func getVideoInfoFromDB() {
@@ -204,15 +237,26 @@ class VideoDetailViewController: UIViewController {
     }
     
     private func setFullScreenConstraint() {
-        videoLengthLabel.rightAnchor.constraint(equalTo: playerView.rightAnchor, constant: -30).isActive = true
-        videoLengthLabel.bottomAnchor.constraint(equalTo: playerView.bottomAnchor).isActive = true
-        videoLengthLabel.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        fullScreenButton.rightAnchor.constraint(equalTo: playerView.rightAnchor, constant: -25).isActive = true
+        fullScreenButton.bottomAnchor.constraint(equalTo: playerView.bottomAnchor, constant: -2).isActive = true
+        fullScreenButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        fullScreenButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        videoLengthLabel.rightAnchor.constraint(equalTo: fullScreenButton.leftAnchor, constant: -8).isActive = true
+        videoLengthLabel.bottomAnchor.constraint(equalTo: playerView.bottomAnchor, constant: -5).isActive = true
+        videoLengthLabel.widthAnchor.constraint(equalToConstant: 60).isActive = true
         videoLengthLabel.heightAnchor.constraint(equalToConstant: 24).isActive = true
         
-        currentTimeLabel.leftAnchor.constraint(equalTo: playerView.leftAnchor, constant: 80).isActive = true
-        currentTimeLabel.bottomAnchor.constraint(equalTo: playerView.bottomAnchor).isActive = true
-        currentTimeLabel.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        currentTimeLabel.leftAnchor.constraint(equalTo: playerView.leftAnchor, constant: 25).isActive = true
+        currentTimeLabel.bottomAnchor.constraint(equalTo: playerView.bottomAnchor, constant: -5).isActive = true
+        currentTimeLabel.widthAnchor.constraint(equalToConstant: 50).isActive = true
         currentTimeLabel.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        
+        videoSlider.rightAnchor.constraint(equalTo: videoLengthLabel.leftAnchor, constant: 10).isActive = true
+        videoSlider.bottomAnchor.constraint(equalTo: playerView.bottomAnchor).isActive = true
+        videoSlider.leftAnchor.constraint(equalTo: currentTimeLabel.rightAnchor).isActive = true
+        videoSlider.heightAnchor.constraint(equalToConstant: 35).isActive = true
+        videoSlider.thumbTintColor = .red
     }
     
     @objc private func setFullScreen() {
@@ -291,8 +335,9 @@ class VideoDetailViewController: UIViewController {
                 //lets move the slider thumb
                 if let duration = self.player?.currentItem?.duration {
                     let durationSeconds = CMTimeGetSeconds(duration)
-                    
-                    self.videoSlider.value = Float(seconds / durationSeconds)
+                    let runningPercentage = Float(seconds / durationSeconds)
+                    self.videoSlider.value = runningPercentage
+                    self.videoProgress = runningPercentage
                 }
             })
         }
@@ -315,7 +360,6 @@ class VideoDetailViewController: UIViewController {
             isPlaying = true
             if let duration = player?.currentItem?.duration {
                 let seconds = CMTimeGetSeconds(duration)
-                
                 let secondsText = Int(seconds) % 60
                 let minutesText = String(format: "%02d", Int(seconds) / 60)
                 videoLengthLabel.text = "\(minutesText):\(secondsText)"

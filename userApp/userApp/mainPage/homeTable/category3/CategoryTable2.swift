@@ -9,15 +9,23 @@
 import UIKit
 import Firebase
 
+var totalPopularVideoIdArray = Array<String>()
+var totalPopularTitleArray = Array<String>()
+var totalPopularAuthorArray = Array<String>()
+var totalPopularViewArray = Array<Int>()
+
 class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
     
     var textArray = ["","",""]
     var authorArray = ["","",""]
+    var viewArray = ["","",""]
     var dataReceived:Bool = false
     
-    var playingVideoIdArray = Array<String>()
-    var playingTitleArray = Array<String>()
-    var playingAuthorArray = Array<String>()
+    var popularVideoIdArray = Array<String>()
+    var popularTitleArray = Array<String>()
+    var popularAuthorArray = Array<String>()
+    var popularViewArray = Array<Int>()
+    var playingViewArray = Array<Int>()
     
     override func awakeFromNib() {
         self.delegate = self
@@ -25,26 +33,21 @@ class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
         
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child("user/201302493/playList/").observeSingleEvent(of: .value, with: { (snapshot) in
-            // Get user value
-            let value = snapshot.value as? NSDictionary
-            for video in value! {
-                if self.playingVideoIdArray.count == 3 {
-                    print("-------ARRAY SIZE IS FULL------")
-                    break
+        ref.child(userCompanyCode + "/videos/").queryOrdered(byChild: "view").observeSingleEvent(of: .value, with: { (snapshot) in
+            let dataSize = Int(snapshot.childrenCount) - 1
+            for video in snapshot.children.allObjects as! [DataSnapshot] {
+                if let videoInfo = video.value as? [String : Any] {
+                    totalPopularVideoIdArray.append(video.key)
+                    totalPopularTitleArray.append(videoInfo["title"] as! String)
+                    totalPopularAuthorArray.append(videoInfo["author"] as! String)
+                    totalPopularViewArray.append(videoInfo["view"] as! Int)
                 }
-                let videoDict = video.value as! Dictionary<String, Any>;()
-                let status = videoDict["state"] as! String
-                if status == "completed" {
-                    let videoId = video.key as! String
-                    let title = videoDict["title"] as! String
-                    let author = videoDict["author"] as! String
-                    self.playingVideoIdArray.append(videoId)
-                    self.playingTitleArray.append(title)
-                    self.playingAuthorArray.append(author)
-                } else {
-                    continue
-                }
+            }
+            for i in 0...2 {
+                self.popularVideoIdArray.append(totalPopularVideoIdArray[dataSize - i])
+                self.popularTitleArray.append(totalPopularTitleArray[dataSize - i])
+                self.popularAuthorArray.append(totalPopularAuthorArray[dataSize - i])
+                self.popularViewArray.append(totalPopularViewArray[dataSize - i])
             }
             self.dataReceived = true
             self.reloadData()
@@ -62,11 +65,11 @@ class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return playingVideoIdArray.count
+        return popularVideoIdArray.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let videoId = playingVideoIdArray[indexPath.row]
+        let videoId = popularVideoIdArray[indexPath.row]
         selectedVideoId = videoId
         TabViewController().goToDetailPage()
     }
@@ -75,13 +78,15 @@ class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
         let cell = tableView.dequeueReusableCell(withIdentifier: "VideoCell2") as! VideoCell2
         
         if dataReceived {
-            cell.videoTitleLabel.text = playingTitleArray[indexPath.row]
-            cell.videoAuthorLabel.text = playingAuthorArray[indexPath.row]
-            cell.videoThumbnail.image = CachedImageView().loadCacheImage(urlKey: playingVideoIdArray[indexPath.row])
+            cell.videoTitleLabel.text = popularTitleArray[indexPath.row]
+            cell.videoAuthorLabel.text = popularAuthorArray[indexPath.row]
+            cell.videoThumbnail.image = CachedImageView().loadCacheImage(urlKey: popularVideoIdArray[indexPath.row])
+            cell.videoViewLabel.text = String(popularViewArray[indexPath.row])
         } else {
             cell.videoTitleLabel.text = textArray[indexPath.row]
             cell.videoAuthorLabel.text = authorArray[indexPath.row]
             cell.videoThumbnail.image = UIImage(named: "white.jpg")
+            cell.videoViewLabel.text = viewArray[indexPath.row]
         }
         
         return cell

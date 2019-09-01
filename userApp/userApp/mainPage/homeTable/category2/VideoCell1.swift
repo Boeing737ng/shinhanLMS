@@ -13,6 +13,8 @@ class VideoCell1: UITableViewCell {
     @IBOutlet weak var videoTitleLabel: UILabel!
     @IBOutlet weak var videoAuthorLabel: UILabel!
     @IBOutlet weak var videoThumbnail: UIImageView!
+    @IBOutlet weak var videoProgressBar: UIProgressView!
+    @IBOutlet weak var videoViewLabel: UILabel!
     
 
     override func awakeFromNib() {

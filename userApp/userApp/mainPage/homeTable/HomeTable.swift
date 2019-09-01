@@ -13,7 +13,6 @@ class HomeTable: UITableViewController  {
     
     func viewDidload() {
         super.viewDidLoad()
-        print("yes")
         self.tableView.delegate = self
         self.tableView.dataSource = self
     }
