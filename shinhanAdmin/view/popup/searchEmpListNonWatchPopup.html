@@ -1,7 +1,7 @@
 <!-- Logout Modal-->
-<div class="modal fade" id="modal-searchEmpList" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="modal-searchEmpListNonWatch" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog" role="document" style="width: 870px">
+    <div class="modal-dialog" role="document" style="width: 900px">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title"></h5>
@@ -15,6 +15,25 @@
                     <div class="card shadow h-100 py-2">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
+                                <div>
+                                    <div class="searchComponentDiv">
+                                        <label><span style="color:red;">*</span>필수강좌 카테고리</label> : </label>
+                                        <div class="dropdown bootstrap-select form-control"
+                                            style="width:166px;float: none;margin-bottom: 0;padding: 0;border: none;">
+                                            <select class="form-control searchRequiredCat" data-live-search="true"></select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div class="searchComponentDiv">
+                                        <label><span style="color:red;">*</span>필수강좌</label> : </label>
+                                        <div class="dropdown bootstrap-select form-control"
+                                            style="width:166px;float: none;margin-bottom: 0;padding: 0;border: none;">
+                                            <select class="form-control searchRequiredContent" data-live-search="true"></select>
+                                        </div>
+                                    </div>
+                                </div>
                     
                                 <div>
                                     <div class="searchComponentDiv">
@@ -31,15 +50,6 @@
                                         <label>부서명</label> : </label>
                                         <div class="dropdown bootstrap-select form-control" style="width:166px;float: none;margin-bottom: 0;padding: 0;border: none;">
                                             <select class="form-control searchDept" data-live-search="true"></select>
-                                        </div>
-                                    </div>
-                                </div>
-                    
-                                <div>
-                                    <div class="searchComponentDiv">
-                                        <label>성명</label> : </label>
-                                        <div class="dropdown bootstrap-select form-control" style="width:166px;float: none;margin-bottom: 0;padding: 0;border: none;">
-                                            <input type="text" class="form-control searchNm" style="float: left;"/>
                                         </div>
                                     </div>
                                 </div>

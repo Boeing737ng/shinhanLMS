@@ -18,8 +18,6 @@
   <link href="/vendor/bootstrap-select/dist/css/bootstrap-select.css" rel="stylesheet" type="text/css" />
   <!-- Custom styles for this template-->
   <link href="/css/sb-admin-2.css" rel="stylesheet">
-  <!-- TOAST Grid -->
-  <link rel="stylesheet" href="/vendor/tui.grid-4.4.0/tui-grid.css" />
   <!-- Common CSS -->
   <link href="/css/lmsCommon.css" rel="stylesheet" type="text/css">
 
@@ -47,8 +45,6 @@
   <script src="/vendor/bootstrap-select/dist/js/bootstrap-select.js"></script>
   <!-- datepicker -->
   <script src="/vendor/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
-  <!-- TOAST Grid -->
-  <script src="/vendor/tui.grid-4.4.0/tui-grid.js"></script>
 
   <script src="/js/index.js"></script>
 
@@ -68,23 +64,10 @@
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
         <img src="/img/shinple_Logo2.png" style="width:200px"/>
-        <!-- <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-laugh-wink"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">Shinple</div> -->
       </a>
 
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
-
-      <!-- Nav Item - Dashboard -->
-      <!--
-      <li class="nav-item active">
-        <a class="nav-link" href="index.html">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
-      </li>
-      -->
 
       <li class="nav-item dummy">
         <a class="nav-link" style="cursor:pointer">
@@ -92,44 +75,14 @@
           <span></span></a>
       </li>
 
-      <!-- Divider -->
-      <!--<hr class="sidebar-divider">-->
-
-      <!-- Heading -->
-      <!--
-      <div class="sidebar-heading">
-        Interface
-      </div>
-      -->
-
-
-      <!-- Nav Item - Utilities Collapse Menu -->
-      <!--
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-          <i class="fas fa-fw fa-wrench"></i>
-          <span>Utilities</span>
-        </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Custom Utilities:</h6>
-            <a class="collapse-item" href="view/utilities-color.html">Colors</a>
-            <a class="collapse-item" href="view/utilities-border.html">Borders</a>
-            <a class="collapse-item" href="view/utilities-animation.html">Animations</a>
-            <a class="collapse-item" href="view/utilities-other.html">Other</a>
-          </div>
-        </div>
-      </li>
-      -->
-
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
 
       <!-- Sidebar Toggler (Sidebar) -->
-      <div class="text-center d-none d-md-inline">
+<!--       <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
-      </div>
+      </div> -->
 
     </ul>
     <!-- End of Sidebar -->
@@ -254,7 +207,7 @@
   <!-- Logout Modal-->
   <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">로그아웃을 하시겠습니까?</h5>
@@ -264,8 +217,8 @@
         </div>
         <div class="modal-body">세션을 종료하고 싶으면 로그아웃 버튼을 눌러주세요</div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="/login.html">Logout</a>
+          <a class="btn btn-primary" href="/login.html">로그아웃</a>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
         </div>
       </div>
     </div>

@@ -6,7 +6,7 @@
 
     /*==================================================================
     [ Focus input ]*/
-    $('.input100').each(function(){
+    /* $('.input100').each(function(){
         $(this).on('blur', function(){
             if($(this).val().trim() != "") {
                 $(this).addClass('has-val');
@@ -15,7 +15,8 @@
                 $(this).removeClass('has-val');
             }
         });    
-    })
+    }) */
+    $('.input100').addClass('has-val');
   
   
     /*==================================================================
@@ -139,5 +140,9 @@
         }
         
     });
+
+
+    $('span[data-placeholder=사번]').focus();
+    //$('input[name=empNo]').focus();
 
 })(jQuery);

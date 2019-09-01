@@ -34,8 +34,8 @@ $(document).ready(function () {
 
         e.preventDefault();
 
-        var popup = SearchEmpListPopup.getInstance({
-            title: '사원 검색'
+        var popup = searchEmpListNonWatchPopup.getInstance({
+            title: '필수강좌 미이수자 검색'
         });
 
         $(popup).off('submit').on('submit', function(e, param) {
@@ -84,7 +84,7 @@ $(document).ready(function () {
         data: [],
         fields: [
             { name: "empNo", title: '사번', type: "text", width: 100, editing: false, align: "center" },
-            { name: "name", title: '성명', type: "text", width: 100, editing: false, align: "left" },
+            { name: "name", title: '성명', type: "text", width: 100, editing: false, align: "center" },
             { name: "compNm", title: "회사명", type: 'text', width: 150, editing: false, align: "left" },
             { name: "department", title: '부서명', type: "text", width: 200, editing: false, align: "left" }
         ]
