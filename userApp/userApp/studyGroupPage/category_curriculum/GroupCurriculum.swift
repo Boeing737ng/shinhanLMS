@@ -7,30 +7,39 @@ class GroupCurriculum: UICollectionView, UICollectionViewDelegate, UICollectionV
     var authorArray = ["","","","",""]
     var dataReceived:Bool = false
     
-    var recentVideoIdArray = Array<String>()
-    var recentTitleArray = Array<String>()
-    var recentAuthorArray = Array<String>()
+    var curriculumVideoIdArray = Array<String>()
+    var curriculumTitleArray = Array<String>()
+    var curriculumAuthorArray = Array<String>()
     
     override func awakeFromNib() {
         self.delegate = self
         self.dataSource = self
+        initcurriculum()
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadcollection), name: NSNotification.Name(rawValue: "copchange"), object: nil)
+    }
+    @objc func reloadcollection() {
+        getData()
+        self.reloadData()
+    }
+    func initcurriculum()
+    {
+        initArrays()
         var index = 0
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child(userCompanyCode + "/videos").queryLimited(toLast: 5).observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child("58/study/11111/curriculum").observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
+            print(curri)
             let value = snapshot.value as? Dictionary<String,Any>;()
             for video in value! {
-                if index == 5 {
-                    break
-                }
                 let videoDict = video.value as! Dictionary<String, Any>;()
                 let videoId = video.key
+                print(videoId)
                 let title = videoDict["title"] as! String
                 let author = videoDict["author"] as! String
-                self.recentVideoIdArray.append(videoId)
-                self.recentTitleArray.append(title)
-                self.recentAuthorArray.append(author)
+                self.curriculumVideoIdArray.append(videoId)
+                self.curriculumTitleArray.append(title)
+                self.curriculumAuthorArray.append(author)
                 index += 1
             }
             self.dataReceived = true
@@ -39,17 +48,49 @@ class GroupCurriculum: UICollectionView, UICollectionViewDelegate, UICollectionV
             print(error.localizedDescription)
         }
     }
-    
+    func getData()
+    {
+        initArrays()
+        var index = 0
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        ref.child("58/study/"+curri_send+"/curriculum").observeSingleEvent(of: .value, with: { (snapshot) in
+            // Get user value
+            print(curri)
+            let value = snapshot.value as? Dictionary<String,Any>;()
+            for video in value! {
+                let videoDict = video.value as! Dictionary<String, Any>;()
+                let videoId = video.key
+                print(videoId)
+                let title = videoDict["title"] as! String
+                let author = videoDict["author"] as! String
+                self.curriculumVideoIdArray.append(videoId)
+                self.curriculumTitleArray.append(title)
+                self.curriculumAuthorArray.append(author)
+                index += 1
+            }
+            self.dataReceived = true
+            self.reloadData()
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    func initArrays() {
+        curriculumVideoIdArray.removeAll()
+        curriculumAuthorArray.removeAll()
+        curriculumTitleArray.removeAll()
+        self.dataReceived = false
+    }
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let videoId = recentVideoIdArray[indexPath.row]
+        let videoId = curriculumVideoIdArray[indexPath.row]
         selectedVideoId = videoId
         TabViewController().goToDetailPage()
     }
@@ -61,16 +102,15 @@ class GroupCurriculum: UICollectionView, UICollectionViewDelegate, UICollectionV
         cell.video_author.text = authorArray[indexPath.row]
         
         if dataReceived {
-            cell.video_title.text = recentTitleArray[indexPath.row]
-            cell.video_author.text = recentAuthorArray[indexPath.row]
-            cell.video_img.image = CachedImageView().loadCacheImage(urlKey: recentVideoIdArray[indexPath.row])
+            cell.video_title.text = curriculumTitleArray[indexPath.row]
+            cell.video_author.text = curriculumAuthorArray[indexPath.row]
+            cell.video_img.image = UIImage(named: "white.jpg")
+                //CachedImageView().loadCacheImage(urlKey: curriculumVideoIdArray[indexPath.row])
         } else {
             cell.video_title.text = textArray[indexPath.row]
             cell.video_author.text = authorArray[indexPath.row]
             cell.video_img.image = UIImage(named: "white.jpg")
         }
-        
-        
         return cell
     }
     /*

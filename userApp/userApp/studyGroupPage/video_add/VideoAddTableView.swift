@@ -9,7 +9,6 @@
 import UIKit
 import Firebase
 
-// var selectedCategoryIndex:Int = 0
 
 class VideoAddTableView: UITableView, UITableViewDataSource, UITableViewDelegate {
 
@@ -39,7 +38,7 @@ class VideoAddTableView: UITableView, UITableViewDataSource, UITableViewDelegate
         if selectedCategoryIndex == 0 {
             dataURL = userCompanyCode + "/videos"
         } else {
-            dataURL = userCompanyCode + "/categories/" + categoryDict[selectedCategoryIndex]! + "/videos/"
+            dataURL = userCompanyCode + "/categories/" + categoryDict1[selectedCategoryIndex]! + "/videos/"
         }
         
         print(dataURL)
@@ -47,6 +46,9 @@ class VideoAddTableView: UITableView, UITableViewDataSource, UITableViewDelegate
         ref = Database.database().reference()
         ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
+            if snapshot.childrenCount == 0 {
+                return
+            }
             let value = snapshot.value as? Dictionary<String,Any>;()
             for video in value! {
                 let videoDict = video.value as! Dictionary<String, Any>;()
