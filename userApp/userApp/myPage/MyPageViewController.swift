@@ -19,40 +19,30 @@ import Firebase
 
 class MyPageViewController: UIViewController{
     
-
-    
-    var textArray = ["","",""]
-    var authorArray = ["","",""]
-    var dataReceived:Bool = false
-    
     var dbingArray = Array<String>()
     var dbedArray = Array<String>()
     var dbnameArray = Array<String>()
     var dbfieldArray = Array<String>()
     var dbgroupArray = Array<String>()
-
-    
-    //@IBOutlet weak var taglbl: UILabel!
-    
-    @IBOutlet weak var fieldlbl: UILabel!
-    @IBOutlet weak var namelbl: UILabel!
-    
-    @IBOutlet weak var edLecture: UILabel!
-    @IBOutlet weak var imgLecture: UILabel!
-    @IBOutlet weak var questionlbl: UILabel!
-
-    
     var playnum: Int = 0
     var plednum: Int = 0
     
+    @IBOutlet weak var fieldlbl: UILabel!
+    @IBOutlet weak var namelbl: UILabel!
+    @IBOutlet weak var edLecture: UILabel!
+    @IBOutlet weak var imgLecture: UILabel!
+    @IBOutlet weak var questionlbl: UILabel!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        getDataFromDB()
+        getUserInfo()
+    }
+    
     func getDataFromDB(){
-       clearArrays()
-//        var dataURL:String = "user" + userNo
-        var dataURL:String = "user/201302493/playList"
-        
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child("user/" + userNo + "/playList/").observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? Dictionary<String, Any>;()
             for ing in value! {
                 let statusD = ing.value as! Dictionary<String, Any>;()
@@ -65,65 +55,37 @@ class MyPageViewController: UIViewController{
                    self.plednum += 1
                 }
             }
-           self.imgLecture.text = "\(self.playnum)"
+            self.imgLecture.text = "\(self.playnum)"
             self.edLecture.text = "\(self.plednum)"
-            self.dataReceived = true
         }) { (error) in
             print(error.localizedDescription)
         }
-        }
+    }
     
-    func getNamePartDB(){
-        clearArrays()
-        var dataURL:String = "user/201302493"
-//        var dataURL:String = ""
-//        dataURL = "user/" + userNo
-        
+    func getUserInfo(){
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child("user/" + userNo).observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? Dictionary<String, Any>;()
-            let nameD = value as! Dictionary<String, Any>;()
-            let partD = value as! Dictionary<String, Any>;()
-            let name = nameD["name"] as! String
-            let part = partD["department"] as! String
+            let name = value!["name"] as! String
+            let department = value!["department"] as! String
             self.dbnameArray.append(name)
-            self.dbfieldArray.append(part)
+            self.dbfieldArray.append(department)
             
             self.namelbl.text = "\(self.dbnameArray[0])"
             self.fieldlbl.text = "\(self.dbfieldArray[0])"
-            
-            self.dataReceived = true
         }) { (error) in
             print(error.localizedDescription)
         }
     }
     
-    func clearArrays() {
-        dbedArray.removeAll()
-        dbingArray.removeAll()
-        dbnameArray.removeAll()
-        dbfieldArray.removeAll()
-        dbgroupArray.removeAll()
+    @IBAction func onGoBack(_ sender: UIBarButtonItem) {
+        let transition: CATransition = CATransition()
+        transition.duration = 0.5
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
+        transition.type = CATransitionType.reveal
+        transition.subtype = CATransitionSubtype.fromLeft
+        self.view.window!.layer.add(transition, forKey: nil)
+        self.dismiss(animated: false, completion: nil)
     }
-    
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        getDataFromDB()
-        getNamePartDB()
-//        self.imgLecture.text = "\(self.playnum)"
-//        RunLoop.current.add(timer, forMode: RunLoop.Mode.common)
-//        print("======================")
-//        print("======= \(dbingArray)")
-//        imgLecture.text = "\(dbingArray.count)"
-
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        print("======= \(dbingArray)")
-    }
-
-
 }
