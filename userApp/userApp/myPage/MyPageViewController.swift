@@ -30,6 +30,7 @@ class MyPageViewController: UIViewController{
     var dbnameArray = Array<String>()
     var dbfieldArray = Array<String>()
     var dbgroupArray = Array<String>()
+    var dbwriterArray = Array<String>()
 
     
     //@IBOutlet weak var taglbl: UILabel!
@@ -99,12 +100,34 @@ class MyPageViewController: UIViewController{
         }
     }
     
+    func getQnumDB(){
+        clearArrays()
+        var dataURL:String = "board_request/201302493"
+        
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+         ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            let value = snapshot.value as? Dictionary<String, Any>;()
+            let nameD = value as! Dictionary<String, Any>;()
+            let name = nameD["contents"] as! String
+            self.dbwriterArray.append(name)
+            
+            self.questionlbl.text = "\(self.dbwriterArray.count)"
+            print(self.dbwriterArray.count)
+            self.dataReceived = true
+         }) { (error) in
+            print(error.localizedDescription)
+    }
+    }
+    
     func clearArrays() {
         dbedArray.removeAll()
         dbingArray.removeAll()
         dbnameArray.removeAll()
         dbfieldArray.removeAll()
         dbgroupArray.removeAll()
+        dbwriterArray.removeAll()
     }
     
     
@@ -113,6 +136,7 @@ class MyPageViewController: UIViewController{
         super.viewDidLoad()
         getDataFromDB()
         getNamePartDB()
+        getQnumDB()
 //        self.imgLecture.text = "\(self.playnum)"
 //        RunLoop.current.add(timer, forMode: RunLoop.Mode.common)
 //        print("======================")

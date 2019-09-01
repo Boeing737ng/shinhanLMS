@@ -10,6 +10,12 @@ import UIKit
 import Charts
 import Firebase
 
+var textArray = ["","",""]
+var authorArray = ["","",""]
+var dataReceived:Bool = false
+
+var dbStudyArray = Array<String>()
+
 class graphViewController: UIViewController, ChartViewDelegate {
 
     var months: [String]!
@@ -40,10 +46,37 @@ class graphViewController: UIViewController, ChartViewDelegate {
         setChart(dataPoints: months, values: unitSold)
         
         timeStacklbl.text = "Shinple과 함께 \(studyTime)분을 학습했습니다"
-        copStacklbl.text = "\(copnum)개의 CoP에서 활동중"
         goalTimelbl.text = "\(goalTime)분"
+        getNamePartDB()
         // Do any additional setup after loading the view.
         
+    }
+    
+    func getNamePartDB(){
+        clearArrays()
+        var dataURL:String = "58/study/11111/member/201302493"
+        //        var dataURL:String = ""
+        //        dataURL = "user/" + userNo
+        
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? Dictionary<String, Any>;()
+            let nameD = value as! Dictionary<String, Any>;()
+            let name = nameD["name"] as! String
+            
+            dbStudyArray.append(name)
+            self.copStacklbl.text = "\(dbStudyArray.count)개의 CoP에서 활동중"
+
+            dataReceived = true
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+
+    func clearArrays() {
+        dbStudyArray.removeAll()
+
     }
     
     @IBAction func onGoBack(_ sender: UIButton) {
