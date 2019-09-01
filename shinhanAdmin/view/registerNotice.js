@@ -16,13 +16,21 @@ $(document).ready(function () {
 
         e.preventDefault();
 
+        if(!$(this).hasClass('active') && !confirm('기존에 선택한 수신자 리스트가 초기화됩니다. 계속하시겠습니까?')) {
+            return false;
+        }
+
+        $('#nonWatchEmpGrid').jsGrid('option', 'data', []);
+        $('#nonWatchEmpGrid').hide();
+        $('#trgtEmpGrid').show();
+
         var popup = SearchEmpListPopup.getInstance({
             title: '사원 검색'
         });
 
         $(popup).off('submit').on('submit', function(e, param) {
             var records = param['records'];
-            $('#empGrid').jsGrid('option', 'data', records);
+            $('#trgtEmpGrid').jsGrid('option', 'data', records);
         });
 
         popup.open();
@@ -30,9 +38,18 @@ $(document).ready(function () {
     });
 
 
+    //필수강좌 미이수자 팝업 버튼
     $('#btnLoadEmpNonWatch').on('click', function(e) {
 
         e.preventDefault();
+
+        if(!$(this).hasClass('active') && !confirm('기존에 선택한 수신자 리스트가 초기화됩니다. 계속하시겠습니까?')) {
+            return false;
+        }
+
+        $('#trgtEmpGrid').jsGrid('option', 'data', []);
+        $('#trgtEmpGrid').hide();
+        $('#nonWatchEmpGrid').show();
 
         var popup = searchEmpListNonWatchPopup.getInstance({
             title: '필수강좌 미이수자 검색'
@@ -40,7 +57,7 @@ $(document).ready(function () {
 
         $(popup).off('submit').on('submit', function(e, param) {
             var records = param['records'];
-            $('#empGrid').jsGrid('option', 'data', records);
+            $('#nonWatchEmpGrid').jsGrid('option', 'data', records);
         });
 
         popup.open();
@@ -76,7 +93,8 @@ $(document).ready(function () {
 
 
     /** start of grid ***********************/
-    $("#empGrid").jsGrid({
+    //특정 사원 그리드
+    $("#trgtEmpGrid").jsGrid({
         width: "100%",
         height: "200px",
         sorting: true,
@@ -87,6 +105,23 @@ $(document).ready(function () {
             { name: "name", title: '성명', type: "text", width: 100, editing: false, align: "center" },
             { name: "compNm", title: "회사명", type: 'text', width: 150, editing: false, align: "left" },
             { name: "department", title: '부서명', type: "text", width: 200, editing: false, align: "left" }
+        ]
+    });
+
+
+    //필수강좌 미이수자 그리드
+    $("#nonWatchEmpGrid").jsGrid({
+        width: "100%",
+        height: "200px",
+        sorting: true,
+        paging: false,
+        data: [],
+        fields: [
+            { name: "empNo", title: '사번', type: "text", width: 100, editing: false, align: "center" },
+            { name: "name", title: '성명', type: "text", width: 100, editing: false, align: "center" },
+            { name: "compNm", title: "회사명", type: 'text', width: 100, editing: false, align: "left" },
+            { name: "department", title: '부서명', type: "text", width: 120, editing: false, align: "left" },
+            { name: "title", title: '미이수강좌명', type: "text", width: 200, editing: false, align: "left" }
         ]
     });
     /** end of grid *************************/
@@ -159,7 +194,7 @@ $(document).ready(function () {
         var param = '';
         var target;
 
-        var empGridRowCnt = $('#empGrid').jsGrid('option', 'data').length;
+        var empGridRowCnt = $('#trgtEmpGrid').jsGrid('option', 'data').length;
 
         if(empGridRowCnt == 0) {
             param = '수신자 리스트';
@@ -191,7 +226,7 @@ $(document).ready(function () {
         var contentTitle=$('#title').val();
         var contentDescription = $('#description').val();
 
-        var userRecords = $('#empGrid').jsGrid('option', 'data');
+        var userRecords = $('#trgtEmpGrid').jsGrid('option', 'data');
         var targetUsers = {};
 
         for(var i=0; i<userRecords.length; i++) {

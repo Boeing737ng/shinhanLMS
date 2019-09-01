@@ -286,6 +286,8 @@ var searchEmpListNonWatchPopup = (function() {
 
 
         $('#modal-searchEmpListNonWatch .btnDetailSearch').on('click', function(e) {
+            e.preventDefault();
+            
             $( '#modal-searchEmpListNonWatch .toggleDiv' ).toggle();
 
             if($(this).find('i').hasClass('fa-chevron-down')) {
