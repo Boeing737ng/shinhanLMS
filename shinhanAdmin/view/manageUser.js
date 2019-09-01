@@ -68,7 +68,7 @@ $(document).ready(function () {
                 }
                 return rslt; 
               } },
-            { name: "listenClass", title: "수강강좌수", type: 'text', width: 100, editing: false, align: "center" }
+            { name: "listenClass", title: "수강강좌수", type: 'text', width: 100, editing: false, align: "right" }
         ]
         
     });
