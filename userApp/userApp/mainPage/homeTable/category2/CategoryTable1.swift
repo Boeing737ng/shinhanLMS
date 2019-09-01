@@ -91,18 +91,23 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
         let cell = tableView.dequeueReusableCell(withIdentifier: "VideoCell1") as! VideoCell1
         
         cell.videoProgressBar.progress = 0.8
-        if dataReceived {
-            cell.videoTitleLabel.text = playingTitleArray[indexPath.row]
-            cell.videoAuthorLabel.text = playingAuthorArray[indexPath.row]
-            cell.videoThumbnail.image = CachedImageView().loadCacheImage(urlKey: playingVideoIdArray[indexPath.row])
-            cell.videoProgressBar.progress = playingProgressArray[indexPath.row]
-            cell.videoViewLabel.text = String(playingViewArray[indexPath.row])
+        if playingViewArray.count == 3 {
+            if dataReceived {
+                cell.videoTitleLabel.text = playingTitleArray[indexPath.row]
+                cell.videoAuthorLabel.text = playingAuthorArray[indexPath.row]
+                cell.videoThumbnail.image = CachedImageView().loadCacheImage(urlKey: playingVideoIdArray[indexPath.row])
+                cell.videoProgressBar.progress = playingProgressArray[indexPath.row]
+                cell.videoViewLabel.text = String(playingViewArray[indexPath.row])
+            } else {
+                cell.videoTitleLabel.text = textArray[indexPath.row]
+                cell.videoAuthorLabel.text = authorArray[indexPath.row]
+                cell.videoThumbnail.image = UIImage(named: "white.jpg")
+                cell.videoProgressBar.progress = defaultProgress
+                cell.videoViewLabel.text = viewArray[indexPath.row]
+            }
         } else {
-            cell.videoTitleLabel.text = textArray[indexPath.row]
-            cell.videoAuthorLabel.text = authorArray[indexPath.row]
-            cell.videoThumbnail.image = UIImage(named: "white.jpg")
-            cell.videoProgressBar.progress = defaultProgress
-            cell.videoViewLabel.text = viewArray[indexPath.row]
+            print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+            self.reloadData()
         }
         
         return cell
