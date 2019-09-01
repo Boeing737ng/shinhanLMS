@@ -74,7 +74,7 @@ $(document).ready(function () {
     width: "100%",
     height: "241px",
     sorting: true,
-    paging: false,
+    paging: true,
     data: [],
 
     rowDoubleClick: function (args) {
@@ -88,10 +88,10 @@ $(document).ready(function () {
     },
 
     fields: [
-      { name: "title", title: '제목', type: "text", width: 120, editing: false, align: "center" },
-      { name: "writor", title: "작성자", type: 'text', width: 150, editing: false, align: "center" },
+      { name: "title", title: '제목', type: "text", width: 180, editing: false, align: "center" },
+      { name: "writor", title: "작성자", type: 'text', width: 80, editing: false, align: "center" },
       {
-        name: "date", title: "등록일자", type: 'text', width: 150, editing: false, align: "center", cellRenderer: function (item, value) {
+        name: "date", title: "등록일자", type: 'text', width: 100, editing: false, align: "center", cellRenderer: function (item, value) {
           var rslt = $("<td>").addClass("my-row-custom-class");
           var date = moment(item, 'YYYYMMDDHHmmss').format('YYYY-MM-DD');
           $(rslt).append(date);
@@ -190,6 +190,7 @@ $(document).ready(function () {
   function fnRetrieve3() {
       var view=[];
       var title=[];
+      var info={};
 
     
     parent.database.ref('/' + compCd + '/videos').once('value').then(function (snapshot) {
@@ -205,6 +206,7 @@ $(document).ready(function () {
 
       }); 
      // console.log('정렬전:'+view);
+
 
       function compare ( a , b ) 
         {   
