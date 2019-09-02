@@ -22,7 +22,7 @@ class tagEditCollectionView: UICollectionView, UICollectionViewDelegate, UIColle
         self.delegate = self
         self.dataSource = self
         getTagListFromDB()
-        tagLoadDB()
+        getUserSelectedTag()
     }
     
     func getTagListFromDB() {
@@ -42,7 +42,7 @@ class tagEditCollectionView: UICollectionView, UICollectionViewDelegate, UIColle
     }
     
     var arr = Array<String>()
-    func tagLoadDB() {
+    func getUserSelectedTag() {
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child("user/" + userNo + "/selectedTags").observeSingleEvent(of: .value, with: { (snapshot) in
