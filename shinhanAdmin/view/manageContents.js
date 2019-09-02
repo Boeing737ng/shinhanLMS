@@ -190,13 +190,13 @@ $(document).ready(function () {
             } },
 
             //{ name: "description", title: "설명", type: 'textarea', align: "left", width: 200 },
-            { name: "requireYn", title: "필수강좌여부", type: 'select', items: [
+            { name: "requireYn", title: "필수강의여부", type: 'select', items: [
                 { Name: "전체", Id: "" },
                 { Name: "Y", Id: "Y" },
                 { Name: "N", Id: "N" }
             ],valueField: "Id", textField: "Name", width: 100, editing: true, validate: {
                 validator: 'required', 
-                message: '필수강좌여부 는 필수입력 입니다.'
+                message: '필수강의여부 는 필수입력 입니다.'
             }, align: "center" },
             { type: "control" } //edit control
         ]

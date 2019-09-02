@@ -5,6 +5,18 @@ $(document).ready(function () {
     /** start of components ***********************/
     $('#releaseYn').selectpicker();
     $('#regDate').text(moment().format('YYYY-MM-DD'));
+    $('#template').selectpicker();
+    fnGetCommonCmb('template', '#template');
+
+    $('[data-toggle="tooltip"]').tooltip();
+
+
+    $('#template').on('change', function(e) {
+        var detailText = $(this).find('option:selected').attr('data-detail');
+        $('#description').val(detailText);
+    });
+
+
 
     var userInfo = JSON.parse(window.sessionStorage.getItem('userInfo'));
     var compCd = userInfo['compCd'];
@@ -12,8 +24,14 @@ $(document).ready(function () {
     $('#writor').text(userInfo['name']);
 
 
-    $('#btnAddEmp').on('click', function(e) {
+    $('#btnGuide').on('click', function(e) {
 
+        //modal-guide
+        $('#modal-guide').modal();
+    });
+
+
+    $('#btnAddEmp').on('click', function(e) {
         e.preventDefault();
 
         if(!$(this).hasClass('active') && !confirm('기존에 선택한 수신자 리스트가 초기화됩니다. 계속하시겠습니까?')) {
@@ -29,8 +47,29 @@ $(document).ready(function () {
         });
 
         $(popup).off('submit').on('submit', function(e, param) {
+            var srcRecords = $('#trgtEmpGrid').jsGrid('option', 'data');
             var records = param['records'];
-            $('#trgtEmpGrid').jsGrid('option', 'data', records);
+            var mergeRecords = [].concat(srcRecords);
+
+            for(var i=0; i<records.length; i++) {
+                var trgtRecord = records[i];
+                var flag = true;
+
+                for(var j=0; j<srcRecords.length; j++) {
+                    var srcRecord = srcRecords[j];
+
+                    if(trgtRecord['empNo'] == srcRecord['empNo']) {
+                        flag = false;
+                        break;
+                    }
+                }
+
+                if(flag) {
+                    mergeRecords.push(trgtRecord);
+                }
+            }
+            
+            $('#trgtEmpGrid').jsGrid('option', 'data', mergeRecords);
         });
 
         popup.open();
@@ -38,9 +77,8 @@ $(document).ready(function () {
     });
 
 
-    //필수강좌 미이수자 팝업 버튼
+    //필수강의 미이수자 팝업 버튼
     $('#btnLoadEmpNonWatch').on('click', function(e) {
-
         e.preventDefault();
 
         if(!$(this).hasClass('active') && !confirm('기존에 선택한 수신자 리스트가 초기화됩니다. 계속하시겠습니까?')) {
@@ -52,16 +90,36 @@ $(document).ready(function () {
         $('#nonWatchEmpGrid').show();
 
         var popup = searchEmpListNonWatchPopup.getInstance({
-            title: '필수강좌 미이수자 검색'
+            title: '필수강의 미이수자 검색'
         });
 
         $(popup).off('submit').on('submit', function(e, param) {
+            var srcRecords = $('#nonWatchEmpGrid').jsGrid('option', 'data');
             var records = param['records'];
-            $('#nonWatchEmpGrid').jsGrid('option', 'data', records);
+            var mergeRecords = [].concat(srcRecords);
+
+            for(var i=0; i<records.length; i++) {
+                var trgtRecord = records[i];
+                var flag = true;
+
+                for(var j=0; j<srcRecords.length; j++) {
+                    var srcRecord = srcRecords[j];
+
+                    if(trgtRecord['empNo'] == srcRecord['empNo'] && trgtRecord['videoId'] == srcRecord['videoId']) {
+                        flag = false;
+                        break;
+                    }
+                }
+
+                if(flag) {
+                    mergeRecords.push(trgtRecord);
+                }
+            }
+
+            $('#nonWatchEmpGrid').jsGrid('option', 'data', mergeRecords);
         });
 
         popup.open();
-        
     });
 
 
@@ -89,6 +147,20 @@ $(document).ready(function () {
             });
         }
     });
+
+
+    //수신자 리스트 삭제
+    $('#btnDelEmpList').on('click', function(e) {
+
+        e.preventDefault();
+
+        if($('#btnAddEmp').hasClass('active')) {
+            removeCheckedRows('trgt');
+        }else {
+            removeCheckedRows('nonWatch');
+        }
+
+    });
     /** end of components *************************/
 
 
@@ -100,7 +172,41 @@ $(document).ready(function () {
         sorting: true,
         paging: false,
         data: [],
+        confirmDeleting: false,
         fields: [
+            {
+                itemTemplate: function(_, item) {
+                    return $("<input>").attr("type", "checkbox")
+                            .addClass('selectionCheckbox')
+                            .prop("checked", $.inArray(item, trgtEmpSelectedItems) > -1)
+                            .on("change", function () {
+                                if($(this).is(":checked")) {
+                                    selectItem('trgt', item);
+                                }else {
+                                    unselectItem('trgt', item);
+                                    $("#trgtEmpGrid").find('.selectionHeaderCheckbox').prop('checked', false);
+                                }
+                            });
+                },
+                headerTemplate: function(_, item) {
+                    return $("<input>").attr("type", "checkbox")
+                            .addClass('selectionHeaderCheckbox')
+                            .on("change", function () {
+                                if($(this).is(":checked")) {
+                                    $("#trgtEmpGrid").find('.selectionCheckbox:not(input[type=checkbox]:checked)').each(function() {
+                                        $(this).click();
+                                    });
+                                }else {
+                                    $("#trgtEmpGrid").find('.selectionCheckbox:checked').each(function() {
+                                        $(this).click();
+                                    });
+                                }
+                            });
+                },
+                align: "center",
+                sorting: false,
+                width: 20
+            },
             { name: "empNo", title: '사번', type: "text", width: 100, editing: false, align: "center" },
             { name: "name", title: '성명', type: "text", width: 100, editing: false, align: "center" },
             { name: "compNm", title: "회사명", type: 'text', width: 150, editing: false, align: "left" },
@@ -109,22 +215,100 @@ $(document).ready(function () {
     });
 
 
-    //필수강좌 미이수자 그리드
+    //필수강의 미이수자 그리드
     $("#nonWatchEmpGrid").jsGrid({
         width: "100%",
         height: "200px",
         sorting: true,
         paging: false,
         data: [],
+        confirmDeleting: false,
         fields: [
+            {
+                itemTemplate: function(_, item) {
+                    return $("<input>").attr("type", "checkbox")
+                            .addClass('selectionCheckbox')
+                            .prop("checked", $.inArray(item, nonWatchEmpSelectedItems) > -1)
+                            .on("change", function () {
+                                if($(this).is(":checked")) {
+                                    selectItem('nonWatch', item);
+                                }else {
+                                    unselectItem('nonWatch', item);
+                                    $("#nonWatchEmpGrid").find('.selectionHeaderCheckbox').prop('checked', false);
+                                }
+                            });
+                },
+                headerTemplate: function(_, item) {
+                    return $("<input>").attr("type", "checkbox")
+                            .addClass('selectionHeaderCheckbox')
+                            .on("change", function () {
+                                if($(this).is(":checked")) {
+                                    $("#nonWatchEmpGrid").find('.selectionCheckbox:not(input[type=checkbox]:checked)').each(function() {
+                                        $(this).click();
+                                    });
+                                }else {
+                                    $("#nonWatchEmpGrid").find('.selectionCheckbox:checked').each(function() {
+                                        $(this).click();
+                                    });
+                                }
+                            });
+                },
+                align: "center",
+                sorting: false,
+                width: 20
+            },
             { name: "empNo", title: '사번', type: "text", width: 100, editing: false, align: "center" },
             { name: "name", title: '성명', type: "text", width: 100, editing: false, align: "center" },
             { name: "compNm", title: "회사명", type: 'text', width: 100, editing: false, align: "left" },
             { name: "department", title: '부서명', type: "text", width: 120, editing: false, align: "left" },
-            { name: "title", title: '미이수강좌명', type: "text", width: 200, editing: false, align: "left" }
+            { name: "title", title: '미이수강의명', type: "text", width: 200, editing: false, align: "left" }
         ]
     });
     /** end of grid *************************/
+
+
+    var trgtEmpSelectedItems = [];
+    var nonWatchEmpSelectedItems = [];
+
+
+    //체크된 건들 삭제
+    function removeCheckedRows(option) {
+
+        var selectedItems = (option == 'trgt') ? trgtEmpSelectedItems : nonWatchEmpSelectedItems;
+        var grid = (option == 'trgt') ? $('#trgtEmpGrid') : $('#nonWatchEmpGrid');
+
+        for(var i=0; i<selectedItems.length; i++) {
+            var item = selectedItems[i];
+            grid.jsGrid("deleteItem", item);
+        }
+
+        selectedItems = [];
+    }
+
+
+    function selectItem(option, item) {
+        if(option == 'trgt') {
+            trgtEmpSelectedItems.push(item);
+        }else {
+            nonWatchEmpSelectedItems.push(item);
+        }
+        
+    }
+
+
+    function unselectItem(option, item) {
+        if(option == 'trgt') {
+            trgtEmpSelectedItems = $.grep(trgtEmpSelectedItems, function(i) {
+                return i !== item;
+            });
+        }else {
+            nonWatchEmpSelectedItems = $.grep(nonWatchEmpSelectedItems, function(i) {
+                return i !== item;
+            });
+        }
+    }
+        
+        
 
 
     function getParams() {
@@ -194,7 +378,7 @@ $(document).ready(function () {
         var param = '';
         var target;
 
-        var empGridRowCnt = $('#trgtEmpGrid').jsGrid('option', 'data').length;
+        var empGridRowCnt = ($('#btnAddEmp').hasClass('active')) ? $('#trgtEmpGrid').jsGrid('option', 'data').length : $('#nonWatchEmpGrid').jsGrid('option', 'data').length;
 
         if(empGridRowCnt == 0) {
             param = '수신자 리스트';
@@ -222,12 +406,15 @@ $(document).ready(function () {
     //저장
     function fnSave(callback) {
 
-        var contentWritor = $('#writor').text();
-        var contentTitle=$('#title').val();
-        var contentDescription = $('#description').val();
+        var writor = $('#writor').text();
+        var title=$('#title').val();
+        var description = $('#description').val();
 
-        var userRecords = $('#trgtEmpGrid').jsGrid('option', 'data');
+        var userRecords = ($('#btnAddEmp').hasClass('active')) ? $('#trgtEmpGrid').jsGrid('option', 'data') : $('#nonWatchEmpGrid').jsGrid('option', 'data');
+        console.log(userRecords);
         var targetUsers = {};
+
+        var timestamp = Date.now();
 
         for(var i=0; i<userRecords.length; i++) {
             var user = userRecords[i];
@@ -235,22 +422,27 @@ $(document).ready(function () {
             var empNm = user.name;
             var compNm = user.compNm;
             var deptNm = user.department;
+            var content = user.title || '';
 
             var newObj = {
+                'empNo': empNo,
                 'name': empNm,
                 'compNm': compNm,
                 'department': deptNm,
+                'content': content,
                 'noticeId': moment().unix()
             };
 
-            targetUsers[empNo] = newObj;
+            targetUsers[empNo + '_' + (timestamp++)] = newObj;
         }
 
+        console.log(targetUsers);
+
         setNotieDatabase({
-            writor: contentWritor,
-            description: contentDescription,
+            writor: writor,
+            description: description,
             date: moment().format('YYYYMMDD'),
-            title: contentTitle,
+            title: title,
             targetUsers: targetUsers
         }, callback);
     }
@@ -268,6 +460,37 @@ $(document).ready(function () {
         }).catch(function onError(err) {
             console.log("ERROR!!!! " + err);
         });
+    }
+
+
+    //combo 구성
+    function fnGetCommonCmb(option, selector) {
+
+        $('' + selector + ' > option').remove();
+        
+
+        switch (option) {
+            case 'template':
+                $('' + selector + ' > option').remove();
+                $('' + selector).append($('<option value="">선택</option>'));
+
+                parent.database.ref('/notieTemplate/').once('value')
+                    .then(function (snapshot) {
+                        var arr = snapshot.val();
+
+                        $.each(arr, function (idx, val) {
+                            var newOption = $('<option></option>');
+                            $(newOption).attr('value', idx);
+                            $(newOption).text(val['templateNm']);
+                            $(newOption).attr('data-detail', val['detailText']);
+
+                            $('' + selector).append($(newOption));
+                        });
+
+                        $('' + selector).selectpicker('refresh');
+                    });
+                break;
+        }
     }
 
 

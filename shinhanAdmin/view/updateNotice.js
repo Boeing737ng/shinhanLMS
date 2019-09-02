@@ -29,8 +29,9 @@ $(document).ready(function () {
         fields: [
             { name: "empNo", title: '사번', type: "text", width: 100, editing: false, align: "center" },
             { name: "name", title: '성명', type: "text", width: 100, editing: false, align: "center" },
-            { name: "compNm", title: "회사명", type: 'text', width: 150, editing: false, align: "left" },
-            { name: "department", title: '부서명', type: "text", width: 200, editing: false, align: "left" }
+            { name: "compNm", title: "회사명", type: 'text', width: 120, editing: false, align: "left" },
+            { name: "department", title: '부서명', type: "text", width: 150, editing: false, align: "left" },
+            { name: "content", title: '미이수강의명', type: "text", width: 200, editing: false, align: "left", visible: false }
         ]
     });
     /** end of grid *************************/
@@ -52,12 +53,11 @@ $(document).ready(function () {
             var gridRecords = [];
 
             $.each(targetUsers, function(idx, value) {
-                console.log(value);
-                value['empNo'] = idx;
                 gridRecords.push(value);
             });
 
             $('#empGrid').jsGrid('option', 'data', gridRecords);
+            $("#empGrid").jsGrid("fieldOption", "content", "visible", (gridRecords.length != 0 && !isEmpty(gridRecords[0].content)));
         });
     }
 

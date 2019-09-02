@@ -69,7 +69,7 @@ $(document).ready(function () {
                 }
                 return rslt; 
               } },
-            { name: "listenClass", title: "수강강좌수", type: 'text', width: 100, editing: false, align: "right" }
+            { name: "listenClass", title: "수강강의수", type: 'text', width: 100, editing: false, align: "right" }
         ]
         
     });
@@ -92,7 +92,7 @@ $(document).ready(function () {
         },
         fields: [
             { name: "title", title: '수강과목명', type: "text", width: 150, editing: false, align: "left" },
-            { name: "categoryNm", title: "강좌 카테고리", type: "text", width: 150, editing: false, align: "left" },
+            { name: "categoryNm", title: "강의 카테고리", type: "text", width: 150, editing: false, align: "left" },
             { name: "author", title: "강사명", type: 'text', width: 100, editing: false, align: "center" },
             {
                 name: "state", title: "수강상태", type: 'text', width: 100, editing: false, align: "center" , cellRenderer: function (item, value) {
@@ -147,7 +147,7 @@ $(document).ready(function () {
                     //studyObj['participant'] = mbrCnt;
                     studyObj['empNo'] = idx;
 
-                    //수강강좌수 카운트
+                    //수강강의수 카운트
                     var mbrCnt = Object.keys(studyObj['playList'] || []).length;
                     studyObj['listenClass'] = mbrCnt;
             
