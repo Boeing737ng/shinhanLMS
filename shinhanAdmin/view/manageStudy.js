@@ -33,6 +33,7 @@ $(document).ready(function () {
     //editing: true,
     sorting: true,
     paging: false,
+    noDataContent: "검색결과가 없습니다.",
     //filtering: true,
     data: [],
 
@@ -75,6 +76,7 @@ $(document).ready(function () {
    $("#grid2").jsGrid({
     width: "100%",
     height: "200px",
+    noDataContent: "검색결과가 없습니다.",
     sorting: true,
     paging: false,
     data: [],
@@ -93,6 +95,7 @@ $(document).ready(function () {
     height: "200px",
     sorting: true,
     paging: false,
+    noDataContent: "검색결과가 없습니다.",
     data: [],
     fields: [
         { name: "author", title: "강사명", type: 'text', width: 100, editing: false, align: "center" },

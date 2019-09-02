@@ -22,6 +22,7 @@ $(document).ready(function () {
         height: "300px",
         //inserting: true,
         //editing: false,
+        noDataContent: "검색결과가 없습니다.",
         sorting: true,
         paging: false,
         //filtering: true,
@@ -82,6 +83,7 @@ $(document).ready(function () {
         height: "200px",
         sorting: true,
         paging: false,
+        noDataContent: "검색결과가 없습니다.",
         data: [],
     
         rowClick: function(args) {
