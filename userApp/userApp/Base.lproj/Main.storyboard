@@ -1818,6 +1818,10 @@
                                 <state key="normal" title="완료">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="Addcurriculum:" destination="b00-z6-2zm" eventType="touchUpInside" id="e1c-jx-QtD"/>
+                                    <action selector="Addcurriculum:" destination="pGU-MZ-MdB" eventType="touchUpInside" id="j3h-ff-GBY"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1846,6 +1850,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3eb-DA-ys6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="pGU-MZ-MdB" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3269.5652173913045" y="1001.7857142857142"/>
         </scene>

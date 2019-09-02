@@ -25,6 +25,9 @@ class GroupMember: UICollectionView, UICollectionViewDelegate, UICollectionViewD
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child("58/study/11111/member").observeSingleEvent(of: .value, with: { (snapshot) in
+            if snapshot.childrenCount == 0 {
+                return
+            }
             let value = snapshot.value as? Dictionary<String,Any>;()
             for study in value! {
                 let studyDict = study.value as! Dictionary<String, Any>;()
@@ -83,8 +86,8 @@ class GroupMember: UICollectionView, UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MemberCell", for: indexPath) as! MemberCell
         
-        cell.depart_txt.text = textArray[indexPath.row]
-        cell.member_txt.text = authorArray[indexPath.row]
+        cell.depart_txt.text = ""
+        cell.member_txt.text = ""
         
         if dataReceived {
             cell.depart_txt.text = member_depart[indexPath.row]
