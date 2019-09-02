@@ -226,11 +226,7 @@ $(document).ready(function () {
 
       $.each(catArr, function (idx, chartObj) {
         chartObj['rowKey'] = idx;
-        //chartArr.push(chartObj);
         chartArr.push(chartObj);
-        //view.push(chartObj['view']); //조회수정보
-        //title.push(chartObj['title']) //동영상조회수
-
       }); 
 
       
@@ -253,6 +249,7 @@ $(document).ready(function () {
           labels: ["1위", "2위", "3위", "4위", "5위", "6위", "7위", "8위", "9위", "10위"],
           datasets: [{
             label: "조회수: ",
+            title: title,
             backgroundColor: "#0282ea",
             hoverBackgroundColor: "#2e59d9",
             borderColor: "#0282ea",
@@ -320,35 +317,20 @@ $(document).ready(function () {
             displayColors: false,
             caretPadding: 10,
             callbacks: {
+              title: function(tooltipItem, chart) {
+                var idx = tooltipItem[0].index;
+                var titleArr = chart.datasets[tooltipItem[0].datasetIndex].title;
+                var title = titleArr[idx];
+                
+                return title;
+              },
               label: function (tooltipItem, chart) {
+                //console.log(chart.datasets);
                 var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
                 return datasetLabel + number_format(tooltipItem.yLabel) + ' 회';
               }
             }
 
-
-
-
-           /* callbacks: {
-              label: function (tooltipItem, chart) {
-
-                var datasetLabel = (function(idx) {
-                 // console.log(idx);
-                  return title[idx] || '';
-                })(tooltipItem.datasetIndex);
-
-         
-                var datasetLabel = title[tooltipItem.datasetIndex] || '';
-                
-                return datasetLabel + '\n ' + number_format(tooltipItem.yLabel) + ' 회'
-                
-
-
-                
-                
-              }
-            },*/
-            
           },
         }
       });
