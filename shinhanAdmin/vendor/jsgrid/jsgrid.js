@@ -90,7 +90,7 @@
         },
         rowDoubleClick: $.noop,
 
-        noDataContent: "Not found",
+        noDataContent: "검색결과가 없습니다.",
         noDataRowClass: "jsgrid-nodata-row",
 
         heading: true,
