@@ -41,7 +41,6 @@ class tagEditCollectionView: UICollectionView, UICollectionViewDelegate, UIColle
         }
     }
     
-    var arr = Array<String>()
     func getUserSelectedTag() {
         var ref: DatabaseReference!
         ref = Database.database().reference()
