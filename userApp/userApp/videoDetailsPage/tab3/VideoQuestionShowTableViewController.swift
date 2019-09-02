@@ -22,7 +22,6 @@ class VideoQuestionShowTableViewController: UITableViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
 
-        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -31,8 +30,15 @@ class VideoQuestionShowTableViewController: UITableViewController {
         
         //self.tableView.delegate = self
         //self.tableView.dataSource = self
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadComment), name: NSNotification.Name(rawValue: "commentAdd"), object: nil)
+    }
+    
+    @objc func reloadComment() {
+        getQuestionCommentFromDB()
+        self.tableView.reloadData()
     }
 
+    
     override func viewWillAppear(_ animated: Bool) {
         getQuestionCommentFromDB()
     }
