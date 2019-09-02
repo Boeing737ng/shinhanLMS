@@ -38,7 +38,7 @@ var searchEmpListNonWatchPopup = (function() {
             //조회
             case 'SEARCH':
                 if(isEmpty($('#modal-searchEmpListNonWatch select.searchRequiredContent').val())) {
-                    alert('필수강좌 는 필수입력 입니다.');
+                    alert('필수강의 는 필수입력 입니다.');
                     rslt = false;
                 }
                 break;
@@ -82,11 +82,11 @@ var searchEmpListNonWatchPopup = (function() {
                     var playList = empObj['playList'];
                     var videoKeys = Object.keys(playList);
 
-                    if(videoKeys.indexOf(searchContent) == -1) { //헤당 강좌를 들은 기록이 없으면
+                    if(videoKeys.indexOf(searchContent) == -1) { //헤당 강의를 들은 기록이 없으면
                         empObj['videoId'] = searchContent;
                         empObj['title'] = searchContentNm;
                         rsltArr.push(empObj);
-                    }else { //해당 강좌 수강기록이 있으면
+                    }else { //해당 강의 수강기록이 있으면
                         for(var i=0; i<videoKeys.length; i++) {
                             var videoId = videoKeys[i];
                             var videoObj = playList[videoId];
@@ -358,7 +358,7 @@ var searchEmpListNonWatchPopup = (function() {
                 { name: "name", title: '성명', type: "text", width: 100, editing: false, align: "center" },
                 { name: "compNm", title: "회사명", type: 'text', width: 100, editing: false, align: "left" },
                 { name: "department", title: '부서명', type: "text", width: 120, editing: false, align: "left" },
-                { name: "title", title: '미이수강좌명', type: "text", width: 200, editing: false, align: "left" }
+                { name: "title", title: '미이수강의명', type: "text", width: 200, editing: false, align: "left" }
             ]
         });
         /** end of grid *************************/

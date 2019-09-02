@@ -99,9 +99,17 @@ author : juyeun
                                           <input type="radio" name="options" id="option1" autocomplete="off" style="display:none;" checked> 사원 검색
                                         </label>
                                         <label class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" style="margin-bottom:0px;" id="btnLoadEmpNonWatch">
-                                          <input type="radio" name="options" id="option2" autocomplete="off" style="display:none;"> 필수강좌 미이수자 검색
+                                          <input type="radio" name="options" id="option2" autocomplete="off" style="display:none;"> 필수강의 미이수자 검색
                                         </label>
                                       </div>
+
+                                      <ul style="float: right; padding-inline-start: 10px;">
+                                           <li id="btnDelEmpList">
+                                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                                            <i class="fas fa-minus fa-sm text-white-50"></i> 삭제
+                                             </a>
+                                           </li>
+                                       </ul>
                                 </div>
                     </div>
             
@@ -151,9 +159,18 @@ author : juyeun
                               </td>
                             </tr>
 
+                            <tr>
+                                <th><span>템플릿</span></th>
+                                <td colspan="3">
+                                    <select class="form-control searchCompany" data-live-search="true" id="template"></select>
+                                </td>
+                            </tr>
 
                             <tr>
-                                <th class="required"><span>내용</span></th>
+                                <th class="required">
+                                    <span>내용</span>&nbsp;
+                                    <i id="btnGuide" class="fas fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="도움말" style="cursor: pointer;"></i>
+                                </th>
                                 <td colspan="3">
                                     <textarea id="description" class="form-control" style="width:100%; height: 300px; resize: none;"></textarea>
                                 </td>
@@ -184,6 +201,138 @@ author : juyeun
             </div>
         </div>
     </div>
+
+
+
+    <div class="modal fade" id="modal-guide" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document" style="width:870px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">도움말</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fas fa-times" style="color:white"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+
+                    <!-- <div class="card shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div>
+                                    
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div> -->
+
+                    <div class="card shadow mb-4 searchResultDiv">
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">와일드카드 사용 가이드</h6>
+                            </div>
+                    
+                            <div class="card-body">
+
+                                    특정 키워드 를 이용하여 범용적으로 푸쉬알림을 보낼 수 있습니다.<br/><br/>
+
+                                    <table class="registerTable" style="margin-bottom: 25px;">
+                                        <colgroup>
+                                            <col width="20%" />
+                                            <col width="25%" />
+                                            <col width="55%" />
+                                        </colgroup>
+                                        <tbody>
+                                    
+                                            <tr>
+                                                <th rowspan="5"><span>와일드카드 종류</span></th>
+                                                <th><span>{NAME}</span></th>
+                                                <td>
+                                                    <span>사원명</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th><span>{COMPANY}</span></th>
+                                                <td>
+                                                    <span>회사명</span>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <th><span>{DEPT}</span></th>
+                                                <td>
+                                                    <span>부서명</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th><span>{DATE}</span></th>
+                                                <td>
+                                                    <span>현재 날짜</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th><span>{CONTENT}</span></th>
+                                                <td>
+                                                    미이수한 강좌명<br/> 
+                                                    <span style="color:red;">**필수강의 미이수자 검색 시에만 사용 가능합니다.</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <table class="registerTable">
+                                            <colgroup>
+                                                <col width="20%" />
+                                                <col width="25%" />
+                                                <col width="55%" />
+                                            </colgroup>
+                                            <tbody>
+                                                <tr>
+                                                    <th rowspan="5"><span>예시</span></th>
+                                                    <th><span>텍스트</span></th>
+                                                    <td>
+                                                            {NAME} 님 안녕하세요.<br/>
+                                                            현재 {DATE} 기준으로 {COMPANY} {DEPT} 팀에서 진행하는 강좌를 아직 수강하지 않으셔서 알림 드립니다.<br/>
+                                                            일주일 내에 수강완료 부탁드립니다.<br/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th><span>실제 알림메세지</span></th>
+                                                    <td>
+                                                            김신한 님 안녕하세요.<br/>
+                                                            현재 2019-09-02 기준으로 신한DS 은행인프라 팀에서 진행하는 강좌를 아직 수강하지 않으셔서 알림 드립니다.<br/>
+                                                            일주일 내에 수강완료 부탁드립니다.
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                            </div>
+                    
+                        </div> 
+
+
+<!--                     <div class="card shadow mb-4 searchResultDiv">
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">필수강의 미이수자 리스트</h6>
+                            </div>
+                    
+                    
+                            <div class="card-body">
+                                <div class="lms-grid grid"></div>
+                            </div>
+                    
+                        </div> -->
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 </body>
