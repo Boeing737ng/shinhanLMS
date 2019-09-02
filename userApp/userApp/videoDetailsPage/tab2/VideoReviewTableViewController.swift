@@ -12,6 +12,10 @@ import Firebase
 
 class VideoReviewTableViewController: UITableViewController {
 
+    var totalContentArray = Array<String>()
+    var totalDateArray = Array<String>()
+    var totalWriterArray = Array<String>()
+    
     var contentArray = Array<String>()
     var dateArray = Array<String>()
     var writerArray = Array<String>()
@@ -39,39 +43,50 @@ class VideoReviewTableViewController: UITableViewController {
         
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child(userCompanyCode + "/videos/" + selectedVideoId + "/review").queryOrdered(byChild: "date").observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child(userCompanyCode + "/videos/" + selectedVideoId + "/review/").queryOrdered(byChild: "date").observeSingleEvent(of: .value, with: { (snapshot) in
             
             if snapshot.childrenCount == 0 {
                 return
             }
             
-            //print(snapshot)
+            let dataSize = Int(snapshot.childrenCount) - 1
             
-            //var idx: Int = 0
+            //let reviewInfo = snapshot.value as? Dictionary<String,Any>;()
             
-            let reviewInfo = snapshot.value as? Dictionary<String,Any>;()
-            
-            for review in reviewInfo! {
-                let reviewDict = review.value as! Dictionary<String, Any>;()
-                
-                let content = reviewDict["content"] as! String
-                let writer = reviewDict["writer"] as! String
-                
-                let date: Double = reviewDict["date"] as! Double
-                let myTimeInterval = TimeInterval(date)
-                let ts = NSDate(timeIntervalSince1970: TimeInterval(myTimeInterval))
-                let formatter = DateFormatter()
-                formatter.dateFormat = "yy/MM/dd HH:mm"
-                let formattedDate = formatter.string(from: ts as Date)
+            for review in snapshot.children.allObjects as! [DataSnapshot] {
+                //let reviewDict = review.value as! Dictionary<String, Any>;()
+                if let reviewInfo = review.value as? [String : Any] {
+                    self.totalContentArray.append(reviewInfo["content"] as! String)
+                    
+                    let date: Double = reviewInfo["date"] as! Double
+                    let myTimeInterval = TimeInterval(date)
+                    let ts = NSDate(timeIntervalSince1970: TimeInterval(myTimeInterval))
+                    let formatter = DateFormatter()
+                    formatter.dateFormat = "yy/MM/dd HH:mm"
+                    let formattedDate = formatter.string(from: ts as Date)
+
+                    self.totalDateArray.append(formattedDate)
+                    self.totalWriterArray.append(reviewInfo["writer"] as! String)
+                } 
+//                let content = reviewDict["content"] as! String
+//                let writer = reviewDict["writer"] as! String
+//
+//                let date: Double = reviewDict["date"] as! Double
+//                let myTimeInterval = TimeInterval(date)
+//                let ts = NSDate(timeIntervalSince1970: TimeInterval(myTimeInterval))
+//                let formatter = DateFormatter()
+//                formatter.dateFormat = "yy/MM/dd HH:mm"
+//                let formattedDate = formatter.string(from: ts as Date)
                 
 //                print(content)
 //                print(review.key)
 //                print(writer)
 //                print("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n")
-                
-                self.contentArray.append(content)
-                self.dateArray.append(formattedDate)
-                self.writerArray.append(writer)
+            }
+            for i in 0...dataSize {
+                self.contentArray.append(self.totalContentArray[dataSize - i])
+                self.dateArray.append(self.totalDateArray[dataSize - i])
+                self.writerArray.append(self.totalWriterArray[dataSize - i])
             }
             //self.dataReceived = true
             self.tableView.reloadData()

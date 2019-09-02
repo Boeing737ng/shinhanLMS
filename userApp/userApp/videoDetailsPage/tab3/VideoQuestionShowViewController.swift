@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-var selectedQuestionId: String = "-Ln_SeugMAsLj5l1HKMc"
+//var selectedQuestionId: String = "-Ln_SeugMAsLj5l1HKMc"
 
 class VideoQuestionShowViewController: UIViewController {
     
@@ -28,6 +28,7 @@ class VideoQuestionShowViewController: UIViewController {
         keyboardHandling(commentView)
         getQuestionFromDB()
     }
+    
     
     func getQuestionFromDB() {
         var ref: DatabaseReference!
@@ -61,6 +62,7 @@ class VideoQuestionShowViewController: UIViewController {
             "writer": userName
             ])
         tfComment.text = ""
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "commentAdd"), object: nil)
     }
     
     func onGoBack() {

@@ -2,6 +2,8 @@ import UIKit
 import XLPagerTabStrip
 import Firebase
 
+var selectedQuestionId: String = ""
+
 class VideoQnATableViewController: UITableViewController {
     
     var keyArray = Array<String>()
@@ -34,6 +36,7 @@ class VideoQnATableViewController: UITableViewController {
         self.contentArray.removeAll()
         self.dateArray.removeAll()
         self.writerArray.removeAll()
+        
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child(userCompanyCode + "/videos/" + selectedVideoId + "/qnaBoard").observeSingleEvent(of: .value, with: { (snapshot) in
@@ -79,6 +82,17 @@ class VideoQnATableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return keyArray.count
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let questionId = keyArray[indexPath.row]
+        selectedQuestionId = questionId
+        goToPostShowPage()
+    }
+    
+    func goToPostShowPage() {
+        let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "questionShowStoryboard")
+        UIApplication.topViewController()!.present(viewController, animated: true, completion: nil)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
