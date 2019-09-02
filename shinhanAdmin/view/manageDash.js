@@ -217,28 +217,34 @@ $(document).ready(function () {
   function fnRetrieve3() {
     var view = [];
     var title = [];
+    var chartArr = [];
 
 
     parent.database.ref('/' + compCd + '/videos').once('value').then(function (snapshot) {
       var catArr = snapshot.val();
-      var chartArr = [];
+      
 
       $.each(catArr, function (idx, chartObj) {
         chartObj['rowKey'] = idx;
         //chartArr.push(chartObj);
+        chartArr.push(chartObj);
+        //view.push(chartObj['view']); //조회수정보
+        //title.push(chartObj['title']) //동영상조회수
 
-        view.push(chartObj['view']); //조회수정보
-        title.push(chartObj['title']) //동영상조회수
+      }); 
 
-      });
-      // console.log('정렬전:'+view);
+      
+      //db값을 view기준으로 정렬하는 함수
+      chartArr.sort(function (a, b) { 
+          return a.view > b.view ? -1 : a.view < b.view ? 1 : 0;  
+        });
 
-      function compare(a, b) {
-        return b - a;
-      }
-
-      view.sort(compare);
-
+      //정렬된 값을 각각 배열에 입력
+        for(var i=0;i<10;i++)
+        {
+        view[i]=(chartArr[i].view);
+        title[i]=(chartArr[i].title);
+        }
 
       var ctx = document.getElementById("view_count_chart");
       var myBarChart = new Chart(ctx, {
@@ -246,11 +252,12 @@ $(document).ready(function () {
         data: {
           labels: ["1위", "2위", "3위", "4위", "5위", "6위", "7위", "8위", "9위", "10위"],
           datasets: [{
-            label: "조회수 : ",
+            label: "조회수: ",
             backgroundColor: "#0282ea",
             hoverBackgroundColor: "#2e59d9",
             borderColor: "#0282ea",
-            data: view
+            data: view,
+            
           }],
         },
         options: {
@@ -318,11 +325,33 @@ $(document).ready(function () {
                 return datasetLabel + number_format(tooltipItem.yLabel) + ' 회';
               }
             }
+
+
+
+
+           /* callbacks: {
+              label: function (tooltipItem, chart) {
+
+                var datasetLabel = (function(idx) {
+                 // console.log(idx);
+                  return title[idx] || '';
+                })(tooltipItem.datasetIndex);
+
+         
+                var datasetLabel = title[tooltipItem.datasetIndex] || '';
+                
+                return datasetLabel + '\n ' + number_format(tooltipItem.yLabel) + ' 회'
+                
+
+
+                
+                
+              }
+            },*/
+            
           },
         }
       });
-
-
     });
   }
 
