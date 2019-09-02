@@ -29,7 +29,6 @@ class VideoQuestionShowViewController: UIViewController {
         getQuestionFromDB()
     }
     
-    
     func getQuestionFromDB() {
         var ref: DatabaseReference!
         ref = Database.database().reference()

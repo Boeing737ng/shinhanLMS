@@ -15,19 +15,6 @@ class VideoReviewWriteViewController: UIViewController, UITextViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
-        
-        
-        //        let date = NSDate().timeIntervalSince1970
-        //        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-        //        print(date)
-        //
-        //        let myTimeInterval = TimeInterval(date)
-        //        let time = NSDate(timeIntervalSince1970: TimeInterval(myTimeInterval))
-        //
-        //        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-        //        print(time)
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -58,14 +45,6 @@ class VideoReviewWriteViewController: UIViewController, UITextViewDelegate {
         }
     }
     
-    //    func getCurrentDate() -> String {
-    //        let date = Date()
-    //        let dateFormat = DateFormatter()
-    //        dateFormat.dateFormat = "yyyy/MM/dd"
-    //        let dateString = dateFormat.string(from: date)
-    //        return dateString
-    //    }
-    
     func getCurrentDate() -> String {
         let date = NSDate().timeIntervalSince1970
         let dateString = String(date)
@@ -92,7 +71,9 @@ class VideoReviewWriteViewController: UIViewController, UITextViewDelegate {
             "writer": userName
             ])
         
-        //print(String(UInt(NSDate().timeIntervalSince1970 * 1000000)))
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reviewAdd"), object: nil)
+        
         onGoBack()
     }
     
@@ -126,15 +107,4 @@ class VideoReviewWriteViewController: UIViewController, UITextViewDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }
