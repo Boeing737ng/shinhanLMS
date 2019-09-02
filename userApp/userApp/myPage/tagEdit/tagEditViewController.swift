@@ -9,8 +9,6 @@
 import UIKit
 import Firebase
 
-var userSelectedTagArray = Array<String>()
-
 class tagEditViewController: UIViewController{
         
     override func viewDidLoad() {
@@ -25,7 +23,12 @@ class tagEditViewController: UIViewController{
             "selectedTags": setUserTagString()
             ]
         )
+        userTagUpdated()
         popPage()
+    }
+    
+    func userTagUpdated() {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userTagUpdated"), object: nil)
     }
     
     private func setUserTagString() -> String {

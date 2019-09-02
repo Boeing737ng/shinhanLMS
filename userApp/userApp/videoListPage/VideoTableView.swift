@@ -41,8 +41,6 @@ class VideoTableView: UITableView, UITableViewDelegate, UITableViewDataSource{
         } else {
             dataURL = userCompanyCode + "/categories/" + categoryDict[selectedCategoryIndex]! + "/videos/"
         }
-        
-        print(dataURL)
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
@@ -60,7 +58,6 @@ class VideoTableView: UITableView, UITableViewDelegate, UITableViewDataSource{
                 self.databaseTitleArray.append(title)
                 self.databaseAuthorArray.append(author)
             }
-            print(self.databaseTitleArray)
             self.dataReceived = true
             DispatchQueue.main.async {
                 self.reloadData()
@@ -90,7 +87,6 @@ class VideoTableView: UITableView, UITableViewDelegate, UITableViewDataSource{
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        print("ROW NUMBER ", videoIdArray.count)
         return videoIdArray.count
     }
     
@@ -101,7 +97,6 @@ class VideoTableView: UITableView, UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("CELL")
         let cell = tableView.dequeueReusableCell(withIdentifier: "VideoListCell") as! VideoListCell
         
         if dataReceived {

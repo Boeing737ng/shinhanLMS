@@ -38,7 +38,6 @@ class GroupCreateViewController: UIViewController, UIImagePickerControllerDelega
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
             studyImg.image = image
             awakeFromNib()
-            print(info)
         }
         dismiss(animated: true, completion: nil)
     }

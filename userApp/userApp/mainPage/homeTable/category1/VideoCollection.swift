@@ -9,68 +9,95 @@
 import UIKit
 import Firebase
 
+var userSelectedTagArray = Array<String>()
+
 class VideoCollection: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource {
     
     var textArray = ["","","","",""]
     var authorArray = ["","","","",""]
     var dataReceived:Bool = false
     
-    var recentVideoIdArray = Array<String>()
-    var recentTitleArray = Array<String>()
-    var recentAuthorArray = Array<String>()
+    var recommendedVideoIdArray = Array<String>()
+    var recommendedTitleArray = Array<String>()
+    var recommendedAuthorArray = Array<String>()
     
     override func awakeFromNib() {
         self.delegate = self
         self.dataSource = self
-        var index = 0
+        NotificationCenter.default.addObserver(self, selector: #selector(getDataFromDB), name: NSNotification.Name(rawValue: "userTagUpdated"), object: nil)
+        getDataFromDB()
+    }
+    
+    @objc func getDataFromDB() {
+        clearArrays()
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child(userCompanyCode + "/videos").queryLimited(toLast: 5).observeSingleEvent(of: .value, with: { (snapshot) in
-            // Get user value
-            let value = snapshot.value as? Dictionary<String,Any>;()
-            for video in value! {
-                if index == 5 {
-                    break
+        ref.child("user/" + userNo + "/selectedTags").observeSingleEvent(of: .value, with: { (snapshot) in
+            let tagList = snapshot.value as! String
+            userSelectedTagArray = tagList.components(separatedBy: " ")
+            var index = 0
+            ref.child(userCompanyCode + "/videos").observeSingleEvent(of: .value, with: { (snapshot) in
+                // Get user value
+                let value = snapshot.value as? Dictionary<String,Any>;()
+                for video in value! {
+                    let videoDict = video.value as! Dictionary<String, Any>;()
+                    let videoTagList = (videoDict["tags"] as! String).components(separatedBy: " ")
+                    for userTag in userSelectedTagArray {
+                        for videoTag in videoTagList {
+                            if userTag == videoTag {
+                                if index == 5 {
+                                    self.dataReceived = true
+                                    self.reloadData()
+                                    return
+                                }
+                                let videoId = video.key
+                                let title = videoDict["title"] as! String
+                                let author = videoDict["author"] as! String
+                                self.recommendedVideoIdArray.append(videoId)
+                                self.recommendedTitleArray.append(title)
+                                self.recommendedAuthorArray.append(author)
+                                index += 1
+                            }
+                        }
+                    }
                 }
-                let videoDict = video.value as! Dictionary<String, Any>;()
-                let videoId = video.key
-                let title = videoDict["title"] as! String
-                let author = videoDict["author"] as! String
-                self.recentVideoIdArray.append(videoId)
-                self.recentTitleArray.append(title)
-                self.recentAuthorArray.append(author)
-                index += 1
+                self.dataReceived = true
+                self.reloadData()
+            }) { (error) in
+                print(error.localizedDescription)
             }
-            self.dataReceived = true
-            self.reloadData()
-        }) { (error) in
+            
+        }){ (error) in
             print(error.localizedDescription)
         }
     }
+    
+    func clearArrays() {
+        recommendedVideoIdArray.removeAll()
+        recommendedTitleArray.removeAll()
+        recommendedAuthorArray.removeAll()
+    }
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return recommendedVideoIdArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let videoId = recentVideoIdArray[indexPath.row]
+        let videoId = recommendedVideoIdArray[indexPath.row]
         selectedVideoId = videoId
         TabViewController().goToDetailPage()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoCell", for: indexPath) as! VideoCell
-        
-        cell.textLabel.text = textArray[indexPath.row]
-        cell.authorLabel.text = authorArray[indexPath.row]
-        
         if dataReceived {
-            cell.textLabel.text = recentTitleArray[indexPath.row]
-            cell.authorLabel.text = recentAuthorArray[indexPath.row]
-            cell.thumbnail.image = CachedImageView().loadCacheImage(urlKey: recentVideoIdArray[indexPath.row])
+            cell.textLabel.text = recommendedTitleArray[indexPath.row]
+            cell.authorLabel.text = recommendedAuthorArray[indexPath.row]
+            cell.thumbnail.image = CachedImageView().loadCacheImage(urlKey: recommendedVideoIdArray[indexPath.row])
         } else {
             cell.textLabel.text = textArray[indexPath.row]
             cell.authorLabel.text = authorArray[indexPath.row]

@@ -22,7 +22,7 @@ class tagEditCollectionView: UICollectionView, UICollectionViewDelegate, UIColle
         self.delegate = self
         self.dataSource = self
         getTagListFromDB()
-        tagLoadDB()
+        getUserSelectedTag()
     }
     
     func getTagListFromDB() {
@@ -41,8 +41,7 @@ class tagEditCollectionView: UICollectionView, UICollectionViewDelegate, UIColle
         }
     }
     
-    var arr = Array<String>()
-    func tagLoadDB() {
+    func getUserSelectedTag() {
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child("user/" + userNo + "/selectedTags").observeSingleEvent(of: .value, with: { (snapshot) in
@@ -78,7 +77,7 @@ class tagEditCollectionView: UICollectionView, UICollectionViewDelegate, UIColle
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tagCell", for: indexPath) as! tagEditCell
-        if dataReceived{
+        if dataReceived && selectedTagIndexArray.count > 0{
             for i in 0...selectedTagIndexArray.count-1 {
                 if selectedTagIndexArray[i] == indexPath.row {
                     cell.backgroundColor = UIColor.init(red: 157/255, green: 206/255, blue: 255/255, alpha: 1.0)
@@ -86,7 +85,7 @@ class tagEditCollectionView: UICollectionView, UICollectionViewDelegate, UIColle
             }
             cell.tagCell.text = databaseTagArray[indexPath.row]
         }else{
-            cell.tagCell.text = tagArray[indexPath.row]
+            cell.tagCell.text = databaseTagArray[indexPath.row]
         }
         cell.layer.cornerRadius = 10
         return cell
@@ -100,6 +99,12 @@ class tagEditCollectionView: UICollectionView, UICollectionViewDelegate, UIColle
         } else {
             cell?.backgroundColor = nil
             removeElementByValue(element:databaseTagArray[indexPath.row])
+        }
+        
+        for tag in userSelectedTagArray {
+            if tag == "" {
+                removeElementByValue(element:tag)
+            }
         }
     }
     
