@@ -154,6 +154,11 @@ class VideoDetailViewController: UIViewController {
         ref.child(userCompanyCode + "/videos/" + selectedVideoId + "/user/" + userNo).setValue([
                 "name": userName
             ])
+        ref.child("user/" + userNo + "/playList/" + selectedVideoId).updateChildValues([
+            "progress": 0.0,
+            "state": "playing"
+            ]
+        )
     }
     
     func getVideoInfoFromDB() {
