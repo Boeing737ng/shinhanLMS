@@ -25,9 +25,6 @@ class NotificationTableView: UITableView, UITableViewDelegate, UITableViewDataSo
             for noti in value! {
                 let noticeDict = noti.value as! Dictionary<String, Any>;()
                 let text = noticeDict["text"] as! String
-                
-                print(text)
-                
                 self.noticeArray.append(text)
             }
             self.dataReceived = true
