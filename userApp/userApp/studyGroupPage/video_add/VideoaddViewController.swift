@@ -29,6 +29,7 @@ class VideoaddViewController: UIViewController {
         super.viewDidLoad()
         initializeDropDown()
         setDropdownBarText()
+        
         // Do any additional setup after loading the view.
     }
     @objc func dropdownButton(){

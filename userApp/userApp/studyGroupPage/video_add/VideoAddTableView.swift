@@ -8,7 +8,7 @@
 
 import UIKit
 import Firebase
-
+var addArray = Array<String>()
 
 class VideoAddTableView: UITableView, UITableViewDataSource, UITableViewDelegate {
 
@@ -30,6 +30,12 @@ class VideoAddTableView: UITableView, UITableViewDataSource, UITableViewDelegate
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("DID SELECTED ROW AT")
+        let videoId = videoIdArray[indexPath.row]
+        addArray.append(videoId)
+        //selectedVideoId = videoId
     }
     
     func getDataFromDB() {
