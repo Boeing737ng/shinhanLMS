@@ -9,12 +9,16 @@
 import UIKit
 import Charts
 import Firebase
+import Foundation
+
 
 var textArray = ["","",""]
 var authorArray = ["","",""]
 var dataReceived:Bool = false
 
 var dbStudyArray = Array<String>()
+var dbCatArray = Array<String>()
+var dbTeaArray = Array<String>()
 
 class graphViewController: UIViewController, ChartViewDelegate {
 
@@ -48,6 +52,8 @@ class graphViewController: UIViewController, ChartViewDelegate {
         timeStacklbl.text = "Shinple과 함께 \(studyTime)분을 학습했습니다"
         goalTimelbl.text = "\(goalTime)분"
         getNamePartDB()
+        mostCgDB()
+        mostTeaDB()
         // Do any additional setup after loading the view.
         
     }
@@ -73,10 +79,152 @@ class graphViewController: UIViewController, ChartViewDelegate {
             print(error.localizedDescription)
         }
     }
+    
+    func mostCgDB(){
+        clearArrays()
+        var dataURL:String = ""
+        dataURL = "user/201302493/playList"
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            for video in value! {
 
+                let catD = video.value as! Dictionary<String, Any>;()
+                let catId = video.key as! String
+                let cat = catD["categoryNm"] as! String
+//                print(cat)
+                dbCatArray.append(cat)
+            }
+//            print(dbCatArray)
+            dataReceived = true
+            let stringRepresentation = dbCatArray.joined(separator: " ")
+      //      print(stringRepresentation)
+            print(self.wordCount(s: stringRepresentation))
+            let classK = Array(self.wordCount(s: stringRepresentation).values)
+            let classV = Array(self.wordCount(s: stringRepresentation).keys)
+            print(classK)
+            print(classV)
+
+            var rank = [Int](repeating: 1, count: classK.count)
+            for i in 0 ... classK.count-1 {
+                for j in 0 ... classK.count-1 {
+                    if classK[i] < classK[j] {
+                        rank[i] += 1
+                    }
+                }
+            }
+            
+           print(rank)
+            var total = 0
+            for i in 0...classK.count-1{
+                total = classK[i] + total
+            }
+            
+            for i in 0...classK.count-1{
+                if rank[i] == 1{
+                    var per = (classK[i]*100)/total
+                    print("1위: \(classV[i]) \(per)%")
+                    self.cat1lbl.text = "1위: \(classV[i]) \(per)%"
+                }else if rank[i] == 2{
+                    var per = (classK[i]*100)/total
+                    print("2위: \(classV[i]) \(per)%")
+                    self.cat2lbl.text = "2위: \(classV[i]) \(per)%"
+                }else if rank[i] == 3{
+                    var per = (classK[i]*100)/total
+                    print("3위: \(classV[i]) \(per)%")
+                    self.cat3lbl.text = "3위: \(classV[i]) \(per)%"
+                }
+            }
+            
+            
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    
+    func mostTeaDB(){
+        clearArrays()
+        var dataURL:String = ""
+        dataURL = "user/201302493/playList"
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            for video in value! {
+                let catD = video.value as! Dictionary<String, Any>;()
+                let catId = video.key as! String
+                let cat = catD["author"] as! String
+//                print(cat)
+                dbTeaArray.append(cat)
+            }
+//            print(dbTeaArray)
+            dataReceived = true
+            let stringRepresentation = dbTeaArray.joined(separator: " ")
+      //      print(stringRepresentation)
+      //      print(self.wordCount(s: stringRepresentation))
+            
+            print(self.wordCount(s: stringRepresentation))
+            let classK = Array(self.wordCount(s: stringRepresentation).values)
+            let classV = Array(self.wordCount(s: stringRepresentation).keys)
+            print(classK)
+            print(classV)
+            
+            var rank = [Int](repeating: 1, count: classK.count)
+            for i in 0 ... classK.count-1 {
+                for j in 0 ... classK.count-1 {
+                    if classK[i] < classK[j] {
+                        rank[i] += 1
+                    }
+                }
+            }
+            
+            print(rank)
+            var total = 0
+            for i in 0...classK.count-1{
+                total = classK[i] + total
+            }
+            
+            for i in 0...classK.count-1{
+                if rank[i] == 1{
+                    var per = (classK[i]*100)/total
+                    print("1위: \(classV[i]) \(per)%")
+                    self.teac1lbl.text = "1위: \(classV[i]) \(per)%"
+                }else if rank[i] == 2{
+                    var per = (classK[i]*100)/total
+                    print("2위: \(classV[i]) \(per)%")
+                    self.teac2lbl.text = "2위: \(classV[i]) \(per)%"
+                }else if rank[i] == 3{
+                    var per = (classK[i]*100)/total
+                    print("3위: \(classV[i]) \(per)%")
+                    self.teac3lbl.text = "3위: \(classV[i]) \(per)%"
+                }
+            }
+            
+            
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+ 
+    func wordCount(s: String) -> Dictionary<String, Int>{
+        var words = s.components(separatedBy: .whitespaces)
+        var WordD = Dictionary<String, Int>()
+        for word in words{
+            if let count = WordD[word]{
+                WordD[word] = count + 1
+            }else{
+                WordD[word] = 1
+            }
+        }
+        return WordD
+    }
+    
     func clearArrays() {
         dbStudyArray.removeAll()
-
+        dbCatArray.removeAll()
+        dbTeaArray.removeAll()
     }
     
     @IBAction func onGoBack(_ sender: UIButton) {

@@ -116,6 +116,7 @@ class MyPageViewController: UIViewController{
             self.questionlbl.text = "\(self.dbwriterArray.count)"
             print(self.dbwriterArray.count)
             self.dataReceived = true
+            
          }) { (error) in
             print(error.localizedDescription)
     }
