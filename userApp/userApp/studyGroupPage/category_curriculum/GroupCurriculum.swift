@@ -56,7 +56,6 @@ class GroupCurriculum: UICollectionView, UICollectionViewDelegate, UICollectionV
         ref = Database.database().reference()
         ref.child("58/study/"+curri_send+"/curriculum").observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
-            print(curri)
             let value = snapshot.value as? Dictionary<String,Any>;()
             for video in value! {
                 let videoDict = video.value as! Dictionary<String, Any>;()
@@ -104,7 +103,9 @@ class GroupCurriculum: UICollectionView, UICollectionViewDelegate, UICollectionV
         if dataReceived {
             cell.video_title.text = curriculumTitleArray[indexPath.row]
             cell.video_author.text = curriculumAuthorArray[indexPath.row]
-            cell.video_img.image = UIImage(named: "white.jpg")
+            print(curriculumVideoIdArray)
+            cell.video_img.image = CachedImageView().loadCacheImage(urlKey: curriculumVideoIdArray[indexPath.row])
+            //UIImage(named: "white.jpg")
                 //CachedImageView().loadCacheImage(urlKey: curriculumVideoIdArray[indexPath.row])
         } else {
             cell.video_title.text = textArray[indexPath.row]
