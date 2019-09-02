@@ -11,22 +11,31 @@ import Firebase
 
 //var selectedQuestionId: String = "-Ln_SeugMAsLj5l1HKMc"
 
-class VideoQuestionShowViewController: UIViewController {
+class VideoQuestionShowViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var commentTableView: UIView!
-    @IBOutlet weak var commentView: UIView!
+    //@IBOutlet weak var commentView: UIView!
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblWriter: UILabel!
     @IBOutlet weak var lblDate: UILabel!
     @IBOutlet weak var lblContent: UILabel!
     @IBOutlet weak var tfComment: UITextField!
+    @IBOutlet weak var btnSubmit: UIButton!
+    
+    var keyboardSettingHeight: CGFloat = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        keyboardHandling(commentView)
+        //keyboardHandling(tfComment)
         getQuestionFromDB()
+        
+        tfComment.returnKeyType = .done
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        keyboardHandling(tfComment)
     }
     
     func getQuestionFromDB() {
@@ -78,43 +87,104 @@ class VideoQuestionShowViewController: UIViewController {
         onGoBack()
     }
     
-    func keyboardHandling(_ sender: UIView) {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+    func keyboardHandling(_ sender:UITextField) {
+        // 키보드가 보일때~
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)),name:UIResponder.keyboardWillShowNotification, object: nil)
+        // 키보드가 사라질때~
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)),name:UIResponder.keyboardWillHideNotification, object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow(_:)),name:UIResponder.keyboardDidShowNotification, object: nil)
+       
     }
     
+    // 키보드 보이기
     @objc func keyboardWillShow(_ sender: Notification) {
-        NSLog("====== keyboardWillShow ======")
+        NSLog("===== keyboardWillShow =====")
         
         if let keyboardFrame: NSValue = sender.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
             let keyboardHeight = keyboardRectangle.height
             
+            keyboardSettingHeight = self.view.frame.height - keyboardHeight - tfComment.frame.height - 5
+            
             print(self.view.frame.height)
             print(keyboardHeight)
-            //print(self.view.frame.height)
             
-            
-            self.commentView.frame.origin.y = self.view.frame.height - keyboardHeight - commentView.frame.height - 5
+            //self.commentView.frame.origin.y = self.view.frame.height - keyboardHeight - commentView.frame.height - 5
+            self.tfComment.frame.origin.y = keyboardSettingHeight
+            self.btnSubmit.frame.origin.y = keyboardSettingHeight
         }
     }
     
+    // 키보드 숨기기
     @objc func keyboardWillHide(_ sender: Notification) {
-        NSLog("====== keyboardWillShow ======")
-        self.commentView.frame.origin.y = 0
+        NSLog("===== keyboardWillHide =====")
+        
+        self.tfComment.frame.origin.y = 0
+        self.btnSubmit.frame.origin.y = 0
     }
     
+    @objc func keyboardDidShow(_ sender: Notification) {
+        NSLog("===== keyboardDidShow =====")
+        
+        self.tfComment.frame.origin.y = keyboardSettingHeight
+        self.btnSubmit.frame.origin.y = keyboardSettingHeight
+    }
+    
+    // 엔터로 키보드 내리기
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        NSLog("====== textFieldShouldReturn ======")
+        NSLog("textFieldShouldReturn")
+        
         textField.resignFirstResponder()
         return true
     }
     
+    // 아무데나 선택 시 키보드 내리기
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
     
+//    @objc func keyboardWillShow(_ sender: Notification) {
+//        NSLog("====== keyboardWillShow ======")
+//
+//        if let keyboardFrame: NSValue = sender.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+//            let keyboardRectangle = keyboardFrame.cgRectValue
+//            let keyboardHeight = keyboardRectangle.height
+//
+//            keyboardSettingHeight = self.view.frame.height - keyboardHeight - tfComment.frame.height - 5
+//
+//            print(self.view.frame.height)
+//            print(keyboardHeight)
+//
+//            //self.commentView.frame.origin.y = self.view.frame.height - keyboardHeight - commentView.frame.height - 5
+//            self.tfComment.frame.origin.y = keyboardSettingHeight
+//            self.btnSubmit.frame.origin.y = keyboardSettingHeight
+//        }
+//    }
+//
+//    @objc func keyboardWillHide(_ sender: Notification) {
+//        NSLog("====== keyboardWillHide ======")
+////        self.commentView.frame.origin.y = 0
+//    }
+//
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        NSLog("====== textFieldShouldReturn ======")
+//        textField.resignFirstResponder()
+//        return true
+//    }
+//
+//    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+//        print("here")
+//        self.tfComment.frame.origin.y = keyboardSettingHeight
+//        self.btnSubmit.frame.origin.y = keyboardSettingHeight
+//
+//        return true
+//    }
+//
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        self.view.endEditing(true)
+//    }
+//
     /*
      // MARK: - Navigation
      
