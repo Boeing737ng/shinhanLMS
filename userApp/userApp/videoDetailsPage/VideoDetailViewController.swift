@@ -185,7 +185,6 @@ class VideoDetailViewController: UIViewController {
         else if sender.selectedSegmentIndex == 2 {
         }
     }
-    
     func initVideoPlayer() {
         setupPlayerView()
         
