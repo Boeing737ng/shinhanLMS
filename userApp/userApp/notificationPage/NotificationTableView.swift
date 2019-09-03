@@ -9,6 +9,10 @@
 import UIKit
 import Firebase
 
+var selectedNoticeTitle: String = ""
+var selectedNoticeDate: String = ""
+var selectedNoticeDetailText: String = ""
+
 class NotificationTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     
     var keyArray = Array<String>()
@@ -31,6 +35,12 @@ class NotificationTableView: UITableView, UITableViewDelegate, UITableViewDataSo
         self.delegate = self
         self.dataSource = self
         
+        getNoticeFromDB()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadNoticeList), name: NSNotification.Name(rawValue: "noticeRead"), object: nil)
+    }
+    
+    @objc func reloadNoticeList() {
         getNoticeFromDB()
     }
     
@@ -92,6 +102,25 @@ class NotificationTableView: UITableView, UITableViewDelegate, UITableViewDataSo
         totalTextArray.removeAll()
         totalDateArray.removeAll()
         totalTitleArray.removeAll()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        ref.child(userCompanyCode + "/notice/" + userNo + "/" + keyArray[indexPath.row]).updateChildValues(["state": "read"])
+        
+        
+        //self.reloadData()
+        selectedNoticeTitle = titleArray[indexPath.row]
+        selectedNoticeDate = dateArray[indexPath.row]
+        selectedNoticeDetailText = detailTextArray[indexPath.row]
+        goToNoticeShowPage()
+    }
+    
+    func goToNoticeShowPage() {
+        let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "noticeShowStoryboard")
+        UIApplication.topViewController()!.present(viewController, animated: true, completion: nil)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
