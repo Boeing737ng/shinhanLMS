@@ -52,7 +52,7 @@ class VideoQuestionShowTableViewController: UITableViewController {
         
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child(userCompanyCode + "/videos/" + selectedVideoId + "/qnaBoard/" + selectedQuestionId + "/comment/").queryOrdered(byChild: "date").observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child(userCompanyCode + "/videos/" + selectedLectureId + "/qnaBoard/" + selectedQuestionId + "/comment/").queryOrdered(byChild: "date").observeSingleEvent(of: .value, with: { (snapshot) in
             
             if snapshot.childrenCount == 0 {
                 return

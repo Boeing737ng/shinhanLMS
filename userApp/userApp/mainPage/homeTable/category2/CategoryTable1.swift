@@ -32,7 +32,7 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
     func gerUserPlayingLectureInfoFromDB() {
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child("user/201302493/playList/").observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child("user/" + userNo + "/playList/").observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             if snapshot.childrenCount == 0 {
                 return
@@ -45,17 +45,24 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
                 let videoDict = video.value as! Dictionary<String, Any>;()
                 let status = videoDict["state"] as! String
                 if status == "playing" {
-                    let videoId = video.key as! String
+                    let lectureId = video.key as! String
                     let title = videoDict["title"] as! String
                     let author = videoDict["author"] as! String
                     let progress = (videoDict["progress"] as! NSNumber)
-                    self.playingLectureIdArray.append(videoId)
+                    self.playingLectureIdArray.append(lectureId)
                     self.playingTitleArray.append(title)
                     self.playingAuthorArray.append(author)
                     self.playingProgressArray.append(progress.floatValue)
                     
-                    self.dataReceived = true
-                    self.reloadData()
+                    ref.child(userCompanyCode + "/lecture/" + lectureId).observeSingleEvent(of: .value, with: { (snapshot) in
+                        let videoDict2 = snapshot.value as! Dictionary<String, Any>;()
+                        let view = videoDict2["view"] as! Int
+                        self.playingViewArray.append(view)
+                        self.dataReceived = true
+                        self.reloadData()
+                    }) { (error) in
+                        print(error.localizedDescription)
+                    }
                 } else {
                     continue
                 }

@@ -60,7 +60,7 @@ class VideoQuestionWriteViewController: UIViewController, UITextViewDelegate {
         
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child(userCompanyCode + "/videos/" + selectedVideoId + "/qnaBoard").childByAutoId().setValue([
+        ref.child(userCompanyCode + "/videos/" + selectedLectureId + "/qnaBoard").childByAutoId().setValue([
             "content": tvContent.text as? String,
             "date": NSDate().timeIntervalSince1970,
             "title": tfTitle.text as? String,
