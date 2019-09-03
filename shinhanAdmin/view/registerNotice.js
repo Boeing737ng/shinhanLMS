@@ -90,7 +90,7 @@ $(document).ready(function () {
         $('#nonWatchEmpGrid').show();
 
         var popup = searchEmpListNonWatchPopup.getInstance({
-            title: '필수강의 미이수자 검색'
+            title: '필수강좌 미이수자 검색'
         });
 
         $(popup).off('submit').on('submit', function(e, param) {
@@ -215,7 +215,7 @@ $(document).ready(function () {
     });
 
 
-    //필수강의 미이수자 그리드
+    //필수강좌 미이수자 그리드
     $("#nonWatchEmpGrid").jsGrid({
         width: "100%",
         height: "200px",

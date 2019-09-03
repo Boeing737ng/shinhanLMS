@@ -219,15 +219,21 @@ $(document).ready(function () {
     var title = [];
     var chartArr = [];
 
+    chartArr = [];
+    
 
-    parent.database.ref('/' + compCd + '/videos').once('value').then(function (snapshot) {
+    parent.database.ref('/' + compCd + '/lecture').once('value').then(function (snapshot) {
+
+      
       var catArr = snapshot.val();
       
 
       $.each(catArr, function (idx, chartObj) {
         chartObj['rowKey'] = idx;
         chartArr.push(chartObj);
+        
       }); 
+     
 
       
       //db값을 view기준으로 정렬하는 함수

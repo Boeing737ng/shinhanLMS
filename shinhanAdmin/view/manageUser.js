@@ -91,8 +91,8 @@ $(document).ready(function () {
             var arr = $('#grid2').jsGrid('option', 'data');
         },
         fields: [
-            { name: "title", title: '수강과목명', type: "text", width: 150, editing: false, align: "left" },
-            { name: "categoryNm", title: "강의 카테고리", type: "text", width: 150, editing: false, align: "left" },
+            { name: "title", title: '수강강좌명', type: "text", width: 150, editing: false, align: "left" },
+            { name: "categoryNm", title: "강좌 카테고리", type: "text", width: 150, editing: false, align: "left" },
             { name: "author", title: "강사명", type: 'text', width: 100, editing: false, align: "center" },
             {
                 name: "state", title: "수강상태", type: 'text', width: 100, editing: false, align: "center" , cellRenderer: function (item, value) {

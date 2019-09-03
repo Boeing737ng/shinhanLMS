@@ -99,7 +99,7 @@ $(document).ready(function () {
     data: [],
     fields: [
         { name: "author", title: "강사명", type: 'text', width: 100, editing: false, align: "center" },
-        { name: "title", title: '컨텐츠명', type: "text", width: 200, editing: false, align: "left" }
+        { name: "title", title: '강좌명', type: "text", width: 200, editing: false, align: "left" }
     ]
     });
 
