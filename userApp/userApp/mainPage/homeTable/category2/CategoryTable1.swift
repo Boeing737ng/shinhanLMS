@@ -17,7 +17,7 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
     var defaultProgress:Float = 0.0
     var dataReceived:Bool = false
     
-    var playingVideoIdArray = Array<String>()
+    var playingLectureIdArray = Array<String>()
     var playingTitleArray = Array<String>()
     var playingAuthorArray = Array<String>()
     var playingProgressArray = Array<Float>()
@@ -26,17 +26,20 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
     override func awakeFromNib() {
         self.delegate = self
         self.dataSource = self
-        gerUserPlayingVieoInfoFromDB()
+        gerUserPlayingLectureInfoFromDB()
     }
     
-    func gerUserPlayingVieoInfoFromDB() {
+    func gerUserPlayingLectureInfoFromDB() {
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child("user/201302493/playList/").observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
+            if snapshot.childrenCount == 0 {
+                return
+            }
             let value = snapshot.value as? NSDictionary
             for video in value! {
-                if self.playingVideoIdArray.count == 3 {
+                if self.playingLectureIdArray.count == 3 {
                     break
                 }
                 let videoDict = video.value as! Dictionary<String, Any>;()
@@ -46,20 +49,13 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
                     let title = videoDict["title"] as! String
                     let author = videoDict["author"] as! String
                     let progress = (videoDict["progress"] as! NSNumber)
-                    self.playingVideoIdArray.append(videoId)
+                    self.playingLectureIdArray.append(videoId)
                     self.playingTitleArray.append(title)
                     self.playingAuthorArray.append(author)
                     self.playingProgressArray.append(progress.floatValue)
                     
-                    ref.child(userCompanyCode + "/videos/" + videoId).observeSingleEvent(of: .value, with: { (snapshot) in
-                        let videoDict2 = snapshot.value as! Dictionary<String, Any>;()
-                        let view = videoDict2["view"] as! Int
-                        self.playingViewArray.append(view)
-                        self.dataReceived = true
-                        self.reloadData()
-                    }) { (error) in
-                        print(error.localizedDescription)
-                    }
+                    self.dataReceived = true
+                    self.reloadData()
                 } else {
                     continue
                 }
@@ -78,12 +74,12 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return playingVideoIdArray.count
+        return playingLectureIdArray.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let videoId = playingVideoIdArray[indexPath.row]
-        selectedVideoId = videoId
+        let videoId = self.playingLectureIdArray[indexPath.row]
+        selectedLectureId = videoId
         TabViewController().goToDetailPage()
     }
     
@@ -93,11 +89,11 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
         cell.videoProgressBar.progress = 0.8
         if playingViewArray.count == 3 {
             if dataReceived {
-                cell.videoTitleLabel.text = playingTitleArray[indexPath.row]
+                cell.videoTitleLabel.text = self.self.playingTitleArray[indexPath.row]
                 cell.videoAuthorLabel.text = playingAuthorArray[indexPath.row]
-                cell.videoThumbnail.image = CachedImageView().loadCacheImage(urlKey: playingVideoIdArray[indexPath.row])
-                cell.videoProgressBar.progress = playingProgressArray[indexPath.row]
-                cell.videoViewLabel.text = String(playingViewArray[indexPath.row])
+                cell.videoThumbnail.image = CachedImageView().loadCacheImage(urlKey: self.playingLectureIdArray[indexPath.row])
+                cell.videoProgressBar.progress = self.playingProgressArray[indexPath.row]
+                cell.videoViewLabel.text = String(self.playingViewArray[indexPath.row])
             } else {
                 cell.videoTitleLabel.text = textArray[indexPath.row]
                 cell.videoAuthorLabel.text = authorArray[indexPath.row]

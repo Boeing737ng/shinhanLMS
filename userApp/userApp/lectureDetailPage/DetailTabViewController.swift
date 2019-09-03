@@ -21,8 +21,9 @@ class DetailTabViewController: ButtonBarPagerTabStripViewController {
         let child_1 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TableOne")
         let child_2 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TableTwo")
         let child_3 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TableThree")
+        let child_4 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TableFour")
         
-        return [child_1,child_2,child_3]
+        return [child_1,child_2,child_3,child_4]
     }
     func loadDesign(){
         self.settings.style.selectedBarVerticalAlignment = .bottom

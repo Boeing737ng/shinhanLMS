@@ -21,7 +21,7 @@ class VideoInfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getVideoDescriptionFromDB()
+        getLectureDescriptionFromDB()
 //        self.tv.layer.borderWidth = 1.0
 //        self.tv.layer.borderColor = UIColor.black.cgColor
 //        self.tv.layer.cornerRadius = 4
@@ -31,10 +31,10 @@ class VideoInfoViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    func getVideoDescriptionFromDB() {
+    func getLectureDescriptionFromDB() {
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child(userCompanyCode + "/videos/" + selectedVideoId).observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child(userCompanyCode + "/lecture/" + selectedLectureId).observeSingleEvent(of: .value, with: { (snapshot) in
             let videoInfo = snapshot.value as! Dictionary<String, Any>;()
             self.videoDescriptionLabel.text = videoInfo["description"]! as? String
             self.videoTitle.text = videoInfo["title"]! as? String
