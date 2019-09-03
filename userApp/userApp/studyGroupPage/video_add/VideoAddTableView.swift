@@ -42,9 +42,9 @@ class VideoAddTableView: UITableView, UITableViewDataSource, UITableViewDelegate
         clearArrays()
         var dataURL:String = ""
         if selectedCategoryIndex == 0 {
-            dataURL = userCompanyCode + "/videos"
+            dataURL = userCompanyCode + "/lecture"
         } else {
-            dataURL = userCompanyCode + "/categories/" + categoryDict1[selectedCategoryIndex]! + "/videos/"
+            dataURL = userCompanyCode + "/categories/" + categoryDict1[selectedCategoryIndex]! + "/lecture/"
         }
         
         print(dataURL)
