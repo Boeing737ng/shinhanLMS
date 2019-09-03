@@ -28,7 +28,7 @@ class VideoQuestionShowViewController: UIViewController, UITextFieldDelegate {
         
         // Do any additional setup after loading the view.
         
-        //getQuestionFromDB()
+        getQuestionFromDB()
         tfComment.returnKeyType = .done
     }
     
