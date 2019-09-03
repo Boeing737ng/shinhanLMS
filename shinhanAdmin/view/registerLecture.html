@@ -1,0 +1,281 @@
+<!--
+**********************************************
+title : registerLecture
+description : 강좌 등록
+author : jybobo
+**********************************************
+-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Shinple</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+    <!-- bootstrap select -->
+    <link href="/vendor/bootstrap-select/dist/css/bootstrap-select.css" rel="stylesheet" type="text/css" />
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin-2.css" rel="stylesheet">
+    <!-- Common CSS -->
+    <link href="/css/lmsCommon.css" rel="stylesheet" type="text/css">
+
+    <link href="/vendor/dropzone/dropzone.css" rel="stylesheet" type="text/css">
+
+    <!-- datepicker CSS -->
+    <link href="/vendor/jquery-ui-1.12.1.custom/jquery-ui.structure.css" rel="stylesheet" type="text/css">
+    <link href="/vendor/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="/vendor/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.css">
+    <link href="/vendor/fakeloader-master/dist/fakeloader.css" rel="stylesheet" type="text/css">
+
+     <link rel="stylesheet" href="/vendor/jsgrid/jsgrid.css">
+  <link rel="stylesheet" href="/vendor/jsgrid/jsgrid-theme.css">
+
+    <!-- /* Bootstrap core JavaScript */ -->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- /* Core plugin JavaScript */ -->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- /* Custom scripts for all pages */ -->
+    <script src="/js/sb-admin-2.min.js"></script>
+    <!-- /* Page level plugins */ -->
+    <script src="/vendor/chart.js/Chart.min.js"></script>
+    <!-- /* firebase */ -->
+    <script src="https://www.gstatic.com/firebasejs/6.3.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-database.js"></script>
+    <script src="/js/firebaseConfig.js"></script>
+    
+    <!-- /* bootstrap select */ -->
+    <script src="/vendor/bootstrap-select/dist/js/bootstrap-select.js"></script>
+    <!-- datepicker -->
+    <script src="/vendor/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+
+    <script src="/vendor/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.js"></script>
+
+    <script src="/vendor/moment/moment.min.js"></script>
+
+    <script src="/vendor/fakeloader-master/dist/fakeLoader.min.js"></script>
+    <script src="/vendor/jsgrid/jsgrid.js"></script>
+
+
+    <script src="/vendor/dropzone/dropzone.js"></script>
+
+    <script src="/view/registerLecture.js"></script>
+    <script src="/js/main.js"></script>
+
+
+    <style>
+        #lectureThumbnailFile {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            width: 80px;
+            opacity: 0;
+        }
+
+
+        #thumbnailFile {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            width: 80px;
+            opacity: 0;
+        }
+
+        #thumbnailImgPreview {
+            /* width: 200px; */
+            width: 100%;
+            height: 100px;
+            display: table;
+            text-align: center;
+            border: 1px solid #d1d3e2;
+            background-color: black;
+            color: white;
+            cursor: pointer;
+        }
+
+        #thumbnailImgPreview span {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+/*         #videoAttachFile {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            width: 80px;
+            opacity: 0;
+        } */
+
+        .attachFile {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            width: 80px;
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body class="contentInnerBody">
+
+    <div id="fakeloader-overlay" class="visible incoming"><div class="loader-wrapper-outer"><div class="loader-wrapper-inner"><div class="loader"></div></div></div></div>
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800" id="contentHeader">강좌 관리</h1>
+    </div>
+
+
+    <div class="row searchResultDiv">
+            <div class="col-xl-12">
+                    <div class="card shadow mb-4">
+                        <!-- Card Header - Dropdown -->
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-primary">강좌 등록</h6>
+                        </div>
+        
+                        <!-- Card Body -->
+                        <div class="card-body">
+                            <table class="registerTable" style="margin-bottom: 20px;">
+                                <colgroup>
+                                    <col width="20%" />
+                                    <col width="20%" />
+                                    <col width="20%" />
+                                    <col width="40%" />
+                                </colgroup>
+                                <tbody>
+                                        <tr>
+                                                <th class="required"><span>강좌명</span></th>
+                                                <td colspan="3">
+                                                    <input type="text" id="title" class="form-control" style="width:100%" />
+                                                </td>
+                                            </tr>
+                                    <tr>
+                                        <th class="required"><span>썸네일</span></th>
+                                        <td>
+                                            <div>
+                                                <input type="file" id="lectureThumbnailFile"/>
+                                                <div id="output" style="margin: 0px auto; width:160px; height:90px; cursor: pointer; background-image: url('/img/upload.png'); background-size: cover;"></div>
+                                            </div>
+        
+                                        </td>
+                                        <th class="required"><span>강사명</span></th>
+                                        <td>
+                                            <input type="text" id="author" class="form-control" style="width:100%" />
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <th class="required"><span>필수강의여부</span></th>
+                                        <td>
+                                            <select id="lectureRequireYn" data-live-search="true" data-width="100%">
+                                                <option value="Y">Y</option>
+                                                <option value="N">N</option>
+                                            </select>
+                                            <!-- <span id="requireYn"></span> -->
+                                        </td>
+                                        <th class="required"><span>카테고리</span></th>
+                                        <td>
+                                            <select id="category" class="category" data-live-search="true" data-width="100%" data-size="5">
+                                            </select>
+                                        </td>
+        
+                                    </tr>
+                                    <tr>
+                                        <th class="required">
+                                            <span>관련태그</span>
+                                        </th>
+                                        <td colspan="3">
+                                            <input type="text" id="relatedTags" class="tagsInput"/>
+                                        </td>
+                                        
+                                    </tr>
+        
+                                    <tr>
+                                        <th><span>상세설명</span></th>
+                                        <td colspan="3">
+                                            <textarea id="description" class="form-control" style="width:100%; height:200px; resize:none;"></textarea>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="required"><span>강의</span></th>
+                                        <td colspan="3">
+                                            <!-- Uploader Dropzone -->
+                                            <!-- <div id="dropzone" class="dropzone" url="#" style="height:150px; overflow: auto;">
+                                                    <div class="dz-message" data-dz-message="">
+                                                            <div class="icon">
+                                                                <i class="fa fa-lg fa-paperclip"></i>
+                                                            </div>
+                                                            <h4 class="message">Drag and Drop files here</h4>
+                                                        </div>
+                                                </div> -->
+
+                                                <div class="moduleBtnDiv" style="margin-bottom: 10px !important;">
+                                                        <ul>
+                                                            <li id="btnUploadVideo">
+                                                              <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                                                                <i class="fas fa-paperclip text-white-50"></i> 업로드
+                                                              </a>
+                                                            </li>
+                                                            <li id="btnDel">
+                                                                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                                                                      <i class="fas fa-minus text-white-50"></i> 삭제
+                                                                    </a>
+                                                                  </li>
+                                                        </ul>
+
+                                                        <input type="file" id="videoAttachFile" class="attachFile" multiple/>
+                                                        <input type="file" id="videoThumbnailFile" class="attachFile"/>
+                                                      </div>
+                                            
+                                            <div class="lms-grid" id="contentGrid"></div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+        
+                            <div class="moduleBtnDiv">
+                                <ul>
+                                    <li id="btnSave">
+                                        <a href="#" class="btn btn-primary">
+                                            저장
+                                        </a>
+                                    </li>
+                                    <li id="btnList">
+                                            <a href="#" class="btn btn-secondary">
+                                                목록
+                                            </a>
+                                        </li>
+                                </ul>
+                            </div>
+        
+                        </div>
+        
+        
+                    </div>
+                </div>
+
+
+    </div>
+
+
+</body>
+
+</html>

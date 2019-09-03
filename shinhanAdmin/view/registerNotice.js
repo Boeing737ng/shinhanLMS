@@ -445,7 +445,7 @@ $(document).ready(function () {
         setNotieDatabase({
             writor: writor,
             description: description,
-            date: moment().format('YYYYMMDD'),
+            date: moment().format('YYYYMMDDHHmm'),
             title: title,
             targetUsers: targetUsers
         }, callback);
