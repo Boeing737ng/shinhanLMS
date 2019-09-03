@@ -95,6 +95,19 @@ $(document).ready(function () {
     });
 
 
+    $('#btnAdd').on('click', function(e) {
+
+        e.preventDefault();
+
+        fnGo('/view/registerLecture.html', {
+            'searchRequireYn' : $('#searchRequireYn').val(),
+            'searchCategory' : $('#searchCategory').val(),
+            'searhRelatedTag': $('#searhRelatedTag').val(),
+            'searchTitle': $('#searchTitle').val()
+        });
+    });
+
+
     //행삭제 버튼
     $('#btnDel').on('click', function(e) {
         e.preventDefault();
@@ -181,6 +194,145 @@ $(document).ready(function () {
     }
 
 
+    //combo 구성
+    function fnGetCommonCmb(option, selector, defaultValue) {
+
+        $('' + selector).html('');
+        $('' + selector).html('<option value="">전체</option>');
+
+        switch(option) {
+            case 'tag':
+                parent.database.ref('/' + compCd + '/tags/').once('value')
+                .then(function (snapshot) {
+                    var tagArr = snapshot.val();
+                    var optionArr = [];
+                
+                    $.each(tagArr, function(idx, tagObj) {
+                        var newOption = $('<option></option>');
+                        $(newOption).attr('value', tagArr[idx].value);
+                        $(newOption).text(tagArr[idx].value);
+
+                        if(tagArr[idx].value == defaultValue) {
+                            $(newOption).attr('selected', 'selected');
+                        }
+
+                        $(''+selector).append($(newOption));
+                    });
+
+                    $(''+selector).selectpicker();
+                });    
+                break;
+
+
+            case 'category':
+                    parent.database.ref('/' + compCd + '/categories/').once('value')
+                    .then(function (snapshot) {
+                        var catArr = snapshot.val();
+                        var optionArr = [];
+                    
+                        console.log(catArr)
+                        $.each(catArr, function(idx, catObj) {
+                            var newOption = $('<option></option>');
+                            $(newOption).attr('value', idx);
+                            $(newOption).text(catArr[idx].title);
+
+                            if(idx == defaultValue) {
+                                $(newOption).attr('selected', 'selected');
+                            }
+
+                            $(''+selector).append($(newOption));
+                        });
+    
+                        $(''+selector).selectpicker();
+                    });    
+                break; 
+        }
+    }
+
+
+    function fnInit() {
+
+        $('#searchRequireYn').selectpicker();
+
+        var searchParam = getParams();
+        
+        if(Object.keys(searchParam).length > 0) {
+            $('#searchRequireYn').val(searchParam['searchRequireYn']);
+            $('#searchRequireYn').selectpicker('refresh');
+            
+            //$('#searchCategory').val(searchParam['searchCategory']);
+            //$('#searchCategory').selectpicker('refresh');
+            
+            $('#searchTitle').val(searchParam['searchTitle']);
+            
+            fnGetCommonCmb('tag', '#searhRelatedTag', searchParam['searhRelatedTag']);
+            fnGetCommonCmb('category', '#searchCategory', searchParam['searchCategory']);
+
+            fnRetrieve({
+                searchRequireYn: searchParam['searchRequireYn'],
+                searchCategory: searchParam['searchCategory'],
+                searchTitle: searchParam['searchTitle'],
+                searchRelatedTag: searchParam['searhRelatedTag'] 
+            });
+        }else {
+            fnGetCommonCmb('tag', '#searhRelatedTag');
+            fnGetCommonCmb('category', '#searchCategory');
+            fnRetrieve();
+        }
+
+    }
+
+
+    function fnGo(url, paramObj) {
+        var form = $('<form></form>');
+        $(form).attr('method', 'get');
+        $(form).attr('action', url);
+        
+        $.each(paramObj, function(key, value) {
+            var input = $('<input type="hidden"/>');
+            $(input).attr('name', key);
+            $(input).val(value);
+
+            $(form).append(input);
+        });
+
+        $('body').append(form);
+        $(form).submit();
+    }
+
+
+    function getParams() {
+        var param = {};
+     
+        // 현재 페이지의 url
+        var url = decodeURIComponent(location.href);
+        url = decodeURIComponent(url);
+        
+        if(url.split('?').length > 1) {
+
+            var params = url.split('?')[1];
+
+            if(params.length == 0) {
+                return param;
+            }
+
+            params = params.split("&");
+
+            var size = params.length;
+            var key, value;
+
+            for(var i=0 ; i < size ; i++) {
+                key = params[i].split("=")[0];
+                value = params[i].split("=")[1];
+        
+                param[key] = value;
+            }
+        }
+        
+        return param;
+    }
+
+
     function fnRetrieve() {
         var searchCompany = compCd;
         var searchCategory = $('#searchCategory').val() || '';
@@ -249,6 +401,7 @@ $(document).ready(function () {
 
 
     resizeFrame();
-    fnRetrieve();
+    fnInit();
+    //fnRetrieve();
  
 });
