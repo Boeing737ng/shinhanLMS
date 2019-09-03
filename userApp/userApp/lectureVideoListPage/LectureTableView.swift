@@ -97,7 +97,6 @@ class LectureTableView: UITableView, UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LectureListCell") as! LectureListCell
-        print("CELL")
         if dataReceived{
             cell.videoTitleLabel.text = databaseTitleArray[indexPath.row]
             cell.videoAuthorLabel.text = databaseAuthorArray[indexPath.row]

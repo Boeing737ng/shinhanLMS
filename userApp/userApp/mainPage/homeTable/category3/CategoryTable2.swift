@@ -34,12 +34,12 @@ class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
         ref = Database.database().reference()
         ref.child(userCompanyCode + "/lecture/").queryOrdered(byChild: "view").observeSingleEvent(of: .value, with: { (snapshot) in
             let dataSize = Int(snapshot.childrenCount) - 1
-            for video in snapshot.children.allObjects as! [DataSnapshot] {
-                if let videoInfo = video.value as? [String : Any] {
-                    totalPopularVideoIdArray.append(video.key)
-                    totalPopularTitleArray.append(videoInfo["title"] as! String)
-                    totalPopularAuthorArray.append(videoInfo["author"] as! String)
-                    totalPopularViewArray.append(videoInfo["view"] as! Int)
+            for lecutre in snapshot.children.allObjects as! [DataSnapshot] {
+                if let lectureInfo = lecutre.value as? [String : Any] {
+                    totalPopularVideoIdArray.append(lecutre.key)
+                    totalPopularTitleArray.append(lectureInfo["title"] as! String)
+                    totalPopularAuthorArray.append(lectureInfo["author"] as! String)
+                    totalPopularViewArray.append(lectureInfo["view"] as! Int)
                 }
             }
             for i in 0...2 {
@@ -75,7 +75,6 @@ class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "VideoCell2") as! VideoCell2
-        
         if dataReceived {
             cell.videoTitleLabel.text = popularTitleArray[indexPath.row]
             cell.videoAuthorLabel.text = popularAuthorArray[indexPath.row]
