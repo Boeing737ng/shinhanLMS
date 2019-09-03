@@ -129,18 +129,8 @@ author : jybobo
                   <div class="searchComponentDiv">
                     <label>관련태그 : </label>
     
-                    <select class="form-control" id="searhRelatedTag" data-live-search="true" data-width="auto"
+                    <select class="form-control" id="searchRelatedTag" data-live-search="true" data-width="auto"
                       data-size="5">
-                      <option value="">전체</option>
-                      <option>Mustard</option>
-                      <option>Ketchup</option>
-                      <option>Relish</option>
-                      <option>Relish</option>
-                      <option>Relish</option>
-                      <option>Relish</option>
-                      <option>Relish</option>
-                      <option>Relish</option>
-                      <option>Relish</option>
                     </select>
                   </div>
                 </div>
@@ -198,7 +188,7 @@ author : jybobo
   
           <!-- Card Body -->
           <div class="card-body">
-                <div id="grid" class="lms-grid"></div>
+                <div id="lectureGrid" class="lms-grid"></div>
           </div>
   
             <!-- <div class="moduleBtnDiv">
@@ -221,12 +211,43 @@ author : jybobo
             <div class="card shadow mb-4">
               <!-- Card Header - Dropdown -->
               <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">강좌 리스트</h6>
+                <h6 class="m-0 font-weight-bold text-primary">강의 리스트</h6>
+                <div class="moduleBtnDiv">
+                    <ul>
+                        <li id="btnAddVideo">
+                          <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                            <i class="fas fa-plus fa-sm text-white-50"></i> 신규
+                          </a>
+                        </li>
+                      <li id="btnDelVideo">
+                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                          <i class="fas fa-minus fa-sm text-white-50"></i> 삭제
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
               </div>
       
               <!-- Card Body -->
               <div class="card-body">
-                    <div id="detailGrid" class="lms-grid"></div>
+
+                <div>
+                <div style="width:320px; float: left;">
+
+                    <video id="video" style="cursor: pointer; background-color: black; width: 320px; height: 200px;" controls>
+                        이 브라우저는 지원 안함
+                    </video>
+                </div>
+
+
+                <div style="width:calc(100% - 320px - 16px); margin-left: 16px; float: left;">
+                    <div id="contentGrid" class="lms-grid"></div>
+                </div>
+              </div>
+
+
+
+                    
               </div>
       
                 <!-- <div class="moduleBtnDiv">

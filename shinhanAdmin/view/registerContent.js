@@ -8,6 +8,9 @@ $(document).ready(function () {
     var compCd = userObj['compCd'];
     var compNm = userObj['compNm'];
     const MAX_TAGS_CNT = 5;
+    
+    var params = getParams();
+    const LECTURE_ID = params['lectureId'];
 
 
     /** start of components ***********************/
@@ -18,7 +21,7 @@ $(document).ready(function () {
     });
     
     
-    fnGetCommonCmb('category', '#category');
+    //fnGetCommonCmb('category', '#category');
 
 
     $('#category').on('change', function(e) {
@@ -176,11 +179,31 @@ $(document).ready(function () {
         
         return param;
     }
+
+
+    function fnRetrieve() {
+        window.FakeLoader.showOverlay();
+        
+        console.log(LECTURE_ID);
+        parent.database.ref('/' + compCd + '/lecture/' + LECTURE_ID).once('value').then(function(snapshot) {
+
+            var obj = snapshot.val();
+            console.log(obj);
+            
+            $('#lectureTitle').text(obj['title']);
+            $('#requireYn').text(obj['requireYn']);
+            
+            fnGetCommonCmb('category', '#category', obj['categoryId']);
+            $('#requireYn').text(obj['requireYn']);
+
+            window.FakeLoader.hideOverlay();
+        });
+    }
     
     
     //목록 이동
     function fnGoList() {
-        var url = '/view/manageContents.html';
+        var url = '/view/manageLecture.html';
         var paramObj = getParams();
 
         fnGo(url, paramObj);
@@ -347,21 +370,15 @@ $(document).ready(function () {
         var param = '';
         var target;
 
-        if(isEmpty($('#video').attr('src'))) {
-            param = '동영상';
-            target = $('#video');
-        }else if(isEmpty($('#title').val())) {
+        if(isEmpty($('#title').val())) {
             param = '컨텐츠명';
             target = $('#title');
-        }else if(isEmpty($('#author').val())) {
-            param = '강사명';
-            target = $('#author');
-        }else if(isEmpty($('#category').val())) {
-            param = '카테고리';
-            target = $('#category');
-        }else if($('#relatedTags').tagsinput('items').length == 0) {
-            param = '관련태그';
-            target = $('#relatedTags');
+        }else if(isEmpty($('#video').attr('src'))) {
+            param = '동영상';
+            target = $('#video');
+        }else if(isEmpty($('#description').val())) {
+            param = '상세설명';
+            target = $('#description');
         }
 
         if(!isEmpty(param)) {
@@ -391,31 +408,32 @@ $(document).ready(function () {
 
                     thumbnailPath = downloadURL;
 
-                    var contentAuthor = $('#author').val();
-                    var contentCategory = $('#category').val();
-                    var categoryNm = $('#category > option:selected').text();
+                    //var contentAuthor = $('#author').val();
+                    //var contentCategory = $('#category').val();
+                    //var categoryNm = $('#category > option:selected').text();
                     
-                    var contentTagArr = $('#relatedTags').tagsinput('items');
+                    /* var contentTagArr = $('#relatedTags').tagsinput('items');
                     for(var i=0; i<contentTagArr.length; i++) {
                         contentTagArr[i] = replaceBlankSpace(contentTagArr[i]);
-                    }
+                    } */
                     
-                    var contentTag = contentTagArr.join(' ');
+                    //var contentTag = contentTagArr.join(' ');
                     var contentDescription = $('#description').val();
                     var title = $('#title').val();
-                    var requireYn = $('#requireYn').text();
+                    //var requireYn = $('#requireYn').text();
 
                     setVideoDatabase(rowId, {
                         downloadURL: videoPath,
-                        author: contentAuthor,
-                        categoryId: contentCategory,
-                        categoryNm: categoryNm,
-                        tags: contentTag,
+                        //author: contentAuthor,
+                        //categoryId: contentCategory,
+                        //categoryNm: categoryNm,
+                        //tags: contentTag,
                         thumbnail: thumbnailPath,
                         description: contentDescription,
                         date: moment().format('YYYYMMDDHHmmss'),
                         title: title,
-                        requireYn: requireYn
+                        seq: $('#seq').val()/1 || 0
+                        //requireYn: requireYn
                     }, callback);
                 });
             });
@@ -426,17 +444,17 @@ $(document).ready(function () {
 
     function setVideoDatabase(rowId, paramObj, callback) {
 
-        parent.database.ref('/' + compCd + '/videos/' + rowId + '/').set({
+        parent.database.ref('/' + compCd + '/lecture/' + LECTURE_ID + '/videos/' + rowId + '/').set({
             downloadURL: paramObj['downloadURL'],
-            author: paramObj['author'],
-            categoryId: paramObj['categoryId'],
-            categoryNm: paramObj['categoryNm'],
-            tags: paramObj['tags'],
+            //author: paramObj['author'],
+            //categoryId: paramObj['categoryId'],
+            //categoryNm: paramObj['categoryNm'],
+            //tags: paramObj['tags'],
             description: paramObj['description'],
             date: paramObj['date'],
             thumbnail: paramObj['thumbnail'],
             title: paramObj['title'],
-            requireYn: paramObj['requireYn'],
+            //requireYn: paramObj['requireYn'],
             view: 0
         }).then(function onSuccess(res) {
             if(callback != null && callback != undefined) {
@@ -531,5 +549,6 @@ $(document).ready(function () {
 
     //ifame height resize
     resizeFrame();
+    fnRetrieve();
 
 });

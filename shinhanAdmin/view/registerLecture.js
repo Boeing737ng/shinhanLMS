@@ -27,32 +27,32 @@ $(document).ready(function () {
     fnGetCommonCmb('category', '#category');
 
 
-    $('#category').on('change', function(e) {
+    $('#category').on('change', function (e) {
         $('#requireYn').text($('#category > option:selected').attr('data-requireYn') || 'N');
     });
 
 
-    $('#output').on('click', function(e) {
+    $('#output').on('click', function (e) {
         $('#lectureThumbnailFile').click();
     });
 
 
-    $('#btnUploadVideo').on('click', function(e) {
+    $('#btnUploadVideo').on('click', function (e) {
         e.preventDefault();
         $('#videoAttachFile').click();
     });
 
 
-    $('#lectureThumbnailFile').on('change', function(e) {
+    $('#lectureThumbnailFile').on('change', function (e) {
 
-        if(document.getElementById("lectureThumbnailFile").files.length == 0) {
+        if (document.getElementById("lectureThumbnailFile").files.length == 0) {
             return false;
         }
 
         var ext = $(this).val().split('.').pop().toLowerCase(); //확장자
-        
+
         //배열에 추출한 확장자가 존재하는지 체크
-        if($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
+        if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
             resetFormElement($(this)); //폼 초기화
             window.alert('이미지 파일이 아닙니다! (gif, png, jpg, jpeg 만 업로드 가능)');
         } else {
@@ -67,7 +67,7 @@ $(document).ready(function () {
             img.width = 160;
             img.height = 90;
 
-            $(img).on('load', function(e) {
+            $(img).on('load', function (e) {
                 var canvas = capture('image', img);
                 output.innerHTML = '';
                 $(output).css('background-color', 'black');
@@ -84,18 +84,18 @@ $(document).ready(function () {
     var scaleFactor = 0.25;
 
 
-    $('#video').on('click', function(e) {
+    $('#video').on('click', function (e) {
         $('#videoAttachFile').click();
     });
 
 
-    $('#videoAttachFile').on('change', function(e) {
-        if(document.getElementById("videoAttachFile").files.length == 0) {
+    $('#videoAttachFile').on('change', function (e) {
+        if (document.getElementById("videoAttachFile").files.length == 0) {
             return false;
         }
 
         var ext = $(this).val().split('.').pop().toLowerCase(); //확장자
-        if($.inArray(ext, ['mp4', 'webm']) == -1) {
+        if ($.inArray(ext, ['mp4', 'webm']) == -1) {
             resetFormElement($(this)); //폼 초기화
             window.alert('동영상 파일이 아닙니다! (mp4, webm 만 업로드 가능)');
             return false;
@@ -105,7 +105,7 @@ $(document).ready(function () {
 
         var files = document.getElementById("videoAttachFile").files;
 
-        for(var i=0; i<files.length; i++) {
+        for (var i = 0; i < files.length; i++) {
             var file = document.getElementById("videoAttachFile").files[i];
             var type = file.type;
 
@@ -115,79 +115,89 @@ $(document).ready(function () {
 
             var canvas = document.getElementById('canvas');
 
-            if(!isEmpty(canvas)) {
+            if (!isEmpty(canvas)) {
                 var dataUrl = canvas.toDataURL('image/png');
                 var defaultThumbnailUrl = dataUrl;
             }
-            
+
             $('#contentGrid').jsGrid('insertItem', {
-                title: defaultFileNm || '', 
+                title: defaultFileNm || '',
                 videoFileNm: file.name || '',
-                uploadURL: fileURL || '', 
+                uploadURL: fileURL || '',
                 thumbnail: defaultThumbnailUrl || ''
             });
         }
     });
 
 
-    $('#videoThumbnailFile').on('change', function(e) {
+    $('#videoThumbnailFile').on('change', function (e) {
 
-        if(document.getElementById("videoAttachFile").files.length == 0) {
+        if (document.getElementById("videoAttachFile").files.length == 0) {
             return false;
         }
 
         var ext = $(this).val().split('.').pop().toLowerCase(); //확장자
-        if($.inArray(ext, ['jpeg', 'jpg', 'png']) == -1) {
+        if ($.inArray(ext, ['jpeg', 'jpg', 'png']) == -1) {
             resetFormElement($(this)); //폼 초기화
             window.alert('이미지 파일이 아닙니다! (jpeg, jpg, png 만 업로드 가능)');
             return false;
         }
 
-        var file = document.getElementById("videoAttachFile").files[0];
-        var type = file.type;
 
-        var URL = window.URL || window.webkitURL;
-        var fileURL = URL.createObjectURL(file);
-        var defaultFileNm = file.name.split('.')[0];
+        var file = document.getElementById("videoThumbnailFile").files[0];
+        var blobURL = window.URL.createObjectURL(file);
 
-        var canvas = document.getElementById('canvas');
+        var selectedIdx = $('#contentGrid').find('.jsgrid-edit-row').prevAll().length;
+        var item = $('#contentGrid').jsGrid('option', 'data')[selectedIdx];
+        item['thumbnail'] = blobURL;
 
-        if (!isEmpty(canvas)) {
-            var dataUrl = canvas.toDataURL('image/png');
-            var defaultThumbnailUrl = dataUrl;
-        }
+        $("#contentGrid").jsGrid("refresh"); //grid refresh
 
-        $('#contentGrid').jsGrid('updateItem', {
-            title: defaultFileNm || '',
-            videoFileNm: file.name || '',
-            uploadURL: fileURL || '',
-            thumbnail: defaultThumbnailUrl || ''
+
+        // update currently editing row with specified data
+        /* $("#contentGrid").jsGrid("updateItem",  item);
+
+        var img = document.createElement('img');
+        img.width = 160;
+        img.height = 90;
+
+        $(img).on('load', function(e) {
+            var w = 160;
+            var h = 90;
+            //var canvas = capture('image', img);
+
+            //var canvas = $('#contentGrid').find('.jsgrid-edit-row:eq(selectedIdx)').find('canvas');
+            $(canvas).css('width', w);
+            $(canvas).css('height', h);
+
+            canvas = $(canvas).get(0);
+
+            var ctx = canvas.getContext('2d');
+            ctx.drawImage(content, 0, 0, w, h);
+
+            output.innerHTML = '';
+            $(output).css('background-color', 'black');
+            $(output).css('background-image', '');
+            output.appendChild(canvas);
         });
+
+        img.src = blobURL; */
     });
 
 
-    /* video.addEventListener('loadedmetadata', function () {
-        $(video).one('seeked', function(e) {
-            shoot();
-        });
-
-        this.currentTime = this.duration / 2;
-    }, false); */
-
-
     //저장 버튼
-    $('#btnSave').on('click', function(e) {
+    $('#btnSave').on('click', function (e) {
         e.preventDefault();
-        
-        if(!fnValidate()) {
+
+        if (!fnValidate()) {
             return false;
         }
 
-        if(confirm('저장하시겠습니까?')) {
-            
+        if (confirm('저장하시겠습니까?')) {
+
             window.FakeLoader.showOverlay();
-            
-            fnSave(function() {
+
+            fnSave(function () {
                 window.FakeLoader.hideOverlay();
                 alert('저장하였습니다');
                 fnGoList();
@@ -197,10 +207,10 @@ $(document).ready(function () {
 
 
     //행삭제 버튼
-    $('#btnDel').on('click', function(e) {
+    $('#btnDel').on('click', function (e) {
         e.preventDefault();
 
-        if(selectedItems.length == 0) {
+        if (selectedItems.length == 0) {
             alert('선택된 데이터가 없습니다.');
             return false;
         }
@@ -210,7 +220,7 @@ $(document).ready(function () {
 
 
     //목록 버튼
-    $('#btnList').on('click', function(e) {
+    $('#btnList').on('click', function (e) {
         e.preventDefault();
         fnGoList();
     });
@@ -228,8 +238,8 @@ $(document).ready(function () {
         selecting: true,
         data: [],
 
-        /* nextEdit: false,
-        rowClick: function(args) {
+        //nextEdit: false,
+        /* rowClick: function(args) {
             if (this._editingRow)
             {
             this.updateItem();
@@ -240,90 +250,64 @@ $(document).ready(function () {
             this.editItem($(args.event.target).closest("tr"));
             }
         }, */
-      /* onItemUpdated: function()
-      {
-        if(this.nextEdit)
-        {
-          this.editItem($(this.nextEdit).closest("tr"));
-          this.nextEdit = false;
-        }
-      }, */
-        
-
-        /* onItemInserting: function(args) {
-            if(!confirm('추가하시겠습니까?')) {
-                args.cancel = true;
-            }
-        }, */
-
-        /* onItemInserted: function(args) { //신규
-            var item = args.item;
-
-            fnCreate(item, function() {
-                alert('저장되었습니다.');
-                fnRetrieve();
-            });
-        }, */
-
-        /* rowClick: function(args) {
-            var $row = this.rowByItem(args.item),
-            selectedRow = $("#grid").find('table tr.highlight');
-
-            if (selectedRow.length) {
-                selectedRow.toggleClass('highlight');
-            };
-            
-            $row.toggleClass("highlight");
-
-            fnRetrieveDetail(args.item);
-            
-        }, */
 
         fields: [
             {
-                itemTemplate: function(_, item) {
+                itemTemplate: function (_, item) {
                     return $("<input>").attr("type", "checkbox")
-                            .addClass('selectionCheckbox')
-                            .prop("checked", $.inArray(item, selectedItems) > -1)
-                            //.prop('disabled', (item.rowKey == 'REQUIRED'))
-                            .on("change", function () {
-                                $(this).is(":checked") ? selectItem(item) : unselectItem(item);
-                            });
+                        .addClass('selectionCheckbox')
+                        .prop("checked", $.inArray(item, selectedItems) > -1)
+                        //.prop('disabled', (item.rowKey == 'REQUIRED'))
+                        .on("change", function () {
+                            $(this).is(":checked") ? selectItem(item) : unselectItem(item);
+                        });
                 },
                 align: "center",
                 width: 30
             },
-            { name: "thumbnail", title: '썸네일', width: 80, editing: false, align: "center", cellRenderer: function(item, value) {
-                var rslt = $("<td>").addClass("jsgrid-cell");
-                var canvas = $('<canvas/>');
-                
-                $(canvas).css('width', '60px');
-                $(canvas).css('height', '45px');
-                $(canvas).css('cursor', 'pointer');
-                $(canvas).attr('src', item);
-                $(rslt).append(canvas);
-                
-                return rslt;
-            }, editTemplate: function(item, value) {
-                
-                var canvas = $('<canvas/>');
-                
-                $(canvas).css('width', '60px');
-                $(canvas).css('height', '45px');
-                $(canvas).css('cursor', 'pointer');
-                
-                $(canvas).on('click', function(e) {
-                    $('#videoThumbnailFile').click();
-                });
-                
-                $(canvas).attr('src', item);
+            {
+                name: "thumbnail", title: '썸네일', width: 80, editing: false, align: "center", cellRenderer: function (item, value) {
+                    var rslt = $("<td>").addClass("jsgrid-cell");
+                    var img = $('<img/>');
 
-                return canvas;
-            } },
-            { name: "title", title: '강의명', type: "text", width: 200, align: "left", editing: true, validate: {
-                validator: 'required', 
-                message: '강의명 은 필수입력 입니다.'
-            } },
+                    $(img).css('width', '60px');
+                    $(img).css('height', '45px');
+                    $(img).css('cursor', 'pointer');
+                    $(img).attr('src', item);
+
+/*                     $(img).on('click', function (e) {
+                        $('#videoThumbnailFile').click();
+                    }); */
+
+                    $(rslt).append(img);
+
+                    console.log(item);
+
+                    return rslt;
+                }, editTemplate: function (item, value) {
+
+                    var img = $('<img/>');
+
+                    $(img).css('width', '60px');
+                    $(img).css('height', '45px');
+                    $(img).css('cursor', 'pointer');
+                    $(img).attr('id', 'canvas_edit_' + item.index);
+
+                    $(img).on('click', function (e) {
+                        $('#videoThumbnailFile').click();
+                    });
+
+                    $(img).attr('src', item);
+
+                    return img;
+                }
+            },
+            {
+                name: "title", title: '강의명', type: "text", width: 200, align: "left", editing: true, validate: {
+                    validator: 'required',
+                    message: '강의명 은 필수입력 입니다.'
+                }
+            },
             { name: "videoFileNm", title: '파일', type: "text", width: 200, editing: false, align: "left" }
             ,
             { type: "control", deleteButton: false } //edit control
@@ -334,13 +318,13 @@ $(document).ready(function () {
 
     /** start of functions ***********************/
     var selectedItems = [];
- 
+
     function selectItem(item) {
         selectedItems.push(item);
     };
 
     function unselectItem(item) {
-        selectedItems = $.grep(selectedItems, function(i) {
+        selectedItems = $.grep(selectedItems, function (i) {
             return i !== item;
         });
     }
@@ -348,33 +332,33 @@ $(document).ready(function () {
 
     //체크된 건들 삭제
     function removeCheckedRows(callback) {
-        for(var i=0; i<selectedItems.length; i++) {
+        for (var i = 0; i < selectedItems.length; i++) {
             var item = selectedItems[i];
             var rowKey = item['rowKey'];
             $('#contentGrid').jsGrid('deleteItem', item);
             //fnDeleteDatabase(rowKey, null)
         }
 
-        if(callback != null && callback != undefined) {
+        if (callback != null && callback != undefined) {
             callback();
         }
 
         selectedItems = [];
     }
-    
-    
+
+
     function getParams() {
         var param = {}
-     
+
         // 현재 페이지의 url
         var url = decodeURIComponent(location.href);
         url = decodeURIComponent(url);
-        
-        if(url.split('?').length > 1) {
+
+        if (url.split('?').length > 1) {
 
             var params = url.split('?')[1];
 
-            if(params.length == 0) {
+            if (params.length == 0) {
                 return param;
             }
 
@@ -383,18 +367,18 @@ $(document).ready(function () {
             var size = params.length;
             var key, value;
 
-            for(var i=0 ; i < size ; i++) {
+            for (var i = 0; i < size; i++) {
                 key = params[i].split("=")[0];
                 value = params[i].split("=")[1];
-        
+
                 param[key] = value;
             }
         }
-        
+
         return param;
     }
-    
-    
+
+
     //목록 이동
     function fnGoList() {
         var url = '/view/manageLecture.html';
@@ -408,8 +392,8 @@ $(document).ready(function () {
         var form = $('<form></form>');
         $(form).attr('method', 'get');
         $(form).attr('action', url);
-        
-        $.each(paramObj, function(key, value) {
+
+        $.each(paramObj, function (key, value) {
             var input = $('<input type="hidden"/>');
             $(input).attr('name', key);
             $(input).val(value);
@@ -420,10 +404,10 @@ $(document).ready(function () {
         $('body').append(form);
         $(form).submit();
     }
-    
-    
+
+
     function resetFormElement(e) {
-        e.wrap('<form>').closest('form').get(0).reset(); 
+        e.wrap('<form>').closest('form').get(0).reset();
         //리셋하려는 폼양식 요소를 폼(<form>) 으로 감싸고 (wrap()) , 
         //요소를 감싸고 있는 가장 가까운 폼( closest('form')) 에서 Dom요소를 반환받고 ( get(0) ),
         //DOM에서 제공하는 초기화 메서드 reset()을 호출
@@ -443,31 +427,30 @@ $(document).ready(function () {
         canvas.id = 'canvas';
         var w = 160;
         var h = 90;
-        canvas.width  = w;
+        canvas.width = w;
         canvas.height = h;
 
         var ctx = canvas.getContext('2d');
 
-        switch(option) {
+        switch (option) {
             case 'image':
                 ctx.drawImage(content, 0, 0, w, h);
-                console.log('?');
                 break;
             case 'video':
                 ctx.drawImage(content, 0, 0, w, h);
                 break; 
         }
-        
+
         return canvas;
-    } 
+    }
 
     /**
      * Invokes the <code>capture</code> function and attaches the canvas element to the DOM.
      */
     function shoot() {
-        var video  = document.getElementById('video');
+        var video = document.getElementById('video');
         var output = document.getElementById('output');
-        
+
         var canvas = capture('video', video);
         output.innerHTML = '';
         output.appendChild(canvas);
@@ -478,22 +461,18 @@ $(document).ready(function () {
     function fnUploadVideo(rowId, callback) {
 
         var contentFile = $(submitVideoAttachFile).prop('files')[0];
-        var uploadTask = firebase.storage().ref('videos/' + rowId).put(contentFile, {contentType: null});
+        var uploadTask = firebase.storage().ref('videos/' + rowId).put(contentFile, { contentType: null });
 
         uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
-            function(snapshot) {
+            function (snapshot) {
                 //progressbar 갱신
                 var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                 $('#video').siblings('div.progress').find('div.progress-bar').css('width', progress + '%');
-                
+
                 switch (snapshot.state) {
-                case firebase.storage.TaskState.PAUSED:
-                    console.log('Upload is paused');
-                    break;
-                case firebase.storage.TaskState.RUNNING:
-                    break;
+                    case firebase.storage.TaskState.PAUSED:
                 }
-            }, function(error) {
+            }, function (error) {
                 switch (error.code) {
                     case 'storage/unauthorized':
                         break;
@@ -504,9 +483,9 @@ $(document).ready(function () {
                 }
 
                 window.FakeLoader.hideOverlay();
-            }, function() {
-                uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-                    if(callback != null && callback != undefined) {
+            }, function () {
+                uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+                    if (callback != null && callback != undefined) {
                         callback(downloadURL);
                     }
                 });
@@ -522,21 +501,17 @@ $(document).ready(function () {
         var dataUrl = canvas.toDataURL('image/png');
         var contentFile = fnConvertDataUrlToBlob(dataUrl);
 
-        var uploadTask = firebase.storage().ref('thumbnail/' + rowId).put(contentFile, {contentType: null});
+        var uploadTask = firebase.storage().ref('thumbnail/' + rowId).put(contentFile, { contentType: null });
 
         uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
-            function(snapshot) {
+            function (snapshot) {
                 //progressbar 갱신
                 var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 
                 switch (snapshot.state) {
-                case firebase.storage.TaskState.PAUSED:
-                    console.log('Upload is paused');
-                    break;
-                case firebase.storage.TaskState.RUNNING:
-                    break;
+                    case firebase.storage.TaskState.PAUSED:
                 }
-            }, function(error) {
+            }, function (error) {
                 switch (error.code) {
                     case 'storage/unauthorized':
                         break;
@@ -547,9 +522,9 @@ $(document).ready(function () {
                 }
 
                 window.FakeLoader.hideOverlay();
-            }, function() {
-                uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-                    if(callback != null && callback != undefined) {
+            }, function () {
+                uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+                    if (callback != null && callback != undefined) {
                         callback(downloadURL);
                     }
                 });
@@ -564,24 +539,24 @@ $(document).ready(function () {
         var param = '';
         var target;
 
-        if(isEmpty($('#title').val())) {
+        if (isEmpty($('#title').val())) {
             param = '강좌명';
             target = $('#title');
-        }else if(isEmpty($('#output').html())) {
+        } else if (isEmpty($('#output').html())) {
             param = '썸네일';
             target = $('#output');
-        }else if(isEmpty($('#author').val())) {
+        } else if (isEmpty($('#author').val())) {
             param = '강사명';
             target = $('#author');
-        }else if(isEmpty($('#category').val())) {
+        } else if (isEmpty($('#category').val())) {
             param = '카테고리';
             target = $('#category');
-        }else if($('#relatedTags').tagsinput('items').length == 0) {
+        } else if ($('#relatedTags').tagsinput('items').length == 0) {
             param = '관련태그';
             target = $('#relatedTags');
         }
 
-        if(!isEmpty(param)) {
+        if (!isEmpty(param)) {
             errMsg = param + ' 은(는) 필수입력 입니다.';
             alert(errMsg);
             $(target).focus();
@@ -627,21 +602,46 @@ $(document).ready(function () {
     }
 
 
-    function setLectureDatabase(rowId, paramObj, callback) {
+    function fnSaveVideos(callback) {
 
-        parent.database.ref('/' + compCd + '/lecture/' + rowId + '/').set(paramObj).then(function onSuccess(res) {
-            if(callback != null && callback != undefined) {
-                callback();
-            }
-        }).catch(function onError(err) {
-            console.log("ERROR!!!! " + err);
-            window.FakeLoader.hideOverlay();
-        });
+    }
+
+
+    //combo 구성
+    function fnGetCommonCmb(option, selector, defaultValue) {
+
+        $('' + selector).html('');
+        $('' + selector).html('<option value="">전체</option>');
+
+        switch (option) {
+            case 'category':
+                parent.database.ref('/' + compCd + '/categories/').once('value')
+                    .then(function (snapshot) {
+                        var catArr = snapshot.val();
+                        var optionArr = [];
+
+                        $.each(catArr, function (idx, catObj) {
+                            var newOption = $('<option></option>');
+                            $(newOption).attr('value', idx);
+                            $(newOption).attr('data-requireYn', catObj['requireYn']);
+                            $(newOption).text(catArr[idx].title);
+
+                            if (idx == defaultValue) {
+                                $(newOption).attr('selected', 'selected');
+                            }
+
+                            $('' + selector).append($(newOption));
+                        });
+
+                        $('' + selector).selectpicker();
+                    });
+                break;
+        }
     }
 
 
     function replaceBlankSpace(string) {
-        return string.replace(' ','_');
+        return string.replace(' ', '_');
     }
 
 
@@ -654,15 +654,15 @@ $(document).ready(function () {
     //dataUrl --> Blob
     function fnConvertDataUrlToBlob(dataURL) {
         const BASE64_MARKER = ";base64,";
-      
+
         // base64로 인코딩 되어있지 않을 경우
         if (dataURL.indexOf(BASE64_MARKER) === -1) {
-          const parts = dataURL.split(",");
-          const contentType = parts[0].split(":")[1];
-          const raw = parts[1];
-          return new Blob([raw], {
-            type: contentType
-          });
+            const parts = dataURL.split(",");
+            const contentType = parts[0].split(":")[1];
+            const raw = parts[1];
+            return new Blob([raw], {
+                type: contentType
+            });
         }
 
         // base64로 인코딩 된 이진데이터일 경우
@@ -673,54 +673,33 @@ $(document).ready(function () {
         const rawLength = raw.length;
         // 부호 없는 1byte 정수 배열을 생성 
         const uInt8Array = new Uint8Array(rawLength); // 길이만 지정된 배열
-        
+
         var i = 0;
         while (i < rawLength) {
-          uInt8Array[i] = raw.charCodeAt(i);
-          i++;
+            uInt8Array[i] = raw.charCodeAt(i);
+            i++;
         }
 
         return new Blob([uInt8Array], {
-          type: contentType
+            type: contentType
         });
     }
 
 
-    //combo 구성
-    function fnGetCommonCmb(option, selector, defaultValue) {
+    function setLectureDatabase(rowId, paramObj, callback) {
 
-        $('' + selector).html('');
-        $('' + selector).html('<option value="">전체</option>');
+        parent.database.ref('/' + compCd + '/lecture/' + rowId + '/').set(paramObj).then(function onSuccess(res) {
+            if (callback != null && callback != undefined) {
+                callback();
+            }
+        }).catch(function onError(err) {
 
-        switch(option) {
-            case 'category':
-                    parent.database.ref('/' + compCd + '/categories/').once('value')
-                    .then(function (snapshot) {
-                        var catArr = snapshot.val();
-                        var optionArr = [];
-                    
-                        $.each(catArr, function(idx, catObj) {
-                            var newOption = $('<option></option>');
-                            $(newOption).attr('value', idx);
-                            $(newOption).attr('data-requireYn', catObj['requireYn']);
-                            $(newOption).text(catArr[idx].title);
-
-                            if(idx == defaultValue) {
-                                $(newOption).attr('selected', 'selected');
-                            }
-
-                            $(''+selector).append($(newOption));
-                        });
-    
-                        $(''+selector).selectpicker();
-                    });    
-                break; 
-        }
+        });
     }
     /** end of functions *************************/
 
 
     //ifame height resize
     resizeFrame();
-
+    
 });

@@ -7,11 +7,11 @@ $(document).ready(function () {
     var compNm = userObj['compNm'];
 
     /** start of grid ***********************/
-    $("#grid").jsGrid({
+    $("#lectureGrid").jsGrid({
         width: "100%",
-        height: "200px",
-        //editing: true,
-        inserting: true,
+        height: "300px",
+        editing: true,
+        //inserting: true,
         sorting: true,
         paging: false,
         selecting: true,
@@ -32,21 +32,48 @@ $(document).ready(function () {
             });
         },
 
+        onItemUpdating: function(args) {
+            if(!confirm('수정하시겠습니까?')) {
+                args.cancel = true;
+            }
+        },
+
+        onItemUpdated: function(args) {
+            var rowKey = args.item.rowKey;
+            var item = args.item;
+            delete item['rowKey']; 
+            
+            fnUpdateDatabase('lecture', rowKey, item, function() {
+                alert('수정되었습니다.');
+                fnRetrieve();
+            });
+        },
+
+        onItemDeleting: function(args) {
+            if(!confirm('삭제하시겠습니까?')) {
+                args.cancel = true;
+            }
+        },
+
+        onItemDeleted: function(args) {
+            var rowKey = args.item.rowKey;
+            
+            fnDeleteDatabase('lecture', rowKey, function() {
+                alert('삭제되었습니다.');
+                fnRetrieve();
+            });
+        },
+
         rowClick: function(args) {
             var $row = this.rowByItem(args.item),
-            selectedRow = $("#grid").find('table tr.highlight');
+            selectedRow = $("#lectureGrid").find('table tr.highlight');
 
             if (selectedRow.length) {
                 selectedRow.toggleClass('highlight');
             };
             
             $row.toggleClass("highlight");
-
             fnRetrieveDetail(args.item);
-            
-            /* if(this.editing) {
-                this.editItem($(args.event.target).closest("tr"));
-            } */
         },
 
         fields: [
@@ -54,43 +81,194 @@ $(document).ready(function () {
                 itemTemplate: function(_, item) {
                     return $("<input>").attr("type", "checkbox")
                             .addClass('selectionCheckbox')
-                            .prop("checked", $.inArray(item, selectedItems) > -1)
+                            .prop("checked", $.inArray(item, selectedItemsLecture) > -1)
                             //.prop('disabled', (item.rowKey == 'REQUIRED'))
                             .on("change", function () {
-                                $(this).is(":checked") ? selectItem(item) : unselectItem(item);
+                                $(this).is(":checked") ? selectItem('lecture', item) : unselectItem('lecture', item);
                             });
                 },
                 align: "center",
-                width: 30
+                width: '30px'
             },
+            { name: "thumbnail", title: '썸네일', width: 80, editing: false, align: "center", cellRenderer: function(item, value) {
+                var rslt = $("<td>").addClass("jsgrid-cell");
+                var img = $("<img>");
+                
+                $(img).css('width', '60px');
+                $(img).css('height', '45px');
+                $(img).attr('src', item);
+                $(rslt).append(img);
+                
+                return rslt;
+            }, editTemplate: function(item, value) {
+                
+                var img = $('<img>');
+                
+                $(img).css('width', '60px');
+                $(img).css('height', '45px');
+                $(img).attr('src', item);
+                
+                return img;
+            } },
             { name: "title", title: '강좌명', type: "text", width: 200, align: "left", validate: {
                 validator: 'required', 
                 message: '공개여부 는 필수입력 입니다.'
             } },
-            { name: "lecture", title: '강의수', type: "number", width: 50, align: "right", inserting: false, editing: false },
-            { type: "control", editButton: false, deleteButton: false } //edit control
+            { name: "categoryNm", title: '카테고리', type: "text", width: 150, align: "left", editing: false },
+            { name: "author", title: '강사명', type: "text", width: 100, align: "center" },
+            { name: "tags", title: "관련태그", type: 'text', width: 200, editing: false, align: "left", cellRenderer: function(item, value){
+                var rslt = $("<td>").addClass("jsgrid-cell");
+                var div = $('<div></div>');
+                $(rslt).append(div);
+
+                if(isEmpty(item)) {
+                    return rslt;
+                }
+
+                var arr = item.split(' ');
+                for(var i=0; i<arr.length; i++) {
+                    $(div).append($('<span class="tag label label-info" style="margin-right:5px; display:inline-block;">'+arr[i]+'</span>'));
+                }
+                return rslt; 
+              }, editTemplate: function(item, value) {
+                var div = $('<div></div>');
+                
+                if(isEmpty(item)) {
+                    return div;
+                }
+                
+                var arr = item.split(' ');
+                
+                for(var i=0; i<arr.length; i++) {
+                    $(div).append($('<span class="tag label label-info" style="margin-right:5px; display:inline-block;">'+arr[i]+'</span>'));
+                }
+
+                return div; 
+            } },
+            { name: "requireYn", title: "필수강좌여부", type: 'select', items: [
+                { Name: "전체", Id: "" },
+                { Name: "Y", Id: "Y" },
+                { Name: "N", Id: "N" }
+            ],valueField: "Id", textField: "Name", width: 100, editing: true, validate: {
+                validator: 'required', 
+                message: '필수강좌여부 는 필수입력 입니다.'
+            }, align: "center" },
+            { name: "contentCnt", title: '강의수', type: "number", width: 50, align: "right", inserting: false, editing: false },
+            { type: 'control'}
         ]
     });
 
 
-    $("#detailGrid").jsGrid({
+    $("#contentGrid").jsGrid({
         width: "100%",
-        height: "300px",
-        //editing: true,
+        height: "200px",
+        editing: true,
         sorting: true,
         paging: false,
         selecting: true,
+        confirmDeleting: false,
         data: [],
 
+        onItemUpdating: function(args) {
+            if(!confirm('수정하시겠습니까?')) {
+                args.cancel = true;
+            }
+        },
+
+        onItemUpdated: function(args) {
+            var rowKey = args.item.rowKey;
+            var item = args.item;
+            delete item['rowKey']; 
+            
+            fnUpdateDatabase('content', rowKey, item, function() {
+                alert('수정되었습니다.');
+
+                var data = $('#lectureGrid').jsGrid('option', 'data');
+                var selectedRow = $("#lectureGrid").find('table tr.highlight').prevAll().length;
+
+                fnRetrieveDetail(data[selectedRow]);
+            });
+        },
+
+        onItemDeleting: function(args) {
+            if(!confirm('삭제하시겠습니까?')) {
+                args.cancel = true;
+            }
+        },
+
+        onItemDeleted: function(args) {
+            var rowKey = args.item.rowKey;
+            
+            fnDeleteDatabase('content', rowKey, function() {
+                alert('삭제되었습니다.');
+
+                var data = $('#lectureGrid').jsGrid('option', 'data');
+                var selectedRow = $("#lectureGrid").find('table tr.highlight').prevAll().length;
+                
+                fnRetrieveDetail(data[selectedRow]);
+            });
+        },
+
+        rowClick: function(args) {
+            var arr = $('#contentGrid').jsGrid('option', 'data');
+            console.log(arr);
+            var videoUrl = arr[args.itemIndex]['downloadURL'];
+            fnLoadVideo(videoUrl);
+            
+            var $row = this.rowByItem(args.item);
+            var selectedRow = $("#contentGrid").find('table tr.highlight');
+
+            if (selectedRow.length) {
+                selectedRow.toggleClass('highlight');
+            };
+            
+            $row.toggleClass("highlight");
+        },
+
         fields: [
+            {
+                itemTemplate: function(_, item) {
+                    return $("<input>").attr("type", "checkbox")
+                            .addClass('selectionCheckbox')
+                            .prop("checked", $.inArray(item, selectedItemsContent) > -1)
+                            //.prop('disabled', (item.rowKey == 'REQUIRED'))
+                            .on("change", function () {
+                                $(this).is(":checked") ? selectItem('content', item) : unselectItem('content', item);
+                            });
+                },
+                align: "center",
+                width: '30px'
+            },
+            { name: "thumbnail", title: '썸네일', width: 80, editing: false, align: "center", cellRenderer: function(item, value) {
+                var rslt = $("<td>").addClass("jsgrid-cell");
+                var img = $('<img onerror="this.src=\'/img/UPLOADING.png\'"/>');
+                
+                $(img).css('width', '60px');
+                $(img).css('height', '45px');
+                $(img).attr('src', item);
+                $(rslt).append(img);
+                
+                return rslt;
+            }, editTemplate: function(item, value) {
+                
+                var img = $('<img onerror="this.src=\'/img/UPLOADING.png\'"/>');
+                
+                $(img).css('width', '60px');
+                $(img).css('height', '45px');
+                $(img).attr('src', item);
+                
+                return img;
+            } },
             { name: "title", title: '강의명', type: "text", width: 200, align: "left" },
-            { name: "author", title: '강사명', type: "text", width: 100, align: "left" }
+            { name: "seq", title: '정렬순서', type: "number", width: 50, align: "right" },
+            { type: 'control' }
         ]
     });
+    /** end of grid ***********************/
 
 
     $('#btnSearch').on('click', function(e) {
-        $("#detailGrid").jsGrid("option", "data", []);
+        $("#contentGrid").jsGrid("option", "data", []);
         fnRetrieve();
     });
 
@@ -102,7 +280,7 @@ $(document).ready(function () {
         fnGo('/view/registerLecture.html', {
             'searchRequireYn' : $('#searchRequireYn').val(),
             'searchCategory' : $('#searchCategory').val(),
-            'searhRelatedTag': $('#searhRelatedTag').val(),
+            'searchRelatedTag': $('#searchRelatedTag').val(),
             'searchTitle': $('#searchTitle').val()
         });
     });
@@ -112,24 +290,22 @@ $(document).ready(function () {
     $('#btnDel').on('click', function(e) {
         e.preventDefault();
 
-        if(selectedItems.length == 0) {
+        if(selectedItemsLecture.length == 0) {
             alert('선택된 데이터가 없습니다.');
-            args.cancel = true;
             return false;
         }else {
-            for(var i=0; i<selectedItems.length; i++) {
-                var item = selectedItems[i];
+            for(var i=0; i<selectedItemsLecture.length; i++) {
+                var item = selectedItemsLecture[i];
 
                 if(item['contentCnt'] > 0) {
-                    alert('컨텐츠가 등록된 카테고리는 삭제할 수 없습니다.');
-                    args.cancel = true;
+                    alert('강의가 등록된 강좌는 삭제할 수 없습니다.');
                     return false;
                 }
             }
         }
 
         if(confirm("삭제하시겠습니까?")) {
-            removeCheckedRows(function() {
+            removeCheckedRows('lecture', function() {
                 alert('삭제되었습니다.');
                 fnRetrieve();
             });
@@ -137,45 +313,130 @@ $(document).ready(function () {
     });
 
 
-    var selectedItems = [];
+    /** start of component ***********************/
+    $('#btnAddVideo').on('click', function(e) {
+
+        e.preventDefault();
+
+        var data = $('#lectureGrid').jsGrid('option', 'data');
+        var selectedRow = $("#lectureGrid").find('table tr.highlight').prevAll().length;
+        var lectureId = data[selectedRow]['rowKey'];
+
+
+        fnGo('/view/registerContent.html', {
+            'searchRequireYn' : $('#searchRequireYn').val(),
+            'searchCategory' : $('#searchCategory').val(),
+            'searchRelatedTag': $('#searchRelatedTag').val(),
+            'searchTitle': $('#searchTitle').val(),
+            'lectureId': lectureId
+        });
+    });
+
+
+    $('#btnDelVideo').on('click', function(e) {
+
+        e.preventDefault();
+
+        console.log(selectedItemsContent);
+
+        if(selectedItemsContent.length == 0) {
+            alert('선택된 데이터가 없습니다.');
+            return false;
+        }
+
+        if(confirm("삭제하시겠습니까?")) {
+            removeCheckedRows('content', function() {
+                alert('삭제되었습니다.');
+
+                var data = $('#lectureGrid').jsGrid('option', 'data');
+                var selectedRow = $("#lectureGrid").find('table tr.highlight').prevAll().length;
+
+                fnRetrieveDetail(data[selectedRow]);
+            });
+        }
+    });
+    /** end of component ***********************/
+
+
+    /** start of function ***********************/
+    var selectedItemsLecture = [];
+    var selectedItemsContent = [];
  
-    function selectItem(item) {
-        selectedItems.push(item);
+    function selectItem(option, item) {
+        if(option == 'lecture') {
+            selectedItemsLecture.push(item);
+        }else {
+            selectedItemsContent.push(item);
+        }
     };
 
-    function unselectItem(item) {
-        selectedItems = $.grep(selectedItems, function(i) {
-            return i !== item;
-        });
+    function unselectItem(option, item) {
+        if(option == 'lecture') {
+            selectedItemsLecture = $.grep(selectedItems, function(i) {
+                return i !== item;
+            });
+        }else {
+            selectedItemsContent = $.grep(selectedItems, function(i) {
+                return i !== item;
+            });
+        }
     }
 
 
     //체크된 건들 삭제
-    function removeCheckedRows(callback) {
+    function removeCheckedRows(option, callback) {
+        var selectedItems = (option == 'lecture') ? selectedItemsLecture : selectedItemsContent;
+
         for(var i=0; i<selectedItems.length; i++) {
             var item = selectedItems[i];
             var rowKey = item['rowKey'];
-            fnDeleteDatabase(rowKey, null)
+            fnDeleteDatabase(option, rowKey, null)
+        }
+
+        if(option == 'lecture') {
+            selectedItemsLecture = [];
+            selectedItemsContent = [];
+        }else {
+            selectedItemsContent = [];
         }
 
         if(callback != null && callback != undefined) {
             callback();
         }
-
-        selectedItems = [];
     }
 
 
     //삭제
-    function fnDeleteDatabase(rowKey, callback) {
+    function fnDeleteDatabase(option, rowKey, callback) {
 
-        parent.database.ref('/' + compCd + '/categories/' + rowKey + '/').remove().then(function onSuccess(res) {
-            if(callback != null && callback != undefined) {
-                callback();
-            }
-        }).catch(function onError(err) {
-            console.log("ERROR!!!! " + err);
-        });
+        switch (option) {
+            case 'lecture':
+                    parent.database.ref('/' + compCd + '/lecture/' + rowKey + '/').remove().then(function onSuccess(res) {
+                        if(callback != null && callback != undefined) {
+                            callback();
+                        }
+                    }).catch(function onError(err) {
+                        console.log("ERROR!!!! " + err);
+                    });
+                break;
+
+            case 'content':
+                    var data = $('#lectureGrid').jsGrid('option', 'data');
+                    var selectedRow = $("#lectureGrid").find('table tr.highlight').prevAll().length;
+                    var lectureId = data[selectedRow]['rowKey'];
+                    console.log(lectureId);
+
+                    parent.database.ref('/' + compCd + '/lecture/' + lectureId + '/videos/' + rowKey).remove().then(function onSuccess(res) {
+                        if(callback != null && callback != undefined) {
+                            callback();
+                        }
+                    }).catch(function onError(err) {
+                        console.log("ERROR!!!! " + err);
+                    });
+                break;
+        }
+
+        
     }
 
 
@@ -230,7 +491,6 @@ $(document).ready(function () {
                         var catArr = snapshot.val();
                         var optionArr = [];
                     
-                        console.log(catArr)
                         $.each(catArr, function(idx, catObj) {
                             var newOption = $('<option></option>');
                             $(newOption).attr('value', idx);
@@ -250,6 +510,55 @@ $(document).ready(function () {
     }
 
 
+    //수정
+    function fnUpdateDatabase(option, rowKey, paramObj, callback) {
+
+        switch(option) {
+            case 'lecture':
+                    parent.database.ref('/' + compCd + '/lecture/' + rowKey + '/').update(paramObj).then(function onSuccess(res) {
+                        if (callback != null && callback != undefined) {
+                            callback();
+                        }
+                    }).catch(function onError(err) {
+                        console.log("ERROR!!!! " + err);
+                    });
+                break;
+
+            case 'content':
+                    var data = $('#lectureGrid').jsGrid('option', 'data');
+                    var selectedRow = $("#lectureGrid").find('table tr.highlight').prevAll().length;
+                    var lectureId = data[selectedRow]['rowKey'];
+
+                    console.log(paramObj);
+
+                    parent.database.ref('/' + compCd + '/lecture/' + lectureId + '/videos/' + rowKey + '/').update(paramObj).then(function onSuccess(res) {
+                        if (callback != null && callback != undefined) {
+                            callback();
+                        }
+                    }).catch(function onError(err) {
+                        console.log("ERROR!!!! " + err);
+                    });
+                break;
+        }
+    }
+
+
+    //video load
+    function fnLoadVideo(videoUrl) {
+        var video = document.getElementById('video');
+        video.pause();
+
+        var source = document.createElement('source');
+        source.type = 'video/mp4';
+        source.src = videoUrl;
+
+        video.innerHTML = '';
+        video.appendChild(source);
+
+        video.load();
+    }
+
+
     function fnInit() {
 
         $('#searchRequireYn').selectpicker();
@@ -259,23 +568,19 @@ $(document).ready(function () {
         if(Object.keys(searchParam).length > 0) {
             $('#searchRequireYn').val(searchParam['searchRequireYn']);
             $('#searchRequireYn').selectpicker('refresh');
-            
-            //$('#searchCategory').val(searchParam['searchCategory']);
-            //$('#searchCategory').selectpicker('refresh');
-            
             $('#searchTitle').val(searchParam['searchTitle']);
             
-            fnGetCommonCmb('tag', '#searhRelatedTag', searchParam['searhRelatedTag']);
+            fnGetCommonCmb('tag', '#searchRelatedTag', searchParam['searchRelatedTag']);
             fnGetCommonCmb('category', '#searchCategory', searchParam['searchCategory']);
 
             fnRetrieve({
                 searchRequireYn: searchParam['searchRequireYn'],
                 searchCategory: searchParam['searchCategory'],
                 searchTitle: searchParam['searchTitle'],
-                searchRelatedTag: searchParam['searhRelatedTag'] 
+                searchRelatedTag: searchParam['searchRelatedTag'] 
             });
         }else {
-            fnGetCommonCmb('tag', '#searhRelatedTag');
+            fnGetCommonCmb('tag', '#searchRelatedTag');
             fnGetCommonCmb('category', '#searchCategory');
             fnRetrieve();
         }
@@ -334,22 +639,36 @@ $(document).ready(function () {
 
 
     function fnRetrieve() {
+        
+        selectedItemsLecture = [];
+        selectedItemsContent = [];
+        
         var searchCompany = compCd;
         var searchCategory = $('#searchCategory').val() || '';
+        var searchTitle = $('#searchTitle').val() || '';
+        var searchRelatedTag = $('#searchRelatedTag').val() || '';
+        var searchRequireYn = $('#searchRequireYn').val() || '';
 
 
         window.FakeLoader.showOverlay();
 
-        parent.database.ref('/'+ searchCompany+'/categories').once('value').then(function(snapshot) {
+        parent.database.ref('/'+ searchCompany+'/lecture').once('value').then(function(snapshot) {
     
             var catArr = snapshot.val();
             var rsltArr = [];
 
             $.each(catArr, function(idx, catObj) {
 
-                var catName = catObj['title'] || '';
+                console.log(searchRelatedTag);
+                console.log($.inArray(searchRelatedTag, catObj['tags'].split(' ')));
 
-                if(searchCategory == '' || catName.indexOf(searchCategory) > -1) {
+                if(
+                    (searchTitle == '' || catObj['title'].indexOf(searchTitle) > -1) &&
+                    (searchRequireYn == '' || searchRequireYn == catObj['requireYn']) &&
+                    (searchRelatedTag == '' || $.inArray(searchRelatedTag, catObj['tags'].split(' ')) > -1) &&
+                    ((searchCategory == '') || searchCategory == catObj['categoryId'])
+                    
+                ) {
                     var contentObj = catObj['videos'] || {};
                     var contentCnt = Object.keys(contentObj).length;
     
@@ -359,22 +678,25 @@ $(document).ready(function () {
                 }
             });
 
-            $("#grid").jsGrid("option", "data", rsltArr);
+            $("#lectureGrid").jsGrid("option", "data", rsltArr);
 
             window.FakeLoader.hideOverlay();
 
-            $('#grid').find('tr.jsgrid-row:eq(0)').click(); //첫번째 row click
+            $('#lectureGrid').find('tr.jsgrid-row:eq(0)').click(); //첫번째 row click
         });
     }
 
 
     //상세조회
     function fnRetrieveDetail(item) {
+        
+        selectedItemsContent = [];
+        
         var searchCompany = compCd;
 
         window.FakeLoader.showOverlay();
 
-        parent.database.ref('/'+ searchCompany+'/categories/'+ item['rowKey'] + '/videos').once('value').then(function(snapshot) {
+        parent.database.ref('/'+ searchCompany+'/lecture/'+ item['rowKey'] + '/videos').once('value').then(function(snapshot) {
     
             var catArr = snapshot.val();
             var rsltArr = [];
@@ -382,9 +704,6 @@ $(document).ready(function () {
             $.each(catArr, function(idx) {
 
                 var catObj = catArr[idx];
-                var catName = catObj['title'];
-                var author = catObj['author'];
-
                 var contentCnt = Object.keys(catObj).length;
 
                 catObj['rowKey'] = idx;
@@ -392,16 +711,22 @@ $(document).ready(function () {
                 rsltArr.push(catObj);
             });
 
-            $("#detailGrid").jsGrid("option", "data", rsltArr);
+            //seq 기준 오름차순 정렬
+            rsltArr.sort(function(a, b) {
+                return a.seq - b.seq;
+            });
+
+            $("#contentGrid").jsGrid("option", "data", rsltArr);
+            $('#contentGrid').find('tr.jsgrid-row:eq(0)').click(); //첫번째 row click
 
             window.FakeLoader.hideOverlay();
         });
 
     }
+    /** end of function ***********************/
 
 
     resizeFrame();
     fnInit();
-    //fnRetrieve();
  
 });
