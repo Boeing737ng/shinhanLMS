@@ -10,6 +10,8 @@ import UIKit
 import XLPagerTabStrip
 import Firebase
 
+var selectedCopPostId: String = ""
+
 class GroupBoardTableView: UITableView, UITableViewDataSource, UITableViewDelegate {
     
     var keyArray = Array<String>()
@@ -24,6 +26,7 @@ class GroupBoardTableView: UITableView, UITableViewDataSource, UITableViewDelega
         getQuestionFromDB()
         NotificationCenter.default.addObserver(self, selector: #selector(reloadtable), name: NSNotification.Name(rawValue: "copboardadd"), object: nil)
     }
+    
     @objc func reloadtable() {
         getQuestionFromDB()
         self.reloadData()
@@ -87,6 +90,17 @@ class GroupBoardTableView: UITableView, UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return keyArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let copPostId = keyArray[indexPath.row]
+        selectedCopPostId = copPostId
+        goToCopPostShowPage()
+    }
+    
+    func goToCopPostShowPage() {
+        let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ShowStoryboard")
+        UIApplication.topViewController()!.present(viewController, animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
