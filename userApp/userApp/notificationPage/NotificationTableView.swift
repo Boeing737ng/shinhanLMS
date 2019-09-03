@@ -112,7 +112,9 @@ class NotificationTableView: UITableView, UITableViewDelegate, UITableViewDataSo
         }
         else {
             cell.imgReadUnread.image = UIImage(named: "readNotice")
-            cell.backgroundColor = UIColor.lightGray
+            cell.backgroundColor = #colorLiteral(red: 0.9631979695, green: 0.9631979695, blue: 0.9631979695, alpha: 1)
+            cell.lblTitle.textColor = UIColor.lightGray
+            cell.lblText.textColor = UIColor.lightGray
         }
         cell.lblText.text = textArray[(indexPath as NSIndexPath).row]
         cell.lblDate.text = dateArray[(indexPath as NSIndexPath).row]
