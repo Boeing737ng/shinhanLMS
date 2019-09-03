@@ -40,7 +40,9 @@ class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerV
         //curri=study_nameArray[row]
         detail.text = study_detailtxt[row]
         curri_send = curri[row]
-        imageview.image = UIImage(named: study_img[row])
+        let url = NSURL(string: study_img[row])
+        let data = NSData(contentsOf : url! as URL)
+        imageview.image = UIImage(data : data! as Data)
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "copchange"), object: nil)
         //imageview.image=imageArray[row]
         
