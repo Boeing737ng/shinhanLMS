@@ -59,18 +59,19 @@ class MyPagePreView: UITableView, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return self.playingTitleArray.count
+        //return self.playingTitleArray.count
+        return item.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! MyPagePreCell
-//        if dataReceived {
-//        cell.tagLbl.text = self.playingTitleArray[indexPath.row]
-//        cell.tagImg.image = CachedImageView().loadCacheImage(urlKey: playingVideoIdArray[indexPath.row])
-//        }else{
+        if dataReceived {
+        cell.tagLbl.text = self.playingTitleArray[indexPath.row]
+        cell.tagImg.image = CachedImageView().loadCacheImage(urlKey: playingVideoIdArray[indexPath.row])
+        }else{
             cell.tagLbl.text = item[indexPath.row]
             cell.tagImg.image = UIImage(named: img[(indexPath as NSIndexPath).row])
-//        }
+        }
             return cell
             
         
