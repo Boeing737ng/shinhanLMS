@@ -72,7 +72,7 @@ $(document).ready(function () {
 
 
    /** start of grid ***********************/
-   /**스터디 참여자 리스트 **/
+   /**스터디 참여자 목록 **/
    $("#grid2").jsGrid({
     width: "100%",
     height: "200px",
@@ -89,7 +89,7 @@ $(document).ready(function () {
     });
 
    /** start of grid ***********************/
-   /**스터디 커리큘럼 리스트 **/
+   /**스터디 커리큘럼 목록 **/
    $("#grid3").jsGrid({
     width: "100%",
     height: "200px",
@@ -104,7 +104,7 @@ $(document).ready(function () {
     });
 
 
-//grid 1, 스터디리스트조회 
+//grid 1, 스터디목록조회 
 function fnRetrieve1() {
     window.FakeLoader.showOverlay();
     
@@ -165,7 +165,7 @@ function isMemberInStudy(memberArr, option, searchNm, ) {
     return false;
 }
 
-//grid 2, 스터디 참여자 리스트 조회 
+//grid 2, 스터디 참여자 목록 조회 
 function fnRetrieve2(studyNo) {
 
    

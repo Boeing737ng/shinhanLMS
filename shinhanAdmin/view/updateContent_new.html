@@ -1,7 +1,7 @@
 <!--
 **********************************************
-title : registerContnet
-description : 강의 등록
+title : updateContent
+description : 강의 수정
 author : jybobo
 **********************************************
 -->
@@ -66,7 +66,7 @@ author : jybobo
 
     <script src="/vendor/fakeloader-master/dist/fakeLoader.min.js"></script>
 
-    <script src="/view/registerContent.js"></script>
+    <script src="/view/updateContent_new.js"></script>
     <script src="/js/main.js"></script>
 
 
@@ -127,7 +127,7 @@ author : jybobo
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">강의 등록</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">강의 수정</h6>
                 </div>
 
                 <!-- Card Body -->
@@ -178,21 +178,17 @@ author : jybobo
                                 <td>
                                     <input type="file" id="videoAttachFile" />
                                     <video id="video"
-                                        style="width: 320px; height: 180px; cursor: pointer; background-image: url('/img/upload.png'); background-size: cover;">
+                                        style="width: 320px; height: 180px; background-color: black; background-size: cover;">
                                         이 브라우저는 지원 안함
                                     </video>
-                                    <div class="progress progress-sm">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: 0%"
-                                            aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
                                 </td>
                                 <th class="required"><span>썸네일</span></th>
                                 <td>
                                     <div>
                                         <input type="file" id="thumbnailFile" />
-                                        <div id="output"
-                                            style="width:320px; height:180px; cursor: pointer; background-image: url('/img/upload.png'); background-size: cover;">
-                                        </div>
+                                        <div id="output" style="cursor: pointer;">
+                                                <canvas id="canvas" width="320" height="180"></canvas>
+                                            </div>
                                     </div>
 
                                 </td>

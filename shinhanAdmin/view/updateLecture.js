@@ -8,6 +8,8 @@ $(document).ready(function () {
     var compCd = userObj['compCd'];
     var compNm = userObj['compNm'];
     const MAX_TAGS_CNT = 5;
+    var params = getParams();
+    const LECTURE_ID = params['rowKey'];
 
 
     /** start of components ***********************/
@@ -99,126 +101,7 @@ $(document).ready(function () {
     /** end of components *************************/
 
 
-    /** start of grid ***********************/
-    $("#contentGrid").jsGrid({
-        width: "100%",
-        height: "400px",
-        editing: true,
-        //inserting: true,
-        sorting: true,
-        paging: false,
-        selecting: true,
-        data: [],
-
-        //nextEdit: false,
-        /* rowClick: function(args) {
-            if (this._editingRow)
-            {
-            this.updateItem();
-            this.nextEdit = args.event.target;
-            }
-            else if(this.editing)
-            {
-            this.editItem($(args.event.target).closest("tr"));
-            }
-        }, */
-
-        fields: [
-            {
-                itemTemplate: function (_, item) {
-                    return $("<input>").attr("type", "checkbox")
-                        .addClass('selectionCheckbox')
-                        .prop("checked", $.inArray(item, selectedItems) > -1)
-                        //.prop('disabled', (item.rowKey == 'REQUIRED'))
-                        .on("change", function () {
-                            $(this).is(":checked") ? selectItem(item) : unselectItem(item);
-                        });
-                },
-                align: "center",
-                width: 30
-            },
-            {
-                name: "thumbnail", title: '썸네일', width: 80, editing: false, align: "center", cellRenderer: function (item, value) {
-                    var rslt = $("<td>").addClass("jsgrid-cell");
-                    var img = $('<img/>');
-
-                    $(img).css('width', '60px');
-                    $(img).css('height', '45px');
-                    $(img).css('cursor', 'pointer');
-                    $(img).attr('src', item);
-
-/*                     $(img).on('click', function (e) {
-                        $('#videoThumbnailFile').click();
-                    }); */
-
-                    $(rslt).append(img);
-
-                    console.log(item);
-
-                    return rslt;
-                }, editTemplate: function (item, value) {
-
-                    var img = $('<img/>');
-
-                    $(img).css('width', '60px');
-                    $(img).css('height', '45px');
-                    $(img).css('cursor', 'pointer');
-                    $(img).attr('id', 'canvas_edit_' + item.index);
-
-                    $(img).on('click', function (e) {
-                        $('#videoThumbnailFile').click();
-                    });
-
-                    $(img).attr('src', item);
-
-                    return img;
-                }
-            },
-            {
-                name: "title", title: '강의명', type: "text", width: 200, align: "left", editing: true, validate: {
-                    validator: 'required',
-                    message: '강의명 은 필수입력 입니다.'
-                }
-            },
-            { name: "videoFileNm", title: '파일', type: "text", width: 200, editing: false, align: "left" }
-            ,
-            { type: "control", deleteButton: false } //edit control
-        ]
-    });
-    /** end of grid *************************/
-
-
     /** start of functions ***********************/
-    var selectedItems = [];
-
-    function selectItem(item) {
-        selectedItems.push(item);
-    };
-
-    function unselectItem(item) {
-        selectedItems = $.grep(selectedItems, function (i) {
-            return i !== item;
-        });
-    }
-
-
-    //체크된 건들 삭제
-    function removeCheckedRows(callback) {
-        for (var i = 0; i < selectedItems.length; i++) {
-            var item = selectedItems[i];
-            var rowKey = item['rowKey'];
-            $('#contentGrid').jsGrid('deleteItem', item);
-            //fnDeleteDatabase(rowKey, null)
-        }
-
-        if (callback != null && callback != undefined) {
-            callback();
-        }
-
-        selectedItems = [];
-    }
-
-
     function getParams() {
         var param = {}
 
@@ -284,36 +167,6 @@ $(document).ready(function () {
         //요소를 감싸고 있는 가장 가까운 폼( closest('form')) 에서 Dom요소를 반환받고 ( get(0) ),
         //DOM에서 제공하는 초기화 메서드 reset()을 호출
         e.unwrap(); //감싼 <form> 태그를 제거
-    }
-
-    /**
-     * Captures a image frame from the provided video element.
-     *
-     * @param {Video} video HTML5 video element from where the image frame will be captured.
-     * @param {Number} scaleFactor Factor to scale the canvas element that will be return. This is an optional parameter.
-     *
-     * @return {Canvas}
-     */
-    function capture(option, content) {
-        var canvas = document.createElement('canvas');
-        canvas.id = 'canvas';
-        var w = 160;
-        var h = 90;
-        canvas.width = w;
-        canvas.height = h;
-
-        var ctx = canvas.getContext('2d');
-
-        switch (option) {
-            case 'image':
-                ctx.drawImage(content, 0, 0, w, h);
-                break;
-            case 'video':
-                ctx.drawImage(content, 0, 0, w, h);
-                break; 
-        }
-
-        return canvas;
     }
 
 
@@ -395,9 +248,8 @@ $(document).ready(function () {
 
         (function () {
             var thumbnailPath = '';
-            var rowId = fnGetPrimaryKey(); //id 채번
 
-            fnUploadThumbnail(rowId, function (downloadURL) {
+            fnUploadThumbnail(LECTURE_ID, function (downloadURL) {
 
                 thumbnailPath = downloadURL;
 
@@ -407,7 +259,7 @@ $(document).ready(function () {
                 }
                 var contentTag = contentTagArr.join(' ');
 
-                setLectureDatabase(rowId, {
+                setLectureDatabase(LECTURE_ID, {
                     author: $('#author').val(),
                     categoryId: $('#category').val(),
                     categoryNm: $('#category > option:selected').text(),
@@ -463,9 +315,64 @@ $(document).ready(function () {
     }
 
 
-    //id 채번
-    function fnGetPrimaryKey() {
-        return 'lecture_' + moment().unix();
+    //video load
+    function fnLoadVideo(videoUrl) {
+        var video = document.getElementById('video');
+        video.pause();
+
+        var source = document.createElement('source');
+        source.type = 'video/mp4';
+        source.src = videoUrl;
+
+        video.innerHTML = '';
+        video.appendChild(source);
+
+        video.load();
+    }
+
+
+    //canvas 그리기
+    function drawCanvas(imgUrl) {
+
+        //이미지 객체 생성
+        var imgClo = new Image();
+
+        //페이지 로드후 이미지가 로드 되었을 때 이미지 출력
+        imgClo.addEventListener('load', function () {
+            //로드된 이미지를 캔버스에 출력
+            var ctx = document.getElementById('canvas').getContext("2d");
+
+            //canvas.drawImage() 함수를 사용하여 이미지 출력
+            ctx.drawImage(imgClo, 0, 0, 160, 90);
+            $('#canvas').attr('data-url', imgUrl);
+
+        }, false);
+
+        //이미지 경로 설정
+        imgClo.src = imgUrl;
+
+    }
+
+
+    function fnRetrieve() {
+        window.FakeLoader.showOverlay();
+
+        console.log(LECTURE_ID);
+        
+        parent.database.ref('/' + compCd + '/lecture/' + LECTURE_ID).once('value').then(function(snapshot) {
+
+            var obj = snapshot.val();
+            
+            $('#lectureTitle').text(obj['title']);
+            
+            fnGetCommonCmb('category', '#category', obj['categoryId']);
+            $('#requireYn').val(obj['requireYn']);
+            $('#description').val(obj['description']);
+
+            drawCanvas(obj['thumbnail']);
+
+            window.FakeLoader.hideOverlay();
+        });
     }
 
 
@@ -506,7 +413,7 @@ $(document).ready(function () {
 
     function setLectureDatabase(rowId, paramObj, callback) {
 
-        parent.database.ref('/' + compCd + '/lecture/' + rowId + '/').set(paramObj).then(function onSuccess(res) {
+        parent.database.ref('/' + compCd + '/lecture/' + rowId + '/').update(paramObj).then(function onSuccess(res) {
             if (callback != null && callback != undefined) {
                 callback();
             }
@@ -519,5 +426,6 @@ $(document).ready(function () {
 
     //ifame height resize
     resizeFrame();
+    fnRetrieve();
     
 });

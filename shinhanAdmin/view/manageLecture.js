@@ -73,7 +73,20 @@ $(document).ready(function () {
             };
             
             $row.toggleClass("highlight");
-            fnRetrieveDetail(args.item);
+            
+            //fnRetrieveDetail(args.item);
+        },
+
+        rowDoubleClick: function(args) {
+            var arr = $('#lectureGrid').jsGrid('option', 'data');
+
+            fnGo('/view/updateLecture.html', {
+                'searchRequireYn' : $('#searchRequireYn').val(),
+                'searchCategory' : $('#searchCategory').val(),
+                'searhRelatedTag': $('#searhRelatedTag').val(),
+                'searchTitle': $('#searchTitle').val(),
+                'rowKey': arr[args.itemIndex]['rowKey']
+            });
         },
 
         fields: [
@@ -223,6 +236,24 @@ $(document).ready(function () {
             };
             
             $row.toggleClass("highlight");
+        },
+
+        rowDoubleClick: function(args) {
+            var arr = $('#contentGrid').jsGrid('option', 'data');
+
+            var data = $('#lectureGrid').jsGrid('option', 'data');
+            var selectedRow = $("#lectureGrid").find('table tr.highlight').prevAll().length;
+            var lectureId = data[selectedRow]['rowKey'];
+    
+            
+            fnGo('/view/updateContent_new.html', {
+                'searchRequireYn' : $('#searchRequireYn').val(),
+                'searchCategory' : $('#searchCategory').val(),
+                'searhRelatedTag': $('#searhRelatedTag').val(),
+                'searchTitle': $('#searchTitle').val(),
+                'lectureId': lectureId,
+                'rowKey': arr[args.itemIndex]['rowKey']
+            });
         },
 
         fields: [
@@ -638,7 +669,7 @@ $(document).ready(function () {
     }
 
 
-    function fnRetrieve() {
+    function fnRetrieve(searchParam) {
         
         selectedItemsLecture = [];
         selectedItemsContent = [];
@@ -649,6 +680,18 @@ $(document).ready(function () {
         var searchRelatedTag = $('#searchRelatedTag').val() || '';
         var searchRequireYn = $('#searchRequireYn').val() || '';
 
+        if(!isEmpty(searchParam)) {
+            searchRequireYn = searchParam['searchRequireYn'] || '';
+            searchCat = searchParam['searchCategory'] || '';
+            searchTag = searchParam['searchRelatedTag'] || '';
+            searchTitle = searchParam['searchTitle'] || '';
+        }else {
+            searchRequireYn = $('#searchRequireYn').val() || '';
+            searchCat = $('#searchCategory').val() || '';
+            searchTag = $('#searhRelatedTag').val() || '';
+            searchTitle = $('#searchTitle').val() || '';
+        }
+
 
         window.FakeLoader.showOverlay();
 
@@ -658,9 +701,6 @@ $(document).ready(function () {
             var rsltArr = [];
 
             $.each(catArr, function(idx, catObj) {
-
-                console.log(searchRelatedTag);
-                console.log($.inArray(searchRelatedTag, catObj['tags'].split(' ')));
 
                 if(
                     (searchTitle == '' || catObj['title'].indexOf(searchTitle) > -1) &&
@@ -690,6 +730,7 @@ $(document).ready(function () {
     //상세조회
     function fnRetrieveDetail(item) {
         
+        fnLoadVideo('');
         selectedItemsContent = [];
         
         var searchCompany = compCd;
