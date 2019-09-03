@@ -9,6 +9,10 @@
 import UIKit
 import Firebase
 
+var selectedNoticeTitle: String = ""
+var selectedNoticeDate: String = ""
+var selectedNoticeDetailText: String = ""
+
 class NotificationTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     
     var keyArray = Array<String>()
@@ -31,6 +35,12 @@ class NotificationTableView: UITableView, UITableViewDelegate, UITableViewDataSo
         self.delegate = self
         self.dataSource = self
         
+        getNoticeFromDB()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadNoticeList), name: NSNotification.Name(rawValue: "noticeRead"), object: nil)
+    }
+    
+    @objc func reloadNoticeList() {
         getNoticeFromDB()
     }
     
@@ -94,6 +104,25 @@ class NotificationTableView: UITableView, UITableViewDelegate, UITableViewDataSo
         totalTitleArray.removeAll()
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        ref.child(userCompanyCode + "/notice/" + userNo + "/" + keyArray[indexPath.row]).updateChildValues(["state": "read"])
+        
+        
+        //self.reloadData()
+        selectedNoticeTitle = titleArray[indexPath.row]
+        selectedNoticeDate = dateArray[indexPath.row]
+        selectedNoticeDetailText = detailTextArray[indexPath.row]
+        goToNoticeShowPage()
+    }
+    
+    func goToNoticeShowPage() {
+        let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "noticeShowStoryboard")
+        UIApplication.topViewController()!.present(viewController, animated: true, completion: nil)
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -112,7 +141,9 @@ class NotificationTableView: UITableView, UITableViewDelegate, UITableViewDataSo
         }
         else {
             cell.imgReadUnread.image = UIImage(named: "readNotice")
-            cell.backgroundColor = UIColor.lightGray
+            cell.backgroundColor = #colorLiteral(red: 0.9631979695, green: 0.9631979695, blue: 0.9631979695, alpha: 1)
+            cell.lblTitle.textColor = UIColor.lightGray
+            cell.lblText.textColor = UIColor.lightGray
         }
         cell.lblText.text = textArray[(indexPath as NSIndexPath).row]
         cell.lblDate.text = dateArray[(indexPath as NSIndexPath).row]
