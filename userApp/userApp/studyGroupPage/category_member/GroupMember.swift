@@ -50,6 +50,9 @@ class GroupMember: UICollectionView, UICollectionViewDelegate, UICollectionViewD
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child("58/study/"+curri_send+"/member").observeSingleEvent(of: .value, with: { (snapshot) in
+            if snapshot.childrenCount == 0 {
+                return
+            }
         let value = snapshot.value as? Dictionary<String,Any>;()
             for study in value! {
                 let studyDict = study.value as! Dictionary<String, Any>;()

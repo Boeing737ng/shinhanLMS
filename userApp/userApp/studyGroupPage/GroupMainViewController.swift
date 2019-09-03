@@ -15,6 +15,8 @@
 import UIKit
 import Firebase
 import XLPagerTabStrip
+import Foundation
+
 var curri = Array<String>()
 var curri_send : String = ""
 class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
@@ -40,16 +42,18 @@ class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerV
         //curri=study_nameArray[row]
         detail.text = study_detailtxt[row]
         curri_send = curri[row]
-        let url = NSURL(string: study_img[row])
-        let data = NSData(contentsOf : url! as URL)
-        imageview.image = UIImage(data : data! as Data)
+        //imageview.image = UIImage(url: URL(string: study_img[row]))
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "copchange"), object: nil)
-        //imageview.image=imageArray[row]
         
+    }
+    @objc func refresh() {
+        self.viewDidLoad()
+        self.viewWillAppear(true)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         getData()
+        NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: NSNotification.Name(rawValue: "addcop"), object: nil)
     }
     func getData() {
         initArrays()
@@ -67,10 +71,10 @@ class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerV
                 curri.append(studyID)
                 let studytitle = studyDict["studyname"] as! String
                 let studydetail = studyDict["detail"] as! String
-                let studyimage = studyDict["img"] as! String
+               // let studyimage = studyDict["img"] as! String
                 self.study_nameArray.append(studytitle)
                 self.study_detailtxt.append(studydetail)
-                self.study_img.append(studyimage)
+                //self.study_img.append(studyimage)
             }
             self.dataReceived = true
             self.pickerImage.reloadAllComponents()
@@ -81,11 +85,24 @@ class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerV
     func initArrays() {
         study_nameArray.removeAll()
         study_detailtxt.removeAll()
-        study_img.removeAll()
+        //study_img.removeAll()
     }
 }
 extension GroupMainViewController : IndicatorInfoProvider{
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo{
         return IndicatorInfo(title: "CoP")
+    }
+}
+extension UIImage {
+    convenience init?(url: URL?) {
+        guard let url = url else { return nil }
+        
+        do {
+            let data = try Data(contentsOf: url)
+            self.init(data: data)
+        } catch {
+            print("Cannot load image from url: \(url) with error: \(error)")
+            return nil
+        }
     }
 }
