@@ -272,32 +272,90 @@ class graphViewController: UIViewController, ChartViewDelegate {
         self.view.window!.layer.add(transition, forKey: nil)
         self.dismiss(animated: false, completion: nil)
     }
+    /*
+    @IBAction func Addcurriculum(_ sender: Any) {
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        for i in addArray
+        {
+            ref.child("58/videos/" + i).observeSingleEvent(of: .value, with: { (snapshot) in
+                // Get user value
+                let value = snapshot.value as? Dictionary<String,Any>;()
+                let videoDict = value as! Dictionary<String, Any>;()
+                let author=videoDict["author"] as! String
+                let title=videoDict["title"] as! String
+                ///////////////////
+                print(curri_send)
+                print(i)
+                ref.child("58/study/"+curri_send+"/curriculum/"+i).setValue([
+                    "author": author,
+                    "title": title,
+                    ])
+                self.dataReceived = true
+            }) { (error) in
+                print(error.localizedDescription)
+            }
+        }
+        addArray.removeAll()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addcurri"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "back"), object: nil)
+    }
+     */
     
     @IBAction func setGoal(_ sender: UIButton) {
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+//        ref.child("user/201302493").observeSingleEvent(of: .value, with: { (snapshot) in
+//            let value = snapshot.value as? Dictionary<String, Any>;()
+//            let goalD = value as! Dictionary<String, Any>;()
+//            let goal = goalD["goalTime"] as! Int
+//            ref.child("user/201302493").setValue(["goalTime": 30])
+//         let updates = ["user/201302493/goalTime":30]
+//         ref.updateChildValues(updates)
+//            }) {
+//            (error) in
+//            print(error.localizedDescription)
+//        }
+        
+        var dataURL:String = "user/201302493/goalTime"
+        
         let timeA = UIAlertController(title: "목표 시간을 선택해 주세요", message: " ", preferredStyle: UIAlertController.Style.alert)
+        
         let A10 = UIAlertAction(title: "10분", style: UIAlertAction.Style.default, handler: {ACTION in self.goalTime = 10
             self.setChart(dataPoints: self.months, values: self.unitSold)
             self.goalTimelbl.text = "\(self.goalTime)분"
+            let updates = [dataURL:10]
+            ref.updateChildValues(updates)
         })
         let A20 = UIAlertAction(title: "20분", style: UIAlertAction.Style.default, handler: {ACTION in self.goalTime = 20
             self.setChart(dataPoints: self.months, values: self.unitSold)
             self.goalTimelbl.text = "\(self.goalTime)분"
+            let updates = [dataURL:20]
+            ref.updateChildValues(updates)
         })
         let A30 = UIAlertAction(title: "30분", style: UIAlertAction.Style.default, handler: {ACTION in self.goalTime = 30
             self.setChart(dataPoints: self.months, values: self.unitSold)
             self.goalTimelbl.text = "\(self.goalTime)분"
+            let updates = [dataURL:30]
+            ref.updateChildValues(updates)
         })
         let A40 = UIAlertAction(title: "40분", style: UIAlertAction.Style.default, handler: {ACTION in self.goalTime = 40
             self.setChart(dataPoints: self.months, values: self.unitSold)
             self.goalTimelbl.text = "\(self.goalTime)분"
+            let updates = [dataURL:40]
+            ref.updateChildValues(updates)
         })
         let A50 = UIAlertAction(title: "50분", style: UIAlertAction.Style.default, handler: {ACTION in self.goalTime = 50
             self.setChart(dataPoints: self.months, values: self.unitSold)
             self.goalTimelbl.text = "\(self.goalTime)분"
+            let updates = [dataURL:50]
+            ref.updateChildValues(updates)
         })
         let A60 = UIAlertAction(title: "60분", style: UIAlertAction.Style.default, handler: {ACTION in self.goalTime = 60
             self.setChart(dataPoints: self.months, values: self.unitSold)
             self.goalTimelbl.text = "\(self.goalTime)분"
+            let updates = [dataURL:60]
+            ref.updateChildValues(updates)
         })
         timeA.addAction(A10)
         timeA.addAction(A20)
