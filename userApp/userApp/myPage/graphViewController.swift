@@ -19,6 +19,7 @@ var dataReceived:Bool = false
 var dbStudyArray = Array<String>()
 var dbCatArray = Array<String>()
 var dbTeaArray = Array<String>()
+var dbGoalArray = Array<Int>()
 
 class graphViewController: UIViewController, ChartViewDelegate {
 
@@ -26,7 +27,7 @@ class graphViewController: UIViewController, ChartViewDelegate {
 
     let copnum: Int = 0
     let studyTime: Int = 0
-    var goalTime: Int = 20
+    var goalTime: Int = 0
     
     @IBOutlet weak var chartView: BarChartView!
     @IBOutlet weak var timeStacklbl: UILabel!
@@ -47,14 +48,15 @@ class graphViewController: UIViewController, ChartViewDelegate {
         super.viewDidLoad()
         months = ["월", "화", "수", "목", "금", "토", "일"]
         
-        setChart(dataPoints: months, values: unitSold)
         
         timeStacklbl.text = "Shinple과 함께 \(studyTime)분을 학습했습니다"
         goalTimelbl.text = "\(goalTime)분"
         getNamePartDB()
         mostCgDB()
         mostTeaDB()
+        goalTimeDB()
         // Do any additional setup after loading the view.
+        setChart(dataPoints: months, values: unitSold)
         
     }
     
@@ -136,7 +138,6 @@ class graphViewController: UIViewController, ChartViewDelegate {
                     self.cat3lbl.text = "3위: \(classV[i]) \(per)%"
                 }
             }
-            
             
         }) { (error) in
             print(error.localizedDescription)
@@ -220,7 +221,42 @@ class graphViewController: UIViewController, ChartViewDelegate {
         }
         return WordD
     }
+//    var ref: DatabaseReference!
+//    ref = Database.database().reference()
+//    ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
+//    let value = snapshot.value as? Dictionary<String, Any>;()
+//    let nameD = value as! Dictionary<String, Any>;()
+//    let name = nameD["name"] as! String
+//    
+//    dbStudyArray.append(name)
     
+    func goalTimeDB(){
+        clearArrays()
+        var dataURL:String = "user/201302493"
+        //        var dataURL:String = ""
+        //        dataURL = "user/" + userNo
+        
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? Dictionary<String, Any>;()
+            let goalD = value as! Dictionary<String, Any>;()
+            let goal = goalD["goalTime"] as! Int
+            print(goal)
+            dbGoalArray.append(goal)
+            dataReceived = true
+            
+            self.goalTimelbl.text = "\(goal)분"
+            
+            let ll = ChartLimitLine(limit: Double(goal)
+                , label: "목표")
+            self.chartView.rightAxis.removeAllLimitLines()
+           self.chartView.rightAxis.addLimitLine(ll)
+            self.chartView.delegate = self
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
     func clearArrays() {
         dbStudyArray.removeAll()
         dbCatArray.removeAll()
@@ -236,6 +272,7 @@ class graphViewController: UIViewController, ChartViewDelegate {
         self.view.window!.layer.add(transition, forKey: nil)
         self.dismiss(animated: false, completion: nil)
     }
+    
     @IBAction func setGoal(_ sender: UIButton) {
         let timeA = UIAlertController(title: "목표 시간을 선택해 주세요", message: " ", preferredStyle: UIAlertController.Style.alert)
         let A10 = UIAlertAction(title: "10분", style: UIAlertAction.Style.default, handler: {ACTION in self.goalTime = 10
