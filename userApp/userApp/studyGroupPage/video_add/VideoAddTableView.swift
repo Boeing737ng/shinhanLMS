@@ -148,10 +148,12 @@ class VideoAddTableView: UITableView, UITableViewDataSource, UITableViewDelegate
             }
         }
         addArray.removeAll()
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addcurri"), object: nil)
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "back"), object: nil)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addcurri"), object: nil)
         }
-    
+        }
     }
 
 
