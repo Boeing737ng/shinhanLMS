@@ -379,6 +379,7 @@ class graphViewController: UIViewController, ChartViewDelegate {
             let chartDataSet = BarChartDataSet(entries: dataEntries, label: "학습량")
             let chartData = BarChartData(dataSet: chartDataSet)
             //            chartDataSet.colors = ChartColorTemplates.material()
+            chartDataSet.colors = [UIColor(red: 0/255, green: 170/255, blue: 255/255, alpha: 1)]
             chartView.data = chartData
             
             chartView.xAxis.labelPosition = .bottom
