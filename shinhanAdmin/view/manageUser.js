@@ -69,7 +69,7 @@ $(document).ready(function () {
                 }
                 return rslt; 
               } },
-            { name: "listenClass", title: "수강강의수", type: 'text', width: 100, editing: false, align: "right" }
+            { name: "listenClass", title: "수강강좌수", type: 'text', width: 100, editing: false, align: "right" }
         ]
         
     });
@@ -147,13 +147,12 @@ $(document).ready(function () {
                     //studyObj['participant'] = mbrCnt;
                     studyObj['empNo'] = idx;
 
-                    //수강강의수 카운트
+                    //수강강좌수 카운트
                     var mbrCnt = Object.keys(studyObj['playList'] || []).length;
                     studyObj['listenClass'] = mbrCnt;
             
                     rsltArr.push(studyObj);
-                
-                   
+    
                 }
                 
             }); 

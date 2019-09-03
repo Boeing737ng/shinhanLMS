@@ -81,6 +81,9 @@ $(document).ready(function () {
     $('#btnLoadEmpNonWatch').on('click', function(e) {
         e.preventDefault();
 
+        console.log(date.now())
+
+
         if(!$(this).hasClass('active') && !confirm('기존에 선택한 수신자 리스트가 초기화됩니다. 계속하시겠습니까?')) {
             return false;
         }
@@ -415,6 +418,7 @@ $(document).ready(function () {
         var targetUsers = {};
 
         var timestamp = Date.now();
+        
 
         for(var i=0; i<userRecords.length; i++) {
             var user = userRecords[i];
@@ -446,7 +450,7 @@ $(document).ready(function () {
             targetUsers: targetUsers
         }, callback);
     }
-
+    console.log(date);
 
     function setNotieDatabase(paramObj, callback) {
 
