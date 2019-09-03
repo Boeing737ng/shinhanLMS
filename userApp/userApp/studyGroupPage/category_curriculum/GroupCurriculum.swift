@@ -16,6 +16,7 @@ class GroupCurriculum: UICollectionView, UICollectionViewDelegate, UICollectionV
         self.dataSource = self
         initcurriculum()
         NotificationCenter.default.addObserver(self, selector: #selector(reloadcollection), name: NSNotification.Name(rawValue: "copchange"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadcollection), name: NSNotification.Name(rawValue: "addcurri"), object: nil)
     }
     @objc func reloadcollection() {
         getData()
@@ -24,17 +25,19 @@ class GroupCurriculum: UICollectionView, UICollectionViewDelegate, UICollectionV
     func initcurriculum()
     {
         initArrays()
+        curri_send="11111"
         var index = 0
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child("58/study/11111/curriculum").observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
-            print(curri)
+            if snapshot.childrenCount == 0 {
+                return
+            }
             let value = snapshot.value as? Dictionary<String,Any>;()
             for video in value! {
                 let videoDict = video.value as! Dictionary<String, Any>;()
                 let videoId = video.key
-                print(videoId)
                 let title = videoDict["title"] as! String
                 let author = videoDict["author"] as! String
                 self.curriculumVideoIdArray.append(videoId)
@@ -55,7 +58,9 @@ class GroupCurriculum: UICollectionView, UICollectionViewDelegate, UICollectionV
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child("58/study/"+curri_send+"/curriculum").observeSingleEvent(of: .value, with: { (snapshot) in
-            // Get user value
+            if snapshot.childrenCount == 0 {
+                return
+            }
             let value = snapshot.value as? Dictionary<String,Any>;()
             for video in value! {
                 let videoDict = video.value as! Dictionary<String, Any>;()
@@ -97,17 +102,15 @@ class GroupCurriculum: UICollectionView, UICollectionViewDelegate, UICollectionV
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CurriculumCell", for: indexPath) as! CurriculumCell
 
-        cell.video_title.text = textArray[indexPath.row]
-        cell.video_author.text = authorArray[indexPath.row]
+        cell.video_title.text = ""
+        cell.video_author.text = ""
         
         if dataReceived {
             cell.video_title.text = curriculumTitleArray[indexPath.row]
             cell.video_author.text = curriculumAuthorArray[indexPath.row]
             print(curriculumVideoIdArray)
             cell.video_img.image = CachedImageView().loadCacheImage(urlKey: curriculumVideoIdArray[indexPath.row])
-            //UIImage(named: "white.jpg")
-                //CachedImageView().loadCacheImage(urlKey: curriculumVideoIdArray[indexPath.row])
-        } else {
+                } else {
             cell.video_title.text = textArray[indexPath.row]
             cell.video_author.text = authorArray[indexPath.row]
             cell.video_img.image = UIImage(named: "white.jpg")
@@ -121,5 +124,4 @@ class GroupCurriculum: UICollectionView, UICollectionViewDelegate, UICollectionV
      // Drawing code
      }
      */
-    
 }

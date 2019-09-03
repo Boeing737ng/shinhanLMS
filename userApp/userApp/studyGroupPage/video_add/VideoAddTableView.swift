@@ -115,4 +115,45 @@ class VideoAddTableView: UITableView, UITableViewDataSource, UITableViewDelegate
         
         return cell
 }
-}
+    func onGoBack() {
+        let transition: CATransition = CATransition()
+        transition.duration = 0.5
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
+        transition.type = CATransitionType.reveal
+        transition.subtype = CATransitionSubtype.fromLeft
+        self.window!.layer.add(transition, forKey: nil)
+        //self.dismiss(animated: false, completion: nil)
+    }
+    @IBAction func Addcurriculum(_ sender: Any) {
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        for i in addArray
+        {
+            ref.child("58/videos/" + i).observeSingleEvent(of: .value, with: { (snapshot) in
+    // Get user value
+            let value = snapshot.value as? Dictionary<String,Any>;()
+            let videoDict = value as! Dictionary<String, Any>;()
+            let author=videoDict["author"] as! String
+            let title=videoDict["title"] as! String
+            ///////////////////
+            print(curri_send)
+            print(i)
+            ref.child("58/study/"+curri_send+"/curriculum/"+i).setValue([
+                "author": author,
+                "title": title,
+                ])
+                self.dataReceived = true
+            }) { (error) in
+                print(error.localizedDescription)
+            }
+        }
+        addArray.removeAll()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "back"), object: nil)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addcurri"), object: nil)
+        }
+        }
+    }
+
+

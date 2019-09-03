@@ -29,7 +29,8 @@ class VideoaddViewController: UIViewController {
         super.viewDidLoad()
         initializeDropDown()
         setDropdownBarText()
-        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addcurri"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onGoBack), name: NSNotification.Name(rawValue: "back"), object: nil)
         // Do any additional setup after loading the view.
     }
     @objc func dropdownButton(){
