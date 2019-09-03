@@ -34,12 +34,10 @@ class GroupCurriculum: UICollectionView, UICollectionViewDelegate, UICollectionV
             if snapshot.childrenCount == 0 {
                 return
             }
-            print(curri)
             let value = snapshot.value as? Dictionary<String,Any>;()
             for video in value! {
                 let videoDict = video.value as! Dictionary<String, Any>;()
                 let videoId = video.key
-                print(videoId)
                 let title = videoDict["title"] as! String
                 let author = videoDict["author"] as! String
                 self.curriculumVideoIdArray.append(videoId)
@@ -112,9 +110,7 @@ class GroupCurriculum: UICollectionView, UICollectionViewDelegate, UICollectionV
             cell.video_author.text = curriculumAuthorArray[indexPath.row]
             print(curriculumVideoIdArray)
             cell.video_img.image = CachedImageView().loadCacheImage(urlKey: curriculumVideoIdArray[indexPath.row])
-            //UIImage(named: "white.jpg")
-                //CachedImageView().loadCacheImage(urlKey: curriculumVideoIdArray[indexPath.row])
-        } else {
+                } else {
             cell.video_title.text = textArray[indexPath.row]
             cell.video_author.text = authorArray[indexPath.row]
             cell.video_img.image = UIImage(named: "white.jpg")
@@ -128,5 +124,4 @@ class GroupCurriculum: UICollectionView, UICollectionViewDelegate, UICollectionV
      // Drawing code
      }
      */
-    
 }
