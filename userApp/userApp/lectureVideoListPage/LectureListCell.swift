@@ -1,5 +1,5 @@
 //
-//  VideoCell.swift
+//  LectureListCell.swift
 //  userApp
 //
 //  Created by Kihyun Choi on 28/08/2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class VideoListCell: UITableViewCell {
+class LectureListCell: UITableViewCell {
     
     @IBOutlet weak var videoThumbnail: UIImageView!
     @IBOutlet weak var videoTitleLabel: UILabel!

@@ -21,11 +21,10 @@ class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
     var viewArray = ["","",""]
     var dataReceived:Bool = false
     
-    var popularVideoIdArray = Array<String>()
+    var popularLectureIdArray = Array<String>()
     var popularTitleArray = Array<String>()
     var popularAuthorArray = Array<String>()
     var popularViewArray = Array<Int>()
-    var playingViewArray = Array<Int>()
     
     override func awakeFromNib() {
         self.delegate = self
@@ -33,7 +32,7 @@ class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
         
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child(userCompanyCode + "/videos/").queryOrdered(byChild: "view").observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child(userCompanyCode + "/lecture/").queryOrdered(byChild: "view").observeSingleEvent(of: .value, with: { (snapshot) in
             let dataSize = Int(snapshot.childrenCount) - 1
             for video in snapshot.children.allObjects as! [DataSnapshot] {
                 if let videoInfo = video.value as? [String : Any] {
@@ -44,7 +43,7 @@ class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
                 }
             }
             for i in 0...2 {
-                self.popularVideoIdArray.append(totalPopularVideoIdArray[dataSize - i])
+                self.popularLectureIdArray.append(totalPopularVideoIdArray[dataSize - i])
                 self.popularTitleArray.append(totalPopularTitleArray[dataSize - i])
                 self.popularAuthorArray.append(totalPopularAuthorArray[dataSize - i])
                 self.popularViewArray.append(totalPopularViewArray[dataSize - i])
@@ -65,12 +64,12 @@ class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return popularVideoIdArray.count
+        return popularLectureIdArray.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let videoId = popularVideoIdArray[indexPath.row]
-        selectedVideoId = videoId
+        let videoId = popularLectureIdArray[indexPath.row]
+        selectedLectureId = videoId
         TabViewController().goToDetailPage()
     }
     
@@ -80,7 +79,7 @@ class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
         if dataReceived {
             cell.videoTitleLabel.text = popularTitleArray[indexPath.row]
             cell.videoAuthorLabel.text = popularAuthorArray[indexPath.row]
-            cell.videoThumbnail.image = CachedImageView().loadCacheImage(urlKey: popularVideoIdArray[indexPath.row])
+            cell.videoThumbnail.image = CachedImageView().loadCacheImage(urlKey: popularLectureIdArray[indexPath.row])
             cell.videoViewLabel.text = String(popularViewArray[indexPath.row])
         } else {
             cell.videoTitleLabel.text = textArray[indexPath.row]

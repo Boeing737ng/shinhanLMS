@@ -1,5 +1,5 @@
 //
-//  VideoTableViewController.swift
+//  LectureTableView.swift.swift
 //  userApp
 //
 //  Created by Kihyun Choi on 28/08/2019.
@@ -11,13 +11,13 @@ import Firebase
 
 var selectedCategoryIndex:Int = 0
 
-class VideoTableView: UITableView, UITableViewDelegate, UITableViewDataSource{
+class LectureTableView: UITableView, UITableViewDelegate, UITableViewDataSource{
     
     var textArray = ["","",""]
     var authorArray = ["","",""]
     var dataReceived:Bool = false
     
-    var databaseVideoIdArray = Array<String>()
+    var databaseLectureIdArray = Array<String>()
     var databaseTitleArray = Array<String>()
     var databaseAuthorArray = Array<String>()
     var databaseViewArray = Array<Int>()
@@ -38,9 +38,9 @@ class VideoTableView: UITableView, UITableViewDelegate, UITableViewDataSource{
         clearArrays()
         var dataURL:String = ""
         if selectedCategoryIndex == 0 {
-            dataURL = userCompanyCode + "/videos"
+            dataURL = userCompanyCode + "/lecture"
         } else {
-            dataURL = userCompanyCode + "/categories/" + categoryDict[selectedCategoryIndex]! + "/videos/"
+            dataURL = userCompanyCode + "/categories/" + categoryDict[selectedCategoryIndex]! + "/lecture/"
         }
         var ref: DatabaseReference!
         ref = Database.database().reference()
@@ -55,11 +55,11 @@ class VideoTableView: UITableView, UITableViewDelegate, UITableViewDataSource{
                 let videoId = video.key
                 let title = videoDict["title"] as! String
                 let author = videoDict["author"] as! String
-                self.databaseVideoIdArray.append(videoId)
+                self.databaseLectureIdArray.append(videoId)
                 self.databaseTitleArray.append(title)
                 self.databaseAuthorArray.append(author)
                 
-                ref.child(userCompanyCode + "/videos/" + videoId).observeSingleEvent(of: .value, with: { (viewCount) in
+                ref.child(userCompanyCode + "/lecture/" + videoId).observeSingleEvent(of: .value, with: { (viewCount) in
                     let videoDict2 = viewCount.value as! Dictionary<String, Any>;()
                     let view = videoDict2["view"] as! Int
                     self.databaseViewArray.append(view)
@@ -75,7 +75,7 @@ class VideoTableView: UITableView, UITableViewDelegate, UITableViewDataSource{
     }
     
     func clearArrays() {
-        databaseVideoIdArray.removeAll()
+        databaseLectureIdArray.removeAll()
         databaseTitleArray.removeAll()
         databaseAuthorArray.removeAll()
         databaseViewArray.removeAll()
@@ -95,22 +95,22 @@ class VideoTableView: UITableView, UITableViewDelegate, UITableViewDataSource{
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return databaseVideoIdArray.count
+        return databaseLectureIdArray.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let videoId = databaseVideoIdArray[indexPath.row]
-        selectedVideoId = videoId
+        let lectureId = databaseLectureIdArray[indexPath.row]
+        selectedLectureId = lectureId
         TabViewController().goToDetailPage()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "VideoListCell") as! VideoListCell
-        if (databaseViewArray.count == databaseVideoIdArray.count) {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "LectureListCell") as! LectureListCell
+        if (databaseViewArray.count == databaseLectureIdArray.count) {
             if dataReceived{
                 cell.videoTitleLabel.text = databaseTitleArray[indexPath.row]
                 cell.videoAuthorLabel.text = databaseAuthorArray[indexPath.row]
-                cell.videoThumbnail.image = CachedImageView().loadCacheImage(urlKey: databaseVideoIdArray[indexPath.row])
+                cell.videoThumbnail.image = CachedImageView().loadCacheImage(urlKey: databaseLectureIdArray[indexPath.row])
                 cell.videoViewLabel.text = String(databaseViewArray[indexPath.row])
             } else {
                 cell.videoTitleLabel.text = textArray[indexPath.row]

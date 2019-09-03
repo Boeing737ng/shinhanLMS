@@ -1,16 +1,10 @@
 //
-//  VideoListViewController.swift
+//  SelectedVideoListViewController.swift
 //  userApp
 //
 //  Created by Kihyun Choi on 20/08/2019.
 //  Copyright © 2019 sfo. All rights reserved.
 //
-
-//DATABASE READ::-----
-//Video Info
-//- thumbnail image
-//- name
-//- download Url
 
 import UIKit
 import XLPagerTabStrip
@@ -18,19 +12,19 @@ import KBRoundedButton
 import DropDown
 import Firebase
 
-var categoryDict = Dictionary<Int, String>()
-var dropdownCategoryList = Array<String>()
+var segueId:String = ""
 
-class VideoListViewController: UIViewController {
+class SelectedVideoListViewController: UIViewController {
     var dropdown:DropDown?
     
     @IBOutlet weak var btn1: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeDropDown()
         setDropdownBarText()
-        // Do any additional setup after loading the view.
     }
+    
     @objc func dropdownButton(){
         dropdown?.show()
     }
@@ -71,10 +65,13 @@ class VideoListViewController: UIViewController {
     func categoryIsSeleceted() {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
     }
-}
-
-extension VideoListViewController : IndicatorInfoProvider{
-    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo{
-        return IndicatorInfo(title: "강좌리스트")
+    @IBAction func onGoBack(_ sender: UIBarButtonItem) {
+        let transition: CATransition = CATransition()
+        transition.duration = 0.5
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
+        transition.type = CATransitionType.reveal
+        transition.subtype = CATransitionSubtype.fromLeft
+        self.view.window!.layer.add(transition, forKey: nil)
+        self.dismiss(animated: false, completion: nil)
     }
 }

@@ -15,6 +15,7 @@ import Firebase
 import AVKit
 
 var selectedVideoId:String = ""
+var selectedLectureId:String = ""
 var videoURL:String = ""
 
 class VideoDetailViewController: UIViewController {
@@ -103,8 +104,18 @@ class VideoDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
-        getVideoInfoFromDB()
-        userDidStartWatching()
+        notificationCenter.addObserver(self, selector: #selector(startVideoPlayer), name: NSNotification.Name(rawValue: "videoSelected"), object: nil)
+        showVideoPlayer()
+        //getVideoInfoFromDB()
+        //userDidStartWatching()
+    }
+    
+    @objc private func startVideoPlayer() {
+        player = AVPlayer()
+        playerView.removeFromSuperview()
+        playerView = UIView()
+        showVideoPlayer()
+        initVideoPlayer()
     }
     
     func showVideoPlayer() {
@@ -118,11 +129,11 @@ class VideoDetailViewController: UIViewController {
     
     @objc func appMovedToBackground() {
         print("App moved to background!")
-        userDidFinishWatching()
+        //userDidFinishWatching()
     }
     
     @IBAction func onGoBack(_ sender: UIBarButtonItem) {
-        userDidFinishWatching()
+        //userDidFinishWatching()
         let transition: CATransition = CATransition()
         transition.duration = 0.5
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
@@ -132,45 +143,43 @@ class VideoDetailViewController: UIViewController {
         self.dismiss(animated: false, completion: nil)
     }
 
-    private func userDidFinishWatching() {
-        var currentState:String = ""
-        if videoProgress == 1 {
-            currentState = "completed"
-        } else {
-            currentState = "playing"
-        }
-        var ref: DatabaseReference!
-        ref = Database.database().reference()
-        ref.child("user/" + userNo + "/playList/" + selectedVideoId).updateChildValues([
-            "progress": videoProgress,
-            "state": currentState
-            ]
-        )
-    }
-    
-    private func userDidStartWatching() {
-        var ref: DatabaseReference!
-        ref = Database.database().reference()
-        ref.child(userCompanyCode + "/videos/" + selectedVideoId + "/user/" + userNo).setValue([
-                "name": userName
-            ])
-        ref.child("user/" + userNo + "/playList/" + selectedVideoId).updateChildValues([
-            "progress": 0.0,
-            "state": "playing"
-            ]
-        )
-    }
-    
+//    private func userDidFinishWatching() {
+//        var currentState:String = ""
+//        if videoProgress == 1 {
+//            currentState = "completed"
+//        } else {
+//            currentState = "playing"
+//        }
+//        var ref: DatabaseReference!
+//        ref = Database.database().reference()
+//        ref.child("user/" + userNo + "/playList/" + selectedLectureId).updateChildValues([
+//            "progress": videoProgress,
+//            "state": currentState
+//            ]
+//        )
+//    }
+//
+//    private func userDidStartWatching() {
+//        var ref: DatabaseReference!
+//        ref = Database.database().reference()
+//        ref.child(userCompanyCode + "/videos/" + selectedLectureId + "/user/" + userNo).setValue([
+//                "name": userName
+//            ])
+//        ref.child("user/" + userNo + "/playList/" + selectedVideoId).updateChildValues([
+//            "progress": 0.0,
+//            "state": "playing"
+//            ]
+//        )
+//    }
+
     func getVideoInfoFromDB() {
         LoadingView().startLoading(self)
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child(userCompanyCode + "/videos/" + selectedVideoId).observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child(userCompanyCode + "/lecture/" + selectedLectureId).observeSingleEvent(of: .value, with: { (snapshot) in
             let videoInfo = snapshot.value as! Dictionary<String, Any>;()
             videoURL = videoInfo["downloadURL"] as! String
             LoadingView().stopLoading()
-            self.showVideoPlayer()
-            self.initVideoPlayer()
         }) { (error) in
             print(error.localizedDescription)
         }
