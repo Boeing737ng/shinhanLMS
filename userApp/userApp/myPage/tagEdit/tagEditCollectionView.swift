@@ -12,141 +12,107 @@ import Foundation
 
 class tagEditCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource  {
 
-    var textArray = ["","",""]
-    var authorArray = ["","",""]
+    var tagArray = ["","",""]
     var dataReceived:Bool = false
     
-    var videoIdArray = Array<String>()
-    var databaseTitleArray = Array<String>()
-    var databaseAuthorArray = Array<String>()
+    var databaseTagArray = Array<String>()
+    var selectedTagIndexArray = Array<Int>()
     
     override func awakeFromNib() {
         self.delegate = self
         self.dataSource = self
-        getDataFromDB()
-        tagLoadDB()
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadTable), name: NSNotification.Name(rawValue: "load"), object: nil)
-//        studyImg?.contentMode = UIView.ContentMode.scaleAspectFill
-//        studyImg?.layer.cornerRadius = 20.0
-//        studyImg?.layer.masksToBounds = true
+        getTagListFromDB()
+        getUserSelectedTag()
     }
     
-    func getDataFromDB() {
-        clearArrays()
-//        var dataURL:String = ""
-//        dataURL = userCompanyCode + "/tags"
-       var dataURL:String = "58/tags"
+    func getTagListFromDB() {
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child(userCompanyCode + "/tags").observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? Dictionary<String,Any>;()
             for tag in value! {
                 let tagDic = tag.value as! Dictionary<String, Any>;()
                 let tag = tagDic["value"] as! String
-                self.databaseTitleArray.append(tag)
+                self.databaseTagArray.append(tag)
             }
             self.dataReceived = true
-            DispatchQueue.main.async {
-                self.reloadData()
-            }
         }) { (error) in
             print(error.localizedDescription)
         }
     }
     
-    var arr = Array<String>()
-    func tagLoadDB(){
-        clearArrays()
-  //      var dataURL:String = ""
-  //      dataURL = "user/" + userNo
-        var dataURL:String = "user/201302493"
+    func getUserSelectedTag() {
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
-            let value = snapshot.value as? Dictionary<String, Any>;()
-            //for tag2 in value! {
-                let tDic = value as! Dictionary<String, Any>;()
-                let tag = tDic["selectedTags"] as! String
-                self.databaseAuthorArray.append(tag)
-           // }
-            print(tag)
-            self.arr = tag.components(separatedBy: " ")
-            var arr2 = self.arr.count
-            print(self.arr[0])
+        ref.child("user/" + userNo + "/selectedTags").observeSingleEvent(of: .value, with: { (snapshot) in
+            let tagList = snapshot.value as! String
+            userSelectedTagArray = tagList.components(separatedBy: " ")
             
-            let tagcount = self.databaseTitleArray.count
-            for cout in 0...tagcount-1 {
-                for cout2 in 0...arr2-1{
-                    if self.databaseTitleArray[cout] == self.arr[cout2] {
+            let totalTagCount = self.databaseTagArray.count
+            let userTagCount = userSelectedTagArray.count
+            
+            for i in 0...totalTagCount-1 {
+                for j in 0...userTagCount-1{
+                    if self.databaseTagArray[i] == userSelectedTagArray[j] {
                         //태그 색 변환
-                        
+                        self.selectedTagIndexArray.append(i)
                     }
                 }
             }
-            
+            self.reloadData()
             self.dataReceived = true
-            }){ (error) in
-                print(error.localizedDescription)
-            }
+        }){ (error) in
+            print(error.localizedDescription)
         }
-    
-    
-    func clearArrays() {
-        databaseTitleArray.removeAll()
-        databaseAuthorArray.removeAll()
     }
-    
-    @objc func reloadTable() {
-        getDataFromDB()
-        self.reloadData()
-    }
-    
     func numberOfSections(in tableView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return databaseTitleArray.count
+        return databaseTagArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tagCell", for: indexPath) as! tagEditCell
-        if dataReceived{
-            cell.tagCell.text = databaseTitleArray[indexPath.row]
+        if dataReceived && selectedTagIndexArray.count > 0{
+            for i in 0...selectedTagIndexArray.count-1 {
+                if selectedTagIndexArray[i] == indexPath.row {
+                    cell.backgroundColor = UIColor.init(red: 157/255, green: 206/255, blue: 255/255, alpha: 1.0)
+                }
+            }
+            cell.tagCell.text = databaseTagArray[indexPath.row]
         }else{
-            cell.tagCell.text = textArray[indexPath.row]
+            cell.tagCell.text = databaseTagArray[indexPath.row]
         }
-
-//
+        cell.layer.cornerRadius = 10
         return cell
     }
     
-    var num = 0
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tagCell", for: indexPath) as! tagEditCell
-        
-       let cell = collectionView.cellForItem(at: indexPath)
-        
-        if num%2 == 0{
-            cell?.backgroundColor = UIColor.lightGray
-            cell?.layer.cornerRadius = 10
-            //cell.tagCell.backgroundColor = UIColor.cyan
-            num = num + 1
-        } else{
+        let cell = collectionView.cellForItem(at: indexPath)
+        if cell?.backgroundColor == nil {
+            cell?.backgroundColor = UIColor.init(red: 157/255, green: 206/255, blue: 255/255, alpha: 1.0)
+            userSelectedTagArray.append(databaseTagArray[indexPath.row])
+        } else {
             cell?.backgroundColor = nil
-            num = num + 1
+            removeElementByValue(element:databaseTagArray[indexPath.row])
         }
         
+        for tag in userSelectedTagArray {
+            if tag == "" {
+                removeElementByValue(element:tag)
+            }
+        }
     }
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    
+    private func removeElementByValue(element:String) {
+        while userSelectedTagArray.contains(element) {
+            if let itemToRemoveIndex = userSelectedTagArray.firstIndex(of: element) {
+                userSelectedTagArray.remove(at: itemToRemoveIndex)
+            }
+        }
     }
-    */
-
 }

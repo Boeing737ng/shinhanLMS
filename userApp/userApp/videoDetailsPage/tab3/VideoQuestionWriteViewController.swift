@@ -16,8 +16,6 @@ class VideoQuestionWriteViewController: UIViewController, UITextViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -48,14 +46,6 @@ class VideoQuestionWriteViewController: UIViewController, UITextViewDelegate {
         }
     }
     
-//    func getCurrentDate() -> String {
-//        let date = Date()
-//        let dateFormat = DateFormatter()
-//        dateFormat.dateFormat = "yyyy/MM/dd"
-//        let dateString = dateFormat.string(from: date)
-//        return dateString
-//    }
-    
     func onGoBack() {
         let transition: CATransition = CATransition()
         transition.duration = 0.5
@@ -77,6 +67,8 @@ class VideoQuestionWriteViewController: UIViewController, UITextViewDelegate {
             "writer": userName
             ])
         
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "questionAdd"), object: nil)
+        
         onGoBack()
     }
     
@@ -89,7 +81,6 @@ class VideoQuestionWriteViewController: UIViewController, UITextViewDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    
     
     @objc func keyboardWillShow(_ sender: Notification) {
         NSLog("====== keyboardWillShow ======")
@@ -110,15 +101,4 @@ class VideoQuestionWriteViewController: UIViewController, UITextViewDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }

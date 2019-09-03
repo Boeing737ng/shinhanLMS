@@ -7,29 +7,43 @@
 //
 
 import UIKit
+import Firebase
 
 class tagEditViewController: UIViewController{
-    
-    //    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-    //        let cell = collectionView.cellForItem(at: indexPath)
-    //        cell?.backgroundColor = UIColor.cyan
-    //    }
-    //    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-    //        let cell = collectionView.cellForItem(at: indexPath)
-    //        cell?.backgroundColor = nil
-    //    }
         
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
     }
-    //
-    //    @IBAction func btn(_ sender: UIButton) {
-    //        NSLog("===click===")
-    //    }
-    //
-    @IBAction func onGoBack(_ sender: UIButton) {
+    @IBAction func saveSelectedTags(_ sender: UIBarButtonItem) {
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        ref.child("user/" + userNo).updateChildValues([
+            "selectedTags": setUserTagString()
+            ]
+        )
+        userTagUpdated()
+        popPage()
+    }
+    
+    func userTagUpdated() {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userTagUpdated"), object: nil)
+    }
+    
+    private func setUserTagString() -> String {
+        var userTagString:String = ""
+        for tag in userSelectedTagArray {
+            userTagString += (tag + " ")
+        }
+        return userTagString
+    }
+    
+    @IBAction func onGoBack(_ sender: Any) {
+        popPage()
+    }
+    
+    func popPage() {
         let transition: CATransition = CATransition()
         transition.duration = 0.5
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
@@ -38,18 +52,4 @@ class tagEditViewController: UIViewController{
         self.view.window!.layer.add(transition, forKey: nil)
         self.dismiss(animated: false, completion: nil)
     }
-    
-    
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }

@@ -48,7 +48,6 @@ class VideoListViewController: UIViewController {
                 categoryDict[index] = video.key
                 index += 1
             }
-            print(categoryDict)
             self.dropdown?.dataSource = dropdownCategoryList
         }) { (error) in
             print(error.localizedDescription)

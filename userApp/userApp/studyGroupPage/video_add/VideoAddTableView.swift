@@ -8,8 +8,7 @@
 
 import UIKit
 import Firebase
-
-// var selectedCategoryIndex:Int = 0
+var addArray = Array<String>()
 
 class VideoAddTableView: UITableView, UITableViewDataSource, UITableViewDelegate {
 
@@ -32,6 +31,12 @@ class VideoAddTableView: UITableView, UITableViewDataSource, UITableViewDelegate
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("DID SELECTED ROW AT")
+        let videoId = videoIdArray[indexPath.row]
+        addArray.append(videoId)
+        //selectedVideoId = videoId
+    }
     
     func getDataFromDB() {
         clearArrays()
@@ -39,7 +44,7 @@ class VideoAddTableView: UITableView, UITableViewDataSource, UITableViewDelegate
         if selectedCategoryIndex == 0 {
             dataURL = userCompanyCode + "/videos"
         } else {
-            dataURL = userCompanyCode + "/categories/" + categoryDict[selectedCategoryIndex]! + "/videos/"
+            dataURL = userCompanyCode + "/categories/" + categoryDict1[selectedCategoryIndex]! + "/videos/"
         }
         
         print(dataURL)
@@ -47,6 +52,9 @@ class VideoAddTableView: UITableView, UITableViewDataSource, UITableViewDelegate
         ref = Database.database().reference()
         ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
+            if snapshot.childrenCount == 0 {
+                return
+            }
             let value = snapshot.value as? Dictionary<String,Any>;()
             for video in value! {
                 let videoDict = video.value as! Dictionary<String, Any>;()
@@ -107,4 +115,43 @@ class VideoAddTableView: UITableView, UITableViewDataSource, UITableViewDelegate
         
         return cell
 }
-}
+    func onGoBack() {
+        let transition: CATransition = CATransition()
+        transition.duration = 0.5
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
+        transition.type = CATransitionType.reveal
+        transition.subtype = CATransitionSubtype.fromLeft
+        self.window!.layer.add(transition, forKey: nil)
+        //self.dismiss(animated: false, completion: nil)
+    }
+    @IBAction func Addcurriculum(_ sender: Any) {
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        for i in addArray
+        {
+            ref.child("58/videos/" + i).observeSingleEvent(of: .value, with: { (snapshot) in
+    // Get user value
+            let value = snapshot.value as? Dictionary<String,Any>;()
+            let videoDict = value as! Dictionary<String, Any>;()
+            let author=videoDict["author"] as! String
+            let title=videoDict["title"] as! String
+            ///////////////////
+            print(curri_send)
+            print(i)
+            ref.child("58/study/"+curri_send+"/curriculum/"+i).setValue([
+                "author": author,
+                "title": title,
+                ])
+                self.dataReceived = true
+            }) { (error) in
+                print(error.localizedDescription)
+            }
+        }
+        addArray.removeAll()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addcurri"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "back"), object: nil)
+        }
+    
+    }
+
+
