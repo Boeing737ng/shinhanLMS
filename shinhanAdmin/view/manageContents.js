@@ -159,6 +159,7 @@ $(document).ready(function () {
             { name: "title", title: '컨텐츠명', type: "text", width: 150, editing: false, align: "left" },
             { name: "author", title: '강사명', type: "text", width: 120, editing: false, align: "center" },
             { name: "categoryNm", title: "카테고리", type: 'text', width: 200, editing: false, align: "left" },
+            { name: "courseNm", title: "강좌명", type: 'text', width: 200, editing: false, align: "left" },
             { name: "tags", title: "관련태그", type: 'text', width: 200, editing: false, align: "left", cellRenderer: function(item, value){
                 var rslt = $("<td>").addClass("jsgrid-cell");
                 var div = $('<div></div>');
