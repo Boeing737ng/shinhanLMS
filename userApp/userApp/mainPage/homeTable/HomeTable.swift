@@ -38,6 +38,28 @@ class HomeTable: UITableViewController  {
         return cell
     }
     
+    @IBAction func goToRecommendedVideoList(_ sender: UIButton) {
+        performSegue(withIdentifier: "recommendListSegue", sender: self)
+    }
+    
+    @IBAction func goToPlayingVideoList(_ sender: UIButton) {
+        performSegue(withIdentifier: "playingListSegue", sender: self)
+    }
+    
+    @IBAction func goToPopularVideoList(_ sender: UIButton) {
+        performSegue(withIdentifier: "popularListSegue", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "recommendListSegue" {
+            segueId = "recommendListSegue"
+        } else if segue.identifier == "playingListSegue" {
+            segueId = "playingListSegue"
+        } else {
+            segueId = "popularListSegue"
+        }
+    }
+    
 }
 extension HomeTable : IndicatorInfoProvider{
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo{

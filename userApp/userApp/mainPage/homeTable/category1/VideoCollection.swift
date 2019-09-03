@@ -11,15 +11,16 @@ import Firebase
 
 var userSelectedTagArray = Array<String>()
 
+var recommendedVideoIdArray = Array<String>()
+var recommendedTitleArray = Array<String>()
+var recommendedAuthorArray = Array<String>()
+var recommendedViewArray = Array<Int>()
+
 class VideoCollection: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource {
     
     var textArray = ["","","","",""]
     var authorArray = ["","","","",""]
     var dataReceived:Bool = false
-    
-    var recommendedVideoIdArray = Array<String>()
-    var recommendedTitleArray = Array<String>()
-    var recommendedAuthorArray = Array<String>()
     
     override func awakeFromNib() {
         self.delegate = self
@@ -36,7 +37,7 @@ class VideoCollection: UICollectionView, UICollectionViewDelegate, UICollectionV
             let tagList = snapshot.value as! String
             userSelectedTagArray = tagList.components(separatedBy: " ")
             var index = 0
-            ref.child(userCompanyCode + "/videos").observeSingleEvent(of: .value, with: { (snapshot) in
+            ref.child(userCompanyCode + "/lecture").observeSingleEvent(of: .value, with: { (snapshot) in
                 // Get user value
                 let value = snapshot.value as? Dictionary<String,Any>;()
                 for video in value! {
@@ -53,9 +54,9 @@ class VideoCollection: UICollectionView, UICollectionViewDelegate, UICollectionV
                                 let videoId = video.key
                                 let title = videoDict["title"] as! String
                                 let author = videoDict["author"] as! String
-                                self.recommendedVideoIdArray.append(videoId)
-                                self.recommendedTitleArray.append(title)
-                                self.recommendedAuthorArray.append(author)
+                                recommendedVideoIdArray.append(videoId)
+                                recommendedTitleArray.append(title)
+                                recommendedAuthorArray.append(author)
                                 index += 1
                             }
                         }
@@ -88,7 +89,7 @@ class VideoCollection: UICollectionView, UICollectionViewDelegate, UICollectionV
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let videoId = recommendedVideoIdArray[indexPath.row]
-        selectedVideoId = videoId
+        selectedLectureId = videoId
         TabViewController().goToDetailPage()
     }
     
