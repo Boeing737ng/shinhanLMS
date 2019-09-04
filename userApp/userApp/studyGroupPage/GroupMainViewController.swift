@@ -94,6 +94,10 @@ class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerV
             "compNm": userCompanyName
             ])
         
+        ref.child("user/" + userNo + "/study/").childByAutoId().setValue([
+            "key": curri_send
+            ])
+        
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "memberAdd"), object: nil)
     }
     

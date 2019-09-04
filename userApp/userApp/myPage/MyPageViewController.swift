@@ -19,8 +19,6 @@ import Firebase
 
 class MyPageViewController: UIViewController{
     
-
-    
     var textArray = ["","",""]
     var authorArray = ["","",""]
     var dataReceived:Bool = false
@@ -31,7 +29,6 @@ class MyPageViewController: UIViewController{
     var dbfieldArray = Array<String>()
     var dbgroupArray = Array<String>()
     var dbwriterArray = Array<String>()
-
     
     //@IBOutlet weak var taglbl: UILabel!
     
@@ -41,11 +38,23 @@ class MyPageViewController: UIViewController{
     @IBOutlet weak var edLecture: UILabel!
     @IBOutlet weak var imgLecture: UILabel!
     @IBOutlet weak var questionlbl: UILabel!
-
     
     var playnum: Int = 0
     var plednum: Int = 0
     var question: Int = 0
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        getDataFromDB()
+        getNamePartDB()
+        getQnumDB()
+        //        self.imgLecture.text = "\(self.playnum)"
+        //        RunLoop.current.add(timer, forMode: RunLoop.Mode.common)
+        //        print("======================")
+        //        print("======= \(dbingArray)")
+        //        imgLecture.text = "\(dbingArray.count)"
+    }
+    
     func getDataFromDB(){
         clearArrays()
         
@@ -64,9 +73,9 @@ class MyPageViewController: UIViewController{
                 let status = statusD["state"] as! String
                 self.dbingArray.append(status)
                 if status == "playing"{
-                   self.playnum += 1
-               }else{
-                   self.plednum += 1
+                    self.playnum += 1
+                }else{
+                    self.plednum += 1
                 }
             }
             self.imgLecture.text = "\(self.playnum)"
@@ -75,67 +84,32 @@ class MyPageViewController: UIViewController{
         }) { (error) in
             print(error.localizedDescription)
         }
-        }
-    
-    func getNamePartDB(){
-        clearArrays()
-        var dataURL:String = "user/" + userNo
-//        var dataURL:String = ""
-//        dataURL = "user/" + userNo
-        
-        var ref: DatabaseReference!
-        ref = Database.database().reference()
-        ref.child("user/" + userNo).observeSingleEvent(of: .value, with: { (snapshot) in
-
-            let value = snapshot.value as? Dictionary<String, Any>;()
-            let nameD = value as! Dictionary<String, Any>;()
-            let partD = value as! Dictionary<String, Any>;()
-            let name = nameD["name"] as! String
-            let part = partD["department"] as! String
-            self.dbnameArray.append(name)
-            self.dbfieldArray.append(part)
-            
-            self.namelbl.text = "\(self.dbnameArray[0])"
-            self.fieldlbl.text = "\(self.dbfieldArray[0])"
-            
-            self.dataReceived = true
-        }) { (error) in
-            print(error.localizedDescription)
-        }
     }
     
-    func getQnumDB(){
+    func getNamePartDB(){
+        self.namelbl.text = userName
+        self.fieldlbl.text = userDeptName
+    }
+    
+    func getQnumDB(){ // 가입한 CoP 수
         clearArrays()
-        var dataURL:String = userCompanyCode + "/study/11111/board"
-
+        var dataURL:String = "user/" + userNo + "/study"
+        
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
             if !snapshot.exists() || snapshot.childrenCount == 0 {
                 self.questionlbl.text = "\(self.dbwriterArray.count)"
-                print("Playlist is empty!!!!")
+                print("CoP NULL!!!!")
                 return
             }
             
-            let value = snapshot.value as? Dictionary<String, Any>;()
-            for ing in value! {
-                let statusD = ing.value as! Dictionary<String, Any>;()
-                let status = statusD["writer"] as! String
-                self.dbwriterArray.append(status)
-                print(self.dbwriterArray)
-                if status == "최기현"{
-                    self.question += 1
-                }else{
-                    self.question += 1
-                }
-            }
-            self.questionlbl.text = "\(self.dbwriterArray.count)"
-            print(self.dbwriterArray.count)
-            self.dataReceived = true
-
-         }) { (error) in
+            let studyCount = Int(snapshot.childrenCount)
+            self.questionlbl.text = String(studyCount)
+            
+        }) { (error) in
             print(error.localizedDescription)
-    }
+        }
     }
     
     func clearArrays() {
@@ -147,21 +121,6 @@ class MyPageViewController: UIViewController{
         dbwriterArray.removeAll()
     }
     
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        getDataFromDB()
-        getNamePartDB()
-        getQnumDB()
-//        self.imgLecture.text = "\(self.playnum)"
-//        RunLoop.current.add(timer, forMode: RunLoop.Mode.common)
-//        print("======================")
-//        print("======= \(dbingArray)")
-//        imgLecture.text = "\(dbingArray.count)"
-
-    }
-    
     @IBAction func onGoBack(_ sender: UIBarButtonItem) {
         let transition: CATransition = CATransition()
         transition.duration = 0.5
@@ -171,8 +130,9 @@ class MyPageViewController: UIViewController{
         self.view.window!.layer.add(transition, forKey: nil)
         self.dismiss(animated: false, completion: nil)
     }
-
+    
     @IBAction func logoutbtn(_ sender: UIButton) {
+        
     }
     
 }
