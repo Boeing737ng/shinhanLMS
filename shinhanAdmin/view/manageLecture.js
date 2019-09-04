@@ -65,16 +65,20 @@ $(document).ready(function () {
         },
 
         rowClick: function(args) {
+            fnRetrieveDetail(args.item);
+            
             var $row = this.rowByItem(args.item),
             selectedRow = $("#lectureGrid").find('table tr.highlight');
 
             if (selectedRow.length) {
                 selectedRow.toggleClass('highlight');
             };
+
+            
             
             $row.toggleClass("highlight");
             
-            fnRetrieveDetail(args.item);
+            
         },
 
         rowDoubleClick: function(args) {
@@ -224,7 +228,6 @@ $(document).ready(function () {
 
         rowClick: function(args) {
             var arr = $('#contentGrid').jsGrid('option', 'data');
-            console.log(arr);
             var videoUrl = arr[args.itemIndex]['downloadURL'];
             fnLoadVideo(videoUrl);
             
@@ -367,8 +370,6 @@ $(document).ready(function () {
     $('#btnDelVideo').on('click', function(e) {
 
         e.preventDefault();
-
-        console.log(selectedItemsContent);
 
         if(selectedItemsContent.length == 0) {
             alert('선택된 데이터가 없습니다.');

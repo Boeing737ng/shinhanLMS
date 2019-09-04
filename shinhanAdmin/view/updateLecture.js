@@ -22,7 +22,7 @@ $(document).ready(function () {
 
 
     $('#lectureRequireYn').selectpicker();
-    fnGetCommonCmb('category', '#category');
+    //fnGetCommonCmb('category', '#category');
 
 
     $('#category').on('change', function (e) {
@@ -249,29 +249,45 @@ $(document).ready(function () {
         (function () {
             var thumbnailPath = '';
 
-            fnUploadThumbnail(LECTURE_ID, function (downloadURL) {
+            var contentTagArr = $('#relatedTags').tagsinput('items');
+            for (var i = 0; i < contentTagArr.length; i++) {
+                contentTagArr[i] = replaceBlankSpace(contentTagArr[i]);
+            }
+            var contentTag = contentTagArr.join(' ');
 
-                thumbnailPath = downloadURL;
+            var canvas = document.getElementById('canvas');
 
-                var contentTagArr = $('#relatedTags').tagsinput('items');
-                for (var i = 0; i < contentTagArr.length; i++) {
-                    contentTagArr[i] = replaceBlankSpace(contentTagArr[i]);
-                }
-                var contentTag = contentTagArr.join(' ');
+            if(isEmpty($(canvas).attr('data-url'))) { //새로 썸네일 올렸으면
+
+                fnUploadThumbnail(LECTURE_ID, function (downloadURL) {
+
+                    setLectureDatabase(LECTURE_ID, {
+                        author: $('#author').val(),
+                        categoryId: $('#category').val(),
+                        categoryNm: $('#category > option:selected').text(),
+                        tags: contentTag,
+                        thumbnail: downloadURL,
+                        description: $('#description').val(),
+                        date: moment().format('YYYYMMDDHHmmss'),
+                        title: $('#title').val(),
+                        requireYn: $('#lectureRequireYn').val()
+                    }, callback);
+                });
+
+            }else {
 
                 setLectureDatabase(LECTURE_ID, {
                     author: $('#author').val(),
                     categoryId: $('#category').val(),
                     categoryNm: $('#category > option:selected').text(),
                     tags: contentTag,
-                    thumbnail: thumbnailPath,
                     description: $('#description').val(),
                     date: moment().format('YYYYMMDDHHmmss'),
                     title: $('#title').val(),
-                    requireYn: $('#lectureRequireYn').val(),
-                    view: 0
+                    requireYn: $('#lectureRequireYn').val()
                 }, callback);
-            });
+
+            }
 
         })();
     }
@@ -362,12 +378,20 @@ $(document).ready(function () {
         parent.database.ref('/' + compCd + '/lecture/' + LECTURE_ID).once('value').then(function(snapshot) {
 
             var obj = snapshot.val();
+            console.log(obj);
             
-            $('#lectureTitle').text(obj['title']);
+            $('#title').val(obj['title']);
             
             fnGetCommonCmb('category', '#category', obj['categoryId']);
-            $('#requireYn').val(obj['requireYn']);
+            $('#lectureRequireYn').val(obj['requireYn']);
             $('#description').val(obj['description']);
+
+            var tagArr = obj['tags'].split(' ');
+            for(var i=0; i<tagArr.length; i++) {
+                $('#relatedTags').tagsinput('add', tagArr[i]);    
+            }
+
+            $('#author').val(obj['author']);
 
             drawCanvas(obj['thumbnail']);
 

@@ -37,7 +37,6 @@
         var loginId = $('input[name=empNo]').val();
         var password = $('input[name=pass]').val();
 
-        console.log(loginId + ' ' + password);
         onSignIn(loginId, password);
     });
 
