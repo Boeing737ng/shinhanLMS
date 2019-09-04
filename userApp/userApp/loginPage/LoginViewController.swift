@@ -108,10 +108,28 @@ class LoginViewController: UIViewController {
                 let url = video.value as! String
                 self.urlDict[title] = url
             }
-            self.setThumbnailCache(withCompletion: self.isCachingCompleted)
+            ref.child(userCompanyCode + "/study_url").observeSingleEvent(of: .value, with: { (snapshot) in
+                // Get user value
+                if !snapshot.exists() || snapshot.childrenCount == 0 {
+                    self.setThumbnailCache(withCompletion: self.isCachingCompleted)
+                    return
+                }
+                let value = snapshot.value as? NSDictionary
+                for video in value! {
+                    //let videoDict = video.value as! Dictionary<String, Any>;()
+                    let title = video.key as! String
+                    let url = video.value as! String
+                    self.urlDict[title] = url
+                }
+                self.setThumbnailCache(withCompletion: self.isCachingCompleted)
+            }) { (error) in
+                print(error.localizedDescription)
+            }
         }) { (error) in
             print(error.localizedDescription)
         }
+        
+       
     }
 
     func setThumbnailCache(withCompletion completion: () -> Void) {

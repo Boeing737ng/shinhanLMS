@@ -20,6 +20,7 @@ class LectureTableView: UITableView, UITableViewDelegate, UITableViewDataSource{
     var databaseLectureIdArray = Array<String>()
     var databaseTitleArray = Array<String>()
     var databaseAuthorArray = Array<String>()
+    var databaseViewArray = Array<Int>()
     
     override func awakeFromNib() {
         self.delegate = self
@@ -39,8 +40,9 @@ class LectureTableView: UITableView, UITableViewDelegate, UITableViewDataSource{
         if selectedCategoryIndex == 0 {
             dataURL = userCompanyCode + "/lecture"
         } else {
-            dataURL = userCompanyCode + "/categories/" + categoryDict[selectedCategoryIndex]! + "/lecture/"
+            dataURL = userCompanyCode + "/categories/" + categoryDict[selectedCategoryIndex]! + "/lecture"
         }
+        print(categoryDict[selectedCategoryIndex])
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
@@ -57,9 +59,14 @@ class LectureTableView: UITableView, UITableViewDelegate, UITableViewDataSource{
                 self.databaseLectureIdArray.append(videoId)
                 self.databaseTitleArray.append(title)
                 self.databaseAuthorArray.append(author)
-                print(self.databaseLectureIdArray)
-                self.dataReceived = true
-                self.reloadData()
+                ref.child(userCompanyCode + "/views/" + videoId).observeSingleEvent(of: .value, with: { (snapshot) in
+                    print(videoId)
+                    self.databaseViewArray.append(snapshot.value as! Int)
+                    self.dataReceived = true
+                    self.reloadData()
+                }) { (error) in
+                    print(error.localizedDescription)
+                }
             }
         }) { (error) in
             print(error.localizedDescription)
@@ -70,11 +77,11 @@ class LectureTableView: UITableView, UITableViewDelegate, UITableViewDataSource{
         databaseLectureIdArray.removeAll()
         databaseTitleArray.removeAll()
         databaseAuthorArray.removeAll()
+        databaseViewArray.removeAll()
     }
     
     @objc func reloadTable() {
         getDataFromDB()
-        self.reloadData()
     }
 
     // MARK: - Table view data source
@@ -97,14 +104,19 @@ class LectureTableView: UITableView, UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LectureListCell") as! LectureListCell
-        if dataReceived{
-            cell.videoTitleLabel.text = databaseTitleArray[indexPath.row]
-            cell.videoAuthorLabel.text = databaseAuthorArray[indexPath.row]
-            cell.videoThumbnail.image = CachedImageView().loadCacheImage(urlKey: databaseLectureIdArray[indexPath.row])
+        if databaseTitleArray.count == databaseViewArray.count {
+            if dataReceived{
+                cell.videoTitleLabel.text = databaseTitleArray[indexPath.row]
+                cell.videoAuthorLabel.text = databaseAuthorArray[indexPath.row]
+                cell.videoThumbnail.image = CachedImageView().loadCacheImage(urlKey: databaseLectureIdArray[indexPath.row])
+                cell.videoViewLabel.text = String(databaseViewArray[indexPath.row])
+            } else {
+                cell.videoTitleLabel.text = textArray[indexPath.row]
+                cell.videoAuthorLabel.text = authorArray[indexPath.row]
+                cell.videoThumbnail.image = UIImage(named: "white.jpg")
+            }
         } else {
-            cell.videoTitleLabel.text = textArray[indexPath.row]
-            cell.videoAuthorLabel.text = authorArray[indexPath.row]
-            cell.videoThumbnail.image = UIImage(named: "white.jpg")
+            self.reloadData()
         }
         
         return cell
