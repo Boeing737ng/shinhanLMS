@@ -20,6 +20,7 @@ class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
     var authorArray = ["","",""]
     var viewArray = ["","",""]
     var dataReceived:Bool = false
+    var dataSize:Int = 0
     
     var popularLectureIdArray = Array<String>()
     var popularTitleArray = Array<String>()
@@ -35,28 +36,26 @@ class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
     func getDataFromDB() {
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child(userCompanyCode + "/lecture/").queryOrdered(byChild: "view").observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child(userCompanyCode + "/views/").queryOrderedByValue().observeSingleEvent(of: .value, with: { (snapshot) in
             if !snapshot.exists() || snapshot.childrenCount == 0 {
                 print("Lecture list is empty!!!!")
                 return
             }
-            let dataSize = Int(snapshot.childrenCount)
-            for lecutre in snapshot.children.allObjects as! [DataSnapshot] {
-                if let lectureInfo = lecutre.value as? [String : Any] {
-                    totalPopularVideoIdArray.append(lecutre.key)
-                    totalPopularTitleArray.append(lectureInfo["title"] as! String)
-                    totalPopularAuthorArray.append(lectureInfo["author"] as! String)
-                    totalPopularViewArray.append(lectureInfo["view"] as! Int)
+            self.dataSize = Int(snapshot.childrenCount)
+            let lectures = snapshot.children.allObjects as! [DataSnapshot]
+            for lecture in lectures {
+                let lectureId = lecture.key
+                totalPopularViewArray.append(lecture.value as! Int)
+                ref.child(userCompanyCode + "/lecture/" + lectureId).observeSingleEvent(of: .value, with: { (snapshot) in
+                    let lectureDict = snapshot.value as! Dictionary<String, Any>;()
+                    totalPopularVideoIdArray.append(lectureId)
+                    totalPopularTitleArray.append(lectureDict["title"] as! String)
+                    totalPopularAuthorArray.append(lectureDict["author"] as! String)
+                    self.reloadData()
+                }) { (error) in
+                    print(error.localizedDescription)
                 }
-            }
-            for i in 0...2 {
-                if dataSize == i {
-                    break
-                }
-                self.popularLectureIdArray.append(totalPopularVideoIdArray[(dataSize - 1) - i])
-                self.popularTitleArray.append(totalPopularTitleArray[(dataSize - 1) - i])
-                self.popularAuthorArray.append(totalPopularAuthorArray[(dataSize - 1) - i])
-                self.popularViewArray.append(totalPopularViewArray[(dataSize - 1) - i])
+            
             }
             self.dataReceived = true
             self.reloadData()
@@ -74,29 +73,29 @@ class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return popularLectureIdArray.count
+        return totalPopularVideoIdArray.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let videoId = popularLectureIdArray[indexPath.row]
+        let videoId = totalPopularVideoIdArray[indexPath.row]
         selectedLectureId = videoId
         TabViewController().goToDetailPage()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "VideoCell2") as! VideoCell2
+        print(totalPopularTitleArray)
         if dataReceived {
-            cell.videoTitleLabel.text = popularTitleArray[indexPath.row]
-            cell.videoAuthorLabel.text = popularAuthorArray[indexPath.row]
-            cell.videoThumbnail.image = CachedImageView().loadCacheImage(urlKey: popularLectureIdArray[indexPath.row])
-            cell.videoViewLabel.text = String(popularViewArray[indexPath.row])
+            cell.videoTitleLabel.text = totalPopularTitleArray[(dataSize - 1) - indexPath.row]
+            cell.videoAuthorLabel.text = totalPopularAuthorArray[(dataSize - 1) - indexPath.row]
+            cell.videoThumbnail.image = CachedImageView().loadCacheImage(urlKey: totalPopularVideoIdArray[(dataSize - 1) - indexPath.row])
+            cell.videoViewLabel.text = String(totalPopularViewArray[(dataSize - 1) - indexPath.row])
         } else {
             cell.videoTitleLabel.text = textArray[indexPath.row]
             cell.videoAuthorLabel.text = authorArray[indexPath.row]
             cell.videoThumbnail.image = UIImage(named: "white.jpg")
             cell.videoViewLabel.text = viewArray[indexPath.row]
         }
-        
         return cell
     }
 }
