@@ -27,13 +27,13 @@ class LectureVideoTableView: UITableView, UITableViewDelegate, UITableViewDataSo
         var ref: DatabaseReference!
         ref = Database.database().reference()
         print(selectedLectureId)
-        ref.child(userCompanyCode + "/lecture/" + selectedLectureId + "/videos").observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child(userCompanyCode + "/lecture/" + selectedLectureId + "/videos").queryOrdered(byChild: "seq").observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             if snapshot.childrenCount == 0 {
                 return
             }
-            let value = snapshot.value as? Dictionary<String,Any>;()
-            for video in value! {
+            let value = snapshot.children.allObjects as! [DataSnapshot]
+            for video in value {
                 let videoDict = video.value as! Dictionary<String, Any>;()
                 let videoId = video.key
                 let title = videoDict["title"] as! String
