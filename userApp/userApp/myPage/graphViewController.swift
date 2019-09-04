@@ -307,10 +307,12 @@ class graphViewController: UIViewController, ChartViewDelegate {
             
             if(goal<self.staTime){
                 self.staTimelbl.text = "목표 달성"
+                self.staTimelbl.textColor = UIColor.blue
                 print(goal)
                 print(self.staTime)
             }else{
                 self.staTimelbl.text = "목표 미달성"
+                self.staTimelbl.textColor = UIColor.red
             }
             
             let ll = ChartLimitLine(limit: Double(goal)
