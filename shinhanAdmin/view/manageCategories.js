@@ -205,8 +205,7 @@ $(document).ready(function () {
     //신규
     function fnCreate(item, callback) {
         parent.database.ref( '/' + compCd + '/categories/').push({
-            'title': item['title'],
-            'requireYn': item['requireYn']
+            'title': item['title']
         }).then(function onSuccess(res) {
             if(callback != null && callback != undefined) {
                 callback();
