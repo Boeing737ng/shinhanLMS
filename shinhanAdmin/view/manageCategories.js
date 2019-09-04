@@ -67,14 +67,6 @@ $(document).ready(function () {
                 validator: 'required', 
                 message: '공개여부 는 필수입력 입니다.'
             } },
-            /*{ name: "requireYn", title: '필수강좌여부', type: "select", width: 50, align: "center", type: 'select', items: [
-                { Name: "전체", Id: "" },
-                { Name: "Y", Id: "Y" },
-                { Name: "N", Id: "N" }
-            ],valueField: "Id", textField: "Name", inserting: true, validate: {
-                validator: 'required', 
-                message: '필수강좌여부 는 필수입력 입니다.'
-            }, align: "center" },*/
             { name: "contentCnt", title: '등록 강좌수', type: "number", width: 50, align: "right", inserting: false, editing: false },
             { type: "control", editButton: false, deleteButton: false } //edit control
         ]
@@ -92,7 +84,23 @@ $(document).ready(function () {
 
         fields: [
             { name: "title", title: '강좌명', type: "text", width: 200, align: "left" },
-            { name: "author", title: '강사명', type: "text", width: 100, align: "left" }
+            { name: "author", title: '강사명', type: "text", width: 100, align: "center" },
+            { name: "tags", title: "관련태그", type: 'text', width: 200, editing: false, align: "left", cellRenderer: function(item, value){
+                var rslt = $("<td>").addClass("jsgrid-cell");
+                var div = $('<div></div>');
+                $(rslt).append(div);
+
+                if(isEmpty(item)) {
+                    return rslt;
+                }
+
+                var arr = item.split(' ');
+                for(var i=0; i<arr.length; i++) {
+                    $(div).append($('<span class="tag label label-info" style="margin-right:5px; display:inline-block;">'+arr[i]+'</span>'));
+                }
+                return rslt; 
+            }},
+            { name: "requireYn", title: "필수강좌여부", width: 50, align: "center" }
         ]
     });
 
@@ -209,7 +217,7 @@ $(document).ready(function () {
                 var catName = catObj['title'] || '';
 
                 if(searchCategory == '' || catName.indexOf(searchCategory) > -1) {
-                    var contentObj = catObj['videos'] || {};
+                    var contentObj = catObj['lecture'] || {};
                     var contentCnt = Object.keys(contentObj).length;
     
                     catObj['rowKey'] = idx;
@@ -233,7 +241,7 @@ $(document).ready(function () {
 
         window.FakeLoader.showOverlay();
 
-        parent.database.ref('/'+ searchCompany+'/categories/'+ item['rowKey'] + '/videos').once('value').then(function(snapshot) {
+        parent.database.ref('/'+ searchCompany+'/categories/'+ item['rowKey'] + '/lecture').once('value').then(function(snapshot) {
     
             var catArr = snapshot.val();
             var rsltArr = [];
