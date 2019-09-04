@@ -1,0 +1,195 @@
+<!--
+**********************************************
+title : manageNoticeTemplate
+description : 공지사항 템플릿 관리
+author : jybobo
+**********************************************
+-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Shinple</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+    <!-- bootstrap select -->
+    <link href="/vendor/bootstrap-select/dist/css/bootstrap-select.css" rel="stylesheet" type="text/css" />
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin-2.css" rel="stylesheet">
+    <link rel="stylesheet" href="/vendor/jsgrid/jsgrid.css">
+    <link rel="stylesheet" href="/vendor/jsgrid/jsgrid-theme.css">
+    <!-- Common CSS -->
+    <link href="/css/lmsCommon.css" rel="stylesheet" type="text/css">
+
+    <link href="/vendor/fakeloader-master/dist/fakeloader.css" rel="stylesheet" type="text/css">
+
+    <!-- datepicker CSS -->
+    <link href="/vendor/jquery-ui-1.12.1.custom/jquery-ui.structure.css" rel="stylesheet" type="text/css">
+    <link href="/vendor/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet" type="text/css">
+
+    <link href="/vendor/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css">
+
+    <!-- /* Bootstrap core JavaScript */ -->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- /* Core plugin JavaScript */ -->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- /* Custom scripts for all pages */ -->
+    <script src="/js/sb-admin-2.min.js"></script>
+    <!-- /* Page level plugins */ -->
+    <script src="/vendor/chart.js/Chart.min.js"></script>
+    <!-- /* firebase */ -->
+    <script src="https://www.gstatic.com/firebasejs/6.3.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-database.js"></script>
+    <!-- <script src="/js/firebaseConfig.js"></script> -->
+    <!-- /* bootstrap select */ -->
+    <script src="/vendor/bootstrap-select/dist/js/bootstrap-select.js"></script>
+    <!-- datepicker -->
+    <script src="/vendor/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+    <script src="/vendor/jsgrid/jsgrid.js"></script>
+
+    <script src="/vendor/moment/moment.min.js"></script>
+    <script src="/vendor/fakeloader-master/dist/fakeLoader.min.js"></script>
+    <script src="/vendor/daterangepicker/daterangepicker.js"></script>
+
+    <script src="/view/manageNoticeTemplate.js"></script>
+    <script src="/js/main.js"></script>
+
+</head>
+
+<body class="contentInnerBody">
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800" id="contentHeader">공지사항 템플릿 관리</h1>
+    </div>
+    <div class="row searchResultDiv">
+        <div class="col-md-6">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">공지사항 템플릿 목록</h6>
+                    <div class="moduleBtnDiv">
+                        <ul>
+                            <li id="btnAdd">
+                                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">신규등록</a>
+                            </li>
+
+                            <li id="btnDel">
+                                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                                    <i class="fas fa-minus fa-sm text-white-50"></i> 삭제
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <div id="grid" class="lms-grid"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+
+
+        <div class="col-md-6">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">공지사항 템플릿 상세</h6>
+                        <div class="moduleBtnDiv">
+                            <ul>
+                                <li id="btnAdd">
+                                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">신규등록</a>
+                                </li>
+    
+                                <li id="btnDel">
+                                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                                        <i class="fas fa-minus fa-sm text-white-50"></i> 삭제
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-body">
+    
+                        <div>
+                            <table class="registerTable" style="margin-bottom: 20px;">
+                                <colgroup>
+                                    <col width="20%" />
+                                    <col width="30%" />
+                                    <col width="20%" />
+                                    <col width="30%" />
+                                </colgroup>
+                                <tbody>
+    
+                                    <tr>
+                                        <th class="required"><span>템플릿명</span></th>
+                                        <td colspan="3">
+                                            <input type="text" class="form-control" id="templateNm" />
+                                        </td>
+                                    </tr>
+    
+                                    <tr>
+                                        <th class="required"><span>내용</span></th>
+                                        <td colspan="3">
+                                            <textarea id="detailText" class="form-control"
+                                                style="resize: none; width: 100%; height: 300px; overflow: auto;"></textarea>
+                                        </td>
+                                    </tr>
+    
+                                </tbody>
+                            </table>
+    
+                            <div class="moduleBtnDiv">
+                                <ul>
+                                    <li id="btnList">
+                                        <a href="#" class="btn btn-primary">
+                                            저장
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+    </div>
+
+
+
+    </div>
+    </div>
+    </div>
+    </div>
+
+
+
+
+
+
+    </div>
+    </div>
+    </div>
+
+</body>
