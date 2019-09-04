@@ -477,7 +477,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="290" height="290"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shinple_logo" translatesAutoresizingMaskIntoConstraints="NO" id="ACA-qG-M47">
-                                                <rect key="frame" x="0.0" y="0.0" width="290.00000000000182" height="290"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="290" height="290"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="ACA-qG-M47" secondAttribute="height" multiplier="1:1" id="F8K-Dx-ZGB"/>
                                                 </constraints>
@@ -1056,7 +1056,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qce-id-17K" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1884" y="1002"/>
+            <point key="canvasLocation" x="1806" y="1002"/>
         </scene>
         <!--Lecture Details-->
         <scene sceneID="Zqt-jz-m8R">
@@ -3073,8 +3073,8 @@
                                     <action selector="studyAdd:" destination="flo-q4-rx6" eventType="touchUpInside" id="KKg-cr-Owe"/>
                                 </connections>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="default" translatesAutoresizingMaskIntoConstraints="NO" id="d5g-9D-qRa">
-                                <rect key="frame" x="87" y="145" width="240" height="239"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="default-1" translatesAutoresizingMaskIntoConstraints="NO" id="d5g-9D-qRa">
+                                <rect key="frame" x="87" y="145" width="240" height="238.5"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kq0-30-0TH" userLabel="NavigationBar">
@@ -4563,7 +4563,7 @@
         <image name="ID" width="240" height="240"/>
         <image name="PW" width="240" height="240"/>
         <image name="alarm" width="240" height="240"/>
-        <image name="default" width="450" height="450"/>
+        <image name="default-1" width="450" height="450"/>
         <image name="iconmonstr-arrow-69-24" width="24" height="24"/>
         <image name="imgAdd.jpeg" width="144" height="147"/>
         <image name="loginBackground" width="724" height="364"/>
@@ -4575,6 +4575,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="pgX-Sd-WpQ"/>
-        <segue reference="RbT-en-H0r"/>
+        <segue reference="lE8-es-HM3"/>
     </inferredMetricsTieBreakers>
 </document>

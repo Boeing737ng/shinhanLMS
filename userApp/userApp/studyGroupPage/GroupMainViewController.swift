@@ -28,7 +28,9 @@ class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerV
     var dataReceived:Bool = false
     var study_nameArray = Array<String>()
     var study_detailtxt = Array<String>()
-    var study_img = Array<String>()
+    //var study_img = Array<String>()
+    var joinOn = true
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return PICKER_VIEW_COLUMN
     }
@@ -42,7 +44,8 @@ class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerV
         //curri=study_nameArray[row]
         detail.text = study_detailtxt[row]
         curri_send = curri[row]
-        //imageview.image = UIImage(url: URL(string: study_img[row]))
+        print(curri_send)
+        imageview.image = CachedImageView().loadCacheImage(urlKey:curri_send)
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "copchange"), object: nil)
         
     }
@@ -95,6 +98,16 @@ class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerV
             ])
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "memberAdd"), object: nil)
+        
+       /* if(joinOn==true) {
+            let joinOn = UIAlertController(title: "알림", message: "이미 가입되었습니다", preferredStyle: UIAlertController.Style.alert)
+            let onAction = UIAlertAction(title: "네, 알겠습니다.", style: UIAlertAction.Style.default, handler: nil)
+            joinOn.addAction(onAction)
+            present(jo)
+        } else {
+            
+        }
+ */
     }
     
     func initArrays() {
