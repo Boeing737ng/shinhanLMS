@@ -377,6 +377,9 @@ $(document).ready(function () {
         } else if ($('#relatedTags').tagsinput('items').length == 0) {
             param = '관련태그';
             target = $('#relatedTags');
+        } else if (isEmpty($('#description').val())) {
+            param = '상세설명';
+            target = $('#description');
         }
 
         if (!isEmpty(param)) {
