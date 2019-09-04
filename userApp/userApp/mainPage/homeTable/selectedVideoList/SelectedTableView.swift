@@ -15,11 +15,11 @@ class SelectedTableView: UITableView, UITableViewDelegate, UITableViewDataSource
     var authorArray = ["","",""]
     var viewArray = ["","",""]
     var dataReceived:Bool = false
-    var dataSize:Int = 0;
     var currentVideoIdArray = Array<String>()
     var currentVideoTitleArray = Array<String>()
     var currentVideoAuthorArray = Array<String>()
     var currentVideoViewArray = Array<Int>()
+    var currentVideoProgressArray = Array<Float>()
     
     override func awakeFromNib() {
         self.delegate = self
@@ -43,7 +43,7 @@ class SelectedTableView: UITableView, UITableViewDelegate, UITableViewDataSource
         ref.child("user/" + userNo + "/selectedTags").observeSingleEvent(of: .value, with: { (snapshot) in
             let tagList = snapshot.value as! String
             userSelectedTagArray = tagList.components(separatedBy: " ")
-            ref.child(userCompanyCode + "/videos").observeSingleEvent(of: .value, with: { (snapshot) in
+            ref.child(userCompanyCode + "/lecture").observeSingleEvent(of: .value, with: { (snapshot) in
                 // Get user value
                 let value = snapshot.value as? Dictionary<String,Any>;()
                 for video in value! {
@@ -54,21 +54,15 @@ class SelectedTableView: UITableView, UITableViewDelegate, UITableViewDataSource
                             let videoId = video.key
                             let title = videoDict["title"] as! String
                             let author = videoDict["author"] as! String
-                            recommendedVideoIdArray.append(videoId)
-                            recommendedTitleArray.append(title)
-                            recommendedAuthorArray.append(author)
+                            self.currentVideoIdArray.append(videoId)
+                            self.currentVideoTitleArray.append(title)
+                            self.currentVideoAuthorArray.append(author)
                             
-                            ref.child(userCompanyCode + "/videos/" + videoId).observeSingleEvent(of: .value, with: { (snapshot) in
+                            ref.child(userCompanyCode + "/lecture/" + videoId).observeSingleEvent(of: .value, with: { (snapshot) in
                                 let videoDict2 = snapshot.value as! Dictionary<String, Any>;()
                                 let view = videoDict2["view"] as! Int
-                                recommendedViewArray.append(view)
+                                self.currentVideoViewArray.append(view)
                                 self.dataReceived = true
-                                self.dataSize = recommendedVideoIdArray.count
-                                self.currentVideoIdArray = recommendedVideoIdArray
-                                self.currentVideoTitleArray = recommendedTitleArray
-                                self.currentVideoAuthorArray = recommendedAuthorArray
-                                self.currentVideoViewArray = recommendedViewArray
-                                
                                 self.reloadData()
                             }) { (error) in
                                 print(error.localizedDescription)
@@ -87,30 +81,28 @@ class SelectedTableView: UITableView, UITableViewDelegate, UITableViewDataSource
     }
     
     func getPlayingVideoList() {
-        clearArray()
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child("user/201302493/playList/").observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             let value = snapshot.value as? NSDictionary
-            for video in value! {
-                let videoDict = video.value as! Dictionary<String, Any>;()
-                let status = videoDict["state"] as! String
+            for lecture in value! {
+                let lectureDict = lecture.value as! Dictionary<String, Any>;()
+                let status = lectureDict["state"] as! String
                 if status == "playing" {
-                    let videoId = video.key as! String
-                    let title = videoDict["title"] as! String
-                    let author = videoDict["author"] as! String
-                    let progress = (videoDict["progress"] as! NSNumber)
-                    self.currentVideoIdArray.append(videoId)
+                    let lectureId = lecture.key as! String
+                    let title = lectureDict["title"] as! String
+                    let author = lectureDict["author"] as! String
+                    let progress = (lectureDict["progress"] as! NSNumber)
+                    self.currentVideoIdArray.append(lectureId)
                     self.currentVideoTitleArray.append(title)
                     self.currentVideoAuthorArray.append(author)
-                    //playingProgressArray.append(progress.floatValue)
+                    self.currentVideoProgressArray.append(progress.floatValue)
                     
-                    ref.child(userCompanyCode + "/videos/" + videoId).observeSingleEvent(of: .value, with: { (snapshot) in
+                    ref.child(userCompanyCode + "/lecture/" + lectureId).observeSingleEvent(of: .value, with: { (snapshot) in
                         let videoDict2 = snapshot.value as! Dictionary<String, Any>;()
                         let view = videoDict2["view"] as! Int
                         self.currentVideoViewArray.append(view)
-                        self.dataSize = self.currentVideoViewArray.count
                         self.dataReceived = true
                         self.reloadData()
                     }) { (error) in
@@ -126,46 +118,22 @@ class SelectedTableView: UITableView, UITableViewDelegate, UITableViewDataSource
     }
     
     func getPopularVideoList() {
-        clearArray()
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child(userCompanyCode + "/videos/").queryOrdered(byChild: "view").observeSingleEvent(of: .value, with: { (snapshot) in
-            self.dataSize = Int(snapshot.childrenCount) - 1
+        ref.child(userCompanyCode + "/lecture").queryOrdered(byChild: "view").observeSingleEvent(of: .value, with: { (snapshot) in
             for video in snapshot.children.allObjects as! [DataSnapshot] {
                 if let videoInfo = video.value as? [String : Any] {
-                    totalPopularVideoIdArray.append(video.key)
-                    totalPopularTitleArray.append(videoInfo["title"] as! String)
-                    totalPopularAuthorArray.append(videoInfo["author"] as! String)
-                    totalPopularViewArray.append(videoInfo["view"] as! Int)
+                    self.currentVideoIdArray.append(video.key)
+                    self.currentVideoTitleArray.append(videoInfo["title"] as! String)
+                    self.currentVideoAuthorArray.append(videoInfo["author"] as! String)
+                    self.currentVideoViewArray.append(videoInfo["view"] as! Int)
                 }
             }
             self.dataReceived = true
-            self.currentVideoIdArray = totalPopularVideoIdArray
-            self.currentVideoTitleArray = totalPopularTitleArray
-            self.currentVideoAuthorArray = totalPopularAuthorArray
-            self.currentVideoViewArray = totalPopularViewArray
-            
             self.reloadData()
         }) { (error) in
             print(error.localizedDescription)
         }
-    }
-    
-    func clearArray() {
-        totalPopularVideoIdArray.removeAll()
-        totalPopularTitleArray.removeAll()
-        totalPopularAuthorArray.removeAll()
-        totalPopularViewArray.removeAll()
-        
-//        playingVideoIdArray.removeAll()
-//        playingTitleArray.removeAll()
-//        playingAuthorArray.removeAll()
-//        playingViewArray.removeAll()
-//        playingProgressArray.removeAll()
-    }
-    
-    func updateCells() {
-        self.reloadData()
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -173,8 +141,7 @@ class SelectedTableView: UITableView, UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(dataSize)
-        return dataSize
+        return currentVideoIdArray.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -188,10 +155,18 @@ class SelectedTableView: UITableView, UITableViewDelegate, UITableViewDataSource
         var index:Int = 0;
         if currentVideoViewArray.count == currentVideoIdArray.count {
             if segueId == "popularListSegue" {
-                index = dataSize - indexPath.row
+                index = (currentVideoIdArray.count - 1) - indexPath.row
             } else {
                 index = indexPath.row
             }
+            
+            if segueId == "playingListSegue" {
+                cell.videoProgressView.isHidden = false
+                cell.videoProgressView.progress = currentVideoProgressArray[index]
+            } else {
+                cell.videoProgressView.isHidden = true
+            }
+            
             if dataReceived {
                 cell.videoTitleLabel.text = currentVideoTitleArray[index]
                 cell.videoAuthorLabel.text = currentVideoAuthorArray[index]
@@ -204,7 +179,6 @@ class SelectedTableView: UITableView, UITableViewDelegate, UITableViewDataSource
                 cell.videoViewLabel.text = viewArray[indexPath.row]
             }
         } else {
-            print("????????????????????????????????????????")
             self.reloadData()
         }
         
