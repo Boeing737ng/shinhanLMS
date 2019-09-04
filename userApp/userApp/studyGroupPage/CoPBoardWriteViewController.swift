@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-var selectedStudyId:String = "11111"
+//var selectedStudyId:String = "11111"
 class CoPBoardWriteViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet weak var tfTitle: UITextField!
@@ -71,7 +71,7 @@ class CoPBoardWriteViewController: UIViewController, UITextViewDelegate {
         
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child(userCompanyCode + "/study/" + selectedStudyId + "/board").childByAutoId().setValue([
+        ref.child(userCompanyCode + "/study/" + curri_send + "/board").childByAutoId().setValue([
             "content": tvContent.text as? String,
             "date": NSDate().timeIntervalSince1970,
             "title": tfTitle.text as? String,

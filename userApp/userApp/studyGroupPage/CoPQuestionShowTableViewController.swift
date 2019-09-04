@@ -52,7 +52,7 @@ class CoPQuestionShowTableViewController: UITableViewController {
         
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child(userCompanyCode + "/study/" + selectedStudyId + "/board/" + selectedCopPostId + "/comment/").queryOrdered(byChild: "date").observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child(userCompanyCode + "/study/" + curri_send + "/board/" + selectedCopPostId + "/comment/").queryOrdered(byChild: "date").observeSingleEvent(of: .value, with: { (snapshot) in
             
             if snapshot.childrenCount == 0 {
                 return

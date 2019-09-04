@@ -47,9 +47,9 @@ class HomeTable: UITableViewController  {
         performSegue(withIdentifier: "recommendListSegue", sender: self)
     }
     
-    @IBAction func goToPlayingVideoList(_ sender: UIButton) {
-        performSegue(withIdentifier: "playingListSegue", sender: self)
-    }
+//    @IBAction func goToPlayingVideoList(_ sender: UIButton) {
+//        performSegue(withIdentifier: "playingListSegue", sender: self)
+//    }
     
     @IBAction func goToPopularVideoList(_ sender: UIButton) {
         performSegue(withIdentifier: "popularListSegue", sender: self)
