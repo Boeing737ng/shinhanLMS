@@ -95,7 +95,7 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
         let cell = tableView.dequeueReusableCell(withIdentifier: "VideoCell1") as! VideoCell1
         
         cell.videoProgressBar.progress = 0.8
-        if playingViewArray.count == 3 {
+        if playingViewArray.count == playingLectureIdArray.count {
             if dataReceived {
                 cell.videoTitleLabel.text = self.self.playingTitleArray[indexPath.row]
                 cell.videoAuthorLabel.text = playingAuthorArray[indexPath.row]
