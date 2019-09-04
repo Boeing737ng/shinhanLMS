@@ -62,7 +62,7 @@ class GroupCreateViewController: UIViewController, UIImagePickerControllerDelega
             "detail": studyDetail.text as? String,
             "studyname": studyName.text as? String,
             ])
-       // let storageRef = Storage.reference()
+        //let storageRef = Storage.reference()
         let transition: CATransition = CATransition()
         transition.duration = 0.5
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)

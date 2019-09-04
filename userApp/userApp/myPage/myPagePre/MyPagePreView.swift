@@ -33,7 +33,7 @@ class MyPagePreView: UITableView, UITableViewDelegate, UITableViewDataSource {
     func videoDataLoad(){
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child("user/201302493/playList").observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child("user/" + userNo + "/playList").observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
             for video in value! {
                 let videoDict = video.value as! Dictionary<String, Any>;()
@@ -59,8 +59,8 @@ class MyPagePreView: UITableView, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        //return self.playingTitleArray.count
-        return item.count
+        return self.playingTitleArray.count
+        //return item.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -68,6 +68,7 @@ class MyPagePreView: UITableView, UITableViewDelegate, UITableViewDataSource {
         if dataReceived {
         cell.tagLbl.text = self.playingTitleArray[indexPath.row]
         cell.tagImg.image = CachedImageView().loadCacheImage(urlKey: playingVideoIdArray[indexPath.row])
+            cell.taglbl2.text = self.playingAuthorArray[indexPath.row]
         }else{
             cell.tagLbl.text = item[indexPath.row]
             cell.tagImg.image = UIImage(named: img[(indexPath as NSIndexPath).row])

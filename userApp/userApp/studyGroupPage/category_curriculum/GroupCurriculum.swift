@@ -29,7 +29,7 @@ class GroupCurriculum: UICollectionView, UICollectionViewDelegate, UICollectionV
         var index = 0
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child("58/study/11111/curriculum").observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child("58/study/ + \(curri_send) + /curriculum").observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             if snapshot.childrenCount == 0 {
                 return
@@ -109,7 +109,7 @@ class GroupCurriculum: UICollectionView, UICollectionViewDelegate, UICollectionV
             cell.video_title.text = curriculumTitleArray[indexPath.row]
             cell.video_author.text = curriculumAuthorArray[indexPath.row]
             print(curriculumVideoIdArray)
-            cell.video_img.image = CachedImageView().loadCacheImage(urlKey: curriculumVideoIdArray[indexPath.row])
+            //cell.video_img.image = CachedImageView().loadCacheImage(urlKey: curriculumVideoIdArray[indexPath.row])
         } else {
             cell.video_title.text = textArray[indexPath.row]
             cell.video_author.text = authorArray[indexPath.row]
