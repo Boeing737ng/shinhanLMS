@@ -14,43 +14,22 @@ class GroupCurriculum: UICollectionView, UICollectionViewDelegate, UICollectionV
     override func awakeFromNib() {
         self.delegate = self
         self.dataSource = self
-        initcurriculum()
         NotificationCenter.default.addObserver(self, selector: #selector(reloadcollection), name: NSNotification.Name(rawValue: "copchange"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadcollection), name: NSNotification.Name(rawValue: "addcurri"), object: nil)
     }
     @objc func reloadcollection() {
-        getData()
-        self.reloadData()
-    }
-    func initcurriculum()
-    {
-        initArrays()
-        curri_send="11111"
-        var index = 0
-        var ref: DatabaseReference!
-        ref = Database.database().reference()
-        ref.child("58/study/ + \(curri_send) + /curriculum").observeSingleEvent(of: .value, with: { (snapshot) in
-            // Get user value
-            if snapshot.childrenCount == 0 {
-                return
-            }
-            let value = snapshot.value as? Dictionary<String,Any>;()
-            for video in value! {
-                let videoDict = video.value as! Dictionary<String, Any>;()
-                let videoId = video.key
-                let title = videoDict["title"] as! String
-                let author = videoDict["author"] as! String
-                self.curriculumVideoIdArray.append(videoId)
-                self.curriculumTitleArray.append(title)
-                self.curriculumAuthorArray.append(author)
-                index += 1
-            }
-            self.dataReceived = true
+        if(curri_send == "0")
+        {
+            initArrays()
             self.reloadData()
-        }) { (error) in
-            print(error.localizedDescription)
+        }
+        else
+        {
+            getData()
+            self.reloadData()
         }
     }
+
     func getData()
     {
         initArrays()
@@ -117,11 +96,5 @@ class GroupCurriculum: UICollectionView, UICollectionViewDelegate, UICollectionV
         }
         return cell
     }
-    /*
-     // Only override draw() if you perform custom drawing.
-     // An empty implementation adversely affects performance during animation.
-     override func draw(_ rect: CGRect) {
-     // Drawing code
-     }
-     */
+
 }
