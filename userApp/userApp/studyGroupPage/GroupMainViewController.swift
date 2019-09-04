@@ -59,7 +59,9 @@ class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerV
         initArrays()
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child("58/study").observeSingleEvent(of: .value, with: { (snapshot) in
+        print(userCompanyCode)
+        
+        ref.child(userCompanyCode + "/study").observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             if snapshot.childrenCount == 0 {
                 return

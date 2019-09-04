@@ -16,7 +16,8 @@ class MyPagePreViewController: UIViewController {
         
         // Do any additional setup after loading the view.
     }
-    @IBAction func onGoBack(_ sender: UIButton) {
+    
+    @IBAction func onGoBack(_ sender: UIBarButtonItem) {
         let transition: CATransition = CATransition()
         transition.duration = 0.5
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
@@ -25,8 +26,6 @@ class MyPagePreViewController: UIViewController {
         self.view.window!.layer.add(transition, forKey: nil)
         self.dismiss(animated: false, completion: nil)
     }
-    
-    
     /*
      // MARK: - Navigation
      
