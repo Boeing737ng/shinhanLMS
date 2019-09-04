@@ -34,7 +34,8 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
         ref = Database.database().reference()
         ref.child("user/" + userNo + "/playList/").observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
-            if snapshot.childrenCount == 0 {
+            if !snapshot.exists() || snapshot.childrenCount == 0 {
+                print("Playlist is empty!!!!")
                 return
             }
             let value = snapshot.value as? NSDictionary
