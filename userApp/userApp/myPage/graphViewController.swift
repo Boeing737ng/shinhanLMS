@@ -68,7 +68,7 @@ class graphViewController: UIViewController, ChartViewDelegate {
     
     func getNamePartDB(){
         clearArrays()
-        var dataURL:String = "58/study/11111/member/201302493"
+        var dataURL:String = "58/study/+ \(curri_send) + /member/201302493"
         //        var dataURL:String = ""
         //        dataURL = "user/" + userNo
         

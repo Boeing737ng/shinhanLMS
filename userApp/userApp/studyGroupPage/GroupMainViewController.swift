@@ -42,7 +42,7 @@ class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerV
         //curri=study_nameArray[row]
         detail.text = study_detailtxt[row]
         curri_send = curri[row]
-        imageview.image = UIImage(url: URL(string: study_img[row]))
+        //imageview.image = UIImage(url: URL(string: study_img[row]))
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "copchange"), object: nil)
         
     }
@@ -73,10 +73,10 @@ class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerV
                 curri.append(studyID)
                 let studytitle = studyDict["studyname"] as! String
                 let studydetail = studyDict["detail"] as! String
-                let studyimage = studyDict["img"] as! String
+                //let studyimage = studyDict["img"] as! String
                 self.study_nameArray.append(studytitle)
                 self.study_detailtxt.append(studydetail)
-                self.study_img.append(studyimage)
+                // self.study_img.append(studyimage)
             }
             self.dataReceived = true
             self.pickerImage.reloadAllComponents()
@@ -84,6 +84,19 @@ class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerV
             print(error.localizedDescription)
         }
     }
+    
+    @IBAction func CoPJoin(_ sender: UIButton) {
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        ref.child("58/study/" + curri_send + "/member/").child(userNo).setValue([
+            "name": userName,
+            "department": userDeptName,
+            "compNm": userCompanyName
+            ])
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "memberAdd"), object: nil)
+    }
+    
     func initArrays() {
         study_nameArray.removeAll()
         study_detailtxt.removeAll()
