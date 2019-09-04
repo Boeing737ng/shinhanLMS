@@ -17,6 +17,11 @@ class HomeTable: UITableViewController  {
         self.tableView.dataSource = self
     }
     
+    @objc func reloadTable() {
+        print("reload")
+        self.tableView.reloadData()
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }

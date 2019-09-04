@@ -45,7 +45,7 @@ class MyPageViewController: UIViewController{
     
     var playnum: Int = 0
     var plednum: Int = 0
-    
+    var question: Int = 0
     func getDataFromDB(){
         clearArrays()
         
@@ -79,13 +79,14 @@ class MyPageViewController: UIViewController{
     
     func getNamePartDB(){
         clearArrays()
-        var dataURL:String = "user/201302493"
+        var dataURL:String = "user/" + userNo
 //        var dataURL:String = ""
 //        dataURL = "user/" + userNo
         
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child("user/" + userNo).observeSingleEvent(of: .value, with: { (snapshot) in
+
             let value = snapshot.value as? Dictionary<String, Any>;()
             let nameD = value as! Dictionary<String, Any>;()
             let partD = value as! Dictionary<String, Any>;()
@@ -105,21 +106,33 @@ class MyPageViewController: UIViewController{
     
     func getQnumDB(){
         clearArrays()
-        var dataURL:String = "board_request/201302493"
-        
+        var dataURL:String = userCompanyCode + "/study/11111/board"
+
         var ref: DatabaseReference!
         ref = Database.database().reference()
-         ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
+            if !snapshot.exists() || snapshot.childrenCount == 0 {
+                self.questionlbl.text = "\(self.dbwriterArray.count)"
+                print("Playlist is empty!!!!")
+                return
+            }
             
             let value = snapshot.value as? Dictionary<String, Any>;()
-            let nameD = value as! Dictionary<String, Any>;()
-            let name = nameD["contents"] as! String
-            self.dbwriterArray.append(name)
-            
+            for ing in value! {
+                let statusD = ing.value as! Dictionary<String, Any>;()
+                let status = statusD["writer"] as! String
+                self.dbwriterArray.append(status)
+                print(self.dbwriterArray)
+                if status == "최기현"{
+                    self.question += 1
+                }else{
+                    self.question += 1
+                }
+            }
             self.questionlbl.text = "\(self.dbwriterArray.count)"
             print(self.dbwriterArray.count)
             self.dataReceived = true
-            
+
          }) { (error) in
             print(error.localizedDescription)
     }
