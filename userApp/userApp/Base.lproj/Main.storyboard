@@ -22,12 +22,12 @@
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="CategoryCell" rowHeight="185" id="PU2-Dm-Al2" customClass="CategoryCell" customModule="userApp" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="185"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PU2-Dm-Al2" id="WqJ-r1-Jvv">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PU2-Dm-Al2" id="WqJ-r1-Jvv">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="184.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="8it-iT-74I" customClass="VideoCollection" customModule="userApp" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="35" width="414" height="150"/>
+                                            <rect key="frame" x="0.0" y="34.5" width="414" height="150"/>
                                             <color key="backgroundColor" red="0.93362020810000002" green="0.93362020810000002" blue="0.93362020810000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="150" id="Gca-L8-S25"/>
@@ -88,19 +88,19 @@
                                             </cells>
                                         </collectionView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="90I-3h-yJF" userLabel="textBackground">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="30.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="30"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qAf-sj-Fct" userLabel="textContainer">
-                                                    <rect key="frame" x="20.5" y="0.0" width="373" height="30.5"/>
+                                                    <rect key="frame" x="20.5" y="0.0" width="373" height="30"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="추천 강좌" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NLN-2B-0Ky">
-                                                            <rect key="frame" x="0.0" y="6.5" width="56" height="18"/>
+                                                            <rect key="frame" x="0.0" y="6" width="56" height="18"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dr1-EH-Tef">
-                                                            <rect key="frame" x="324" y="2" width="45" height="27"/>
+                                                            <rect key="frame" x="324" y="1.5" width="45" height="27"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <state key="normal" title="View All"/>
                                                             <connections>
@@ -478,7 +478,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="290" height="290"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shinple_logo" translatesAutoresizingMaskIntoConstraints="NO" id="ACA-qG-M47">
-                                                <rect key="frame" x="0.0" y="0.0" width="290.00000000000182" height="290"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="290" height="290"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="ACA-qG-M47" secondAttribute="height" multiplier="1:1" id="F8K-Dx-ZGB"/>
                                                 </constraints>
@@ -642,10 +642,10 @@
             </objects>
             <point key="canvasLocation" x="164" y="-388"/>
         </scene>
-        <!--mainTabPage-->
+        <!--MainTabPage-->
         <scene sceneID="FM2-Qs-wPj">
             <objects>
-                <viewController id="6it-wW-su9" userLabel="mainTabPage" customClass="ViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="6it-wW-su9" userLabel="MainTabPage" customClass="ViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Pm0-u0-FHN">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -658,7 +658,7 @@
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g1U-Tk-fP9" userLabel="ButtonGaps">
                                                 <rect key="frame" x="0.0" y="0.0" width="55" height="20"/>
-                                                <color key="backgroundColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <color key="backgroundColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="55" id="cVp-Ot-fRB"/>
                                                 </constraints>
@@ -673,7 +673,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
-                                                <color key="backgroundColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <color key="backgroundColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" secondItem="UO7-6D-kPW" secondAttribute="trailing" id="6CT-rs-eoZ"/>
                                                     <constraint firstItem="UO7-6D-kPW" firstAttribute="leading" secondItem="MHK-m5-9ct" secondAttribute="leading" id="abh-V3-bw6"/>
@@ -695,7 +695,7 @@
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cxX-ui-kc2" userLabel="gapBetweenBtns">
                                                 <rect key="frame" x="347" y="0.0" width="15" height="20"/>
-                                                <color key="backgroundColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <color key="backgroundColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="15" id="Xgz-82-0sj"/>
                                                 </constraints>
@@ -714,12 +714,13 @@
                                                 </connections>
                                             </button>
                                         </subviews>
+                                        <color key="backgroundColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="lUc-Jf-SZE"/>
                                         </constraints>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.0024550473317503929" green="0.41729119420051575" blue="0.89977985620498657" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="mba-qz-bQP" firstAttribute="leading" secondItem="Wn1-np-KNz" secondAttribute="leading" constant="16" id="8G5-Y2-MmU"/>
                                     <constraint firstAttribute="trailing" secondItem="mba-qz-bQP" secondAttribute="trailing" constant="16" id="8zH-6v-OuH"/>
@@ -746,7 +747,6 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ln0-gK-x44"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="video" id="4jN-ry-lcz"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a3l-sY-ZOT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -767,10 +767,10 @@
             </objects>
             <point key="canvasLocation" x="1093" y="317"/>
         </scene>
-        <!--studyGroup-->
+        <!--Cop Main-->
         <scene sceneID="6Cs-eu-UXg">
             <objects>
-                <viewController storyboardIdentifier="studyGroup" id="O7e-i3-78I" customClass="GroupMainViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="studyGroup" id="O7e-i3-78I" userLabel="Cop Main" customClass="GroupMainViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TWR-aA-hH8">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -900,7 +900,7 @@
                                                             </collectionViewCell>
                                                         </cells>
                                                     </collectionView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="스터디 회원" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OSa-Zd-tf3">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CoP 회원" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OSa-Zd-tf3">
                                                         <rect key="frame" x="0.0" y="180" width="375" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="30" id="1EW-mg-xAF"/>
@@ -1046,7 +1046,6 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="rCn-a9-GUl"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="studyGroup" id="z3A-OF-9vU"/>
                     <connections>
                         <outlet property="detail" destination="goX-lp-ZFN" id="iR7-Iu-tSN"/>
                         <outlet property="imageview" destination="MhK-IY-8Rp" id="cZO-ds-OGH"/>
@@ -1057,10 +1056,10 @@
             </objects>
             <point key="canvasLocation" x="1884" y="1002"/>
         </scene>
-        <!--videoDetails-->
+        <!--Lecture Details-->
         <scene sceneID="Zqt-jz-m8R">
             <objects>
-                <viewController storyboardIdentifier="videoDetails" id="lG6-XC-bKS" userLabel="videoDetails" customClass="VideoDetailViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="videoDetails" id="lG6-XC-bKS" userLabel="Lecture Details" customClass="VideoDetailViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hK4-SH-vgc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1071,7 +1070,7 @@
                                     <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oXG-uc-Tvs">
                                         <rect key="frame" x="0.0" y="86" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                        <color key="barTintColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="barTintColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <textAttributes key="titleTextAttributes">
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </textAttributes>
@@ -1087,7 +1086,7 @@
                                         </items>
                                     </navigationBar>
                                 </subviews>
-                                <color key="backgroundColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="130" id="WxP-wy-nkf"/>
                                 </constraints>
@@ -1126,7 +1125,6 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="JDO-7p-JVo"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="home" id="XQg-mU-ybg"/>
                     <connections>
                         <outlet property="videoView" destination="X0x-5Y-Cju" id="kvs-Mb-ayG"/>
                     </connections>
@@ -1150,10 +1148,10 @@
             </objects>
             <point key="canvasLocation" x="-1329" y="2380"/>
         </scene>
-        <!--Video Info View Controller-->
+        <!--Lecture Info-->
         <scene sceneID="b4q-JG-xfo">
             <objects>
-                <viewController storyboardIdentifier="TableOne" id="Vbc-BR-5EN" customClass="VideoInfoViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TableOne" id="Vbc-BR-5EN" userLabel="Lecture Info" customClass="VideoInfoViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5YE-yc-yK7">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1251,10 +1249,10 @@
             </objects>
             <point key="canvasLocation" x="-2294" y="2950"/>
         </scene>
-        <!--Video Review Table View Controller-->
+        <!--Lecture Review-->
         <scene sceneID="6KD-w1-dH6">
             <objects>
-                <tableViewController storyboardIdentifier="TableThree" id="yZk-va-p1D" customClass="VideoReviewTableViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="TableThree" id="yZk-va-p1D" userLabel="Lecture Review" customClass="VideoReviewTableViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="EHg-Hw-VMI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1344,10 +1342,10 @@
             </objects>
             <point key="canvasLocation" x="-1004" y="2950"/>
         </scene>
-        <!--Video QnA Table View Controller-->
+        <!--Lecture QnA board-->
         <scene sceneID="N8h-2Z-9uk">
             <objects>
-                <tableViewController storyboardIdentifier="TableFour" id="duf-Na-onh" customClass="VideoQnATableViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="TableFour" id="duf-Na-onh" userLabel="Lecture QnA board" customClass="VideoQnATableViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="vAd-wR-lGB">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1448,10 +1446,10 @@
             </objects>
             <point key="canvasLocation" x="-371" y="2950"/>
         </scene>
-        <!--mainTabPage-->
+        <!--CoP Lecture Add-->
         <scene sceneID="Fxp-Nn-XS6">
             <objects>
-                <viewController id="GaD-kU-I7S" userLabel="mainTabPage" customClass="VideoaddViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="GaD-kU-I7S" userLabel="CoP Lecture Add" customClass="VideoaddViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JFa-He-M7J">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1475,20 +1473,17 @@
                                                     <action selector="onGoBack:" destination="GaD-kU-I7S" eventType="touchUpInside" id="h6Y-Eq-9Gk"/>
                                                 </connections>
                                             </button>
-                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tPM-iY-20Q">
-                                                <rect key="frame" x="80" y="0.0" width="62" height="20"/>
-                                            </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VpC-qb-FZE">
-                                                <rect key="frame" x="142" y="0.0" width="98.5" height="20"/>
+                                                <rect key="frame" x="80" y="0.0" width="222" height="20"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="강좌 추가하기" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bje-6c-F9g">
-                                                        <rect key="frame" x="0.0" y="-0.5" width="98.5" height="21.5"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="커리큘럼 추가하기" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bje-6c-F9g">
+                                                        <rect key="frame" x="0.0" y="-0.5" width="222" height="21.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
-                                                <color key="backgroundColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <color key="backgroundColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" secondItem="bje-6c-F9g" secondAttribute="trailing" id="19q-NT-wwi"/>
                                                     <constraint firstItem="bje-6c-F9g" firstAttribute="centerY" secondItem="VpC-qb-FZE" secondAttribute="centerY" id="adB-gB-KwB"/>
@@ -1496,7 +1491,7 @@
                                                 </constraints>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DmS-1f-Mo4">
-                                                <rect key="frame" x="240.5" y="0.0" width="141.5" height="20"/>
+                                                <rect key="frame" x="302" y="0.0" width="80" height="20"/>
                                             </stackView>
                                         </subviews>
                                         <constraints>
@@ -1504,7 +1499,7 @@
                                         </constraints>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="Be5-7n-V9O" secondAttribute="bottom" constant="12" id="AzZ-Oc-pOX"/>
                                     <constraint firstItem="Be5-7n-V9O" firstAttribute="leading" secondItem="VC2-Gu-zM6" secondAttribute="leading" constant="16" id="FXN-CP-Fbw"/>
@@ -1606,7 +1601,6 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="z5W-jU-LZo"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="video" id="c4b-Tk-rqZ"/>
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -1618,10 +1612,10 @@
             </objects>
             <point key="canvasLocation" x="3269.5652173913045" y="1001.7857142857142"/>
         </scene>
-        <!--video-->
+        <!--Lecture-->
         <scene sceneID="4sW-na-S6C">
             <objects>
-                <viewController storyboardIdentifier="videoList" id="hkl-Ua-T7p" customClass="LectureListViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="videoList" id="hkl-Ua-T7p" userLabel="Lecture" customClass="LectureListViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DXe-9z-B27">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1752,7 +1746,6 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="nxP-TD-0WU"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="video" id="Gr0-4f-qEL"/>
                     <connections>
                         <outlet property="btn1" destination="VuJ-bc-QiN" id="3To-Mf-3uY"/>
                     </connections>
@@ -1761,10 +1754,10 @@
             </objects>
             <point key="canvasLocation" x="1092.753623188406" y="1001.7857142857142"/>
         </scene>
-        <!--studyBoard-->
+        <!--CoP Board-->
         <scene sceneID="mk1-to-3t1">
             <objects>
-                <viewController id="vcC-G1-MYY" userLabel="studyBoard" customClass="GroupBoardViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="vcC-G1-MYY" userLabel="CoP Board" customClass="GroupBoardViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NFl-d3-vRu">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1775,12 +1768,12 @@
                                     <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I9Y-mV-Iox">
                                         <rect key="frame" x="0.0" y="86" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                        <color key="barTintColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="barTintColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <textAttributes key="titleTextAttributes">
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </textAttributes>
                                         <items>
-                                            <navigationItem title="게시판" id="8nW-2o-5C7">
+                                            <navigationItem title="CoP 게시판" id="8nW-2o-5C7">
                                                 <barButtonItem key="leftBarButtonItem" title="back" id="SCe-7o-ylH">
                                                     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
@@ -1797,7 +1790,7 @@
                                         </items>
                                     </navigationBar>
                                 </subviews>
-                                <color key="backgroundColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="130" id="ltd-59-JxR"/>
                                 </constraints>
@@ -1861,7 +1854,6 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="9XS-me-SCR"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="videoList" id="rQi-uQ-v9T"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8bo-4b-LeL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1881,7 +1873,7 @@
                                     <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PHy-jP-GRI">
                                         <rect key="frame" x="0.0" y="86" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                        <color key="barTintColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="barTintColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <textAttributes key="titleTextAttributes">
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </textAttributes>
@@ -1897,7 +1889,7 @@
                                         </items>
                                     </navigationBar>
                                 </subviews>
-                                <color key="backgroundColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="130" id="cwz-NF-7qC"/>
                                 </constraints>
@@ -2001,30 +1993,23 @@
                                     <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aof-N2-zem">
                                         <rect key="frame" x="0.0" y="86" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                        <color key="barTintColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="barTintColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <textAttributes key="titleTextAttributes">
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </textAttributes>
                                         <items>
                                             <navigationItem title="나의 이용 현황" id="nXD-p3-CqS">
-                                                <barButtonItem key="leftBarButtonItem" style="plain" id="L0x-P5-L39">
-                                                    <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="18q-cX-kYw">
-                                                        <rect key="frame" x="20" y="7" width="92" height="30"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <state key="normal" title="back">
-                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="onGoBack:" destination="SEF-uT-nNr" eventType="touchUpInside" id="e4g-sz-Sv7"/>
-                                                            <action selector="onGoBack:" destination="NFb-DT-NcW" eventType="touchUpInside" id="vTi-nO-vKG"/>
-                                                        </connections>
-                                                    </button>
+                                                <barButtonItem key="leftBarButtonItem" title="back" id="ABp-7u-bQD">
+                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <connections>
+                                                        <action selector="onGoBack:" destination="SEF-uT-nNr" id="dDW-Ph-ODT"/>
+                                                    </connections>
                                                 </barButtonItem>
                                             </navigationItem>
                                         </items>
                                     </navigationBar>
                                 </subviews>
-                                <color key="backgroundColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="130" id="d2S-BY-0TI"/>
                                 </constraints>
@@ -2343,10 +2328,10 @@
             </objects>
             <point key="canvasLocation" x="2991" y="290"/>
         </scene>
-        <!--myPage-->
+        <!--MyPage-->
         <scene sceneID="MPj-nO-98c">
             <objects>
-                <viewController id="hbD-yG-EEx" customClass="MyPageViewController" customModule="userApp" sceneMemberID="viewController">
+                <viewController id="hbD-yG-EEx" userLabel="MyPage" customClass="MyPageViewController" customModule="userApp" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Rwj-MS-1gx">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2357,14 +2342,14 @@
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D96-yW-EcV" userLabel="NavigationBar">
                                         <rect key="frame" x="0.0" y="-46" width="414" height="130"/>
-                                        <color key="backgroundColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="backgroundColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="130" id="oJS-0c-KGb"/>
                                         </constraints>
                                     </view>
                                     <navigationBar contentMode="scaleToFill" misplaced="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vsw-UO-xNw">
                                         <rect key="frame" x="0.0" y="40" width="414" height="44"/>
-                                        <color key="barTintColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="barTintColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <textAttributes key="titleTextAttributes">
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </textAttributes>
@@ -2785,7 +2770,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="B1H-wK-gIv"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="myPage" id="cVU-hn-TGc"/>
                     <connections>
                         <outlet property="edLecture" destination="CP6-R2-HSO" id="Mrd-Gr-fIQ"/>
                         <outlet property="fieldlbl" destination="vXC-vG-yvC" id="Xa7-vx-34i"/>
@@ -2798,10 +2782,10 @@
             </objects>
             <point key="canvasLocation" x="2502.898550724638" y="-747.32142857142856"/>
         </scene>
-        <!--Tag Edit View Controller-->
+        <!--Tag Edit-->
         <scene sceneID="uxU-r8-yB3">
             <objects>
-                <viewController id="NFb-DT-NcW" customClass="tagEditViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="NFb-DT-NcW" userLabel="Tag Edit" customClass="tagEditViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="krt-hj-JVc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2815,7 +2799,7 @@
                                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JWh-9m-qdn">
                                                 <rect key="frame" x="0.0" y="86" width="414" height="44"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                                <color key="barTintColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <color key="barTintColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <textAttributes key="titleTextAttributes">
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </textAttributes>
@@ -2837,7 +2821,7 @@
                                                 </items>
                                             </navigationBar>
                                         </subviews>
-                                        <color key="backgroundColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="backgroundColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="130" id="nFK-aX-JWv"/>
                                         </constraints>
@@ -2938,17 +2922,17 @@
             </objects>
             <point key="canvasLocation" x="3327.5362318840585" y="-1049.3303571428571"/>
         </scene>
-        <!--My Page Pre View Controller-->
+        <!--My Page Pre-->
         <scene sceneID="skr-Zt-fMc">
             <objects>
-                <viewController id="lZ4-Ea-ID0" customClass="MyPagePreViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="lZ4-Ea-ID0" userLabel="My Page Pre" customClass="MyPagePreViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6dI-pS-gWl">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d9l-e7-bFr">
                                 <rect key="frame" x="0.0" y="40" width="414" height="44"/>
-                                <color key="barTintColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="barTintColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <textAttributes key="titleTextAttributes">
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </textAttributes>
@@ -2959,29 +2943,23 @@
                                     <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C9d-nf-qaq">
                                         <rect key="frame" x="0.0" y="86" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                        <color key="barTintColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="barTintColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <textAttributes key="titleTextAttributes">
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </textAttributes>
                                         <items>
                                             <navigationItem title="강의 시청 기록" id="ecL-zB-6Vu">
-                                                <barButtonItem key="leftBarButtonItem" style="plain" id="jji-yI-H68">
-                                                    <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="k2T-sq-kok">
-                                                        <rect key="frame" x="20" y="7" width="92" height="30"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <state key="normal" title="back">
-                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="onGoBack:" destination="lZ4-Ea-ID0" eventType="touchUpInside" id="Twl-le-RAQ"/>
-                                                        </connections>
-                                                    </button>
+                                                <barButtonItem key="leftBarButtonItem" title="back" id="1AX-3f-bwq">
+                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <connections>
+                                                        <action selector="onGoBack:" destination="lZ4-Ea-ID0" id="UWd-Sh-SOg"/>
+                                                    </connections>
                                                 </barButtonItem>
                                             </navigationItem>
                                         </items>
                                     </navigationBar>
                                 </subviews>
-                                <color key="backgroundColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="130" id="5wC-yB-Yfp"/>
                                 </constraints>
@@ -3042,15 +3020,15 @@
             </objects>
             <point key="canvasLocation" x="3327.5362318840585" y="-388.39285714285711"/>
         </scene>
-        <!--createStudy2-->
+        <!--CoP Create-->
         <scene sceneID="hLX-iF-Mhg">
             <objects>
-                <viewController id="flo-q4-rx6" userLabel="createStudy2" customClass="GroupCreateViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="flo-q4-rx6" userLabel="CoP Create" customClass="GroupCreateViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="49M-lO-Osq">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="스터디 이름" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CkC-M2-9ue">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CoP 이름" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CkC-M2-9ue">
                                 <rect key="frame" x="20" y="413.5" width="78" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -3084,12 +3062,12 @@
                                     <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kVZ-4I-XCg">
                                         <rect key="frame" x="0.0" y="86" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                        <color key="barTintColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="barTintColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <textAttributes key="titleTextAttributes">
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </textAttributes>
                                         <items>
-                                            <navigationItem title="스터디그룹 생성" id="XCF-55-R3s">
+                                            <navigationItem title="CoP 생성" id="XCF-55-R3s">
                                                 <barButtonItem key="leftBarButtonItem" title="back" id="kHZ-NQ-Egm">
                                                     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
@@ -3100,12 +3078,12 @@
                                         </items>
                                     </navigationBar>
                                 </subviews>
-                                <color key="backgroundColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="130" id="vXz-Nq-zKx"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="스터디 목표" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z1U-9P-UtV">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CoP 목표" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z1U-9P-UtV">
                                 <rect key="frame" x="20" y="501.5" width="78" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -3199,7 +3177,7 @@
                                     <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rrt-cg-jEI">
                                         <rect key="frame" x="0.0" y="86" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                        <color key="barTintColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="barTintColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <textAttributes key="titleTextAttributes">
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </textAttributes>
@@ -3221,7 +3199,7 @@
                                         </items>
                                     </navigationBar>
                                 </subviews>
-                                <color key="backgroundColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="130" id="Ceh-Jj-6km"/>
                                 </constraints>
@@ -3249,7 +3227,6 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="xeN-rP-u8T"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="myPage" id="GXp-fn-KrO"/>
                     <connections>
                         <outlet property="tvContent" destination="wKX-0b-fzC" id="Nqk-Wf-vHS"/>
                     </connections>
@@ -3272,7 +3249,7 @@
                                     <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wAg-cM-yXo">
                                         <rect key="frame" x="0.0" y="86" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                        <color key="barTintColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="barTintColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <textAttributes key="titleTextAttributes">
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </textAttributes>
@@ -3294,7 +3271,7 @@
                                         </items>
                                     </navigationBar>
                                 </subviews>
-                                <color key="backgroundColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="130" id="UzW-sK-R2q"/>
                                 </constraints>
@@ -3344,7 +3321,6 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="l34-FS-Qpx"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="myPage" id="SA7-YZ-eMm"/>
                     <connections>
                         <outlet property="tfTitle" destination="Zod-Wr-vxS" id="GCi-m1-D2P"/>
                         <outlet property="tvContent" destination="Wd4-FE-jux" id="s56-Xv-gSP"/>
@@ -3368,7 +3344,7 @@
                                     <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hF8-xQ-1v7">
                                         <rect key="frame" x="0.0" y="86" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                        <color key="barTintColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="barTintColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <textAttributes key="titleTextAttributes">
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </textAttributes>
@@ -3384,7 +3360,7 @@
                                         </items>
                                     </navigationBar>
                                 </subviews>
-                                <color key="backgroundColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="130" id="QhA-zk-VU4"/>
                                 </constraints>
@@ -3516,10 +3492,10 @@
             </objects>
             <point key="canvasLocation" x="478" y="2928"/>
         </scene>
-        <!--Video Question Show Table View Controller-->
+        <!--Question Show Table-->
         <scene sceneID="qkl-6d-E9K">
             <objects>
-                <tableViewController id="hjh-a1-qwb" customClass="VideoQuestionShowTableViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="hjh-a1-qwb" userLabel="Question Show Table" customClass="VideoQuestionShowTableViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="V47-8d-HZ0">
                         <rect key="frame" x="0.0" y="0.0" width="374" height="525"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3593,7 +3569,7 @@
                                     <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hXn-S6-BrV">
                                         <rect key="frame" x="0.0" y="86" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                        <color key="barTintColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="barTintColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <textAttributes key="titleTextAttributes">
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </textAttributes>
@@ -3615,7 +3591,7 @@
                                         </items>
                                     </navigationBar>
                                 </subviews>
-                                <color key="backgroundColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="130" id="DSc-Is-60h"/>
                                 </constraints>
@@ -3665,7 +3641,6 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="70M-Qq-ACD"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="myPage" id="p1e-Dw-xWe"/>
                     <connections>
                         <outlet property="tfTitle" destination="k96-Tq-4d3" id="yAd-1o-fVv"/>
                         <outlet property="tvContent" destination="dMY-Sw-WQh" id="maI-xK-Bw3"/>
@@ -3675,10 +3650,10 @@
             </objects>
             <point key="canvasLocation" x="4091" y="1398"/>
         </scene>
-        <!--video-->
+        <!--Selected Video List-->
         <scene sceneID="AYQ-4p-m9T">
             <objects>
-                <viewController id="sFu-Aa-d8N" customClass="SelectedVideoListViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="sFu-Aa-d8N" userLabel="Selected Video List" customClass="SelectedVideoListViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QcU-tU-RIS">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3689,7 +3664,7 @@
                                     <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lzM-rr-abC">
                                         <rect key="frame" x="0.0" y="86" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                        <color key="barTintColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="barTintColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <textAttributes key="titleTextAttributes">
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </textAttributes>
@@ -3705,7 +3680,7 @@
                                         </items>
                                     </navigationBar>
                                 </subviews>
-                                <color key="backgroundColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="130" id="v1S-Op-GJN"/>
                                 </constraints>
@@ -3848,7 +3823,6 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Mxh-4k-7aW"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="video" id="xKY-0x-jHg"/>
                     <connections>
                         <outlet property="btn1" destination="SRj-4Y-MbZ" id="cqh-gf-g3d"/>
                     </connections>
@@ -3857,10 +3831,10 @@
             </objects>
             <point key="canvasLocation" x="271" y="1771"/>
         </scene>
-        <!--video-->
+        <!--Lecture Video List-->
         <scene sceneID="nvz-5F-SLN">
             <objects>
-                <viewController storyboardIdentifier="TableTwo" id="Ce3-1h-lU9" customClass="LectureVideoListViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TableTwo" id="Ce3-1h-lU9" userLabel="Lecture Video List" customClass="LectureVideoListViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="B0M-fy-Ss5">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3937,7 +3911,6 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="g0Q-y3-ESc"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="video" id="RjS-Bu-wgH"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ngt-7z-igf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -3957,12 +3930,12 @@
                                     <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x4g-es-M8f">
                                         <rect key="frame" x="0.0" y="86" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                        <color key="barTintColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="barTintColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <textAttributes key="titleTextAttributes">
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </textAttributes>
                                         <items>
-                                            <navigationItem title="질문 보기" id="EXO-I6-A5d">
+                                            <navigationItem title="게시글 보기" id="EXO-I6-A5d">
                                                 <barButtonItem key="leftBarButtonItem" title="back" id="Um3-4Y-eG8">
                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <connections>
@@ -3973,7 +3946,7 @@
                                         </items>
                                     </navigationBar>
                                 </subviews>
-                                <color key="backgroundColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="130" id="FHi-lx-XVa"/>
                                 </constraints>
@@ -4096,10 +4069,10 @@
             </objects>
             <point key="canvasLocation" x="4090" y="2121"/>
         </scene>
-        <!--CoP Question Show Table View Controller-->
+        <!--CoP Question Show Table-->
         <scene sceneID="r50-Wg-c71">
             <objects>
-                <tableViewController id="4YS-x0-VTT" customClass="CoPQuestionShowTableViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="4YS-x0-VTT" userLabel="CoP Question Show Table" customClass="CoPQuestionShowTableViewController" customModule="userApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="nQe-DY-I6G">
                         <rect key="frame" x="0.0" y="0.0" width="374" height="525"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -4166,7 +4139,7 @@
                                     <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jjV-hF-uSH">
                                         <rect key="frame" x="0.0" y="86" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                        <color key="barTintColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="barTintColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <textAttributes key="titleTextAttributes">
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </textAttributes>
@@ -4182,7 +4155,7 @@
                                         </items>
                                     </navigationBar>
                                 </subviews>
-                                <color key="backgroundColor" red="0.18912024299999999" green="0.5369307015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.0" green="0.40784313725490196" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="130" id="jr7-cn-BHc"/>
                                 </constraints>
