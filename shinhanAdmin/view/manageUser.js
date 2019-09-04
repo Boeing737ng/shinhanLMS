@@ -133,9 +133,10 @@ $(document).ready(function () {
             var rsltArr = [];
 
             $.each(catArr, function(idx, studyObj) {
+        
 
                 if( 
-                    ((searchempNm == '') || (studyObj['name'].indexOf(searchempNm) > -1)) &&
+                    ((searchempNm == '') || (studyObj['name'].toLowerCase().indexOf(searchempNm.toLowerCase()) > -1)) &&
                     ((searchempNo == '') || (searchempNo == idx)) &&
                     ((searchCompany == '') ||(studyObj['compCd'] == searchCompany)) &&
                     (studyObj['roleCd'] != 'admin')

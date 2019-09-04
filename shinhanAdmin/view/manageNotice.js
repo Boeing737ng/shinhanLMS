@@ -224,7 +224,7 @@ $(document).ready(function () {
             $.each(catArr, function (idx, studyObj) {
 
                 if (
-                    ((searchTitle == '') || (studyObj['title'].indexOf(searchTitle) > -1)) &&
+                    ((searchTitle == '') || (studyObj['title'].toLowerCase().indexOf(searchTitle.toLowerCase()) > -1)) &&
                     ((searchDate == '') || moment(studyObj['date'], 'YYYYMMDD').format('YYYYMMDD') == moment(searchDate, 'YYYY-MM-DD').format('YYYYMMDD')) 
 
                 ) {

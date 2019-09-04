@@ -231,12 +231,12 @@ $(document).ready(function () {
     
             var catArr = snapshot.val();
             var rsltArr = [];
-
+           
             $.each(catArr, function(idx, catObj) {
 
                 var catName = catObj['title'] || '';
 
-                if(searchCategory == '' || catName.indexOf(searchCategory) > -1) {
+                if(searchCategory == '' || catName.toLowerCase().indexOf(searchCategory.toLowerCase()) > -1) {
                     var contentObj = catObj['lecture'] || {};
                     var contentCnt = Object.keys(contentObj).length;
     
