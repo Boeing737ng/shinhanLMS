@@ -59,6 +59,7 @@ class tagEditCollectionView: UICollectionView, UICollectionViewDelegate, UIColle
                     }
                 }
             }
+
             self.reloadData()
             self.dataReceived = true
         }){ (error) in

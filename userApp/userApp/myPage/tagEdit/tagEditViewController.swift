@@ -36,6 +36,8 @@ class tagEditViewController: UIViewController{
         for tag in userSelectedTagArray {
             userTagString += (tag + " ")
         }
+        userTagString = String(userTagString.dropLast())
+        
         return userTagString
     }
     

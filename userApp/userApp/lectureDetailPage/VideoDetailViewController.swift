@@ -110,14 +110,30 @@ class VideoDetailViewController: UIViewController {
         //getVideoInfoFromDB()
         //userDidStartWatching()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        increaseViewCount()
+    }
     
     @objc private func startVideoPlayer() {
         print("Video Started")
-        player = AVPlayer()
-        playerView.removeFromSuperview()
-        playerView = UIView()
         showVideoPlayer()
         initVideoPlayer()
+    }
+    
+    func increaseViewCount() {
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        ref.child(userCompanyCode + "/views/" + selectedLectureId).observeSingleEvent(of: .value, with: { (snapshot) in
+            var incresedViewCount = snapshot.value as! Int
+            incresedViewCount += 1
+            ref.child(userCompanyCode + "/views").updateChildValues([
+                selectedLectureId: incresedViewCount
+                ]
+            )
+            
+        }) { (error) in
+            print(error.localizedDescription)
+        }
     }
     
     func showVideoPlayer() {
@@ -146,6 +162,7 @@ class VideoDetailViewController: UIViewController {
     }
     
     private func getUserLectureList() {
+        userLectureList.removeAll()
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child("user/" + userNo + "/playList").observeSingleEvent(of: .value, with: { (snapshot) in
@@ -165,49 +182,15 @@ class VideoDetailViewController: UIViewController {
     }
 
     private func userDidFinishWatching() {
+        print("video Stoped")
+        player?.pause()
         player = AVPlayer()
-        playerView.removeFromSuperview()
         playerView = UIView()
-        print("??")
-        var watchedVideoCount:Int = 0
-        var totalVideoCount:Int = 0
-        var compledtedRatio:Float = 0.0
-        var currentState:String = ""
-        var ref: DatabaseReference!
-        ref = Database.database().reference()
-        ref.child("user/" + userNo + "/playList/" + selectedLectureId + "/videos").observeSingleEvent(of: .value, with: { (snapshot) in
-            let videos = snapshot.children.allObjects as! [DataSnapshot]
-            totalVideoCount = Int(snapshot.childrenCount)
-            for video in videos {
-                let videoInfo = video.value as! Dictionary<String, Any>;()
-                let videoState = videoInfo["state"] as! String
-                if videoState == "completed" {
-                    watchedVideoCount += 1
-                }
-            }
-            print("??")
-            compledtedRatio = Float(Double(watchedVideoCount) / Double(totalVideoCount))
-            print(totalVideoCount)
-            print(watchedVideoCount)
-            print(compledtedRatio)
-            if compledtedRatio == 1.0 {
-                currentState = "completed"
-            } else {
-                currentState = "playing"
-            }
-            ref.child("user/" + userNo + "/playList/" + selectedLectureId).updateChildValues([
-                "progress": compledtedRatio,
-                "state": currentState
-                ]
-            )
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshMainTable"), object: nil)
-        }) { (error) in
-            print(error.localizedDescription)
-        }
+        playerView = UIView()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshMainTable"), object: nil)
     }
     
     func playLastPlayedVideo() {
-        print("Setting done")
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child("user/" + userNo + "/playList/" + selectedLectureId + "/videos").queryOrdered(byChild: "seq").observeSingleEvent(of: .value, with: { (snapshot) in
@@ -215,16 +198,16 @@ class VideoDetailViewController: UIViewController {
                 print("Video playlist is empty!!!!!!!!!!!!!!!!!!!!!!")
                 return
             }
-            for video in snapshot.children.allObjects as! [DataSnapshot] {
-                if let videoInfo = video.value as? [String : Any] {
-                    let videoState = videoInfo["state"] as! String
-                    if videoState == "playing" {
-                        selectedVideoId = video.key
-                        print(selectedVideoId)
-                        videoURL = videoInfo["downloadURL"] as! String
-                        self.startVideoPlayer()
-                        return
-                    }
+            let videos = snapshot.children.allObjects as! [DataSnapshot]
+            for video in videos {
+                let videoInfo = video.value as! Dictionary<String, Any>;()
+                let videoState = videoInfo["state"] as! String
+                if videoState == "playing" {
+                    selectedVideoId = video.key
+                    print(selectedVideoId)
+                    videoURL = videoInfo["downloadURL"] as! String
+                    self.startVideoPlayer()
+                    return
                 }
             }
             //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "videoSelected"), object: nil)
@@ -237,12 +220,13 @@ class VideoDetailViewController: UIViewController {
         var ref: DatabaseReference!
         ref = Database.database().reference()
         if userLectureList.contains(selectedLectureId) {
+            print("userLectureList")
             playLastPlayedVideo()
         } else {
             print(selectedLectureId, " 를 처음으로 선택하셨습니다.")
             ref.child(userCompanyCode + "/lecture/" + selectedLectureId + "/user/" + userNo).setValue([
                 "name": userName
-                ])
+            ])
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                 ref.child("user/" + userNo + "/playList/" + selectedLectureId).updateChildValues([
                     "progress": 0.0,
@@ -255,57 +239,22 @@ class VideoDetailViewController: UIViewController {
                         return
                     }
                     let videoInfo = snapshot.value as! Dictionary<String, Any>;()
-                    self.InitializeLectureInfo(videoInfo: videoInfo)
+                    var ref: DatabaseReference!
+                    ref = Database.database().reference()
+                    for video in videoInfo {
+                        let videoId = video.key
+                        ref.child("user/" + userNo + "/playList/" + selectedLectureId + "/videos/" + videoId).updateChildValues([
+                            "progress": 0.0,
+                            "state": "playing"
+                            ]
+                        )
+                        print("Setting....")
+                    }
+                    self.playLastPlayedVideo()
                 }) { (error) in
                     print(error.localizedDescription)
                 }
             }
-        }
-    }
-    
-    func InitializeLectureInfo(videoInfo:Dictionary<String, Any>) {
-        var ref: DatabaseReference!
-        ref = Database.database().reference()
-        for video in videoInfo {
-            let videoId = video.key
-            ref.child("user/" + userNo + "/playList/" + selectedLectureId + "/videos/" + videoId).updateChildValues([
-                "progress": 0.0,
-                "state": "playing"
-                ]
-            )
-            print("Setting....")
-        }
-        playLastPlayedVideo()
-    }
-    
-    func isLectureFirstTime() {
-        var ref: DatabaseReference!
-        ref = Database.database().reference()
-        ref.child("user/" + userNo + "/playList").observeSingleEvent(of: .value, with: { (snapshot) in
-            if !snapshot.exists() || snapshot.childrenCount == 0 {
-                print("Playlist is empty!!!!")
-                return
-            }
-            let videoInfo = snapshot.value as! Dictionary<String, Any>;()
-            for video in videoInfo {
-                self.userLectureList.append(video.key)
-            }
-            self.userDidStartWatching()
-        }) { (error) in
-            print(error.localizedDescription)
-        }
-    }
-
-    func getVideoInfoFromDB() {
-        LoadingView().startLoading(self)
-        var ref: DatabaseReference!
-        ref = Database.database().reference()
-        ref.child(userCompanyCode + "/lecture/" + selectedLectureId).observeSingleEvent(of: .value, with: { (snapshot) in
-            let videoInfo = snapshot.value as! Dictionary<String, Any>;()
-            videoURL = videoInfo["downloadURL"] as! String
-            LoadingView().stopLoading()
-        }) { (error) in
-            print(error.localizedDescription)
         }
     }
     
@@ -315,8 +264,7 @@ class VideoDetailViewController: UIViewController {
         ref.child("user/" + userNo + "/playList/" + selectedLectureId + "/videos/" + selectedVideoId).updateChildValues([
             "progress": 1.0,
             "state": "completed"
-            ]
-        )
+        ])
         print(selectedVideoId, " Finished Playing!!")
     }
     

@@ -172,5 +172,7 @@ class MyPageViewController: UIViewController{
         self.dismiss(animated: false, completion: nil)
     }
 
-
+    @IBAction func logoutbtn(_ sender: UIButton) {
+    }
+    
 }
