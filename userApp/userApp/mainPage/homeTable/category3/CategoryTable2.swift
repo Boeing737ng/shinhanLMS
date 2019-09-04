@@ -44,17 +44,25 @@ class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
             self.dataSize = Int(snapshot.childrenCount)
             let lectures = snapshot.children.allObjects as! [DataSnapshot]
             for lecture in lectures {
-                let lectureId = lecture.key
-                totalPopularVideoIdArray.append(lectureId)
-                totalPopularViewArray.append(lecture.value as! Int)
-            }
-            for id in totalPopularVideoIdArray {
+                print(lecture.key)
+                var id = lecture.key
+                var value = lecture.value
                 ref.child(userCompanyCode + "/lecture/" + id).observeSingleEvent(of: .value, with: { (snapshot) in
                     let lectureDict = snapshot.value as! Dictionary<String, Any>;()
+                    print(id)
+                    print(lectureDict["title"] as! String)
+                    totalPopularVideoIdArray.append(id)
+                    totalPopularViewArray.append(value as! Int)
                     totalPopularTitleArray.append(lectureDict["title"] as! String)
                     totalPopularAuthorArray.append(lectureDict["author"] as! String)
+                    
                     if totalPopularTitleArray.count == self.dataSize {
+                        print("reversed")
                         self.dataReceived = true
+//                        totalPopularVideoIdArray.reverse()
+//                        totalPopularViewArray.reverse()
+//                        totalPopularTitleArray.reverse()
+//                        totalPopularAuthorArray.reverse()
                         self.reloadData()
                     }
                 }) { (error) in
@@ -87,10 +95,10 @@ class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "VideoCell2") as! VideoCell2
         if dataReceived {
-            cell.videoTitleLabel.text = totalPopularTitleArray[(dataSize - 1) - indexPath.row]
-            cell.videoAuthorLabel.text = totalPopularAuthorArray[(dataSize - 1) - indexPath.row]
-            cell.videoThumbnail.image = CachedImageView().loadCacheImage(urlKey: totalPopularVideoIdArray[(dataSize - 1) - indexPath.row])
-            cell.videoViewLabel.text = String(totalPopularViewArray[(dataSize - 1) - indexPath.row])
+            cell.videoTitleLabel.text = totalPopularTitleArray[indexPath.row]
+            cell.videoAuthorLabel.text = totalPopularAuthorArray[indexPath.row]
+            cell.videoThumbnail.image = CachedImageView().loadCacheImage(urlKey: totalPopularVideoIdArray[indexPath.row])
+            cell.videoViewLabel.text = String(totalPopularViewArray[indexPath.row])
         } else {
             cell.videoTitleLabel.text = textArray[indexPath.row]
             cell.videoAuthorLabel.text = authorArray[indexPath.row]
