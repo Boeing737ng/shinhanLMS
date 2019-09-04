@@ -79,7 +79,7 @@ var searchEmpListNonWatchPopup = (function() {
                     (empObj['roleCd'] != 'admin')
                 ) {
 
-                    var playList = empObj['playList'];
+                    var playList = empObj['playList'] || {};
                     var videoKeys = Object.keys(playList);
 
                     if(videoKeys.indexOf(searchContent) == -1) { //헤당 강의를 들은 기록이 없으면
@@ -210,8 +210,7 @@ var searchEmpListNonWatchPopup = (function() {
                 $('' + selector + ' > option').remove();
                 $('' + selector).append($('<option value="">선택</option>'));
                 
-                if(isEmpty(parentCd)) {
-                    parent.database.ref('/' + COMP_CD + '/videos').once('value')
+                parent.database.ref('/' + COMP_CD + '/lecture').once('value')
                     .then(function (snapshot) {
                         var arr = snapshot.val();
 
@@ -227,23 +226,6 @@ var searchEmpListNonWatchPopup = (function() {
 
                         $('' + selector).selectpicker('refresh');
                     });
-                }else {
-                    parent.database.ref('/' + COMP_CD + '/categories/' + parentCd + '/videos').once('value')
-                    .then(function (snapshot) {
-                        var arr = snapshot.val();
-
-                        $.each(arr, function (idx, val) {
-                            var newOption = $('<option></option>');
-                            $(newOption).attr('value', idx);
-                            $(newOption).text(val['title']);
-
-                            $('' + selector).append($(newOption));
-                        });
-
-                        $('' + selector).selectpicker('refresh');
-                    });
-                }
-                
                 break;
         }
     }
@@ -257,10 +239,13 @@ var searchEmpListNonWatchPopup = (function() {
 
         /** start of component ***********************/
         fnGetCommonCmb('company', '#modal-searchEmpListNonWatch select.searchCompany');
-        fnGetCommonCmb('category', '#modal-searchEmpListNonWatch select.searchRequiredCat');
+        //fnGetCommonCmb('category', '#modal-searchEmpListNonWatch select.searchRequiredCat');
 
         $('#modal-searchEmpListNonWatch .searchDept').selectpicker();
         $('#modal-searchEmpListNonWatch .searchRequiredContent').selectpicker();
+
+        $('#modal-searchEmpListNonWatch select.searchRequiredContent').selectpicker();
+        fnGetCommonCmb('content', '#modal-searchEmpListNonWatch select.searchRequiredContent');
 
 
         $('#modal-searchEmpListNonWatch .searchCompany').on('change', function(e) {
@@ -268,10 +253,10 @@ var searchEmpListNonWatchPopup = (function() {
             fnGetCommonCmb('department', '#modal-searchEmpListNonWatch select.searchDept', parentCd);
         });
 
-        $('#modal-searchEmpListNonWatch .searchRequiredCat').on('change', function(e) {
+/*         $('#modal-searchEmpListNonWatch .searchRequiredCat').on('change', function(e) {
             var parentCd = $(this).val();
             fnGetCommonCmb('content', '#modal-searchEmpListNonWatch select.searchRequiredContent', parentCd);
-        });
+        }); */
 
 
         $('#modal-searchEmpListNonWatch .btnSearch').on('click', function(e) {

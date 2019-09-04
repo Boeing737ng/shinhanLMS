@@ -10,15 +10,18 @@ $(document).ready(function () {
     window.FakeLoader.init();
 
 
-    //행추가 버튼 -> 페이지 이동
+    //행추가 버튼
     $('#btnAdd').on('click', function(e) {
         e.preventDefault();
         
-        fnGo('/view/registerNotice.html', {
-            'searchTitle': $('#searchTitle').val(),
-            'searchDate': $('#date').val(),
-            'listUrl': '/view/manageNotice.html'
-        });
+        $('#grid').find('tr').removeClass('highlight');
+        fnClearDetail();
+        
+        $('#detailText').prop('disabled', false);
+        $('#templateNm').prop('disabled', false);
+        $('#btnSaveDetail').show();
+
+        $('#templateNm').focus();
     });
 
 
@@ -46,6 +49,48 @@ $(document).ready(function () {
         e.preventDefault();
         $('#grid1').jsGrid("option", "data", []);
         fnRetrieve();
+    });
+
+
+    //저장 버튼
+    $('#btnSaveDetail').on('click', function(e) {
+
+        e.preventDefault();
+
+
+        if(isEmpty($('#templateNm').val())) {
+            alert('템플릿명 은(는) 필수입력 입니다.');
+            $('#templateNm').focus();
+            return;
+        }else if(isEmpty($('#detailText').val())) {
+            alert('내용 은(는) 필수입력 입니다.');
+            $('#detailText').focus();
+            return;
+        }
+
+
+        if(!confirm('저장하시겠습니까?')) {
+            return;
+        }
+
+
+        var data = $('#grid').jsGrid('option', 'data');
+        var rowKey;
+        var selectedRow = $("#grid").find('table tr.highlight').prevAll().length;
+
+        if($("#grid").find('table tr.highlight').length == 0) {
+            rowKey = null;
+        }else {
+            rowKey = data[selectedRow]['rowKey'];
+        }
+
+        fnSave(rowKey, {
+            detailText: $('#detailText').val() || '',
+            templateNm: $('#templateNm').val() || ''
+        }, function() {
+            alert('저장되었습니다.');
+            fnRetrieve();
+        });
     });
     /** end of components ***********************/
 
@@ -76,9 +121,8 @@ $(document).ready(function () {
         rowClick: function(args) {
             //showDetailsDialog("Edit", args.item);
             var arr = $('#grid').jsGrid('option', 'data');
-
-            var $row = this.rowByItem(args.item),
-            selectedRow = $("#grid").find('table tr.highlight');
+            var $row = this.rowByItem(args.item);
+            var selectedRow = $("#grid").find('table tr.highlight');
 
             if (selectedRow.length) {
                 selectedRow.toggleClass('highlight');
@@ -100,58 +144,18 @@ $(document).ready(function () {
                             });
                 },
                 align: "center",
-                width: 15
+                width: 30
             },
-            { name: "templateNm", title: '템플릿명', type: "text", width: 200, editing: false, align: "left", cellRenderer: function(item, value) {
-                var rslt = $("<td>").addClass("jsgrid-cell");
-                var aLink = $("<a>");
-                $(aLink).attr('href', '#');
-                $(aLink).text(item);
-
-                (function(value) {
-
-                    $(aLink).on('click', function(e) {
-
-                        e.preventDefault();
-    
-                        fnGo('/view/updateNotice.html', {
-                            'searchTitle': $('#searchTitle').val(),
-                            'searchDate': $('#date').val(),
-                            'listUrl': '/view/manageNotice.html',
-                            'rowKey': value['rowKey']
-                        });
-                    });
-
-                }(value));
-
-                $(rslt).append(aLink);
-                
-                return rslt;
-            } }
+            { name: "templateNm", title: '템플릿명', type: "text", width: 200, editing: false, align: "left" }
 
         ]
     });
-
-    function fnGo(url, paramObj) {
-        var form = $('<form></form>');
-        $(form).attr('method', 'get');
-        $(form).attr('action', url);
-        
-        $.each(paramObj, function(key, value) {
-            var input = $('<input type="hidden"/>');
-            $(input).attr('name', key);
-            $(input).val(value);
-
-            $(form).append(input);
-        });
-
-        $('body').append(form);
-        $(form).submit();
-    }
     
+
     //조회
     function fnRetrieve() {
     
+        fnClearDetail();
         selectedItems = [];
        
         var searchTitle = $('#title').val() || '';
@@ -179,6 +183,7 @@ $(document).ready(function () {
             });
 
             $("#grid").jsGrid("option", "data", rsltArr);
+            $('#grid').find('tr.jsgrid-row:eq(0)').click(); //첫번째 row click
 
             window.FakeLoader.hideOverlay();
 
@@ -188,28 +193,24 @@ $(document).ready(function () {
 
     //상세 조회
     function fnRetrieveDetail(item) {
-
+        //fnClearDetail();
         $('#templateNm').val(item['templateNm']);
         $('#detailText').val(item['detailText']);
-        /* var searchCompany = compCd;
 
-        window.FakeLoader.showOverlay();
+        $('#detailText').prop('disabled', false);
+        $('#templateNm').prop('disabled', false);
+        $('#btnSaveDetail').show();
+    }
 
-        parent.database.ref('/'+ searchCompany+'/categories/'+ item['rowKey'] + '/lecture').once('value').then(function(snapshot) {
-    
-            var catArr = snapshot.val();
-            var rsltArr = [];
 
-            $.each(catArr, function(idx) {
-                var catObj = catArr[idx];
-                catObj['rowKey'] = idx;
-                rsltArr.push(catObj);
-            });
+    //상세 폼 삭제
+    function fnClearDetail() {
+        $('#detailText').val('');
+        $('#templateNm').val('');
 
-            $("#detailGrid").jsGrid("option", "data", rsltArr);
-
-            window.FakeLoader.hideOverlay();
-        }); */
+        $('#detailText').prop('disabled', true);
+        $('#templateNm').prop('disabled', true);
+        $('#btnSaveDetail').hide();
     }
 
 
@@ -242,10 +243,38 @@ $(document).ready(function () {
     }
 
 
+    //저장
+    function fnSave(rowKey, paramObj, callback) {
+
+        if(isEmpty(rowKey)) {//신규
+
+            parent.database.ref('/notieTemplate/').push(paramObj).then(function onSuccess(res) {
+                if(callback != null && callback != undefined) {
+                    callback();
+                }
+            }).catch(function onError(err) {
+                console.log("ERROR!!!! " + err);
+            });
+
+        }else {//수정
+
+            parent.database.ref('/notieTemplate/' + rowKey + '/').update(paramObj).then(function onSuccess(res) {
+                if(callback != null && callback != undefined) {
+                    callback();
+                }
+            }).catch(function onError(err) {
+                console.log("ERROR!!!! " + err);
+            });
+
+        }
+
+    }
+
+
     //삭제
     function fnDeleteDatabase(rowKey, callback) {
 
-        parent.database.ref('/' + compCd + '/notie/' + rowKey + '/').remove().then(function onSuccess(res) {
+        parent.database.ref('/notieTemplate/' + rowKey + '/').remove().then(function onSuccess(res) {
             if(callback != null && callback != undefined) {
                 callback();
             }
@@ -253,90 +282,10 @@ $(document).ready(function () {
             console.log("ERROR!!!! " + err);
         });
     }
-
-
-    //combo 구성
-    function fnGetCommonCmb(option, selector, defaultValue) {
-
-        $('' + selector).html('');
-        $('' + selector).html('<option value="">전체</option>');
-
-        switch (option) {
-            case 'company':
-                parent.database.ref('/company/').once('value')
-                    .then(function (snapshot) {
-                        var arr = snapshot.val();
-
-                        $.each(arr, function (idx, val) {
-                            var newOption = $('<option></option>');
-                            $(newOption).attr('value', idx);
-                            $(newOption).text(val);
-
-                            if (idx == defaultValue) {
-                                $(newOption).attr('selected', 'selected');
-                            }
-
-                            $('' + selector).append($(newOption));
-                        });
-
-                        $('' + selector).selectpicker();
-                    });
-                break;
-        }
-    }
-
-
-    function getParams() {
-        var param = {};
-     
-        // 현재 페이지의 url
-        var url = decodeURIComponent(location.href);
-        url = decodeURIComponent(url);
-        
-        if(url.split('?').length > 1) {
-
-            var params = url.split('?')[1];
-
-            if(params.length == 0) {
-                return param;
-            }
-
-            params = params.split("&");
-
-            var size = params.length;
-            var key, value;
-
-            for(var i=0 ; i < size ; i++) {
-                key = params[i].split("=")[0];
-                value = params[i].split("=")[1];
-        
-                param[key] = value;
-            }
-        }
-        
-        return param;
-    }
-
-
-    //초기화
-    function fnInit() {
-
-        var searchParam = getParams();
-        
-        if(Object.keys(searchParam).length > 0) {
-            $('#title').val(searchParam['searchTitle']);
-            $('#date').val(searchParam['searchDate']).trigger('change');
-        }
-
-        fnRetrieve();
-
-    }
     /** start of grid ***********************/
 
 
-
-
     resizeFrame();
-    fnInit();
+    fnRetrieve();
 
 });
