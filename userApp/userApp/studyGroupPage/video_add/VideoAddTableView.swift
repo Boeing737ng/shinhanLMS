@@ -129,7 +129,7 @@ class VideoAddTableView: UITableView, UITableViewDataSource, UITableViewDelegate
         ref = Database.database().reference()
         for i in addArray
         {
-            ref.child("58/videos/" + i).observeSingleEvent(of: .value, with: { (snapshot) in
+            ref.child("58/lecture/" + i).observeSingleEvent(of: .value, with: { (snapshot) in
     // Get user value
             let value = snapshot.value as? Dictionary<String,Any>;()
             let videoDict = value as! Dictionary<String, Any>;()
