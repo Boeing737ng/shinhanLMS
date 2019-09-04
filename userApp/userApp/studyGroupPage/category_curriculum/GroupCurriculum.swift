@@ -95,7 +95,7 @@ class GroupCurriculum: UICollectionView, UICollectionViewDelegate, UICollectionV
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let videoId = curriculumVideoIdArray[indexPath.row]
-        selectedVideoId = videoId
+        selectedLectureId = videoId
         TabViewController().goToDetailPage()
     }
     

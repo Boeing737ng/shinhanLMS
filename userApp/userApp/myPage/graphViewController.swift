@@ -269,7 +269,7 @@ class graphViewController: UIViewController, ChartViewDelegate {
         dbTeaArray.removeAll()
     }
     
-    @IBAction func onGoBack(_ sender: UIButton) {
+    @IBAction func onGoBack(_ sender: UIBarButtonItem) {
         let transition: CATransition = CATransition()
         transition.duration = 0.5
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
@@ -278,7 +278,6 @@ class graphViewController: UIViewController, ChartViewDelegate {
         self.view.window!.layer.add(transition, forKey: nil)
         self.dismiss(animated: false, completion: nil)
     }
-    
     
     @IBAction func setGoal(_ sender: UIButton) {
         var ref: DatabaseReference!
