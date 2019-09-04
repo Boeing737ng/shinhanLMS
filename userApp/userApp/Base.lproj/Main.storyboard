@@ -2736,6 +2736,10 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                         <state key="normal" title="로그아웃"/>
+                                                        <connections>
+                                                            <action selector="logoutbtn:" destination="hbD-yG-EEx" eventType="touchUpInside" id="09O-KV-5EJ"/>
+                                                            <segue destination="OaF-K0-R65" kind="show" id="Cr4-Ub-q42"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <constraints>
