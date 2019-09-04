@@ -13,12 +13,6 @@ $(document).ready(function () {
         dateFormat: 'yy-mm-dd' //Input Display Format 변경
     });
 
-    //fnGetCommonCmb('company', '#searchCompany');
-
-/*     $.datepicker.setDefaults({
-        dateFormat: 'yy-mm-dd' //Input Display Format 변경
-    }); */
-
 
     //행추가 버튼 -> 페이지 이동
     $('#btnAdd').on('click', function(e) {
@@ -129,7 +123,7 @@ $(document).ready(function () {
             } */
         },
 
-        rowDoubleClick: function(args) {
+        /* rowDoubleClick: function(args) {
             var arr = $('#grid').jsGrid('option', 'data');
             
             fnGo('/view/updateNotice.html', {
@@ -138,7 +132,7 @@ $(document).ready(function () {
                 'listUrl': '/view/manageNotice.html',
                 'rowKey': arr[args.itemIndex]['rowKey']
             });
-        },
+        }, */
 
         fields: [
             {
@@ -153,7 +147,32 @@ $(document).ready(function () {
                 align: "center",
                 width: 15
             },
-            { name: "title", title: '제목', type: "text", width: 200, editing: false, align: "left" },
+            { name: "title", title: '제목', type: "text", width: 200, editing: false, align: "left", cellRenderer: function(item, value) {
+                var rslt = $("<td>").addClass("jsgrid-cell");
+                var aLink = $("<a>");
+                $(aLink).attr('href', '#');
+                $(aLink).text(item);
+
+                (function(value) {
+
+                    $(aLink).on('click', function(e) {
+
+                        e.preventDefault();
+    
+                        fnGo('/view/updateNotice.html', {
+                            'searchTitle': $('#searchTitle').val(),
+                            'searchDate': $('#date').val(),
+                            'listUrl': '/view/manageNotice.html',
+                            'rowKey': value['rowKey']
+                        });
+                    });
+
+                }(value));
+
+                $(rslt).append(aLink);
+                
+                return rslt;
+            } },
             { name: "writor", title: "작성자", type: 'text', width: 100, editing: false, align: "center" },
             {
                 name: "date", title: "등록일자", type: 'text', width: 100, editing: false, align: "center", cellRenderer: function (item, value) {
