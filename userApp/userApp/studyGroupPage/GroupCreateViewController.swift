@@ -58,11 +58,29 @@ class GroupCreateViewController: UIViewController, UIImagePickerControllerDelega
     @IBAction func btnSend(_ sender: UIButton) {
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child("58/study/").childByAutoId().setValue([
-            "detail": studyDetail.text as? String,
-            "studyname": studyName.text as? String,
+        let key:String = ref.child("58/study/").childByAutoId().key!
+        ref.child("58/study/"+key).setValue([
+            "detail": studyDetail.text,
+            "studyname": studyName.text
             ])
-        //let storageRef = Storage.reference()
+        CachedImageView().setImageCache(item: studyImg.image!, urlKey: key)
+        let storage = Storage.storage()
+        var data = Data()
+        data = studyImg.image!.pngData()!
+        let storageRef = storage.reference()
+        let imageRef = storageRef.child("/study/"+key+".png")
+        let uploadTask = imageRef.putData(data, metadata: nil) { (metadata, error) in
+            if error != nil {
+                // 4 Uh-oh, an error occurred!
+                return
+            }
+            print(metadata as Any)
+            imageRef.downloadURL{(url, error) in
+                ref.child("58/study_url").updateChildValues([
+                    key: url!.absoluteString
+                    ])
+            }
+        }
         let transition: CATransition = CATransition()
         transition.duration = 0.5
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)

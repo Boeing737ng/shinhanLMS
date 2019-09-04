@@ -109,7 +109,7 @@ class GroupCurriculum: UICollectionView, UICollectionViewDelegate, UICollectionV
             cell.video_title.text = curriculumTitleArray[indexPath.row]
             cell.video_author.text = curriculumAuthorArray[indexPath.row]
             print(curriculumVideoIdArray)
-            //cell.video_img.image = CachedImageView().loadCacheImage(urlKey: curriculumVideoIdArray[indexPath.row])
+            cell.video_img.image = CachedImageView().loadCacheImage(urlKey: curriculumVideoIdArray[indexPath.row])
         } else {
             cell.video_title.text = textArray[indexPath.row]
             cell.video_author.text = authorArray[indexPath.row]
