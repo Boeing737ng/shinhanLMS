@@ -234,131 +234,132 @@ $(document).ready(function () {
 
     chartArr = [];
 
-    var viewMap;
-    
-    parent.database.ref('/' + compCd + '/views').once('value').then(function (snapshot) {
-        viewMap = snapshot.val();
 
-        parent.database.ref('/' + compCd + '/lecture').once('value').then(function (snapshot) {
 
-            var catArr = snapshot.val();
-        
-            $.each(catArr, function (idx, chartObj) {
-                chartObj['rowKey'] = idx;
-                chartObj['view'] = viewMap[idx];
-                chartArr.push(chartObj);
-            });
-            
 
-            //db값을 view기준으로 정렬하는 함수
-            chartArr.sort(function (a, b) {
-                return a.view > b.view ? -1 : a.view < b.view ? 1 : 0;
-            });
+    parent.database.ref('/' + compCd + '/lecture').once('value').then(function (snapshot) {
 
-            //정렬된 값을 각각 배열에 입력
-            var arrLength = chartArr.length >= 10 ? 10 : chartArr.length;
-            var labelArr = [];
+      var catArr = snapshot.val();
+  
+      $.each(catArr, function (idx, chartObj) {
+          chartObj['rowKey'] = idx;
+          chartArr.push(chartObj);
+      });
+      
 
-            for (var i = 0; i < arrLength; i++) {
-                view[i] = (chartArr[i].view);
-                title[i] = (chartArr[i].title);
-                labelArr[i] = (i/1+1) + '위';
+      //db값을 view기준으로 정렬하는 함수
+      chartArr.sort(function (a, b) {
+          return a.view > b.view ? -1 : a.view < b.view ? 1 : 0;
+      });
+
+      //정렬된 값을 각각 배열에 입력
+      var arrLength = chartArr.length >= 10 ? 10 : chartArr.length;
+      var labelArr = [];
+
+      for (var i = 0; i < arrLength; i++) {
+          view[i] = (chartArr[i].view);
+          title[i] = (chartArr[i].title);
+          labelArr[i] = (i/1+1) + '위';
+      }
+
+      var maxNum = Math.max.apply(null, view);
+      maxNum += 100;
+
+      var ctx = document.getElementById("view_count_chart");
+      var myBarChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labelArr,
+          datasets: [{
+            label: "조회수: ",
+            title: title,
+            backgroundColor: "#0282ea",
+            hoverBackgroundColor: "#2e59d9",
+            borderColor: "#0282ea",
+            data: view
+          }],
+        },
+        options: {
+          maintainAspectRatio: false,
+          layout: {
+            padding: {
+              left: 10,
+              right: 25,
+              top: 25,
+              bottom: 0
+            }
+          },
+          scales: {
+            xAxes: [{
+              time: {
+                unit: 'month'
+              },
+              gridLines: {
+                display: false,
+                drawBorder: false
+              },
+              ticks: {
+                maxTicksLimit: 10
+              },
+              maxBarThickness: 25,
+            }],
+            yAxes: [{
+              ticks: {
+                min: 0,
+                max: maxNum,
+                maxTicksLimit: 10,
+                padding: 10,
+                callback: function (value, index, values) {
+                  return number_format(value) + ' 회'; //y축 단위 표시 
+                }
+              },
+              gridLines: {
+                color: "rgb(234, 236, 244)",
+                zeroLineColor: "rgb(234, 236, 244)",
+                drawBorder: false,
+                borderDash: [2],
+                zeroLineBorderDash: [2]
+              }
+            }],
+          },
+          legend: {
+            display: false
+          },
+          /** 마우스 가져다 대면 출력**/
+          tooltips: {
+            titleMarginBottom: 10,
+            titleFontColor: '#6e707e',
+            titleFontSize: 14,
+            backgroundColor: "rgb(255,255,255)",
+            bodyFontColor: "#595b67",
+            borderColor: '#dddfeb',
+            borderWidth: 1,
+            xPadding: 15,
+            yPadding: 15,
+            displayColors: false,
+            caretPadding: 10,
+            callbacks: {
+              title: function (tooltipItem, chart) {
+                var idx = tooltipItem[0].index;
+                var titleArr = chart.datasets[tooltipItem[0].datasetIndex].title;
+                var title = titleArr[idx];
+
+                return title;
+              },
+              label: function (tooltipItem, chart) {
+                //console.log(chart.datasets);
+                var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                return datasetLabel + number_format(tooltipItem.yLabel) + ' 회';
+              }
             }
 
-            var ctx = document.getElementById("view_count_chart");
-            var myBarChart = new Chart(ctx, {
-              type: 'bar',
-              data: {
-                labels: labelArr,
-                datasets: [{
-                  label: "조회수: ",
-                  title: title,
-                  backgroundColor: "#0282ea",
-                  hoverBackgroundColor: "#2e59d9",
-                  borderColor: "#0282ea",
-                  data: view
-                }],
-              },
-              options: {
-                maintainAspectRatio: false,
-                layout: {
-                  padding: {
-                    left: 10,
-                    right: 25,
-                    top: 25,
-                    bottom: 0
-                  }
-                },
-                scales: {
-                  xAxes: [{
-                    time: {
-                      unit: 'month'
-                    },
-                    gridLines: {
-                      display: false,
-                      drawBorder: false
-                    },
-                    ticks: {
-                      maxTicksLimit: 10
-                    },
-                    maxBarThickness: 25,
-                  }],
-                  yAxes: [{
-                    ticks: {
-                      min: 0,
-                      max: 1000,
-                      maxTicksLimit: 10,
-                      padding: 10,
-                      callback: function (value, index, values) {
-                        return number_format(value) + ' 회'; //y축 단위 표시 
-                      }
-                    },
-                    gridLines: {
-                      color: "rgb(234, 236, 244)",
-                      zeroLineColor: "rgb(234, 236, 244)",
-                      drawBorder: false,
-                      borderDash: [2],
-                      zeroLineBorderDash: [2]
-                    }
-                  }],
-                },
-                legend: {
-                  display: false
-                },
-                /** 마우스 가져다 대면 출력**/
-                tooltips: {
-                  titleMarginBottom: 10,
-                  titleFontColor: '#6e707e',
-                  titleFontSize: 14,
-                  backgroundColor: "rgb(255,255,255)",
-                  bodyFontColor: "#595b67",
-                  borderColor: '#dddfeb',
-                  borderWidth: 1,
-                  xPadding: 15,
-                  yPadding: 15,
-                  displayColors: false,
-                  caretPadding: 10,
-                  callbacks: {
-                    title: function (tooltipItem, chart) {
-                      var idx = tooltipItem[0].index;
-                      var titleArr = chart.datasets[tooltipItem[0].datasetIndex].title;
-                      var title = titleArr[idx];
+          }
+        }
+      });
 
-                      return title;
-                    },
-                    label: function (tooltipItem, chart) {
-                      //console.log(chart.datasets);
-                      var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                      return datasetLabel + number_format(tooltipItem.yLabel) + ' 회';
-                    }
-                  }
+  });
 
-                }
-              }
-            });
 
-        });
-    });
   
   }
 
