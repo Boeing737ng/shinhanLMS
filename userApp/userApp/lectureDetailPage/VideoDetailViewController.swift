@@ -182,14 +182,15 @@ class VideoDetailViewController: UIViewController {
     }
 
     private func userDidFinishWatching() {
-        player = nil
+        print("video Stoped")
+        player?.pause()
+        player = AVPlayer()
         playerView = UIView()
         playerView = UIView()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshMainTable"), object: nil)
     }
     
     func playLastPlayedVideo() {
-        print("playLastPlayedVideo")
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child("user/" + userNo + "/playList/" + selectedLectureId + "/videos").queryOrdered(byChild: "seq").observeSingleEvent(of: .value, with: { (snapshot) in
@@ -208,7 +209,6 @@ class VideoDetailViewController: UIViewController {
                     self.startVideoPlayer()
                     return
                 }
-                
             }
             //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "videoSelected"), object: nil)
         }) { (error) in
@@ -226,7 +226,7 @@ class VideoDetailViewController: UIViewController {
             print(selectedLectureId, " 를 처음으로 선택하셨습니다.")
             ref.child(userCompanyCode + "/lecture/" + selectedLectureId + "/user/" + userNo).setValue([
                 "name": userName
-                ])
+            ])
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                 ref.child("user/" + userNo + "/playList/" + selectedLectureId).updateChildValues([
                     "progress": 0.0,
@@ -264,8 +264,7 @@ class VideoDetailViewController: UIViewController {
         ref.child("user/" + userNo + "/playList/" + selectedLectureId + "/videos/" + selectedVideoId).updateChildValues([
             "progress": 1.0,
             "state": "completed"
-            ]
-        )
+        ])
         print(selectedVideoId, " Finished Playing!!")
     }
     
