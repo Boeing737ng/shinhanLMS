@@ -86,6 +86,7 @@ class MyPageViewController: UIViewController{
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child("user/" + userNo).observeSingleEvent(of: .value, with: { (snapshot) in
+
             let value = snapshot.value as? Dictionary<String, Any>;()
             let nameD = value as! Dictionary<String, Any>;()
             let partD = value as! Dictionary<String, Any>;()
@@ -110,7 +111,11 @@ class MyPageViewController: UIViewController{
         var ref: DatabaseReference!
         ref = Database.database().reference()
          ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
-
+            if !snapshot.exists() || snapshot.childrenCount == 0 {
+                self.questionlbl.text = "\(self.dbwriterArray.count)"
+                print("Playlist is empty!!!!")
+                return
+            }
             let value = snapshot.value as? Dictionary<String, Any>;()
             let nameD = value as! Dictionary<String, Any>;()
             let name = nameD["contents"] as! String

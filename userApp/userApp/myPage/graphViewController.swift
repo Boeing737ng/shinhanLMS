@@ -75,6 +75,11 @@ class graphViewController: UIViewController, ChartViewDelegate {
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
+            if !snapshot.exists() || snapshot.childrenCount == 0 {
+                self.copStacklbl.text = "0개의 CoP에서 활동중"
+                print("Playlist is empty!!!!")
+                return
+            }
             let value = snapshot.value as? Dictionary<String, Any>;()
             let nameD = value as! Dictionary<String, Any>;()
             let name = nameD["name"] as! String
@@ -143,6 +148,33 @@ class graphViewController: UIViewController, ChartViewDelegate {
                     print("3위: \(classV[i]) \(per)%")
                     self.cat3lbl.text = "3위: \(classV[i]) \(per)%"
                 }
+//                if rank[i] == 1 && rank[i+1] == 1 && rank[i+2] == 1{
+//                    var per = (classK[i]*100)/total
+//                    print("1위: \(classV[i]) \(per)%")
+//                    print("1위: \(classV[i+1]) \(per)%")
+//                    print("1위: \(classV[i+2]) \(per)%")
+//                    self.cat1lbl.text = "1위: \(classV[i]) \(per)%"
+//                    self.cat2lbl.text = "1위: \(classV[i+1]) \(per)%"
+//                    self.cat3lbl.text = "1위: \(classV[i+2]) \(per)%"
+//                    return
+//                }else if rank[i+1] == 1 && rank[i+2] != 1{
+//                    var per = (classK[i]*100)/total
+//                    print("1위: \(classV[i]) \(per)%")
+//                    print("1위: \(classV[i+1]) \(per)%")
+//                    print("3위: \(classV[i+2]) \(per)%")
+//                    self.cat1lbl.text = "1위: \(classV[i]) \(per)%"
+//                    self.cat2lbl.text = "1위: \(classV[i+1]) \(per)%"
+//                    self.cat3lbl.text = "3위: \(classV[i+2]) \(per)%"
+//                    return
+//                }else{
+//                    var per = (classK[i]*100)/total
+//                    print("1위: \(classV[i]) \(per)%")
+//                    print("2위: \(classV[i+1]) \(per)%")
+//                    print("3위: \(classV[i+2]) \(per)%")
+//                    self.cat1lbl.text = "1위: \(classV[i]) \(per)%"
+//                    self.cat2lbl.text = "2위: \(classV[i+1]) \(per)%"
+//                    self.cat3lbl.text = "3위: \(classV[i+2]) \(per)%"
+//                }
             }
             
         }) { (error) in
@@ -207,6 +239,33 @@ class graphViewController: UIViewController, ChartViewDelegate {
                     print("3위: \(classV[i]) \(per)%")
                     self.teac3lbl.text = "3위: \(classV[i]) \(per)%"
                 }
+//                if rank[i] == 1 && rank[i+1] == 1 && rank[i+2] == 1{
+//                    var per = (classK[i]*100)/total
+//                    print("1위: \(classV[i]) \(per)%")
+//                    print("1위: \(classV[i+1]) \(per)%")
+//                    print("1위: \(classV[i+2]) \(per)%")
+//                    self.teac1lbl.text = "1위: \(classV[i]) \(per)%"
+//                    self.teac2lbl.text = "1위: \(classV[i+1]) \(per)%"
+//                    self.teac3lbl.text = "1위: \(classV[i+2]) \(per)%"
+//                    return
+//                }else if rank[i+1] == 1 && rank[i+2] != 1{
+//                    var per = (classK[i]*100)/total
+//                    print("1위: \(classV[i]) \(per)%")
+//                    print("1위: \(classV[i+1]) \(per)%")
+//                    print("3위: \(classV[i+2]) \(per)%")
+//                    self.teac1lbl.text = "1위: \(classV[i]) \(per)%"
+//                    self.teac2lbl.text = "1위: \(classV[i+1]) \(per)%"
+//                    self.teac3lbl.text = "3위: \(classV[i+2]) \(per)%"
+//                    return
+//                }else{
+//                    var per = (classK[i]*100)/total
+//                    print("1위: \(classV[i]) \(per)%")
+//                    print("2위: \(classV[i+1]) \(per)%")
+//                    print("3위: \(classV[i+2]) \(per)%")
+//                    self.teac1lbl.text = "1위: \(classV[i]) \(per)%"
+//                    self.teac2lbl.text = "2위: \(classV[i+1]) \(per)%"
+//                    self.teac3lbl.text = "3위: \(classV[i+2]) \(per)%"
+//                }
             }
             
             
