@@ -209,6 +209,29 @@ $(document).ready(function () {
     }
 
 
+    function capture(option, content) {
+        var canvas = document.createElement('canvas');
+        canvas.id = 'canvas';
+        var w = 160;
+        var h = 90;
+        canvas.width = w;
+        canvas.height = h;
+
+        var ctx = canvas.getContext('2d');
+
+        switch (option) {
+            case 'image':
+                ctx.drawImage(content, 0, 0, w, h);
+                break;
+            case 'video':
+                ctx.drawImage(content, 0, 0, w, h);
+                break; 
+        }
+
+        return canvas;
+    }
+
+
     //validataion
     function fnValidate() {
         var errMsg = '';
