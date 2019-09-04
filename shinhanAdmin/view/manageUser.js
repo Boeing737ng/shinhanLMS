@@ -109,14 +109,11 @@ $(document).ready(function () {
                             txt = '수강중';
                             break; 
                     }
-
                     $(span).text(txt);
                     $(rslt).append(span);
                     return rslt;
                 }
             }
-
-            
         ]
         
     });
@@ -152,7 +149,6 @@ $(document).ready(function () {
                     studyObj['listenClass'] = mbrCnt;
             
                     rsltArr.push(studyObj);
-    
                 }
                 
             }); 
@@ -170,8 +166,6 @@ $(document).ready(function () {
     function fnRetrieveDetail(empNo) {
 
         window.FakeLoader.showOverlay();
-
-
         var searchstate = $('#state').val() || '';//사번
 
         parent.database.ref('/user/' + empNo + '/playList').once('value').then(function(snapshot)
@@ -182,12 +176,8 @@ $(document).ready(function () {
 
                 {  
                     studyObj['rowKey'] = idx;
-
                     rsltArr.push(studyObj);
-                    
                 }
-            
-                
             });
             $("#grid2").jsGrid("option", "data", rsltArr);
 

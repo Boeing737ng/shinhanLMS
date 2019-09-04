@@ -224,10 +224,8 @@ $(document).ready(function () {
 
     parent.database.ref('/' + compCd + '/lecture').once('value').then(function (snapshot) {
 
-      
       var catArr = snapshot.val();
       
-
       $.each(catArr, function (idx, chartObj) {
         chartObj['rowKey'] = idx;
         chartArr.push(chartObj);

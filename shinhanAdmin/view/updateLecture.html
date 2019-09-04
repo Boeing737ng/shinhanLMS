@@ -1,7 +1,7 @@
 <!--
 **********************************************
-title : registerLecture
-description : 강좌 등록
+title : updateLecture
+description : 강좌 수정
 author : jybobo
 **********************************************
 -->
@@ -75,7 +75,7 @@ author : jybobo
 
     <script src="/vendor/dropzone/dropzone.js"></script>
 
-    <script src="/view/registerLecture.js"></script>
+    <script src="/view/updateLecture.js"></script>
     <script src="/js/main.js"></script>
 
 
@@ -171,7 +171,9 @@ author : jybobo
                                         <td>
                                             <div>
                                                 <input type="file" id="lectureThumbnailFile"/>
-                                                <div id="output" style="margin: 0px auto; width:160px; height:90px; cursor: pointer; background-image: url('/img/upload.png'); background-size: cover;"></div>
+                                                <div id="output" style="margin: 0px auto; width:160px; height:90px; cursor: pointer; background-image: url('/img/upload.png'); background-size: cover;">
+                                                    <canvas id="canvas"/>
+                                                </div>
                                             </div>
         
                                         </td>

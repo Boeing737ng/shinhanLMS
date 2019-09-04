@@ -24,8 +24,6 @@ var searchEmpListNonWatchPopup = (function() {
         selectedItems = [];
         grid.jsGrid('option', 'data', []);
         $("#modal-searchEmpListNonWatch .grid").find('.selectionHeaderCheckbox').prop('checked', false);
-        //var firstVal = $("#modal-searchEmpListNonWatch").find('select.searchCompany > option:eq(0)').val();
-        //$("#modal-searchEmpListNonWatch .grid").find('select.searchCompany').val(firstVal);
     }
 
 
@@ -58,6 +56,8 @@ var searchEmpListNonWatchPopup = (function() {
 
     //조회
     function fnRetrieve() {
+
+        selectedItems = [];
 
         var searchContent = $('#modal-searchEmpListNonWatch select.searchRequiredContent').val() || '';
         var searchContentNm = $('#modal-searchEmpListNonWatch select.searchRequiredContent > option:selected').text() || '';

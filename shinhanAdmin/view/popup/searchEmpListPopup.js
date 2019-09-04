@@ -58,6 +58,8 @@ var SearchEmpListPopup = (function() {
     //조회
     function fnRetrieve() {
 
+        selectedItems = [];
+
         var searchCompany = $('#modal-searchEmpList select.searchCompany').val() || '';
         var searchDept = $('#modal-searchEmpList select.searchDept').val() || '';
         var searchEmpNm = $('#modal-searchEmpList .searchNm').val() || '';

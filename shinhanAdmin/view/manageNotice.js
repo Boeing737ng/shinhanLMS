@@ -187,6 +187,9 @@ $(document).ready(function () {
     
     //조회
     function fnRetrieve() {
+    
+        selectedItems = [];
+       
         var searchTitle = $('#title').val() || '';
         var searchDate = $('#date').val() || '';
 

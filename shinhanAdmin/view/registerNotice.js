@@ -34,7 +34,7 @@ $(document).ready(function () {
     $('#btnAddEmp').on('click', function(e) {
         e.preventDefault();
 
-        if(!$(this).hasClass('active') && !confirm('기존에 선택한 수신자 리스트가 초기화됩니다. 계속하시겠습니까?')) {
+        if(!$(this).hasClass('active') && !confirm('기존에 선택한 수신자 목록가 초기화됩니다. 계속하시겠습니까?')) {
             return false;
         }
 
@@ -81,10 +81,7 @@ $(document).ready(function () {
     $('#btnLoadEmpNonWatch').on('click', function(e) {
         e.preventDefault();
 
-        console.log(date.now())
-
-
-        if(!$(this).hasClass('active') && !confirm('기존에 선택한 수신자 리스트가 초기화됩니다. 계속하시겠습니까?')) {
+        if(!$(this).hasClass('active') && !confirm('기존에 선택한 수신자 목록가 초기화됩니다. 계속하시겠습니까?')) {
             return false;
         }
 
@@ -152,7 +149,7 @@ $(document).ready(function () {
     });
 
 
-    //수신자 리스트 삭제
+    //수신자 목록 삭제
     $('#btnDelEmpList').on('click', function(e) {
 
         e.preventDefault();
@@ -384,7 +381,7 @@ $(document).ready(function () {
         var empGridRowCnt = ($('#btnAddEmp').hasClass('active')) ? $('#trgtEmpGrid').jsGrid('option', 'data').length : $('#nonWatchEmpGrid').jsGrid('option', 'data').length;
 
         if(empGridRowCnt == 0) {
-            param = '수신자 리스트';
+            param = '수신자 목록';
             target = $('#btnAddEmp');
         }
         else if(isEmpty($('#title').val())) {
@@ -418,7 +415,6 @@ $(document).ready(function () {
         var targetUsers = {};
 
         var timestamp = Date.now();
-        
 
         for(var i=0; i<userRecords.length; i++) {
             var user = userRecords[i];
@@ -450,7 +446,7 @@ $(document).ready(function () {
             targetUsers: targetUsers
         }, callback);
     }
-    console.log(date);
+
 
     function setNotieDatabase(paramObj, callback) {
 

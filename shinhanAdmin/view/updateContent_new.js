@@ -3,14 +3,13 @@
 $(document).ready(function () {
 
     var submitVideoAttachFile; //영상 - 실제 저장 시 이용될 file input
-    var submitThumbnailAttachFile; //썸네일 - 실제 저장 시 이용될 file input
     var userObj = JSON.parse(window.sessionStorage.getItem('userInfo'));
     var compCd = userObj['compCd'];
-    var compNm = userObj['compNm'];
     const MAX_TAGS_CNT = 5;
     
     var params = getParams();
     const LECTURE_ID = params['lectureId'];
+    const VIDEO_ID = params['rowKey'];
 
 
     /** start of components ***********************/
@@ -22,11 +21,6 @@ $(document).ready(function () {
     
     
     //fnGetCommonCmb('category', '#category');
-
-
-/*     $('#thumbnailImgPreview').on('click', function(e) {
-        $('#thumbnailFile').click();
-    }); */
 
 
     $('#output').on('click', function(e) {
@@ -72,15 +66,14 @@ $(document).ready(function () {
 
 
     var video = document.getElementById('video');
-    var scaleFactor = 0.25;
 
 
     $('#video').on('click', function(e) {
-        $('#videoAttachFile').click();
+        //$('#videoAttachFile').click();
     });
 
 
-    $('#videoAttachFile').on('change', function(e) {
+/*     $('#videoAttachFile').on('change', function(e) {
         if(document.getElementById("videoAttachFile").files.length == 0) {
             return false;
         }
@@ -102,16 +95,16 @@ $(document).ready(function () {
         var URL = window.URL || window.webkitURL;
         var fileURL = URL.createObjectURL(file);
         videoNode.src = fileURL;
-    });
+    }); */
 
 
-    video.addEventListener('loadedmetadata', function () {
+    /* video.addEventListener('loadedmetadata', function () {
         $(video).one('seeked', function(e) {
             shoot();
         });
 
         this.currentTime = this.duration / 2;
-    }, false);
+    }, false); */
 
 
     //저장 버튼
@@ -176,19 +169,65 @@ $(document).ready(function () {
     }
 
 
+    //video load
+    function fnLoadVideo(videoUrl) {
+        var video = document.getElementById('video');
+        video.pause();
+
+        var source = document.createElement('source');
+        source.type = 'video/mp4';
+        source.src = videoUrl;
+
+        video.innerHTML = '';
+        video.appendChild(source);
+
+        video.load();
+    }
+
+
+    //canvas 그리기
+    function drawCanvas(imgUrl) {
+
+        //이미지 객체 생성
+        var imgClo = new Image();
+
+        //페이지 로드후 이미지가 로드 되었을 때 이미지 출력
+        imgClo.addEventListener('load', function () {
+            //로드된 이미지를 캔버스에 출력
+            var ctx = document.getElementById('canvas').getContext("2d");
+
+            //canvas.drawImage() 함수를 사용하여 이미지 출력
+            ctx.drawImage(imgClo, 0, 0, 320, 180);
+            $('#canvas').attr('data-url', imgUrl);
+
+        }, false);
+
+        //이미지 경로 설정
+        imgClo.src = imgUrl;
+
+    }
+
+
     function fnRetrieve() {
         window.FakeLoader.showOverlay();
         
-        console.log(LECTURE_ID);
         parent.database.ref('/' + compCd + '/lecture/' + LECTURE_ID).once('value').then(function(snapshot) {
 
             var obj = snapshot.val();
-            console.log(obj);
+            var videoObj = obj['videos'][VIDEO_ID];
+
+            console.log(videoObj);
             
             $('#lectureTitle').text(obj['title']);
             
             fnGetCommonCmb('category', '#category', obj['categoryId']);
             $('#requireYn').text(obj['requireYn']);
+            $('#description').val(videoObj['description']);
+            $('#title').val(videoObj['title']);
+            $('#seq').val(videoObj['seq']);
+
+            fnLoadVideo(videoObj['downloadURL']);
+            drawCanvas(videoObj['thumbnail']);
 
             window.FakeLoader.hideOverlay();
         });
@@ -370,9 +409,6 @@ $(document).ready(function () {
         }else if(isEmpty($('#seq').val())) {
             param = '정렬순서';
             target = $('#seq');
-        }else if(isEmpty($('#video').attr('src'))) {
-            param = '동영상';
-            target = $('#video');
         }else if(isEmpty($('#description').val())) {
             param = '상세설명';
             target = $('#description');
@@ -391,55 +427,60 @@ $(document).ready(function () {
 
     //저장
     function fnSave(callback) {
-        
-        (function() {
-            var thumbnailPath = '';
-            var videoPath = '';
-            var rowId = fnGetPrimaryKey(); //id 채번
-            
 
-            fnUploadVideo(rowId, function(downloadURL) {
-                videoPath = downloadURL;
+        var thumbnailPath = '';
 
-                fnUploadThumbnail(rowId, function(downloadURL) {
 
-                    thumbnailPath = downloadURL;
+        var canvas = document.getElementById('canvas');
+        if(isEmpty($(canvas).attr('data-url'))) { //새로 썸네일 올렸으면
 
-                    //var contentAuthor = $('#author').val();
-                    //var contentCategory = $('#category').val();
-                    //var categoryNm = $('#category > option:selected').text();
-                    
-                    /* var contentTagArr = $('#relatedTags').tagsinput('items');
-                    for(var i=0; i<contentTagArr.length; i++) {
-                        contentTagArr[i] = replaceBlankSpace(contentTagArr[i]);
-                    } */
-                    
-                    //var contentTag = contentTagArr.join(' ');
-                    var contentDescription = $('#description').val();
-                    var title = $('#title').val();
-                    //var requireYn = $('#requireYn').text();
+            fnUploadThumbnail(VIDEO_ID, function (downloadURL) {
 
-                    setVideoDatabase(rowId, {
-                        downloadURL: videoPath,
-                        //author: contentAuthor,
-                        //categoryId: contentCategory,
-                        //categoryNm: categoryNm,
-                        //tags: contentTag,
-                        thumbnail: thumbnailPath,
-                        description: contentDescription,
-                        date: moment().format('YYYYMMDDHHmmss'),
-                        title: title,
-                        seq: $('#seq').val()/1 || 0
-                        //requireYn: requireYn
-                    }, callback);
+                thumbnailPath = downloadURL;
+    
+                parent.database.ref('/' + compCd + '/lecture/' + LECTURE_ID + '/videos/' + VIDEO_ID).update({
+                    thumbnail: thumbnailPath,
+                    description: $('#description').val() || '',
+                    date: moment().format('YYYYMMDDHHmmss'),
+                    title: $('#title').val() || '',
+                    seq: $('#seq').val() / 1 || 0
+                }).then(function onSuccess(res) {
+                    window.FakeLoader.hideOverlay();
+    
+                    if (callback != null && callback != undefined) {
+                        callback();
+                    }
+                }).catch(function onError(err) {
+                    console.log("ERROR!!!! " + err);
+                    window.FakeLoader.hideOverlay();
                 });
             });
 
-        })();
+        }else { //썸네일 수정 안했으면
+
+            parent.database.ref('/' + compCd + '/lecture/' + LECTURE_ID + '/videos/' + VIDEO_ID).update({
+                description: $('#description').val() || '',
+                date: moment().format('YYYYMMDDHHmmss'),
+                title: $('#title').val() || '',
+                seq: $('#seq').val() / 1 || 0
+            }).then(function onSuccess(res) {
+                window.FakeLoader.hideOverlay();
+
+                if (callback != null && callback != undefined) {
+                    callback();
+                }
+            }).catch(function onError(err) {
+                console.log("ERROR!!!! " + err);
+                window.FakeLoader.hideOverlay();
+            });
+        }
+
+
+        
     }
 
 
-    function setVideoDatabase(rowId, paramObj, callback) {
+    /* function setVideoDatabase(rowId, paramObj, callback) {
 
         parent.database.ref('/' + compCd + '/lecture/' + LECTURE_ID + '/videos/' + rowId + '/').set(paramObj).then(function onSuccess(res) {
             if(callback != null && callback != undefined) {
@@ -449,18 +490,7 @@ $(document).ready(function () {
             console.log("ERROR!!!! " + err);
             window.FakeLoader.hideOverlay();
         });
-    }
-
-
-    function replaceBlankSpace(string) {
-        return string.replace(' ','_');
-    }
-
-
-    //id 채번
-    function fnGetPrimaryKey() {
-        return 'video_' + moment().unix();
-    }
+    } */
 
 
     //dataUrl --> Blob
@@ -514,7 +544,6 @@ $(document).ready(function () {
                         $.each(catArr, function(idx, catObj) {
                             var newOption = $('<option></option>');
                             $(newOption).attr('value', idx);
-                            //$(newOption).attr('data-requireYn', catObj['requireYn']);
                             $(newOption).text(catArr[idx].title);
 
                             if(idx == defaultValue) {

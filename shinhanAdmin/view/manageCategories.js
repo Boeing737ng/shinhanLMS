@@ -190,6 +190,9 @@ $(document).ready(function () {
 
 
     function fnRetrieve() {
+        
+        selectedItems = [];
+        
         var searchCompany = compCd;
         var searchCategory = $('#searchCategory').val() || '';
 
