@@ -47,13 +47,17 @@ class MyPageViewController: UIViewController{
     var plednum: Int = 0
     
     func getDataFromDB(){
-       clearArrays()
-//        var dataURL:String = "user" + userNo
-        var dataURL:String = "user/201302493/playList"
+        clearArrays()
         
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child("user/" + userNo + "/playList").observeSingleEvent(of: .value, with: { (snapshot) in
+            if !snapshot.exists() || snapshot.childrenCount == 0 {
+                self.imgLecture.text = "\(self.playnum)"
+                self.edLecture.text = "\(self.plednum)"
+                print("Playlist is empty!!!!")
+                return
+            }
             let value = snapshot.value as? Dictionary<String, Any>;()
             for ing in value! {
                 let statusD = ing.value as! Dictionary<String, Any>;()
@@ -66,7 +70,7 @@ class MyPageViewController: UIViewController{
                    self.plednum += 1
                 }
             }
-           self.imgLecture.text = "\(self.playnum)"
+            self.imgLecture.text = "\(self.playnum)"
             self.edLecture.text = "\(self.plednum)"
             self.dataReceived = true
         }) { (error) in
@@ -82,7 +86,7 @@ class MyPageViewController: UIViewController{
         
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child("user/" + userNo).observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? Dictionary<String, Any>;()
             let nameD = value as! Dictionary<String, Any>;()
             let partD = value as! Dictionary<String, Any>;()
