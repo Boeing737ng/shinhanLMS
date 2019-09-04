@@ -123,17 +123,32 @@ class VideoDetailViewController: UIViewController {
     func increaseViewCount() {
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child(userCompanyCode + "/views/" + selectedLectureId).observeSingleEvent(of: .value, with: { (snapshot) in
-            var incresedViewCount = snapshot.value as! Int
-            incresedViewCount += 1
-            ref.child(userCompanyCode + "/views").updateChildValues([
-                selectedLectureId: incresedViewCount
+        ref.child(userCompanyCode + "/lecture/" + selectedLectureId).observeSingleEvent(of: .value, with: { (snapshot) in
+            var lecture = snapshot.value as! Dictionary<String, Any>;()
+            var increasedViewCount = lecture["view"] as! Int
+            increasedViewCount += 1
+            ref.child(userCompanyCode + "/lecture/" + selectedLectureId).updateChildValues([
+                "view": increasedViewCount
                 ]
             )
             
         }) { (error) in
             print(error.localizedDescription)
         }
+        
+//        var ref: DatabaseReference!
+//        ref = Database.database().reference()
+//        ref.child(userCompanyCode + "/views/" + selectedLectureId).observeSingleEvent(of: .value, with: { (snapshot) in
+//            var incresedViewCount = snapshot.value as! Int
+//            incresedViewCount += 1
+//            ref.child(userCompanyCode + "/views").updateChildValues([
+//                selectedLectureId: incresedViewCount
+//                ]
+//            )
+//
+//        }) { (error) in
+//            print(error.localizedDescription)
+//        }
     }
     
     func showVideoPlayer() {

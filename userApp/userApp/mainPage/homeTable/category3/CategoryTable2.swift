@@ -27,6 +27,11 @@ class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
     var popularAuthorArray = Array<String>()
     var popularViewArray = Array<Int>()
     
+    var top3IdArray = Array<String>()
+    var top3ViewArray = Array<Int>()
+    var top3TitleArray = Array<String>()
+    var top3AuthorArray = Array<String>()
+    
     override func awakeFromNib() {
         self.delegate = self
         self.dataSource = self
@@ -36,7 +41,7 @@ class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
     func getDataFromDB() {
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child(userCompanyCode + "/views/").queryOrderedByValue().observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child(userCompanyCode + "/lecture/" + selectedLectureId).queryOrdered(byChild: "view").observeSingleEvent(of: .value, with: { (snapshot) in
             if !snapshot.exists() || snapshot.childrenCount == 0 {
                 print("Lecture list is empty!!!!")
                 return
@@ -44,31 +49,24 @@ class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
             self.dataSize = Int(snapshot.childrenCount)
             let lectures = snapshot.children.allObjects as! [DataSnapshot]
             for lecture in lectures {
-                print(lecture.key)
-                var id = lecture.key
-                var value = lecture.value
-                ref.child(userCompanyCode + "/lecture/" + id).observeSingleEvent(of: .value, with: { (snapshot) in
-                    let lectureDict = snapshot.value as! Dictionary<String, Any>;()
-                    print(id)
-                    print(lectureDict["title"] as! String)
-                    totalPopularVideoIdArray.append(id)
-                    totalPopularViewArray.append(value as! Int)
-                    totalPopularTitleArray.append(lectureDict["title"] as! String)
-                    totalPopularAuthorArray.append(lectureDict["author"] as! String)
-                    
-                    if totalPopularTitleArray.count == self.dataSize {
-                        print("reversed")
-                        self.dataReceived = true
-//                        totalPopularVideoIdArray.reverse()
-//                        totalPopularViewArray.reverse()
-//                        totalPopularTitleArray.reverse()
-//                        totalPopularAuthorArray.reverse()
-                        self.reloadData()
-                    }
-                }) { (error) in
-                    print(error.localizedDescription)
-                }
+                let lectureDict = lecture.value as! Dictionary<String, Any>;()
+                totalPopularVideoIdArray.append(lecture.key)
+                totalPopularViewArray.append(lectureDict["view"] as! Int)
+                totalPopularTitleArray.append(lectureDict["title"] as! String)
+                totalPopularAuthorArray.append(lectureDict["author"] as! String)
+                self.dataReceived = true
+                self.reloadData()
             }
+            totalPopularVideoIdArray.reverse()
+            totalPopularViewArray.reverse()
+            totalPopularTitleArray.reverse()
+            totalPopularAuthorArray.reverse()
+            
+            self.top3IdArray = Array(totalPopularVideoIdArray[0...3])
+            self.top3ViewArray = Array(totalPopularViewArray[0...3])
+            self.top3TitleArray = Array(totalPopularTitleArray[0...3])
+            self.top3AuthorArray = Array(totalPopularAuthorArray[0...3])
+            
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -83,7 +81,7 @@ class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return totalPopularVideoIdArray.count
+        return 3
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -95,10 +93,10 @@ class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "VideoCell2") as! VideoCell2
         if dataReceived {
-            cell.videoTitleLabel.text = totalPopularTitleArray[indexPath.row]
-            cell.videoAuthorLabel.text = totalPopularAuthorArray[indexPath.row]
-            cell.videoThumbnail.image = CachedImageView().loadCacheImage(urlKey: totalPopularVideoIdArray[indexPath.row])
-            cell.videoViewLabel.text = String(totalPopularViewArray[indexPath.row])
+            cell.videoTitleLabel.text = top3TitleArray[indexPath.row]
+            cell.videoAuthorLabel.text = top3AuthorArray[indexPath.row]
+            cell.videoThumbnail.image = CachedImageView().loadCacheImage(urlKey: top3IdArray[indexPath.row])
+            cell.videoViewLabel.text = String(top3ViewArray[indexPath.row])
         } else {
             cell.videoTitleLabel.text = textArray[indexPath.row]
             cell.videoAuthorLabel.text = authorArray[indexPath.row]

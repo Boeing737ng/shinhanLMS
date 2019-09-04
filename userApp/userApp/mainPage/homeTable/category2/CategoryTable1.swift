@@ -110,8 +110,9 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
                     self.playingAuthorArray.append(author)
                     self.playingProgressArray.append(progress.floatValue)
                     
-                    ref.child(userCompanyCode + "/views/" + lectureId).observeSingleEvent(of: .value, with: { (snapshot) in
-                        let view = snapshot.value as! Int
+                    ref.child(userCompanyCode + "/lecture/" + lectureId).observeSingleEvent(of: .value, with: { (snapshot) in
+                        let lecture = snapshot.value as! Dictionary<String, Any>;()
+                        let view = lecture["view"] as! Int
                         self.playingViewArray.append(view)
                         self.dataReceived = true
                         self.reloadData()
