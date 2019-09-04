@@ -45,20 +45,22 @@ class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
             let lectures = snapshot.children.allObjects as! [DataSnapshot]
             for lecture in lectures {
                 let lectureId = lecture.key
+                totalPopularVideoIdArray.append(lectureId)
                 totalPopularViewArray.append(lecture.value as! Int)
-                ref.child(userCompanyCode + "/lecture/" + lectureId).observeSingleEvent(of: .value, with: { (snapshot) in
+            }
+            for id in totalPopularVideoIdArray {
+                ref.child(userCompanyCode + "/lecture/" + id).observeSingleEvent(of: .value, with: { (snapshot) in
                     let lectureDict = snapshot.value as! Dictionary<String, Any>;()
-                    totalPopularVideoIdArray.append(lectureId)
                     totalPopularTitleArray.append(lectureDict["title"] as! String)
                     totalPopularAuthorArray.append(lectureDict["author"] as! String)
-                    self.reloadData()
+                    if totalPopularTitleArray.count == self.dataSize {
+                        self.dataReceived = true
+                        self.reloadData()
+                    }
                 }) { (error) in
                     print(error.localizedDescription)
                 }
-            
             }
-            self.dataReceived = true
-            self.reloadData()
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -84,7 +86,6 @@ class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "VideoCell2") as! VideoCell2
-        print(totalPopularTitleArray)
         if dataReceived {
             cell.videoTitleLabel.text = totalPopularTitleArray[(dataSize - 1) - indexPath.row]
             cell.videoAuthorLabel.text = totalPopularAuthorArray[(dataSize - 1) - indexPath.row]

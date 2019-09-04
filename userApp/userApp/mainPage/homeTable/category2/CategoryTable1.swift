@@ -140,7 +140,8 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let videoId = self.playingLectureIdArray[indexPath.row]
+        print(playingLectureIdArray)
+        let videoId = playingLectureIdArray[indexPath.row]
         selectedLectureId = videoId
         TabViewController().goToDetailPage()
     }
