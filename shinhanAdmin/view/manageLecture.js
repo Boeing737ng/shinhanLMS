@@ -81,7 +81,8 @@ $(document).ready(function () {
             
         },
 
-        rowDoubleClick: function(args) {
+        /* rowDoubleClick: function(args) {
+            
             var arr = $('#lectureGrid').jsGrid('option', 'data');
 
             fnGo('/view/updateLecture.html', {
@@ -91,7 +92,7 @@ $(document).ready(function () {
                 'searchTitle': $('#searchTitle').val(),
                 'rowKey': arr[args.itemIndex]['rowKey']
             });
-        },
+        }, */
 
         fields: [
             {
@@ -127,7 +128,33 @@ $(document).ready(function () {
                 
                 return img;
             } },
-            { name: "title", title: '강좌명', type: "text", width: 200, align: "left", validate: {
+            { name: "title", title: '강좌명', type: "text", width: 200, align: "left", cellRenderer: function(item, value) {
+                var rslt = $("<td>").addClass("jsgrid-cell");
+                var aLink = $("<a>");
+                $(aLink).attr('href', '#');
+                $(aLink).text(item);
+
+                (function(value) {
+
+                    $(aLink).on('click', function(e) {
+
+                        e.preventDefault();
+    
+                        fnGo('/view/updateLecture.html', {
+                            'searchRequireYn' : $('#searchRequireYn').val(),
+                            'searchCategory' : $('#searchCategory').val(),
+                            'searhRelatedTag': $('#searhRelatedTag').val(),
+                            'searchTitle': $('#searchTitle').val(),
+                            'rowKey': value['rowKey']
+                        });
+                    });
+
+                }(value));
+
+                $(rslt).append(aLink);
+                
+                return rslt;
+            }, validate: {
                 validator: 'required', 
                 message: '공개여부 는 필수입력 입니다.'
             } },
@@ -170,7 +197,6 @@ $(document).ready(function () {
                 validator: 'required', 
                 message: '필수강좌여부 는 필수입력 입니다.'
             }, align: "center" },
-            { name: "contentCnt", title: '강의수', type: "number", width: 50, align: "right", inserting: false, editing: false },
             { type: 'control'}
         ]
     });
@@ -241,7 +267,7 @@ $(document).ready(function () {
             $row.toggleClass("highlight");
         },
 
-        rowDoubleClick: function(args) {
+        /* rowDoubleClick: function(args) {
             var arr = $('#contentGrid').jsGrid('option', 'data');
 
             var data = $('#lectureGrid').jsGrid('option', 'data');
@@ -257,7 +283,7 @@ $(document).ready(function () {
                 'lectureId': lectureId,
                 'rowKey': arr[args.itemIndex]['rowKey']
             });
-        },
+        }, */
 
         fields: [
             {
@@ -293,7 +319,39 @@ $(document).ready(function () {
                 
                 return img;
             } },
-            { name: "title", title: '강의명', type: "text", width: 200, align: "left" },
+            { name: "title", title: '강의명', type: "text", width: 200, align: "left", cellRenderer: function(item, value) {
+                var rslt = $("<td>").addClass("jsgrid-cell");
+                var aLink = $("<a>");
+                $(aLink).attr('href', '#');
+                $(aLink).text(item);
+
+                (function(value) {
+
+                    $(aLink).on('click', function(e) {
+
+                        e.preventDefault();
+
+                        var data = $('#lectureGrid').jsGrid('option', 'data');
+                        var selectedRow = $("#lectureGrid").find('table tr.highlight').prevAll().length;
+                        var lectureId = data[selectedRow]['rowKey'];
+                
+                        
+                        fnGo('/view/updateContent_new.html', {
+                            'searchRequireYn' : $('#searchRequireYn').val(),
+                            'searchCategory' : $('#searchCategory').val(),
+                            'searhRelatedTag': $('#searhRelatedTag').val(),
+                            'searchTitle': $('#searchTitle').val(),
+                            'lectureId': lectureId,
+                            'rowKey': value['rowKey']
+                        });
+                    });
+
+                }(value));
+
+                $(rslt).append(aLink);
+                
+                return rslt;
+            } },
             { name: "seq", title: '정렬순서', type: "number", width: 50, align: "right" },
             { type: 'control' }
         ]
@@ -327,7 +385,7 @@ $(document).ready(function () {
         if(selectedItemsLecture.length == 0) {
             alert('선택된 데이터가 없습니다.');
             return false;
-        }else {
+        }/* else {
             for(var i=0; i<selectedItemsLecture.length; i++) {
                 var item = selectedItemsLecture[i];
 
@@ -336,7 +394,7 @@ $(document).ready(function () {
                     return false;
                 }
             }
-        }
+        } */
 
         if(confirm("삭제하시겠습니까?")) {
             removeCheckedRows('lecture', function() {
@@ -711,10 +769,8 @@ $(document).ready(function () {
                     
                 ) {
                     var contentObj = catObj['videos'] || {};
-                    var contentCnt = Object.keys(contentObj).length;
     
                     catObj['rowKey'] = idx;
-                    catObj['contentCnt'] = contentCnt;
                     rsltArr.push(catObj);
                 }
             });
@@ -746,10 +802,8 @@ $(document).ready(function () {
             $.each(catArr, function(idx) {
 
                 var catObj = catArr[idx];
-                var contentCnt = Object.keys(catObj).length;
 
                 catObj['rowKey'] = idx;
-                catObj['contentCnt'] = contentCnt;
                 rsltArr.push(catObj);
             });
 
