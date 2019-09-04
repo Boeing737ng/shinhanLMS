@@ -73,12 +73,8 @@ $(document).ready(function () {
             if (selectedRow.length) {
                 selectedRow.toggleClass('highlight');
             };
-
-            
             
             $row.toggleClass("highlight");
-            
-            
         },
 
         /* rowDoubleClick: function(args) {
