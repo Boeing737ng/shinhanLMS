@@ -27,10 +27,10 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
         self.delegate = self
         self.dataSource = self
         NotificationCenter.default.addObserver(self, selector: #selector(reloadTable), name: NSNotification.Name(rawValue: "refreshMainTable"), object: nil)
-        gerUserPlayingLectureInfoFromDB()
+        setUserLectureProgress()
     }
     @objc func reloadTable() {
-        gerUserPlayingLectureInfoFromDB()
+        setUserLectureProgress()
     }
     
     func clearArrays() {
@@ -39,6 +39,48 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
         playingAuthorArray.removeAll()
         playingProgressArray.removeAll()
         playingViewArray.removeAll()
+    }
+    
+    func setUserLectureProgress() {
+        var watchedVideoCount:Int = 0
+        var totalVideoCount:Int = 0
+        var compledtedRatio:Float = 0.0
+        var currentState:String = ""
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        ref.child("user/" + userNo + "/playList/" + selectedLectureId + "/videos").observeSingleEvent(of: .value, with: { (snapshot) in
+            if !snapshot.exists() || snapshot.childrenCount == 0 {
+                print("Playlist is empty!!!!")
+                self.gerUserPlayingLectureInfoFromDB()
+                return
+            }
+            let videos = snapshot.children.allObjects as! [DataSnapshot]
+            totalVideoCount = Int(snapshot.childrenCount)
+            for video in videos {
+                let videoInfo = video.value as! Dictionary<String, Any>;()
+                let videoState = videoInfo["state"] as! String
+                if videoState == "completed" {
+                    watchedVideoCount += 1
+                }
+            }
+            compledtedRatio = Float(Double(watchedVideoCount) / Double(totalVideoCount))
+            print(totalVideoCount)
+            print(watchedVideoCount)
+            print(compledtedRatio)
+            if compledtedRatio == 1.0 {
+                currentState = "completed"
+            } else {
+                currentState = "playing"
+            }
+            ref.child("user/" + userNo + "/playList/" + selectedLectureId).updateChildValues([
+                "progress": compledtedRatio,
+                "state": currentState
+                ]
+            )
+            self.gerUserPlayingLectureInfoFromDB()
+        }) { (error) in
+            print(error.localizedDescription)
+        }
     }
     
     func gerUserPlayingLectureInfoFromDB() {
@@ -68,9 +110,8 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
                     self.playingAuthorArray.append(author)
                     self.playingProgressArray.append(progress.floatValue)
                     
-                    ref.child(userCompanyCode + "/lecture/" + lectureId).observeSingleEvent(of: .value, with: { (snapshot) in
-                        let videoDict2 = snapshot.value as! Dictionary<String, Any>;()
-                        let view = videoDict2["view"] as! Int
+                    ref.child(userCompanyCode + "/views/" + lectureId).observeSingleEvent(of: .value, with: { (snapshot) in
+                        let view = snapshot.value as! Int
                         self.playingViewArray.append(view)
                         self.dataReceived = true
                         self.reloadData()
@@ -99,7 +140,8 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let videoId = self.playingLectureIdArray[indexPath.row]
+        print(playingLectureIdArray)
+        let videoId = playingLectureIdArray[indexPath.row]
         selectedLectureId = videoId
         TabViewController().goToDetailPage()
     }
