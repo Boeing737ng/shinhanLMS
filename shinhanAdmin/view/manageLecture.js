@@ -760,9 +760,8 @@ $(document).ready(function () {
             var rsltArr = [];
 
             $.each(catArr, function(idx, catObj) {
-
                 if(
-                    (searchTitle == '' || catObj['title'].indexOf(searchTitle) > -1) &&
+                    ((searchTitle == '') || (catObj['title'].toLowerCase().indexOf(searchTitle.toLowerCase()) > -1)) &&
                     (searchRequireYn == '' || searchRequireYn == catObj['requireYn']) &&
                     (searchRelatedTag == '' || $.inArray(searchRelatedTag, catObj['tags'].split(' ')) > -1) &&
                     ((searchCategory == '') || searchCategory == catObj['categoryId'])
