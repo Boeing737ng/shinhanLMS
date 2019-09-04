@@ -83,6 +83,26 @@ $(document).ready(function () {
         data: [],
 
         fields: [
+            { name: "thumbnail", title: '썸네일', width: 80, editing: false, align: "center", cellRenderer: function(item, value) {
+                var rslt = $("<td>").addClass("jsgrid-cell");
+                var img = $("<img>");
+                
+                $(img).css('width', '60px');
+                $(img).css('height', '45px');
+                $(img).attr('src', item);
+                $(rslt).append(img);
+                
+                return rslt;
+            }, editTemplate: function(item, value) {
+                
+                var img = $('<img>');
+                
+                $(img).css('width', '60px');
+                $(img).css('height', '45px');
+                $(img).attr('src', item);
+                
+                return img;
+            } },
             { name: "title", title: '강좌명', type: "text", width: 200, align: "left" },
             { name: "author", title: '강사명', type: "text", width: 100, align: "center" },
             { name: "tags", title: "관련태그", type: 'text', width: 200, editing: false, align: "left", cellRenderer: function(item, value){
@@ -100,7 +120,7 @@ $(document).ready(function () {
                 }
                 return rslt; 
             }},
-            { name: "requireYn", title: "필수강좌여부", width: 50, align: "center" }
+            { name: "requireYn", title: "필수강좌여부", width: 100, align: "center" }
         ]
     });
 
@@ -247,15 +267,8 @@ $(document).ready(function () {
             var rsltArr = [];
 
             $.each(catArr, function(idx) {
-
                 var catObj = catArr[idx];
-                var catName = catObj['title'];
-                var author = catObj['author'];
-
-                var contentCnt = Object.keys(catObj).length;
-
                 catObj['rowKey'] = idx;
-                catObj['contentCnt'] = contentCnt;
                 rsltArr.push(catObj);
             });
 
