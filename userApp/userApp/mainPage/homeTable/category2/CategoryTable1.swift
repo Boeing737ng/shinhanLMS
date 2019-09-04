@@ -5,7 +5,6 @@
 //  Created by Kihyun Choi on 21/08/2019.
 //  Copyright © 2019 sfo. All rights reserved.
 //
-
 import UIKit
 import Firebase
 
@@ -26,10 +25,23 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
     override func awakeFromNib() {
         self.delegate = self
         self.dataSource = self
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTable), name: NSNotification.Name(rawValue: "refreshMainTable"), object: nil)
+        gerUserPlayingLectureInfoFromDB()
+    }
+    @objc func reloadTable() {
         gerUserPlayingLectureInfoFromDB()
     }
     
+    func clearArrays() {
+        playingLectureIdArray.removeAll()
+        playingTitleArray.removeAll()
+        playingAuthorArray.removeAll()
+        playingProgressArray.removeAll()
+        playingViewArray.removeAll()
+    }
+    
     func gerUserPlayingLectureInfoFromDB() {
+        clearArrays()
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child("user/" + userNo + "/playList/").observeSingleEvent(of: .value, with: { (snapshot) in
@@ -95,7 +107,7 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
         let cell = tableView.dequeueReusableCell(withIdentifier: "VideoCell1") as! VideoCell1
         
         cell.videoProgressBar.progress = 0.8
-        if playingViewArray.count == 3 {
+        if playingViewArray.count == playingLectureIdArray.count {
             if dataReceived {
                 cell.videoTitleLabel.text = self.self.playingTitleArray[indexPath.row]
                 cell.videoAuthorLabel.text = playingAuthorArray[indexPath.row]
