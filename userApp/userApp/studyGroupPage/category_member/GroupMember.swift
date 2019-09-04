@@ -11,20 +11,55 @@ class GroupMember: UICollectionView, UICollectionViewDelegate, UICollectionViewD
     override func awakeFromNib() {
         self.delegate = self
         self.dataSource = self
-        initmember()
+        getData()
         NotificationCenter.default.addObserver(self, selector: #selector(reloadcollection), name: NSNotification.Name(rawValue: "copchange"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadMember), name: NSNotification.Name(rawValue: "memberAdd"), object: nil)
     }
+    
+    @objc func reloadMember() {
+        getData()
+        self.reloadData()
+    }
+    
     @objc func reloadcollection() {
         getData()
         self.reloadData()
     }
-    func initmember()
+    
+//    func initmember()
+//    {
+//        initArrays()
+//        var index = 0
+//        var ref: DatabaseReference!
+//        ref = Database.database().reference()
+//        ref.child("58/study/11111/member").observeSingleEvent(of: .value, with: { (snapshot) in
+//            if snapshot.childrenCount == 0 {
+//                return
+//            }
+//            let value = snapshot.value as? Dictionary<String,Any>;()
+//            for study in value! {
+//                let studyDict = study.value as! Dictionary<String, Any>;()
+//                let name = studyDict["name"] as! String
+//                let depart = studyDict["department"] as! String
+//                self.member_name.append(name)
+//                self.member_depart.append(depart)
+//                index += 1
+//            }
+//            self.dataReceived = true
+//            self.reloadData()
+//        }) { (error) in
+//            print(error.localizedDescription)
+//        }
+//    }
+    
+    func getData()
     {
         initArrays()
-        var index = 0
+        //var index = 0
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child("58/study/11111/member").observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child("58/study/" + curri_send + "/member").observeSingleEvent(of: .value, with: { (snapshot) in
             if snapshot.childrenCount == 0 {
                 return
             }
@@ -35,7 +70,7 @@ class GroupMember: UICollectionView, UICollectionViewDelegate, UICollectionViewD
                 let depart = studyDict["department"] as! String
                 self.member_name.append(name)
                 self.member_depart.append(depart)
-                index += 1
+                //index += 1
             }
             self.dataReceived = true
             self.reloadData()
@@ -43,31 +78,7 @@ class GroupMember: UICollectionView, UICollectionViewDelegate, UICollectionViewD
             print(error.localizedDescription)
         }
     }
-    func getData()
-    {
-        initArrays()
-        var index = 0
-        var ref: DatabaseReference!
-        ref = Database.database().reference()
-        ref.child("58/study/"+curri_send+"/member").observeSingleEvent(of: .value, with: { (snapshot) in
-            if snapshot.childrenCount == 0 {
-                return
-            }
-        let value = snapshot.value as? Dictionary<String,Any>;()
-            for study in value! {
-                let studyDict = study.value as! Dictionary<String, Any>;()
-                let name = studyDict["name"] as! String
-                let depart = studyDict["department"] as! String
-                self.member_name.append(name)
-                self.member_depart.append(depart)
-                index += 1
-            }
-            self.dataReceived = true
-            self.reloadData()
-    }) { (error) in
-        print(error.localizedDescription)
-        }
-    }
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -76,16 +87,18 @@ class GroupMember: UICollectionView, UICollectionViewDelegate, UICollectionViewD
         return member_name.count
     }
     
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let videoId = recentVideoIdArray[indexPath.row]
-//        selectedVideoId = videoId
-//        TabViewController().goToDetailPage()
-//    }
+    //    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    //        let videoId = recentVideoIdArray[indexPath.row]
+    //        selectedVideoId = videoId
+    //        TabViewController().goToDetailPage()
+    //    }
+    
     func initArrays() {
         member_depart.removeAll()
         member_name.removeAll()
         self.dataReceived = false
     }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MemberCell", for: indexPath) as! MemberCell
         

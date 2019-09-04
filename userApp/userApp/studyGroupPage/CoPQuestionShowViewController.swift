@@ -43,7 +43,7 @@ class CoPQuestionShowViewController: UIViewController, UITextFieldDelegate {
     func getQuestionFromDB() {
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child(userCompanyCode + "/study/" + selectedStudyId + "/board/" + selectedCopPostId).observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child(userCompanyCode + "/study/" + curri_send + "/board/" + selectedCopPostId).observeSingleEvent(of: .value, with: { (snapshot) in
             let QuestionInfo = snapshot.value as! Dictionary<String, Any>;()
             
             self.lblTitle.text = QuestionInfo["title"]! as? String
@@ -66,7 +66,7 @@ class CoPQuestionShowViewController: UIViewController, UITextFieldDelegate {
     @IBAction func btnSend(_ sender: UIButton) {
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child(userCompanyCode + "/study/" + selectedStudyId + "/board/" + selectedCopPostId + "/comment").child(String(UInt(NSDate().timeIntervalSince1970 * 1000000))).setValue([
+        ref.child(userCompanyCode + "/study/" + curri_send + "/board/" + selectedCopPostId + "/comment").child(String(UInt(NSDate().timeIntervalSince1970 * 1000000))).setValue([
             "content": tfComment.text as? String,
             "date": Double(NSDate().timeIntervalSince1970),
             "writer": userName

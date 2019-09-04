@@ -41,7 +41,7 @@ class GroupBoardTableView: UITableView, UITableViewDataSource, UITableViewDelega
         
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child(userCompanyCode + "/study/" + selectedStudyId + "/board").observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child(userCompanyCode + "/study/" + curri_send + "/board").observeSingleEvent(of: .value, with: { (snapshot) in
             let questionInfo = snapshot.value as? Dictionary<String,Any>;()
             
             if snapshot.childrenCount == 0 {
