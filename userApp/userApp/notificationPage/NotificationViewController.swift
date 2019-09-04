@@ -19,6 +19,7 @@ class NotificationViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    
     @IBAction func onGoBack(_ sender: UIBarButtonItem) {
         let transition: CATransition = CATransition()
         transition.duration = 0.5

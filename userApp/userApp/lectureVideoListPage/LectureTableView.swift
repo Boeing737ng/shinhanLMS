@@ -20,7 +20,6 @@ class LectureTableView: UITableView, UITableViewDelegate, UITableViewDataSource{
     var databaseLectureIdArray = Array<String>()
     var databaseTitleArray = Array<String>()
     var databaseAuthorArray = Array<String>()
-    var databaseViewArray = Array<Int>()
     
     override func awakeFromNib() {
         self.delegate = self
@@ -58,16 +57,9 @@ class LectureTableView: UITableView, UITableViewDelegate, UITableViewDataSource{
                 self.databaseLectureIdArray.append(videoId)
                 self.databaseTitleArray.append(title)
                 self.databaseAuthorArray.append(author)
-                
-                ref.child(userCompanyCode + "/lecture/" + videoId).observeSingleEvent(of: .value, with: { (viewCount) in
-                    let videoDict2 = viewCount.value as! Dictionary<String, Any>;()
-                    let view = videoDict2["view"] as! Int
-                    self.databaseViewArray.append(view)
-                    self.dataReceived = true
-                    self.reloadData()
-                }) { (error) in
-                    print(error.localizedDescription)
-                }
+                print(self.databaseLectureIdArray)
+                self.dataReceived = true
+                self.reloadData()
             }
         }) { (error) in
             print(error.localizedDescription)
@@ -78,7 +70,6 @@ class LectureTableView: UITableView, UITableViewDelegate, UITableViewDataSource{
         databaseLectureIdArray.removeAll()
         databaseTitleArray.removeAll()
         databaseAuthorArray.removeAll()
-        databaseViewArray.removeAll()
     }
     
     @objc func reloadTable() {
@@ -106,20 +97,14 @@ class LectureTableView: UITableView, UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LectureListCell") as! LectureListCell
-        if (databaseViewArray.count == databaseLectureIdArray.count) {
-            if dataReceived{
-                cell.videoTitleLabel.text = databaseTitleArray[indexPath.row]
-                cell.videoAuthorLabel.text = databaseAuthorArray[indexPath.row]
-                cell.videoThumbnail.image = CachedImageView().loadCacheImage(urlKey: databaseLectureIdArray[indexPath.row])
-                cell.videoViewLabel.text = String(databaseViewArray[indexPath.row])
-            } else {
-                cell.videoTitleLabel.text = textArray[indexPath.row]
-                cell.videoAuthorLabel.text = authorArray[indexPath.row]
-                cell.videoThumbnail.image = UIImage(named: "white.jpg")
-                cell.videoViewLabel.text = "0"
-            }
+        if dataReceived{
+            cell.videoTitleLabel.text = databaseTitleArray[indexPath.row]
+            cell.videoAuthorLabel.text = databaseAuthorArray[indexPath.row]
+            cell.videoThumbnail.image = CachedImageView().loadCacheImage(urlKey: databaseLectureIdArray[indexPath.row])
         } else {
-            self.reloadData()
+            cell.videoTitleLabel.text = textArray[indexPath.row]
+            cell.videoAuthorLabel.text = authorArray[indexPath.row]
+            cell.videoThumbnail.image = UIImage(named: "white.jpg")
         }
         
         return cell

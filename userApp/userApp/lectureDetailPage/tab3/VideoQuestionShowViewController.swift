@@ -28,7 +28,7 @@ class VideoQuestionShowViewController: UIViewController, UITextFieldDelegate {
         
         // Do any additional setup after loading the view.
         
-        //getQuestionFromDB()
+        getQuestionFromDB()
         tfComment.returnKeyType = .done
     }
     
@@ -39,7 +39,7 @@ class VideoQuestionShowViewController: UIViewController, UITextFieldDelegate {
     func getQuestionFromDB() {
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child(userCompanyCode + "/videos/" + selectedVideoId + "/qnaBoard/" + selectedQuestionId).observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child(userCompanyCode + "/videos/" + selectedLectureId + "/qnaBoard/" + selectedQuestionId).observeSingleEvent(of: .value, with: { (snapshot) in
             let QuestionInfo = snapshot.value as! Dictionary<String, Any>;()
             
             self.lblTitle.text = QuestionInfo["title"]! as? String
