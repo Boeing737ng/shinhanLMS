@@ -16,7 +16,7 @@ class GroupCreateViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var studyImg: UIImageView!
     @IBOutlet weak var studyName: UITextField!
     @IBOutlet weak var studyDetail: UITextField!
-    
+    var upload_img: UIImage?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -84,6 +84,7 @@ class GroupCreateViewController: UIViewController, UIImagePickerControllerDelega
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
             studyImg.image = image
+            upload_img = image
             awakeFromNib()
         }
         dismiss(animated: true, completion: nil)

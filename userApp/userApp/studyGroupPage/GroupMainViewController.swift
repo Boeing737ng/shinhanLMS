@@ -42,7 +42,7 @@ class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerV
         //curri=study_nameArray[row]
         detail.text = study_detailtxt[row]
         curri_send = curri[row]
-        //imageview.image = UIImage(url: URL(string: study_img[row]))
+        imageview.image = UIImage(url: URL(string: study_img[row]))
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "copchange"), object: nil)
         
     }
@@ -71,10 +71,10 @@ class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerV
                 curri.append(studyID)
                 let studytitle = studyDict["studyname"] as! String
                 let studydetail = studyDict["detail"] as! String
-               // let studyimage = studyDict["img"] as! String
+                let studyimage = studyDict["img"] as! String
                 self.study_nameArray.append(studytitle)
                 self.study_detailtxt.append(studydetail)
-                //self.study_img.append(studyimage)
+                self.study_img.append(studyimage)
             }
             self.dataReceived = true
             self.pickerImage.reloadAllComponents()
