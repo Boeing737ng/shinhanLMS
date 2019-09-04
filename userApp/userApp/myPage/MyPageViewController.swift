@@ -63,7 +63,6 @@ class MyPageViewController: UIViewController{
                 let statusD = ing.value as! Dictionary<String, Any>;()
                 let status = statusD["state"] as! String
                 self.dbingArray.append(status)
-                
                 if status == "playing"{
                    self.playnum += 1
                }else{
