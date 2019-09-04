@@ -263,24 +263,6 @@ $(document).ready(function () {
             $row.toggleClass("highlight");
         },
 
-        /* rowDoubleClick: function(args) {
-            var arr = $('#contentGrid').jsGrid('option', 'data');
-
-            var data = $('#lectureGrid').jsGrid('option', 'data');
-            var selectedRow = $("#lectureGrid").find('table tr.highlight').prevAll().length;
-            var lectureId = data[selectedRow]['rowKey'];
-    
-            
-            fnGo('/view/updateContent_new.html', {
-                'searchRequireYn' : $('#searchRequireYn').val(),
-                'searchCategory' : $('#searchCategory').val(),
-                'searhRelatedTag': $('#searhRelatedTag').val(),
-                'searchTitle': $('#searchTitle').val(),
-                'lectureId': lectureId,
-                'rowKey': arr[args.itemIndex]['rowKey']
-            });
-        }, */
-
         fields: [
             {
                 itemTemplate: function(_, item) {
@@ -332,7 +314,7 @@ $(document).ready(function () {
                         var lectureId = data[selectedRow]['rowKey'];
                 
                         
-                        fnGo('/view/updateContent_new.html', {
+                        fnGo('/view/updateContent.html', {
                             'searchRequireYn' : $('#searchRequireYn').val(),
                             'searchCategory' : $('#searchCategory').val(),
                             'searhRelatedTag': $('#searhRelatedTag').val(),
