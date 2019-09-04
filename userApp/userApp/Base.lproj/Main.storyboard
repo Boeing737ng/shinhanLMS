@@ -22,12 +22,12 @@
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="CategoryCell" rowHeight="185" id="PU2-Dm-Al2" customClass="CategoryCell" customModule="userApp" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="185"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PU2-Dm-Al2" id="WqJ-r1-Jvv">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PU2-Dm-Al2" id="WqJ-r1-Jvv">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="184.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="8it-iT-74I" customClass="VideoCollection" customModule="userApp" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="35" width="414" height="150"/>
+                                            <rect key="frame" x="0.0" y="34.5" width="414" height="150"/>
                                             <color key="backgroundColor" red="0.93362020810000002" green="0.93362020810000002" blue="0.93362020810000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="150" id="Gca-L8-S25"/>
@@ -88,19 +88,19 @@
                                             </cells>
                                         </collectionView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="90I-3h-yJF" userLabel="textBackground">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="30.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="30"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qAf-sj-Fct" userLabel="textContainer">
-                                                    <rect key="frame" x="20.5" y="0.0" width="373" height="30.5"/>
+                                                    <rect key="frame" x="20.5" y="0.0" width="373" height="30"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="추천 강좌" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NLN-2B-0Ky">
-                                                            <rect key="frame" x="0.0" y="6.5" width="56" height="18"/>
+                                                            <rect key="frame" x="0.0" y="6" width="56" height="18"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dr1-EH-Tef">
-                                                            <rect key="frame" x="324" y="2" width="45" height="27"/>
+                                                            <rect key="frame" x="324" y="1.5" width="45" height="27"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <state key="normal" title="View All"/>
                                                             <connections>
@@ -478,7 +478,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="290" height="290"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shinple_logo" translatesAutoresizingMaskIntoConstraints="NO" id="ACA-qG-M47">
-                                                <rect key="frame" x="0.0" y="0.0" width="290" height="290"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="290.00000000000182" height="290"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="ACA-qG-M47" secondAttribute="height" multiplier="1:1" id="F8K-Dx-ZGB"/>
                                                 </constraints>
@@ -3687,15 +3687,12 @@
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </textAttributes>
                                         <items>
-                                            <navigationItem title="게시판" id="VhA-YV-X2p">
+                                            <navigationItem title="강좌 목록" id="VhA-YV-X2p" userLabel="강좌 목록">
                                                 <barButtonItem key="leftBarButtonItem" title="back" id="ojj-rG-vVI">
                                                     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="onGoBack:" destination="sFu-Aa-d8N" id="41f-HD-5nl"/>
                                                     </connections>
-                                                </barButtonItem>
-                                                <barButtonItem key="rightBarButtonItem" systemItem="compose" id="7Y0-du-wgF">
-                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </barButtonItem>
                                             </navigationItem>
                                         </items>
@@ -3760,6 +3757,9 @@
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
+                                                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="3ZC-tf-VoZ">
+                                                                    <rect key="frame" x="8" y="70.5" width="264.5" height="2"/>
+                                                                </progressView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3143" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hQh-Lb-YGt">
                                                                     <rect key="frame" x="267" y="-3" width="22" height="11"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="9"/>
@@ -3789,7 +3789,10 @@
                                                                 <constraint firstItem="hQh-Lb-YGt" firstAttribute="top" secondItem="lUg-jK-I4T" secondAttribute="top" constant="-3" id="T6O-bz-HU9"/>
                                                                 <constraint firstItem="EbS-IJ-om7" firstAttribute="width" secondItem="lUg-jK-I4T" secondAttribute="width" multiplier="0.8" id="TCA-rg-AXo"/>
                                                                 <constraint firstItem="hQh-Lb-YGt" firstAttribute="leading" secondItem="G3T-9O-cnO" secondAttribute="trailing" constant="3" id="VfE-nA-T5U"/>
+                                                                <constraint firstItem="3ZC-tf-VoZ" firstAttribute="leading" secondItem="lUg-jK-I4T" secondAttribute="leading" constant="8" id="YxC-1e-8gS"/>
+                                                                <constraint firstItem="3ZC-tf-VoZ" firstAttribute="width" secondItem="lUg-jK-I4T" secondAttribute="width" multiplier="0.9" id="fcM-Wp-93D"/>
                                                                 <constraint firstItem="EbS-IJ-om7" firstAttribute="leading" secondItem="lUg-jK-I4T" secondAttribute="leading" constant="8" id="iV5-e9-WGb"/>
+                                                                <constraint firstAttribute="bottom" secondItem="3ZC-tf-VoZ" secondAttribute="bottom" constant="10" id="nlR-rg-O9L"/>
                                                                 <constraint firstItem="KSY-3O-WK5" firstAttribute="top" secondItem="EbS-IJ-om7" secondAttribute="bottom" constant="5" id="ouF-3s-Z7X"/>
                                                                 <constraint firstItem="EbS-IJ-om7" firstAttribute="top" secondItem="lUg-jK-I4T" secondAttribute="top" constant="5" id="xAK-Ki-6cc"/>
                                                             </constraints>
@@ -3808,6 +3811,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="videoAuthorLabel" destination="KSY-3O-WK5" id="8CY-e6-MBJ"/>
+                                            <outlet property="videoProgressView" destination="3ZC-tf-VoZ" id="Hzj-Lj-itd"/>
                                             <outlet property="videoThumbnail" destination="R7a-Vp-x08" id="pe4-ll-9fe"/>
                                             <outlet property="videoTitleLabel" destination="EbS-IJ-om7" id="E2n-ya-LZj"/>
                                             <outlet property="videoViewLabel" destination="hQh-Lb-YGt" id="iPw-6C-w5D"/>
