@@ -29,11 +29,18 @@ class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
     override func awakeFromNib() {
         self.delegate = self
         self.dataSource = self
-        
+        getDataFromDB()
+    }
+    
+    func getDataFromDB() {
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child(userCompanyCode + "/lecture/").queryOrdered(byChild: "view").observeSingleEvent(of: .value, with: { (snapshot) in
-            let dataSize = Int(snapshot.childrenCount) - 1
+            if !snapshot.exists() || snapshot.childrenCount == 0 {
+                print("Lecture list is empty!!!!")
+                return
+            }
+            let dataSize = Int(snapshot.childrenCount)
             for lecutre in snapshot.children.allObjects as! [DataSnapshot] {
                 if let lectureInfo = lecutre.value as? [String : Any] {
                     totalPopularVideoIdArray.append(lecutre.key)
@@ -43,10 +50,13 @@ class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
                 }
             }
             for i in 0...2 {
-                self.popularLectureIdArray.append(totalPopularVideoIdArray[dataSize - i])
-                self.popularTitleArray.append(totalPopularTitleArray[dataSize - i])
-                self.popularAuthorArray.append(totalPopularAuthorArray[dataSize - i])
-                self.popularViewArray.append(totalPopularViewArray[dataSize - i])
+                if dataSize == i {
+                    break
+                }
+                self.popularLectureIdArray.append(totalPopularVideoIdArray[(dataSize - 1) - i])
+                self.popularTitleArray.append(totalPopularTitleArray[(dataSize - 1) - i])
+                self.popularAuthorArray.append(totalPopularAuthorArray[(dataSize - 1) - i])
+                self.popularViewArray.append(totalPopularViewArray[(dataSize - 1) - i])
             }
             self.dataReceived = true
             self.reloadData()
