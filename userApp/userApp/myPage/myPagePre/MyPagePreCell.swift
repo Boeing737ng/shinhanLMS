@@ -12,6 +12,7 @@ class MyPagePreCell: UITableViewCell {
 
     @IBOutlet weak var tagImg: UIImageView!
     @IBOutlet weak var tagLbl: UILabel!
+    @IBOutlet weak var taglbl2: UILabel!
     
 //    override func awakeFromNib() {
 //        super.awakeFromNib()
