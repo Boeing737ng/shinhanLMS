@@ -91,8 +91,57 @@ $(document).ready(function () {
             var arr = $('#grid2').jsGrid('option', 'data');
         },
         fields: [
+            { name: "thumbnail", title: '썸네일', width: 80, editing: false, align: "center", cellRenderer: function(item, value) {
+                var rslt = $("<td>").addClass("jsgrid-cell");
+                var img = $('<img onerror="this.src=\'/img/UPLOADING.png\'"/>');
+                
+                $(img).css('width', '60px');
+                $(img).css('height', '45px');
+                $(img).attr('src', item);
+                $(rslt).append(img);
+                
+                return rslt;
+            }, editTemplate: function(item, value) {
+                
+                var img = $('<img onerror="this.src=\'/img/UPLOADING.png\'"/>');
+                
+                $(img).css('width', '60px');
+                $(img).css('height', '45px');
+                $(img).attr('src', item);
+                
+                return img;
+            } },
             { name: "title", title: '수강강좌명', type: "text", width: 150, editing: false, align: "left" },
             { name: "categoryNm", title: "강좌 카테고리", type: "text", width: 150, editing: false, align: "left" },
+            { name: "tags", title: "관련태그", type: 'text', width: 200, editing: false, align: "left", cellRenderer: function(item, value){
+                var rslt = $("<td>").addClass("jsgrid-cell");
+                var div = $('<div></div>');
+                $(rslt).append(div);
+
+                if(isEmpty(item)) {
+                    return rslt;
+                }
+
+                var arr = item.split(' ');
+                for(var i=0; i<arr.length; i++) {
+                    $(div).append($('<span class="tag label label-info" style="margin-right:5px; display:inline-block;">'+arr[i]+'</span>'));
+                }
+                return rslt; 
+              }, editTemplate: function(item, value) {
+                var div = $('<div></div>');
+                
+                if(isEmpty(item)) {
+                    return div;
+                }
+                
+                var arr = item.split(' ');
+                
+                for(var i=0; i<arr.length; i++) {
+                    $(div).append($('<span class="tag label label-info" style="margin-right:5px; display:inline-block;">'+arr[i]+'</span>'));
+                }
+
+                return div; 
+            } },
             { name: "author", title: "강사명", type: 'text', width: 100, editing: false, align: "center" },
             {
                 name: "state", title: "수강상태", type: 'text', width: 100, editing: false, align: "center" , cellRenderer: function (item, value) {
