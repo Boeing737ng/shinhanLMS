@@ -88,7 +88,9 @@ class GroupCreateViewController: UIViewController, UIImagePickerControllerDelega
         transition.subtype = CATransitionSubtype.fromLeft
         self.view.window!.layer.add(transition, forKey: nil)
         self.dismiss(animated: false, completion: nil)
+        curri_send = "0"
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addcop"), object: nil)
+        
     }
     
     func openLibrary(){

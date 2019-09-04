@@ -28,7 +28,6 @@ class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerV
     var dataReceived:Bool = false
     var study_nameArray = Array<String>()
     var study_detailtxt = Array<String>()
-    //var study_img = Array<String>()
     var joinOn = true
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -43,15 +42,21 @@ class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerV
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
         //curri=study_nameArray[row]
         detail.text = study_detailtxt[row]
-        curri_send = curri[row]
-        print(curri_send)
-        imageview.image = CachedImageView().loadCacheImage(urlKey:curri_send)
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "copchange"), object: nil)
         
+        print(curri_send)
+        if(row==0){
+            imageview.image = UIImage(named: "default.png")
+            curri_send = "0"
+        }
+        else{
+            curri_send = curri[row-1]
+            imageview.image = CachedImageView().loadCacheImage(urlKey:curri_send)}
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "copchange"), object: nil)
     }
     @objc func refresh() {
+        //initArrays()
         self.viewDidLoad()
-        self.viewWillAppear(true)
+        pickerImage.selectedRow(inComponent: 0)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,28 +101,15 @@ class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerV
             "department": userDeptName,
             "compNm": userCompanyName
             ])
-        
-        ref.child("user/" + userNo + "/study/").childByAutoId().setValue([
-            "key": curri_send
-            ])
-        
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "memberAdd"), object: nil)
-        
-       /* if(joinOn==true) {
-            let joinOn = UIAlertController(title: "알림", message: "이미 가입되었습니다", preferredStyle: UIAlertController.Style.alert)
-            let onAction = UIAlertAction(title: "네, 알겠습니다.", style: UIAlertAction.Style.default, handler: nil)
-            joinOn.addAction(onAction)
-            present(jo)
-        } else {
-            
-        }
- */
     }
     
     func initArrays() {
         study_nameArray.removeAll()
+        study_nameArray.append("CoP선택")
         study_detailtxt.removeAll()
-        //study_img.removeAll()
+        study_detailtxt.append(" ")
+        curri.removeAll()
     }
 }
 extension GroupMainViewController : IndicatorInfoProvider{

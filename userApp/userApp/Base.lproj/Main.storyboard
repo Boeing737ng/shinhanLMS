@@ -783,7 +783,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UOE-1G-f7R" userLabel="Study Select Stack View">
                                                 <rect key="frame" x="16" y="16" width="375" height="150"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MhK-IY-8Rp">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default" translatesAutoresizingMaskIntoConstraints="NO" id="MhK-IY-8Rp">
                                                         <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="MhK-IY-8Rp" secondAttribute="height" multiplier="1:1" id="g8g-ff-suF"/>
@@ -2743,6 +2743,7 @@
                     </view>
                     <connections>
                         <outlet property="edLecture" destination="CP6-R2-HSO" id="Mrd-Gr-fIQ"/>
+                        <outlet property="essentialProgress" destination="Ezn-ZB-oIM" id="o50-bK-IhM"/>
                         <outlet property="fieldlbl" destination="vXC-vG-yvC" id="Xa7-vx-34i"/>
                         <outlet property="imgLecture" destination="7Z6-xA-EaB" id="RDu-Wq-2oy"/>
                         <outlet property="namelbl" destination="Rr4-S9-y8F" id="808-eJ-NGI"/>
@@ -4533,6 +4534,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="pgX-Sd-WpQ"/>
-        <segue reference="RbT-en-H0r"/>
+        <segue reference="lE8-es-HM3"/>
     </inferredMetricsTieBreakers>
 </document>
