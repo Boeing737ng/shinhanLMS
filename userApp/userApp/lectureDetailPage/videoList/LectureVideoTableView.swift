@@ -12,11 +12,9 @@ import Firebase
 class LectureVideoTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     
     var textArray = ["","",""]
-    var authorArray = ["","",""]
     
     var databaseVideoIdArray = Array<String>()
     var databaseTitleArray = Array<String>()
-    var databaseAuthorArray = Array<String>()
     var dataReceived:Bool = false
     
     override func awakeFromNib() {
@@ -39,10 +37,8 @@ class LectureVideoTableView: UITableView, UITableViewDelegate, UITableViewDataSo
                 let videoDict = video.value as! Dictionary<String, Any>;()
                 let videoId = video.key
                 let title = videoDict["title"] as! String
-                let author = videoDict["author"] as! String
                 self.databaseVideoIdArray.append(videoId)
                 self.databaseTitleArray.append(title)
-                self.databaseAuthorArray.append(author)
                 
                 self.dataReceived = true
                 self.reloadData()
@@ -80,11 +76,9 @@ class LectureVideoTableView: UITableView, UITableViewDelegate, UITableViewDataSo
         let cell = tableView.dequeueReusableCell(withIdentifier: "LectureVideoListTableViewCell") as! LectureVideoListTableViewCell
         if dataReceived{
             cell.videoTitleLabel.text = databaseTitleArray[indexPath.row]
-            cell.videoAuthorLabel.text = databaseAuthorArray[indexPath.row]
             cell.videoThumbnail.image = CachedImageView().loadCacheImage(urlKey: databaseVideoIdArray[indexPath.row])
         } else {
             cell.videoTitleLabel.text = textArray[indexPath.row]
-            cell.videoAuthorLabel.text = authorArray[indexPath.row]
             cell.videoThumbnail.image = UIImage(named: "white.jpg")
         }
         

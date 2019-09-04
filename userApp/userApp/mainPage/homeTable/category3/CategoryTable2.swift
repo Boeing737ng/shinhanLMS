@@ -36,6 +36,10 @@ class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child(userCompanyCode + "/lecture/").queryOrdered(byChild: "view").observeSingleEvent(of: .value, with: { (snapshot) in
+            if !snapshot.exists() || snapshot.childrenCount == 0 {
+                print("Lecture list is empty!!!!")
+                return
+            }
             let dataSize = Int(snapshot.childrenCount)
             for lecutre in snapshot.children.allObjects as! [DataSnapshot] {
                 if let lectureInfo = lecutre.value as? [String : Any] {

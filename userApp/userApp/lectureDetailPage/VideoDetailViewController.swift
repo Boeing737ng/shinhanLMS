@@ -196,6 +196,10 @@ class VideoDetailViewController: UIViewController {
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child("user/" + userNo + "/playList").observeSingleEvent(of: .value, with: { (snapshot) in
+            if !snapshot.exists() || snapshot.childrenCount == 0 {
+                print("Playlist is empty!!!!")
+                return
+            }
             let videoInfo = snapshot.value as! Dictionary<String, Any>;()
             for video in videoInfo {
                 self.userLectureList.append(video.key)
