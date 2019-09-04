@@ -48,7 +48,26 @@ class graphViewController: UIViewController, ChartViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        months = ["월", "화", "수", "목", "금", "토", "일"]
+        let cal = Calendar(identifier: .gregorian)
+        let now = Date()
+        let comps = cal.dateComponents([.weekday], from: now)
+        print(comps.weekday!)
+        if comps.weekday! == 1{
+            months = ["월","화","수","목","금","토","일(오늘)"]
+        }else if comps.weekday! == 2{
+            months = ["화","수","목","금","토","일","월(오늘)"]
+        }else if comps.weekday! == 3{
+            months = ["수","목","금","토","일","월","화(오늘)"]
+        }else if comps.weekday! == 4{
+            months = ["목","금","토","일","월","화","수(오늘)"]
+        }else if comps.weekday! == 5{
+            months = ["금","토","일","월","화","수","목(오늘)"]
+        }else if comps.weekday! == 6{
+            months = ["토","일","월","화","수","목","금(오늘)"]
+        }else if comps.weekday! == 7{
+            months = ["일","월","화","수","목","금","토(오늘)"]
+        }
+        
         for i in 0...unitSold.count-1{
             studyTime = studyTime + unitSold[i]
         }
