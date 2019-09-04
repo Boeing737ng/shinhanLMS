@@ -136,6 +136,7 @@ class VideoDetailViewController: UIViewController {
     
     @IBAction func onGoBack(_ sender: UIBarButtonItem) {
         userDidFinishWatching()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshMainTable"), object: nil)
         let transition: CATransition = CATransition()
         transition.duration = 0.5
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
@@ -150,6 +151,7 @@ class VideoDetailViewController: UIViewController {
         ref = Database.database().reference()
         ref.child("user/" + userNo + "/playList").observeSingleEvent(of: .value, with: { (snapshot) in
             if !snapshot.exists() || snapshot.childrenCount == 0 {
+                self.userDidStartWatching()
                 print("Playlist is empty!!!!")
                 return
             }
@@ -164,16 +166,18 @@ class VideoDetailViewController: UIViewController {
     }
 
     private func userDidFinishWatching() {
+        print("???")
         var watchedVideoCount:Int = 0
         var totalVideoCount:Int = 0
         var compledtedRatio:Float = 0.0
         var currentState:String = ""
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        
+        print("???")
         ref.child("user/" + userNo + "/playList/" + selectedLectureId + "/videos").observeSingleEvent(of: .value, with: { (snapshot) in
             let videos = snapshot.children.allObjects as! [DataSnapshot]
             totalVideoCount = Int(snapshot.childrenCount)
+            print("???")
             for video in videos {
                 let videoInfo = video.value as! Dictionary<String, Any>;()
                 let videoState = videoInfo["state"] as! String
@@ -181,6 +185,7 @@ class VideoDetailViewController: UIViewController {
                     watchedVideoCount += 1
                 }
             }
+            print("???")
             compledtedRatio = Float(Double(watchedVideoCount) / Double(totalVideoCount))
             print(totalVideoCount)
             print(watchedVideoCount)
@@ -237,6 +242,7 @@ class VideoDetailViewController: UIViewController {
         if userLectureList.contains(selectedLectureId) {
             playLastPlayedVideo()
         } else {
+            print(selectedLectureId, " 를 처음으로 선택하셨습니다.")
             ref.child(userCompanyCode + "/lecture/" + selectedLectureId + "/user/" + userNo).setValue([
                 "name": userName
                 ])
@@ -276,7 +282,6 @@ class VideoDetailViewController: UIViewController {
     }
     
     func isLectureFirstTime() {
-        print(selectedLectureId, " 를 처음으로 선택하셨습니다.")
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child("user/" + userNo + "/playList").observeSingleEvent(of: .value, with: { (snapshot) in
