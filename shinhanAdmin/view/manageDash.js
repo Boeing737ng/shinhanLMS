@@ -51,18 +51,31 @@ $(document).ready(function () {
     paging: false,
     data: [],
 
-    rowDoubleClick: function (args) {
-      var item = args.item;
-      var rowKey = item['rowKey'];
-
-      fnGo('/view/updateNotice.html', {
-        'listUrl': '/view/manageDash.html',
-        'rowKey': rowKey
-      });
-    },
-
     fields: [
-      { name: "title", title: '제목', type: "text", width: 150, editing: false, align: "left" },
+      { name: "title", title: '제목', type: "text", width: 150, editing: false, align: "left", cellRenderer: function(item, value) {
+        var rslt = $("<td>").addClass("jsgrid-cell");
+        var aLink = $("<a>");
+        $(aLink).attr('href', '#');
+        $(aLink).text(item);
+
+        (function(value) {
+
+            $(aLink).on('click', function(e) {
+
+                e.preventDefault();
+
+                fnGo('/view/updateNotice.html', {
+                    'listUrl': '/view/manageDash.html',
+                    'rowKey': value['rowKey']
+                });
+            });
+
+        }(value));
+
+        $(rslt).append(aLink);
+        
+        return rslt;
+    } },
       { name: "writor", title: "작성자", type: 'text', width: 100, editing: false, align: "center" },
       {
         name: "date", title: "등록일자", type: 'text', width: 100, editing: false, align: "center", cellRenderer: function (item, value) {
@@ -244,16 +257,19 @@ $(document).ready(function () {
 
             //정렬된 값을 각각 배열에 입력
             var arrLength = chartArr.length >= 10 ? 10 : chartArr.length;
+            var labelArr = [];
+
             for (var i = 0; i < arrLength; i++) {
                 view[i] = (chartArr[i].view);
                 title[i] = (chartArr[i].title);
+                labelArr[i] = (i/1+1) + '위';
             }
 
             var ctx = document.getElementById("view_count_chart");
             var myBarChart = new Chart(ctx, {
               type: 'bar',
               data: {
-                labels: ["1위", "2위", "3위", "4위", "5위", "6위", "7위", "8위", "9위", "10위"],
+                labels: labelArr,
                 datasets: [{
                   label: "조회수: ",
                   title: title,
