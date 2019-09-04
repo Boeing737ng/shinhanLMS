@@ -120,7 +120,7 @@ function fnRetrieve1() {
 
         $.each(catArr, function(idx, studyObj) {
             if( 
-                 ((searchStudy== '') || (studyObj['studyname'].indexOf(searchStudy) > -1)) &&
+                 ((searchStudy== '') || (studyObj['studyname'].toLowerCase().indexOf(searchStudy.toLowerCase()) > -1)) &&
                  ((searchName== '') || isMemberInStudy(studyObj['member'], 'name', searchName)) &&
                  ((searchEmpNo== '') || isMemberInStudy(studyObj['member'], 'empNo', searchEmpNo))
              ) 
