@@ -41,7 +41,7 @@ class VideoReviewTableViewController: UITableViewController {
         
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child(userCompanyCode + "/videos/" + selectedLectureId + "/review/").queryOrdered(byChild: "date").observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child(userCompanyCode + "/lecture/" + selectedLectureId + "/review/").queryOrdered(byChild: "date").observeSingleEvent(of: .value, with: { (snapshot) in
             
             if snapshot.childrenCount == 0 {
                 return

@@ -2041,10 +2041,16 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ok5-OI-1c9">
                                                         <rect key="frame" x="0.0" y="0.0" width="382" height="50"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="내 활동" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kNy-ww-M1f">
-                                                                <rect key="frame" x="0.0" y="0.0" width="382" height="50"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="내 활동" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kNy-ww-M1f">
+                                                                <rect key="frame" x="0.0" y="0.0" width="352.5" height="50"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                 <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="목표" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yg3-AB-Duq">
+                                                                <rect key="frame" x="352.5" y="0.0" width="29.5" height="50"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                         </subviews>
@@ -2326,6 +2332,7 @@
                         <outlet property="chartView" destination="lCI-vI-Nyp" id="PB0-P9-tbz"/>
                         <outlet property="copStacklbl" destination="xcB-eF-ZUj" id="0AT-eo-Wpz"/>
                         <outlet property="goalTimelbl" destination="7gC-Ez-wnH" id="Fmc-jj-2Au"/>
+                        <outlet property="staTimelbl" destination="yg3-AB-Duq" id="TYQ-58-wXM"/>
                         <outlet property="teac1lbl" destination="NEU-V7-QoU" id="jya-vO-Nis"/>
                         <outlet property="teac2lbl" destination="Hpm-Wr-Ndj" id="VWd-sg-G1x"/>
                         <outlet property="teac3lbl" destination="NLK-vm-uaU" id="eMD-UR-daf"/>
@@ -3687,15 +3694,12 @@
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </textAttributes>
                                         <items>
-                                            <navigationItem title="게시판" id="VhA-YV-X2p">
+                                            <navigationItem title="강좌 목록" id="VhA-YV-X2p" userLabel="강좌 목록">
                                                 <barButtonItem key="leftBarButtonItem" title="back" id="ojj-rG-vVI">
                                                     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="onGoBack:" destination="sFu-Aa-d8N" id="41f-HD-5nl"/>
                                                     </connections>
-                                                </barButtonItem>
-                                                <barButtonItem key="rightBarButtonItem" systemItem="compose" id="7Y0-du-wgF">
-                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </barButtonItem>
                                             </navigationItem>
                                         </items>
@@ -3760,6 +3764,9 @@
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
+                                                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="3ZC-tf-VoZ">
+                                                                    <rect key="frame" x="8" y="70.5" width="264.5" height="2"/>
+                                                                </progressView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3143" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hQh-Lb-YGt">
                                                                     <rect key="frame" x="267" y="-3" width="22" height="11"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="9"/>
@@ -3789,7 +3796,10 @@
                                                                 <constraint firstItem="hQh-Lb-YGt" firstAttribute="top" secondItem="lUg-jK-I4T" secondAttribute="top" constant="-3" id="T6O-bz-HU9"/>
                                                                 <constraint firstItem="EbS-IJ-om7" firstAttribute="width" secondItem="lUg-jK-I4T" secondAttribute="width" multiplier="0.8" id="TCA-rg-AXo"/>
                                                                 <constraint firstItem="hQh-Lb-YGt" firstAttribute="leading" secondItem="G3T-9O-cnO" secondAttribute="trailing" constant="3" id="VfE-nA-T5U"/>
+                                                                <constraint firstItem="3ZC-tf-VoZ" firstAttribute="leading" secondItem="lUg-jK-I4T" secondAttribute="leading" constant="8" id="YxC-1e-8gS"/>
+                                                                <constraint firstItem="3ZC-tf-VoZ" firstAttribute="width" secondItem="lUg-jK-I4T" secondAttribute="width" multiplier="0.9" id="fcM-Wp-93D"/>
                                                                 <constraint firstItem="EbS-IJ-om7" firstAttribute="leading" secondItem="lUg-jK-I4T" secondAttribute="leading" constant="8" id="iV5-e9-WGb"/>
+                                                                <constraint firstAttribute="bottom" secondItem="3ZC-tf-VoZ" secondAttribute="bottom" constant="10" id="nlR-rg-O9L"/>
                                                                 <constraint firstItem="KSY-3O-WK5" firstAttribute="top" secondItem="EbS-IJ-om7" secondAttribute="bottom" constant="5" id="ouF-3s-Z7X"/>
                                                                 <constraint firstItem="EbS-IJ-om7" firstAttribute="top" secondItem="lUg-jK-I4T" secondAttribute="top" constant="5" id="xAK-Ki-6cc"/>
                                                             </constraints>
@@ -3808,6 +3818,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="videoAuthorLabel" destination="KSY-3O-WK5" id="8CY-e6-MBJ"/>
+                                            <outlet property="videoProgressView" destination="3ZC-tf-VoZ" id="Hzj-Lj-itd"/>
                                             <outlet property="videoThumbnail" destination="R7a-Vp-x08" id="pe4-ll-9fe"/>
                                             <outlet property="videoTitleLabel" destination="EbS-IJ-om7" id="E2n-ya-LZj"/>
                                             <outlet property="videoViewLabel" destination="hQh-Lb-YGt" id="iPw-6C-w5D"/>

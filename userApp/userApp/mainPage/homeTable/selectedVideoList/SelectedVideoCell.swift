@@ -14,6 +14,7 @@ class SelectedVideoCell: UITableViewCell {
     @IBOutlet weak var videoAuthorLabel: UILabel!
     @IBOutlet weak var videoThumbnail: UIImageView!
     @IBOutlet weak var videoViewLabel: UILabel!
+    @IBOutlet weak var videoProgressView: UIProgressView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

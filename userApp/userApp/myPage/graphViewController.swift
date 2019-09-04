@@ -26,8 +26,9 @@ class graphViewController: UIViewController, ChartViewDelegate {
     var months: [String]!
 
     let copnum: Int = 0
-    let studyTime: Int = 0
+    var studyTime: Int = 0
     var goalTime: Int = 0
+    var staTime: Int = 0
     
     @IBOutlet weak var chartView: BarChartView!
     @IBOutlet weak var timeStacklbl: UILabel!
@@ -36,6 +37,7 @@ class graphViewController: UIViewController, ChartViewDelegate {
     @IBOutlet weak var cat1lbl: UILabel!
     @IBOutlet weak var cat2lbl: UILabel!
     @IBOutlet weak var cat3lbl: UILabel!
+    @IBOutlet weak var staTimelbl: UILabel!
     
     @IBOutlet weak var teac1lbl: UILabel!
     @IBOutlet weak var teac2lbl: UILabel!
@@ -47,7 +49,10 @@ class graphViewController: UIViewController, ChartViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         months = ["월", "화", "수", "목", "금", "토", "일"]
-        
+        for i in 0...unitSold.count-1{
+            studyTime = studyTime + unitSold[i]
+        }
+        staTime = studyTime/7
         
         timeStacklbl.text = "Shinple과 함께 \(studyTime)분을 학습했습니다"
         goalTimelbl.text = "\(goalTime)분"
@@ -55,6 +60,7 @@ class graphViewController: UIViewController, ChartViewDelegate {
         mostCgDB()
         mostTeaDB()
         goalTimeDB()
+        
         // Do any additional setup after loading the view.
         setChart(dataPoints: months, values: unitSold)
         
@@ -221,15 +227,7 @@ class graphViewController: UIViewController, ChartViewDelegate {
         }
         return WordD
     }
-//    var ref: DatabaseReference!
-//    ref = Database.database().reference()
-//    ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
-//    let value = snapshot.value as? Dictionary<String, Any>;()
-//    let nameD = value as! Dictionary<String, Any>;()
-//    let name = nameD["name"] as! String
-//    
-//    dbStudyArray.append(name)
-    
+
     func goalTimeDB(){
         clearArrays()
         var dataURL:String = "user/201302493"
@@ -247,6 +245,14 @@ class graphViewController: UIViewController, ChartViewDelegate {
             dataReceived = true
             
             self.goalTimelbl.text = "\(goal)분"
+            
+            if(goal<self.staTime){
+                self.staTimelbl.text = "목표 달성"
+                print(goal)
+                print(self.staTime)
+            }else{
+                self.staTimelbl.text = "목표 미달성"
+            }
             
             let ll = ChartLimitLine(limit: Double(goal)
                 , label: "목표")
@@ -272,50 +278,11 @@ class graphViewController: UIViewController, ChartViewDelegate {
         self.view.window!.layer.add(transition, forKey: nil)
         self.dismiss(animated: false, completion: nil)
     }
-    /*
-    @IBAction func Addcurriculum(_ sender: Any) {
-        var ref: DatabaseReference!
-        ref = Database.database().reference()
-        for i in addArray
-        {
-            ref.child("58/videos/" + i).observeSingleEvent(of: .value, with: { (snapshot) in
-                // Get user value
-                let value = snapshot.value as? Dictionary<String,Any>;()
-                let videoDict = value as! Dictionary<String, Any>;()
-                let author=videoDict["author"] as! String
-                let title=videoDict["title"] as! String
-                ///////////////////
-                print(curri_send)
-                print(i)
-                ref.child("58/study/"+curri_send+"/curriculum/"+i).setValue([
-                    "author": author,
-                    "title": title,
-                    ])
-                self.dataReceived = true
-            }) { (error) in
-                print(error.localizedDescription)
-            }
-        }
-        addArray.removeAll()
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addcurri"), object: nil)
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "back"), object: nil)
-    }
-     */
+    
     
     @IBAction func setGoal(_ sender: UIButton) {
         var ref: DatabaseReference!
         ref = Database.database().reference()
-//        ref.child("user/201302493").observeSingleEvent(of: .value, with: { (snapshot) in
-//            let value = snapshot.value as? Dictionary<String, Any>;()
-//            let goalD = value as! Dictionary<String, Any>;()
-//            let goal = goalD["goalTime"] as! Int
-//            ref.child("user/201302493").setValue(["goalTime": 30])
-//         let updates = ["user/201302493/goalTime":30]
-//         ref.updateChildValues(updates)
-//            }) {
-//            (error) in
-//            print(error.localizedDescription)
-//        }
         
         var dataURL:String = "user/201302493/goalTime"
         
