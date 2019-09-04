@@ -19,7 +19,6 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var idTextField: UITextField!
     @IBOutlet weak var pwdTextField: UITextField!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,7 +30,6 @@ class LoginViewController: UIViewController {
         userDeptName = "디지털사업부"
     
         // Do any additional setup after loading the view.
-        
         keyboardHandling(idTextField)
         LoadingView().setLoadingStyle(self)
         getThumbnailURL()
@@ -94,12 +92,9 @@ class LoginViewController: UIViewController {
         textField.resignFirstResponder()
         return true
     }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-
-    
     func getThumbnailURL() {
         LoadingView().startLoading(self)
         var ref: DatabaseReference!
@@ -118,7 +113,7 @@ class LoginViewController: UIViewController {
             print(error.localizedDescription)
         }
     }
-    
+
     func setThumbnailCache(withCompletion completion: () -> Void) {
         for (id, url) in urlDict {
             let imageURL = URL(string: url)
@@ -131,7 +126,6 @@ class LoginViewController: UIViewController {
         completion()
         print("Caching completed!!!")
     }
-    
     func isCachingCompleted() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             self.checkLoginUser()

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class GroupCreateViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
@@ -19,11 +20,57 @@ class GroupCreateViewController: UIViewController, UIImagePickerControllerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        func textFieldDidBeginEditing(_ textField: UITextField) {
+            textFieldSetupView()
+        }
+        
+        func textFieldEndEditing(_ textField: UITextField) {
+            if textField.text == "" {
+                textFieldSetupView()
+            }
+        }
+        
+        func textField(_ textField: UITextField, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+            if text == "\n" {
+                textField.resignFirstResponder()
+            }
+            return true
+        }
+        
+        func textFieldSetupView() {
+            if studyDetail.text == "질문 내용을 작성해주세요." {
+                studyDetail.text = ""
+                studyDetail.textColor = UIColor.black
+            }
+            else if studyDetail.text == "" {
+                studyDetail.text = "질문 내용을 작성해주세요."
+                studyDetail.textColor = UIColor.lightGray
+            }
+        }
+        
         studyDetail.delegate = self
         studyName.delegate = self
         picker.delegate = self
         // Do any additional setup after loading the view.
         keyboardHandling(studyDetail)
+    }
+    
+    @IBAction func btnSend(_ sender: UIButton) {
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        ref.child("58/study/").childByAutoId().setValue([
+            "detail": studyDetail.text as? String,
+            "studyname": studyName.text as? String,
+            ])
+        
+        let transition: CATransition = CATransition()
+        transition.duration = 0.5
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
+        transition.type = CATransitionType.reveal
+        transition.subtype = CATransitionSubtype.fromLeft
+        self.view.window!.layer.add(transition, forKey: nil)
+        self.dismiss(animated: false, completion: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addcop"), object: nil)
     }
     
     func openLibrary(){
@@ -80,9 +127,6 @@ class GroupCreateViewController: UIViewController, UIImagePickerControllerDelega
         present(alert, animated: true, completion: nil)
         
     }
-    
-    
-    
     @IBAction func onGoBack(_ sender: UIBarButtonItem) {
         let transition: CATransition = CATransition()
         transition.duration = 0.5
