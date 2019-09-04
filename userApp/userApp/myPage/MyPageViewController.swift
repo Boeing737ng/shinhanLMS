@@ -107,20 +107,20 @@ class MyPageViewController: UIViewController{
     func getQnumDB(){
         clearArrays()
         var dataURL:String = "board_request/201302493"
-        
+
         var ref: DatabaseReference!
         ref = Database.database().reference()
          ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
-            
+
             let value = snapshot.value as? Dictionary<String, Any>;()
             let nameD = value as! Dictionary<String, Any>;()
             let name = nameD["contents"] as! String
             self.dbwriterArray.append(name)
-            
+
             self.questionlbl.text = "\(self.dbwriterArray.count)"
             print(self.dbwriterArray.count)
             self.dataReceived = true
-            
+
          }) { (error) in
             print(error.localizedDescription)
     }
