@@ -48,6 +48,7 @@ class MyPageViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setBasicUserInfo()
         getDataFromDB()
         getQnumDB()
         getTotalEssentialLectureCount()
