@@ -26,10 +26,23 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
     override func awakeFromNib() {
         self.delegate = self
         self.dataSource = self
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTable), name: NSNotification.Name(rawValue: "refreshMainTable"), object: nil)
+        gerUserPlayingLectureInfoFromDB()
+    }
+    @objc func reloadTable() {
         gerUserPlayingLectureInfoFromDB()
     }
     
+    func clearArrays() {
+        playingLectureIdArray.removeAll()
+        playingTitleArray.removeAll()
+        playingAuthorArray.removeAll()
+        playingProgressArray.removeAll()
+        playingViewArray.removeAll()
+    }
+    
     func gerUserPlayingLectureInfoFromDB() {
+        clearArrays()
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child("user/" + userNo + "/playList/").observeSingleEvent(of: .value, with: { (snapshot) in

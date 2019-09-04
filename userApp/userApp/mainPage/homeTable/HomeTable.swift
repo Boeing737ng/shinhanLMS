@@ -15,7 +15,6 @@ class HomeTable: UITableViewController  {
         super.viewDidLoad()
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadTable), name: NSNotification.Name(rawValue: "refreshMainTable"), object: nil)
     }
     
     @objc func reloadTable() {

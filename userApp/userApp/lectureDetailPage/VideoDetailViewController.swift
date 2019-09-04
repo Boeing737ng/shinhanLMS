@@ -136,7 +136,6 @@ class VideoDetailViewController: UIViewController {
     
     @IBAction func onGoBack(_ sender: UIBarButtonItem) {
         userDidFinishWatching()
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshMainTable"), object: nil)
         let transition: CATransition = CATransition()
         transition.duration = 0.5
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
@@ -166,18 +165,19 @@ class VideoDetailViewController: UIViewController {
     }
 
     private func userDidFinishWatching() {
-        print("???")
+        player = AVPlayer()
+        playerView.removeFromSuperview()
+        playerView = UIView()
+        print("??")
         var watchedVideoCount:Int = 0
         var totalVideoCount:Int = 0
         var compledtedRatio:Float = 0.0
         var currentState:String = ""
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        print("???")
         ref.child("user/" + userNo + "/playList/" + selectedLectureId + "/videos").observeSingleEvent(of: .value, with: { (snapshot) in
             let videos = snapshot.children.allObjects as! [DataSnapshot]
             totalVideoCount = Int(snapshot.childrenCount)
-            print("???")
             for video in videos {
                 let videoInfo = video.value as! Dictionary<String, Any>;()
                 let videoState = videoInfo["state"] as! String
@@ -185,7 +185,7 @@ class VideoDetailViewController: UIViewController {
                     watchedVideoCount += 1
                 }
             }
-            print("???")
+            print("??")
             compledtedRatio = Float(Double(watchedVideoCount) / Double(totalVideoCount))
             print(totalVideoCount)
             print(watchedVideoCount)
@@ -200,13 +200,10 @@ class VideoDetailViewController: UIViewController {
                 "state": currentState
                 ]
             )
-            //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "videoSelected"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshMainTable"), object: nil)
         }) { (error) in
             print(error.localizedDescription)
         }
-        player = AVPlayer()
-        playerView.removeFromSuperview()
-        playerView = UIView()
     }
     
     func playLastPlayedVideo() {
