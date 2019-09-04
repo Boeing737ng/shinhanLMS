@@ -52,6 +52,9 @@ class VideoCollection: UICollectionView, UICollectionViewDelegate, UICollectionV
                                     return
                                 }
                                 let videoId = video.key
+                                if recommendedVideoIdArray.contains(videoId) {
+                                    continue
+                                }
                                 let title = videoDict["title"] as! String
                                 let author = videoDict["author"] as! String
                                 recommendedVideoIdArray.append(videoId)
