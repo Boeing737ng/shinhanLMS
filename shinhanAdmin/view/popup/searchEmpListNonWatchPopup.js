@@ -36,7 +36,7 @@ var searchEmpListNonWatchPopup = (function() {
             //조회
             case 'SEARCH':
                 if(isEmpty($('#modal-searchEmpListNonWatch select.searchRequiredContent').val())) {
-                    alert('필수강의 는 필수입력 입니다.');
+                    alert('필수강좌 는 필수입력 입니다.');
                     rslt = false;
                 }
                 break;

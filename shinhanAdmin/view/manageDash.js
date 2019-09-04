@@ -240,7 +240,8 @@ $(document).ready(function () {
         });
 
       //정렬된 값을 각각 배열에 입력
-        for(var i=0;i<10;i++)
+      var arrLength = chartArr.length >= 10 ? 10 : chartArr.length;
+        for(var i=0;i<arrLength;i++)
         {
         view[i]=(chartArr[i].view);
         title[i]=(chartArr[i].title);

@@ -74,7 +74,7 @@ $(document).ready(function () {
             
             $row.toggleClass("highlight");
             
-            //fnRetrieveDetail(args.item);
+            fnRetrieveDetail(args.item);
         },
 
         rowDoubleClick: function(args) {

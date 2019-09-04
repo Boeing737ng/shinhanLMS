@@ -67,13 +67,13 @@ $(document).ready(function () {
                 validator: 'required', 
                 message: '공개여부 는 필수입력 입니다.'
             } },
-            /*{ name: "requireYn", title: '필수강의여부', type: "select", width: 50, align: "center", type: 'select', items: [
+            /*{ name: "requireYn", title: '필수강좌여부', type: "select", width: 50, align: "center", type: 'select', items: [
                 { Name: "전체", Id: "" },
                 { Name: "Y", Id: "Y" },
                 { Name: "N", Id: "N" }
             ],valueField: "Id", textField: "Name", inserting: true, validate: {
                 validator: 'required', 
-                message: '필수강의여부 는 필수입력 입니다.'
+                message: '필수강좌여부 는 필수입력 입니다.'
             }, align: "center" },*/
             { name: "contentCnt", title: '등록 강좌수', type: "number", width: 50, align: "right", inserting: false, editing: false },
             { type: "control", editButton: false, deleteButton: false } //edit control

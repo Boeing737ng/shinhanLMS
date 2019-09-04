@@ -77,7 +77,7 @@ $(document).ready(function () {
     });
 
 
-    //필수강의 미이수자 팝업 버튼
+    //필수강좌 미이수자 팝업 버튼
     $('#btnLoadEmpNonWatch').on('click', function(e) {
         e.preventDefault();
 
