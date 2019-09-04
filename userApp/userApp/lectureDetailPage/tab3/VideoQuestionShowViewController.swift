@@ -62,7 +62,7 @@ class VideoQuestionShowViewController: UIViewController, UITextFieldDelegate {
     @IBAction func btnSend(_ sender: UIButton) {
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        ref.child(userCompanyCode + "/videos/" + selectedVideoId + "/qnaBoard/" + selectedQuestionId + "/comment").child(String(UInt(NSDate().timeIntervalSince1970 * 1000000))).setValue([
+        ref.child(userCompanyCode + "/lecture/" + selectedLectureId + "/qnaBoard/" + selectedQuestionId + "/comment").child(String(UInt(NSDate().timeIntervalSince1970 * 1000000))).setValue([
             "content": tfComment.text as? String,
             "date": Double(NSDate().timeIntervalSince1970),
             "writer": userName
