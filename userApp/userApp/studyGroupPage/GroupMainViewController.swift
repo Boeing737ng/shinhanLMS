@@ -48,6 +48,7 @@ class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerV
         if(row==0){
             imageview.image = UIImage(named: "default.png")
             curri_send = "0"
+            CoPcheck=0
         }
         else{
             curri_send = curri[row-1]
@@ -93,6 +94,37 @@ class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerV
             print(error.localizedDescription)
         }
     }
+    @IBAction func add(_ sender: Any) {
+        if(CoPcheck==1)
+        {
+            let VideoaddViewController = self.storyboard?.instantiateViewController(withIdentifier: "bbb")
+            VideoaddViewController?.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+            self.present(VideoaddViewController!, animated: true, completion: nil)
+        }
+        else
+        {
+            let dialog = UIAlertController(title: "알림", message: "CoP가입이 필요합니다!", preferredStyle: .alert)
+            let action = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+            dialog.addAction(action)
+            self.present(dialog, animated: true, completion: nil)
+        }
+    }
+    @IBAction func board(_ sender: Any) {
+        if(CoPcheck==1)
+        {
+            let GroupBoardViewController = self.storyboard?.instantiateViewController(withIdentifier: "aaa")
+            GroupBoardViewController?.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+            self.present(GroupBoardViewController!, animated: true, completion: nil)
+        }
+        else
+        {
+            let dialog = UIAlertController(title: "알림", message: "CoP가입이 필요합니다!", preferredStyle: .alert)
+            let action = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+            dialog.addAction(action)
+            self.present(dialog, animated: true, completion: nil)
+        }
+
+    }
     
     
 //    @IBAction func board(_ sender: UIButton) {
@@ -128,7 +160,7 @@ class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerV
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "memberAdd"), object: nil)
         }
         else{
-            let dialog = UIAlertController(title: "알림", message: "이미가입된CoP입니다!", preferredStyle: .alert)
+            let dialog = UIAlertController(title: "알림", message: "이미 가입된 CoP입니다!", preferredStyle: .alert)
             let action = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
             dialog.addAction(action)
             self.present(dialog, animated: true, completion: nil)
