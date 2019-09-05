@@ -54,8 +54,9 @@ class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerV
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "copchange"), object: nil)
     }
     @objc func refresh() {
+        //initArrays()
         self.viewDidLoad()
-        self.viewWillAppear(true)
+        pickerImage.selectedRow(inComponent: 0)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
