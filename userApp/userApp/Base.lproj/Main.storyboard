@@ -4565,7 +4565,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="pgX-Sd-WpQ"/>
-        <segue reference="RbT-en-H0r"/>
-        <segue reference="rhK-HN-NNB"/>
+        <!-- <segue reference="RbT-en-H0r"/>
+        <segue reference="rhK-HN-NNB"/> -->
     </inferredMetricsTieBreakers>
 </document>
