@@ -203,7 +203,7 @@
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dhf-Fd-QoV" userLabel="category1 info container">
-                                                                <rect key="frame" x="5" y="11.5" width="365" height="61.5"/>
+                                                                <rect key="frame" x="5" y="11.5" width="404" height="61.5"/>
                                                                 <subviews>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tsZ-i5-FIO" userLabel="videoImage">
                                                                         <rect key="frame" x="0.0" y="0.0" width="110" height="61.5"/>
@@ -214,31 +214,31 @@
                                                                         </constraints>
                                                                     </imageView>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s2m-bL-IDp" userLabel="videoTextView">
-                                                                        <rect key="frame" x="110" y="0.0" width="255" height="61.5"/>
+                                                                        <rect key="frame" x="110" y="0.0" width="294" height="61.5"/>
                                                                         <subviews>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="영상제목 영상제목 영상제목 영상제목 영상제목" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Mg-hi-maT">
-                                                                                <rect key="frame" x="8" y="0.0" width="204" height="31.5"/>
+                                                                                <rect key="frame" x="8" y="0.0" width="235" height="31.5"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                                 <nil key="textColor"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="최강사" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MSD-KW-BhP">
-                                                                                <rect key="frame" x="8" y="36.5" width="229.5" height="12"/>
+                                                                                <rect key="frame" x="8" y="36.5" width="264.5" height="12"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                                 <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="pmD-BM-lkO">
-                                                                                <rect key="frame" x="8" y="54.5" width="229.5" height="2"/>
+                                                                                <rect key="frame" x="8" y="54.5" width="264.5" height="2"/>
                                                                             </progressView>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3143" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFF-3P-e4k">
-                                                                                <rect key="frame" x="233" y="-3" width="22" height="11"/>
+                                                                                <rect key="frame" x="272" y="-3" width="22" height="11"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                                                                 <nil key="textColor"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="view" translatesAutoresizingMaskIntoConstraints="NO" id="Ssn-Fy-7Ue">
-                                                                                <rect key="frame" x="214" y="-5" width="16" height="16"/>
+                                                                                <rect key="frame" x="253" y="-5" width="16" height="16"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="width" constant="16" id="BB4-3t-gTF"/>
                                                                                     <constraint firstAttribute="height" constant="16" id="d69-Iz-obz"/>
@@ -361,7 +361,7 @@
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j4M-ZQ-dCw" userLabel="category2 info container">
-                                                                <rect key="frame" x="5" y="11.5" width="365" height="61.5"/>
+                                                                <rect key="frame" x="5" y="11.5" width="404" height="61.5"/>
                                                                 <subviews>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="d01-1a-AgA" userLabel="videoImage">
                                                                         <rect key="frame" x="0.0" y="0.0" width="110" height="61.5"/>
@@ -372,28 +372,28 @@
                                                                         </constraints>
                                                                     </imageView>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hqo-6V-HOS" userLabel="videoTextView">
-                                                                        <rect key="frame" x="110" y="0.0" width="255" height="61.5"/>
+                                                                        <rect key="frame" x="110" y="0.0" width="294" height="61.5"/>
                                                                         <subviews>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="영상제목 영상제목 영상제목 영상제목 영상제목" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L2k-GL-FCC">
-                                                                                <rect key="frame" x="8" y="10" width="204" height="31.5"/>
+                                                                                <rect key="frame" x="8" y="10" width="235" height="31.5"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                                 <nil key="textColor"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3143" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NRI-Tu-9UI">
-                                                                                <rect key="frame" x="233" y="-3" width="22" height="11"/>
+                                                                                <rect key="frame" x="272" y="-3" width="22" height="11"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                                                                 <nil key="textColor"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="최강사" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cSF-0K-Pfg">
-                                                                                <rect key="frame" x="8" y="46.5" width="204" height="12"/>
+                                                                                <rect key="frame" x="8" y="46.5" width="235" height="12"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                                 <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="view" translatesAutoresizingMaskIntoConstraints="NO" id="7D3-wY-TJT">
-                                                                                <rect key="frame" x="214" y="-5" width="16" height="16"/>
+                                                                                <rect key="frame" x="253" y="-5" width="16" height="16"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="height" constant="16" id="h1b-UT-zYO"/>
                                                                                     <constraint firstAttribute="width" constant="16" id="yve-VA-tS2"/>
@@ -1682,7 +1682,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gMm-1y-bHu" userLabel="video info container">
-                                                    <rect key="frame" x="5" y="11.5" width="365" height="61.5"/>
+                                                    <rect key="frame" x="5" y="11.5" width="404" height="61.5"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Mxt-d4-iBv" userLabel="videoImage">
                                                             <rect key="frame" x="0.0" y="0.0" width="110" height="61.5"/>
@@ -1693,28 +1693,28 @@
                                                             </constraints>
                                                         </imageView>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mys-nf-6hg" userLabel="videoTextView">
-                                                            <rect key="frame" x="110" y="0.0" width="255" height="61.5"/>
+                                                            <rect key="frame" x="110" y="0.0" width="294" height="61.5"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="영상제목 영상제목 영상제목 영상제목 영상제목" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kw9-Li-wp1">
-                                                                    <rect key="frame" x="8" y="5" width="204" height="31.5"/>
+                                                                    <rect key="frame" x="8" y="5" width="235" height="31.5"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="최강사" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K8e-an-WUP">
-                                                                    <rect key="frame" x="8" y="41.5" width="204" height="12"/>
+                                                                    <rect key="frame" x="8" y="41.5" width="235" height="12"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                     <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3143" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zwc-4E-wFU">
-                                                                    <rect key="frame" x="228" y="-3" width="22" height="11"/>
+                                                                    <rect key="frame" x="267" y="-3" width="22" height="11"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="view" translatesAutoresizingMaskIntoConstraints="NO" id="93H-4E-rg2">
-                                                                    <rect key="frame" x="209" y="-5" width="16" height="16"/>
+                                                                    <rect key="frame" x="248" y="-5" width="16" height="16"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="16" id="r3N-iE-roN"/>
                                                                         <constraint firstAttribute="height" constant="16" id="rgt-yr-loO"/>
@@ -1834,7 +1834,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="제목" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0A6-jv-oV7">
-                                                    <rect key="frame" x="16" y="10" width="343" height="1.5"/>
+                                                    <rect key="frame" x="16" y="10" width="382" height="1.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1948,7 +1948,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AhJ-VO-6SK">
-                                                    <rect key="frame" x="40" y="17" width="323" height="9.5"/>
+                                                    <rect key="frame" x="40" y="17" width="362" height="9.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1960,7 +1960,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yc8-9E-J4Z">
-                                                    <rect key="frame" x="40" y="12" width="323" height="0.0"/>
+                                                    <rect key="frame" x="40" y="12" width="362" height="0.0"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -2061,9 +2061,9 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ok5-OI-1c9">
                                                         <rect key="frame" x="0.0" y="0.0" width="382" height="50"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="내 활동" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kNy-ww-M1f">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="● 내 활동" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kNy-ww-M1f">
                                                                 <rect key="frame" x="0.0" y="0.0" width="352.5" height="50"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
@@ -2120,7 +2120,7 @@
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7gC-Ez-wnH">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7gC-Ez-wnH">
                                                                 <rect key="frame" x="182" y="0.0" width="100" height="30"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="100" id="RyE-dC-40e"/>
@@ -2129,7 +2129,7 @@
                                                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xw8-L1-Fx3">
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xw8-L1-Fx3">
                                                                 <rect key="frame" x="282" y="0.0" width="100" height="30"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="100" id="NbS-Lc-IAg"/>
@@ -2153,18 +2153,18 @@
                                                             <constraint firstAttribute="height" constant="1" id="PCN-yX-plb"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9개의 CoP에서 활동중" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xcB-eF-ZUj">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="● 9개의 CoP에서 활동중" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xcB-eF-ZUj">
                                                         <rect key="frame" x="0.0" y="412" width="382" height="70.5"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FFX-DX-t62">
                                                         <rect key="frame" x="0.0" y="482.5" width="382" height="50"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="내가 많이 재생한 카테고리" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bx3-Wh-cCQ">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="● 선호 카테고리" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bx3-Wh-cCQ">
                                                                 <rect key="frame" x="0.0" y="0.0" width="382" height="50"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
@@ -2225,9 +2225,9 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ijb-H8-bL0">
                                                         <rect key="frame" x="0.0" y="623.5" width="382" height="50"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="내가 많이 찾은  강사" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CdL-6s-9yP">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="● 선호  강사" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CdL-6s-9yP">
                                                                 <rect key="frame" x="0.0" y="0.0" width="382" height="50"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
@@ -3494,13 +3494,13 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="19/08/31 12:27" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WOg-JJ-KbX">
-                                            <rect key="frame" x="223.5" y="10" width="95.5" height="17"/>
+                                            <rect key="frame" x="262.5" y="10" width="95.5" height="17"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="댓글 내용" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cI0-sL-kVm">
-                                            <rect key="frame" x="16" y="18" width="303" height="15.5"/>
+                                            <rect key="frame" x="16" y="18" width="342" height="15.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -3699,7 +3699,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bf5-ho-bmd" userLabel="video info container">
-                                                    <rect key="frame" x="5" y="11.5" width="365" height="61.5"/>
+                                                    <rect key="frame" x="5" y="11.5" width="404" height="61.5"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="R7a-Vp-x08" userLabel="videoImage">
                                                             <rect key="frame" x="0.0" y="0.0" width="110" height="61.5"/>
@@ -3710,32 +3710,32 @@
                                                             </constraints>
                                                         </imageView>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lUg-jK-I4T" userLabel="videoTextView">
-                                                            <rect key="frame" x="110" y="0.0" width="255" height="61.5"/>
+                                                            <rect key="frame" x="110" y="0.0" width="294" height="61.5"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="영상제목 영상제목 영상제목 영상제목 영상제목" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EbS-IJ-om7">
-                                                                    <rect key="frame" x="8" y="0.0" width="204" height="31.5"/>
+                                                                    <rect key="frame" x="8" y="0.0" width="235" height="31.5"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="3ZC-tf-VoZ">
-                                                                    <rect key="frame" x="8" y="54.5" width="229.5" height="2"/>
+                                                                    <rect key="frame" x="8" y="54.5" width="264.5" height="2"/>
                                                                 </progressView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3143" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hQh-Lb-YGt">
-                                                                    <rect key="frame" x="228" y="-3" width="22" height="11"/>
+                                                                    <rect key="frame" x="267" y="-3" width="22" height="11"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="view" translatesAutoresizingMaskIntoConstraints="NO" id="G3T-9O-cnO">
-                                                                    <rect key="frame" x="209" y="-5" width="16" height="16"/>
+                                                                    <rect key="frame" x="248" y="-5" width="16" height="16"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="16" id="eai-rU-YHi"/>
                                                                         <constraint firstAttribute="height" constant="16" id="gau-bd-lCa"/>
                                                                     </constraints>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="최강사" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KSY-3O-WK5">
-                                                                    <rect key="frame" x="8" y="36.5" width="204" height="12"/>
+                                                                    <rect key="frame" x="8" y="36.5" width="235" height="12"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                     <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -3830,7 +3830,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uVH-Wc-ZKU" userLabel="video info container">
-                                                    <rect key="frame" x="5" y="11.5" width="365" height="61.5"/>
+                                                    <rect key="frame" x="5" y="11.5" width="404" height="61.5"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XmO-QN-iSI" userLabel="videoImage">
                                                             <rect key="frame" x="0.0" y="0.0" width="110" height="61.5"/>
@@ -3841,10 +3841,10 @@
                                                             </constraints>
                                                         </imageView>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LWj-Ry-jDl" userLabel="videoTextView">
-                                                            <rect key="frame" x="110" y="0.0" width="255" height="61.5"/>
+                                                            <rect key="frame" x="110" y="0.0" width="294" height="61.5"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="영상제목 영상제목 영상제목 영상제목 영상제목" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rCv-Gh-0YL">
-                                                                    <rect key="frame" x="8" y="10" width="204" height="31.5"/>
+                                                                    <rect key="frame" x="8" y="10" width="235" height="31.5"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -4161,13 +4161,13 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="19/08/31 12:27" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uCD-pz-HKi">
-                                            <rect key="frame" x="223.5" y="10" width="95.5" height="17"/>
+                                            <rect key="frame" x="262.5" y="10" width="95.5" height="17"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="댓글 내용" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N94-1i-uHj">
-                                            <rect key="frame" x="16" y="18" width="303" height="15.5"/>
+                                            <rect key="frame" x="16" y="18" width="342" height="15.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -4236,7 +4236,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T4o-e5-uee" userLabel="video info container">
-                                                    <rect key="frame" x="5" y="11.5" width="365" height="61.5"/>
+                                                    <rect key="frame" x="5" y="11.5" width="404" height="61.5"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Cj1-mm-Np7" userLabel="videoImage">
                                                             <rect key="frame" x="0.0" y="0.0" width="110" height="61.5"/>
@@ -4247,32 +4247,32 @@
                                                             </constraints>
                                                         </imageView>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RDB-9D-YNk" userLabel="videoTextView">
-                                                            <rect key="frame" x="110" y="0.0" width="255" height="61.5"/>
+                                                            <rect key="frame" x="110" y="0.0" width="294" height="61.5"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="영상제목 영상제목 영상제목 영상제목 영상제목" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qq3-Yy-D4L">
-                                                                    <rect key="frame" x="8" y="0.0" width="204" height="31.5"/>
+                                                                    <rect key="frame" x="8" y="0.0" width="235" height="31.5"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Zki-Wo-id9">
-                                                                    <rect key="frame" x="8" y="54.5" width="229.5" height="2"/>
+                                                                    <rect key="frame" x="8" y="54.5" width="264.5" height="2"/>
                                                                 </progressView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3143" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G5B-Lk-kc4">
-                                                                    <rect key="frame" x="228" y="-3" width="22" height="11"/>
+                                                                    <rect key="frame" x="267" y="-3" width="22" height="11"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="view" translatesAutoresizingMaskIntoConstraints="NO" id="5IW-Wt-tsJ">
-                                                                    <rect key="frame" x="209" y="-5" width="16" height="16"/>
+                                                                    <rect key="frame" x="248" y="-5" width="16" height="16"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="16" id="bWb-Ep-dz9"/>
                                                                         <constraint firstAttribute="width" constant="16" id="wXK-nE-9RF"/>
                                                                     </constraints>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="최강사" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vxd-ck-rbW">
-                                                                    <rect key="frame" x="8" y="36.5" width="204" height="12"/>
+                                                                    <rect key="frame" x="8" y="36.5" width="235" height="12"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                     <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -4356,7 +4356,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CN7-Nt-9sk" userLabel="video info container">
-                                                    <rect key="frame" x="5" y="11.5" width="365" height="61.5"/>
+                                                    <rect key="frame" x="5" y="11.5" width="404" height="61.5"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7SV-6Z-4N8" userLabel="videoImage">
                                                             <rect key="frame" x="0.0" y="0.0" width="110" height="61.5"/>
@@ -4367,32 +4367,32 @@
                                                             </constraints>
                                                         </imageView>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HeL-qL-57w" userLabel="videoTextView">
-                                                            <rect key="frame" x="110" y="0.0" width="255" height="61.5"/>
+                                                            <rect key="frame" x="110" y="0.0" width="294" height="61.5"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="영상제목 영상제목 영상제목 영상제목 영상제목" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Je6-M4-HJ6">
-                                                                    <rect key="frame" x="8" y="0.0" width="204" height="31.5"/>
+                                                                    <rect key="frame" x="8" y="0.0" width="235" height="31.5"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="cbb-Eo-d6P">
-                                                                    <rect key="frame" x="8" y="54.5" width="229.5" height="2"/>
+                                                                    <rect key="frame" x="8" y="54.5" width="264.5" height="2"/>
                                                                 </progressView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3143" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="POX-6T-lma">
-                                                                    <rect key="frame" x="228" y="-3" width="22" height="11"/>
+                                                                    <rect key="frame" x="267" y="-3" width="22" height="11"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="view" translatesAutoresizingMaskIntoConstraints="NO" id="S21-iL-7TN">
-                                                                    <rect key="frame" x="209" y="-5" width="16" height="16"/>
+                                                                    <rect key="frame" x="248" y="-5" width="16" height="16"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="16" id="NHi-Fd-eIX"/>
                                                                         <constraint firstAttribute="width" constant="16" id="jDx-Su-i9y"/>
                                                                     </constraints>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="최강사" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RbE-wv-qwQ">
-                                                                    <rect key="frame" x="8" y="36.5" width="204" height="12"/>
+                                                                    <rect key="frame" x="8" y="36.5" width="235" height="12"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                     <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                                     <nil key="highlightedColor"/>
