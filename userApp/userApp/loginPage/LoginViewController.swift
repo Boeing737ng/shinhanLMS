@@ -21,18 +21,10 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var pwdTextField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        userNo = "201302493"
-        userName = "최기현"
-        userCompanyCode = "58"
-        userCompanyName = "신한은행"
-        userDeptCode = "5608"
-        userDeptName = "디지털사업부"
-    
         // Do any additional setup after loading the view.
         keyboardHandling(idTextField)
         LoadingView().setLoadingStyle(self)
-        getThumbnailURL()
+        checkLoginUser()
     }
    
     @IBAction func onClickLoginBtn(_ sender: UIButton) {
@@ -48,18 +40,40 @@ class LoginViewController: UIViewController {
             self.id = userId
             self.pwd = UserDefaults.standard.string(forKey: "pwd")!
             login(id:userId, pwd: self.pwd)
+        } else {
+            return
         }
     }
     
     // TODO:: Authentication funcion needs to be added
     func login(id:String, pwd:String) {
-        if id == "201302493" && pwd == "1" {
-            //onSuccessLogin
-            if autoLoginIsSelected {
-                UserDefaults.standard.set(id, forKey: "id")
-                UserDefaults.standard.set(pwd, forKey: "pwd")
+        LoadingView().startLoading(self)
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        ref.child("user/").observeSingleEvent(of: .value, with: { (snapshot) in
+            let userData = snapshot.value as! Dictionary<String, Any>;()
+            for user in userData {
+                let userDict = user.value as! Dictionary<String, Any>;()
+                let userNumber = user.key
+                if userNumber == id && pwd == "1234" {
+                    userNo = user.key
+                    userName = userDict["name"] as! String
+                    userCompanyCode = userDict["compCd"] as! String
+                    userCompanyName = userDict["compNm"] as! String
+                    userDeptCode = String(describing: userDict["department"])
+                    userDeptName = userDict["department"] as! String
+                    
+                    if self.autoLoginIsSelected {
+                        UserDefaults.standard.set(id, forKey: "id")
+                        UserDefaults.standard.set(pwd, forKey: "pwd")
+                    }
+                    print("로그인 성공")
+                    self.getThumbnailURL()
+                }
             }
-            self.performSegue(withIdentifier: "onSuccessLogin", sender: self)
+            
+        }) { (error) in
+            print(error.localizedDescription)
         }
     }
     
@@ -145,9 +159,10 @@ class LoginViewController: UIViewController {
         print("Caching completed!!!")
     }
     func isCachingCompleted() {
+        print(urlDict)
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            self.checkLoginUser()
             LoadingView().stopLoading()
+            self.performSegue(withIdentifier: "onSuccessLogin", sender: self)
         }
     }
 

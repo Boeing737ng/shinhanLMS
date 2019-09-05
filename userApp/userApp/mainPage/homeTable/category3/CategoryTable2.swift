@@ -43,7 +43,7 @@ class CategoryTable2: UITableView, UITableViewDelegate, UITableViewDataSource  {
         ref = Database.database().reference()
         ref.child(userCompanyCode + "/lecture/" + selectedLectureId).queryOrdered(byChild: "view").observeSingleEvent(of: .value, with: { (snapshot) in
             if !snapshot.exists() || snapshot.childrenCount == 0 {
-                print("Lecture list is empty!!!!")
+                print(" Popular Lecture list is empty!!!!")
                 return
             }
             self.dataSize = Int(snapshot.childrenCount)

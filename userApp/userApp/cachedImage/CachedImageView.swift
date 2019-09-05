@@ -20,6 +20,7 @@ open class CachedImageView: UIImageView {
     }
     
     func loadCacheImage(urlKey: String, completion: (() -> ())? = nil) -> UIImage {
+        print(urlKey)
         let cachedItem = CachedImageView.imageCache.object(forKey: urlKey as NSString)
          return cachedItem!
     }

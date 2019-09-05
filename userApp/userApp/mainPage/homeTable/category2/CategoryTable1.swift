@@ -86,11 +86,12 @@ class CategoryTable1: UITableView, UITableViewDelegate, UITableViewDataSource  {
     func gerUserPlayingLectureInfoFromDB() {
         clearArrays()
         var ref: DatabaseReference!
+        print("gerUserPlayingLectureInfoFromDB")
         ref = Database.database().reference()
         ref.child("user/" + userNo + "/playList/").observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             if !snapshot.exists() || snapshot.childrenCount == 0 {
-                print("Playlist is empty!!!!")
+                print("Playing Playlist is empty!!!!")
                 return
             }
             let value = snapshot.value as? NSDictionary
