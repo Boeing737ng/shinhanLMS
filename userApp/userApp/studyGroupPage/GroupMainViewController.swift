@@ -19,6 +19,7 @@ import Foundation
 
 var curri = Array<String>()
 var curri_send : String = ""
+var CoPcheck : Int  = 0
 class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     @IBOutlet weak var pickerImage: UIPickerView!
     @IBOutlet weak var imageview: UIImageView!
@@ -47,9 +48,11 @@ class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerV
         if(row==0){
             imageview.image = UIImage(named: "default.png")
             curri_send = "0"
+            CoPcheck=0
         }
         else{
             curri_send = curri[row-1]
+            check_CoP()
             imageview.image = CachedImageView().loadCacheImage(urlKey:curri_send)}
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "copchange"), object: nil)
     }
@@ -84,7 +87,6 @@ class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerV
                 //let studyimage = studyDict["img"] as! String
                 self.study_nameArray.append(studytitle)
                 self.study_detailtxt.append(studydetail)
-                // self.study_img.append(studyimage)
             }
             self.dataReceived = true
             self.pickerImage.reloadAllComponents()
@@ -92,18 +94,102 @@ class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerV
             print(error.localizedDescription)
         }
     }
-    
-    @IBAction func CoPJoin(_ sender: UIButton) {
-        var ref: DatabaseReference!
-        ref = Database.database().reference()
-        ref.child("58/study/" + curri_send + "/member/").child(userNo).setValue([
-            "name": userName,
-            "department": userDeptName,
-            "compNm": userCompanyName
-            ])
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "memberAdd"), object: nil)
+    @IBAction func add(_ sender: Any) {
+        if(CoPcheck==1)
+        {
+            let VideoaddViewController = self.storyboard?.instantiateViewController(withIdentifier: "bbb")
+            VideoaddViewController?.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+            self.present(VideoaddViewController!, animated: true, completion: nil)
+        }
+        else
+        {
+            let dialog = UIAlertController(title: "알림", message: "CoP가입이 필요합니다!", preferredStyle: .alert)
+            let action = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+            dialog.addAction(action)
+            self.present(dialog, animated: true, completion: nil)
+        }
+    }
+    @IBAction func board(_ sender: Any) {
+        if(CoPcheck==1)
+        {
+            let GroupBoardViewController = self.storyboard?.instantiateViewController(withIdentifier: "aaa")
+            GroupBoardViewController?.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+            self.present(GroupBoardViewController!, animated: true, completion: nil)
+        }
+        else
+        {
+            let dialog = UIAlertController(title: "알림", message: "CoP가입이 필요합니다!", preferredStyle: .alert)
+            let action = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+            dialog.addAction(action)
+            self.present(dialog, animated: true, completion: nil)
+        }
+
     }
     
+    
+//    @IBAction func board(_ sender: UIButton) {
+//        if(CoPcheck==1)
+//        {
+//            let vc = self.storyboard?.instantiateViewController(withIdentifier:) as! ResultViewController
+//        }
+//        else
+//        {
+//            let dialog = UIAlertController(title: "알림", message: "이미가입된CoP입니다!", preferredStyle: .alert)
+//            let action = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+//            dialog.addAction(action)
+//            self.present(dialog, animated: true, completion: nil)
+//        }
+//    }
+    @IBAction func CoPJoin(_ sender: UIButton) {
+        print(CoPcheck)
+        if(CoPcheck==0)
+        {
+            var ref: DatabaseReference!
+            ref = Database.database().reference()
+            ref.child("58/study/" + curri_send + "/member/").child(userNo).setValue([
+                "name": userName,
+                "department": userDeptName,
+                "compNm": userCompanyName
+                ])
+            ref.child("user/"+userNo+"/study").childByAutoId().setValue(["key": curri_send])
+            let dialog = UIAlertController(title: "가입되었습니다!", message: "CoP게시판을 활용해보세요!", preferredStyle: .alert)
+            let action = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+            dialog.addAction(action)
+            self.present(dialog, animated: true, completion: nil)
+            CoPcheck = 1
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "memberAdd"), object: nil)
+        }
+        else{
+            let dialog = UIAlertController(title: "알림", message: "이미 가입된 CoP입니다!", preferredStyle: .alert)
+            let action = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+            dialog.addAction(action)
+            self.present(dialog, animated: true, completion: nil)
+        }
+    }
+    func check_CoP()
+    {
+        CoPcheck = 0
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        ref.child("user/"+userNo+"/study").observeSingleEvent(of: .value, with: { (snapshot) in
+            // Get user value
+            if snapshot.childrenCount == 0 {
+                return
+            }
+            let value = snapshot.value as? Dictionary<String,Any>;()
+            for study in value! {
+                let studyDict = study.value as! Dictionary<String, Any>;()
+                let cop = studyDict["key"] as! String
+                if(cop==curri_send)
+                {
+                    CoPcheck = 1
+                    return
+                }
+            }
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
     func initArrays() {
         study_nameArray.removeAll()
         study_nameArray.append("CoP선택")

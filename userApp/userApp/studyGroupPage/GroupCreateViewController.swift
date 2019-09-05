@@ -64,6 +64,11 @@ class GroupCreateViewController: UIViewController, UIImagePickerControllerDelega
             "studyname": studyName.text
             ])
         CachedImageView().setImageCache(item: studyImg.image!, urlKey: key)
+        ref.child("58/study/" + key + "/member/").child(userNo).setValue([
+            "name": userName,
+            "department": userDeptName,
+            "compNm": userCompanyName
+            ])
         let storage = Storage.storage()
         var data = Data()
         data = studyImg.image!.pngData()!
@@ -136,14 +141,10 @@ class GroupCreateViewController: UIViewController, UIImagePickerControllerDelega
         let library =  UIAlertAction(title: "사진앨범", style: .default) { (action) in self.openLibrary()
         }
         
-        let camera =  UIAlertAction(title: "카메라", style: .default) { (action) in self.openCamera()
-            
-        }
         
         let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         
         alert.addAction(library)
-        alert.addAction(camera)
         alert.addAction(cancel)
         present(alert, animated: true, completion: nil)
         
