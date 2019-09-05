@@ -28,9 +28,9 @@ class DetailTabViewController: ButtonBarPagerTabStripViewController {
     func loadDesign(){
         self.settings.style.selectedBarVerticalAlignment = .bottom
         self.settings.style.selectedBarBackgroundColor = UIColor.black
-        self.settings.style.buttonBarBackgroundColor = .gray
+        self.settings.style.buttonBarBackgroundColor = .lightGray
         self.settings.style.buttonBarItemBackgroundColor = .lightGray
-        self.settings.style.selectedBarBackgroundColor = .white
+        self.settings.style.selectedBarBackgroundColor = UIColor.init(red: 152/255, green: 0/255, blue: 0/255, alpha: 1)
         self.settings.style.buttonBarItemFont = .boldSystemFont(ofSize: 13)
         self.settings.style.selectedBarHeight = 4.0
         self.settings.style.buttonBarMinimumLineSpacing = 0
