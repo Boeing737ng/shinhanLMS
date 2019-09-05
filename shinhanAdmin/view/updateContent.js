@@ -65,46 +65,12 @@ $(document).ready(function () {
     });
 
 
-    var video = document.getElementById('video');
+    //var video = document.getElementById('video');
 
 
-    $('#video').on('click', function(e) {
+/*     $('#video').on('click', function(e) {
         //$('#videoAttachFile').click();
-    });
-
-
-/*     $('#videoAttachFile').on('change', function(e) {
-        if(document.getElementById("videoAttachFile").files.length == 0) {
-            return false;
-        }
-
-        var ext = $(this).val().split('.').pop().toLowerCase(); //확장자
-        if($.inArray(ext, ['mp4', 'webm']) == -1) {
-            resetFormElement($(this)); //폼 초기화
-            window.alert('동영상 파일이 아닙니다! (mp4, webm 만 업로드 가능)');
-        }
-
-        submitVideoAttachFile = $('#videoAttachFile').clone();
-        console.log('black');
-        $('#video').css('background-color', 'black');
-        $('#video').css('background-image', '');
-
-        var file = document.getElementById("videoAttachFile").files[0]
-        var type = file.type;
-        var videoNode = document.querySelector('video')
-        var URL = window.URL || window.webkitURL;
-        var fileURL = URL.createObjectURL(file);
-        videoNode.src = fileURL;
     }); */
-
-
-    /* video.addEventListener('loadedmetadata', function () {
-        $(video).one('seeked', function(e) {
-            shoot();
-        });
-
-        this.currentTime = this.duration / 2;
-    }, false); */
 
 
     //저장 버튼
@@ -170,7 +136,7 @@ $(document).ready(function () {
 
 
     //video load
-    function fnLoadVideo(videoUrl) {
+    /* function fnLoadVideo(videoUrl) {
         var video = document.getElementById('video');
         video.pause();
 
@@ -182,7 +148,7 @@ $(document).ready(function () {
         video.appendChild(source);
 
         video.load();
-    }
+    } */
 
 
     //canvas 그리기
@@ -226,7 +192,7 @@ $(document).ready(function () {
             $('#title').val(videoObj['title']);
             $('#seq').val(videoObj['seq']);
 
-            fnLoadVideo(videoObj['downloadURL']);
+            //fnLoadVideo(videoObj['downloadURL']);
             drawCanvas(videoObj['thumbnail']);
 
             window.FakeLoader.hideOverlay();
@@ -238,6 +204,7 @@ $(document).ready(function () {
     function fnGoList() {
         var url = '/view/manageLecture.html';
         var paramObj = getParams();
+        paramObj['rowKey'] = LECTURE_ID;
 
         fnGo(url, paramObj);
     }
@@ -474,23 +441,8 @@ $(document).ready(function () {
                 window.FakeLoader.hideOverlay();
             });
         }
-
-
         
     }
-
-
-    /* function setVideoDatabase(rowId, paramObj, callback) {
-
-        parent.database.ref('/' + compCd + '/lecture/' + LECTURE_ID + '/videos/' + rowId + '/').set(paramObj).then(function onSuccess(res) {
-            if(callback != null && callback != undefined) {
-                callback();
-            }
-        }).catch(function onError(err) {
-            console.log("ERROR!!!! " + err);
-            window.FakeLoader.hideOverlay();
-        });
-    } */
 
 
     //dataUrl --> Blob

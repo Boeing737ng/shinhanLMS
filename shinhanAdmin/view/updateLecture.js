@@ -138,6 +138,7 @@ $(document).ready(function () {
     function fnGoList() {
         var url = '/view/manageLecture.html';
         var paramObj = getParams();
+        paramObj['rowKey'] = LECTURE_ID;
 
         fnGo(url, paramObj);
     }

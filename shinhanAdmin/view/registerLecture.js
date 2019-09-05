@@ -82,10 +82,10 @@ $(document).ready(function () {
 
             window.FakeLoader.showOverlay();
 
-            fnSave(function () {
+            fnSave(function (returnRowId) {
                 window.FakeLoader.hideOverlay();
                 alert('저장하였습니다');
-                fnGoList();
+                fnGoList(returnRowId);
             });
         }
     });
@@ -109,19 +109,6 @@ $(document).ready(function () {
         paging: false,
         selecting: true,
         data: [],
-
-        //nextEdit: false,
-        /* rowClick: function(args) {
-            if (this._editingRow)
-            {
-            this.updateItem();
-            this.nextEdit = args.event.target;
-            }
-            else if(this.editing)
-            {
-            this.editItem($(args.event.target).closest("tr"));
-            }
-        }, */
 
         fields: [
             {
@@ -252,9 +239,13 @@ $(document).ready(function () {
 
 
     //목록 이동
-    function fnGoList() {
+    function fnGoList(rowKey) {
         var url = '/view/manageLecture.html';
         var paramObj = getParams();
+        
+        if(!isEmpty(rowKey)) {
+            paramObj['rowKey'] = rowKey;
+        }
 
         fnGo(url, paramObj);
     }
@@ -511,7 +502,7 @@ $(document).ready(function () {
 
         parent.database.ref('/' + compCd + '/lecture/' + rowId + '/').set(paramObj).then(function onSuccess(res) {
             if (callback != null && callback != undefined) {
-                callback();
+                callback(rowId);
             }
         }).catch(function onError(err) {
 

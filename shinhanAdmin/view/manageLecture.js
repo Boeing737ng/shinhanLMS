@@ -77,19 +77,6 @@ $(document).ready(function () {
             $row.toggleClass("highlight");
         },
 
-        /* rowDoubleClick: function(args) {
-            
-            var arr = $('#lectureGrid').jsGrid('option', 'data');
-
-            fnGo('/view/updateLecture.html', {
-                'searchRequireYn' : $('#searchRequireYn').val(),
-                'searchCategory' : $('#searchCategory').val(),
-                'searhRelatedTag': $('#searhRelatedTag').val(),
-                'searchTitle': $('#searchTitle').val(),
-                'rowKey': arr[args.itemIndex]['rowKey']
-            });
-        }, */
-
         fields: [
             {
                 itemTemplate: function(_, item) {
@@ -645,7 +632,8 @@ $(document).ready(function () {
                 searchRequireYn: searchParam['searchRequireYn'],
                 searchCategory: searchParam['searchCategory'],
                 searchTitle: searchParam['searchTitle'],
-                searchRelatedTag: searchParam['searchRelatedTag'] 
+                searchRelatedTag: searchParam['searchRelatedTag'],
+                focusRowKey: isEmpty(searchParam['rowKey']) ? '' : searchParam['rowKey']
             });
         }else {
             fnGetCommonCmb('tag', '#searchRelatedTag');
@@ -716,12 +704,15 @@ $(document).ready(function () {
         var searchTitle = $('#searchTitle').val() || '';
         var searchRelatedTag = $('#searchRelatedTag').val() || '';
         var searchRequireYn = $('#searchRequireYn').val() || '';
+        var focusRowKey = '';
+        var focusIdx = 0;
 
         if(!isEmpty(searchParam)) {
             searchRequireYn = searchParam['searchRequireYn'] || '';
             searchCat = searchParam['searchCategory'] || '';
             searchTag = searchParam['searchRelatedTag'] || '';
             searchTitle = searchParam['searchTitle'] || '';
+            focusRowKey = searchParam['focusRowKey'] || '';
         }else {
             searchRequireYn = $('#searchRequireYn').val() || '';
             searchCat = $('#searchCategory').val() || '';
@@ -737,6 +728,8 @@ $(document).ready(function () {
             var catArr = snapshot.val();
             var rsltArr = [];
 
+            var cnt = 0;
+
             $.each(catArr, function(idx, catObj) {
                 if(
                     ((searchTitle == '') || (catObj['title'].toLowerCase().indexOf(searchTitle.toLowerCase()) > -1)) &&
@@ -748,6 +741,13 @@ $(document).ready(function () {
                     var contentObj = catObj['videos'] || {};
     
                     catObj['rowKey'] = idx;
+                    if(idx == focusRowKey) {
+                        console.log('YES');
+                        focusIdx = cnt;
+                    }
+
+                    cnt++;
+
                     rsltArr.push(catObj);
                 }
             });
@@ -756,7 +756,8 @@ $(document).ready(function () {
 
             window.FakeLoader.hideOverlay();
 
-            $('#lectureGrid').find('tr.jsgrid-row:eq(0)').click(); //첫번째 row click
+            $('#lectureGrid').find('tbody > tr:eq('+ focusIdx +')').click(); 
+            $('#lectureGrid').find('tbody > tr:eq('+ focusIdx +')').focus();
         });
     }
 

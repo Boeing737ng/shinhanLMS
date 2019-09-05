@@ -20,14 +20,6 @@ $(document).ready(function () {
         maxTags: MAX_TAGS_CNT
     });
     
-    
-    //fnGetCommonCmb('category', '#category');
-
-
-/*     $('#thumbnailImgPreview').on('click', function(e) {
-        $('#thumbnailFile').click();
-    }); */
-
 
     $('#output').on('click', function(e) {
         $('#thumbnailFile').click();
@@ -179,7 +171,6 @@ $(document).ready(function () {
     function fnRetrieve() {
         window.FakeLoader.showOverlay();
         
-        console.log(LECTURE_ID);
         parent.database.ref('/' + compCd + '/lecture/' + LECTURE_ID).once('value').then(function(snapshot) {
 
             var obj = snapshot.val();
@@ -199,6 +190,7 @@ $(document).ready(function () {
     function fnGoList() {
         var url = '/view/manageLecture.html';
         var paramObj = getParams();
+        paramObj['rowKey'] = LECTURE_ID;
 
         fnGo(url, paramObj);
     }
