@@ -11,7 +11,6 @@ import Charts
 import Firebase
 import Foundation
 
-
 var textArray = ["","",""]
 var authorArray = ["","",""]
 var dataReceived:Bool = false
@@ -22,9 +21,9 @@ var dbTeaArray = Array<String>()
 var dbGoalArray = Array<Int>()
 
 class graphViewController: UIViewController, ChartViewDelegate {
-
+    
     var months: [String]!
-
+    
     let copnum: Int = 0
     var studyTime: Int = 0
     var goalTime: Int = 0
@@ -48,30 +47,39 @@ class graphViewController: UIViewController, ChartViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         let cal = Calendar(identifier: .gregorian)
         let now = Date()
         let comps = cal.dateComponents([.weekday], from: now)
+        
         print(comps.weekday!)
-        if comps.weekday! == 1{
+        
+        if comps.weekday! == 1 {
             months = ["월","화","수","목","금","토","일(오늘)"]
-        }else if comps.weekday! == 2{
+        }
+        else if comps.weekday! == 2 {
             months = ["화","수","목","금","토","일","월(오늘)"]
-        }else if comps.weekday! == 3{
+        }
+        else if comps.weekday! == 3 {
             months = ["수","목","금","토","일","월","화(오늘)"]
-        }else if comps.weekday! == 4{
+        }
+        else if comps.weekday! == 4 {
             months = ["목","금","토","일","월","화","수(오늘)"]
-        }else if comps.weekday! == 5{
+        }
+        else if comps.weekday! == 5 {
             months = ["금","토","일","월","화","수","목(오늘)"]
-        }else if comps.weekday! == 6{
+        }
+        else if comps.weekday! == 6 {
             months = ["토","일","월","화","수","목","금(오늘)"]
-        }else if comps.weekday! == 7{
+        }
+        else if comps.weekday! == 7 {
             months = ["일","월","화","수","목","금","토(오늘)"]
         }
         
-        for i in 0...unitSold.count-1{
+        for i in 0...unitSold.count - 1 {
             studyTime = studyTime + unitSold[i]
         }
-        staTime = studyTime/7
+        staTime = studyTime / 7
         
         timeStacklbl.text = "Shinple과 함께 \(studyTime)분을 학습했습니다"
         goalTimelbl.text = "\(goalTime)분"
@@ -82,37 +90,36 @@ class graphViewController: UIViewController, ChartViewDelegate {
         
         // Do any additional setup after loading the view.
         setChart(dataPoints: months, values: unitSold)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadChat), name: NSNotification.Name(rawValue: "goalSet"), object: nil)
     }
     
-    func getNamePartDB(){
+    @objc func reloadChat() {
+        goalTimeDB()
+    }
+    
+    func getNamePartDB() { // 가입한 CoP 수
         clearArrays()
-        var dataURL:String = userCompanyCode + "/study/11111/member/" + userNo
-        //        var dataURL:String = ""
-        //        dataURL = "user/" + userNo
+        
+        var dataURL:String = "user/" + userNo + "/study"
         
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
+            
             if !snapshot.exists() || snapshot.childrenCount == 0 {
                 self.copStacklbl.text = "0개의 CoP에서 활동중"
-                print("Playlist is empty!!!!")
+                print("CoP NULL!!!!")
                 return
             }
-            let value = snapshot.value as? Dictionary<String, Any>;()
-            let nameD = value as! Dictionary<String, Any>;()
-            let name = nameD["name"] as! String
             
-            dbStudyArray.append(name)
-            self.copStacklbl.text = "\(dbStudyArray.count)개의 CoP에서 활동중"
-
-            dataReceived = true
+            let studyCount = Int(snapshot.childrenCount)
+            self.copStacklbl.text = "\(String(studyCount))개의 CoP에서 활동중"
         }) { (error) in
             print(error.localizedDescription)
         }
     }
     
-    func mostCgDB(){
+    func mostCgDB() {
         clearArrays()
         var dataURL:String = ""
         dataURL = "user/" + userNo + "/playList"
@@ -121,23 +128,23 @@ class graphViewController: UIViewController, ChartViewDelegate {
         ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
             for video in value! {
-
+                
                 let catD = video.value as! Dictionary<String, Any>;()
                 let catId = video.key as! String
                 let cat = catD["categoryNm"] as! String
-//                print(cat)
+                //                print(cat)
                 dbCatArray.append(cat)
             }
-//            print(dbCatArray)
+            //            print(dbCatArray)
             dataReceived = true
             let stringRepresentation = dbCatArray.joined(separator: " ")
-      //      print(stringRepresentation)
+            //      print(stringRepresentation)
             print(self.wordCount(s: stringRepresentation))
             let classK = Array(self.wordCount(s: stringRepresentation).values)
             let classV = Array(self.wordCount(s: stringRepresentation).keys)
             print(classK)
             print(classV)
-
+            
             var rank = [Int](repeating: 1, count: classK.count)
             for i in 0 ... classK.count-1 {
                 for j in 0 ... classK.count-1 {
@@ -147,7 +154,7 @@ class graphViewController: UIViewController, ChartViewDelegate {
                 }
             }
             
-           print(rank)
+            print(rank)
             var total = 0
             for i in 0...classK.count-1{
                 total = classK[i] + total
@@ -169,47 +176,47 @@ class graphViewController: UIViewController, ChartViewDelegate {
                 }
                 
                 
-//                if rank[i] == 1 && rank[i+1] == 1 && rank[i+2] == 1{
-//                    var per = (classK[i]*100)/total
-//                    print("1위: \(classV[i]) \(per)%")
-//                    print("1위: \(classV[i+1]) \(per)%")
-//                    print("1위: \(classV[i+2]) \(per)%")
-//                    self.cat1lbl.text = "1위: \(classV[i]) \(per)%"
-//                    self.cat2lbl.text = "1위: \(classV[i+1]) \(per)%"
-//                    self.cat3lbl.text = "1위: \(classV[i+2]) \(per)%"
-//                    return
-//                }else if rank[i+1] == 1 && rank[i+2] != 1{
-//                    var per = (classK[i]*100)/total
-//                    print("1위: \(classV[i]) \(per)%")
-//                    print("1위: \(classV[i+1]) \(per)%")
-//                    print("3위: \(classV[i+2]) \(per)%")
-//                    self.cat1lbl.text = "1위: \(classV[i]) \(per)%"
-//                    self.cat2lbl.text = "1위: \(classV[i+1]) \(per)%"
-//                    self.cat3lbl.text = "3위: \(classV[i+2]) \(per)%"
-//                    return
-//                }else if rank[i+1] != 1 && rank[i+2] != 3{
-//                    var per = (classK[i]*100)/total
-//                    print("1위: \(classV[i]) \(per)%")
-//                    print("2위: \(classV[i+1]) \(per)%")
-//                    print("2위: \(classV[i+2]) \(per)%")
-//                    self.cat1lbl.text = "1위: \(classV[i]) \(per)%"
-//                    self.cat2lbl.text = "2위: \(classV[i+1]) \(per)%"
-//                    self.cat3lbl.text = "2위: \(classV[i+2]) \(per)%"
-//                    return
-//                }else{
-//                    if rank[i] == 1{
-//                        var per = (classK[i]*100)/total
-//                        print("1위: \(classV[i]) \(per)%")
-//                        self.cat1lbl.text = "1위: \(classV[i]) \(per)%"
-//                    }else if rank[i] == 2{
-//                        var per = (classK[i]*100)/total
-//                        print("2위: \(classV[i]) \(per)%")
-//                        self.cat2lbl.text = "2위: \(classV[i]) \(per)%"
-//                    }else if rank[i] == 3{
-//                        var per = (classK[i]*100)/total
-//                        print("3위: \(classV[i]) \(per)%")
-//                        self.cat3lbl.text = "3위: \(classV[i]) \(per)%"
-//                    }                }
+                //                if rank[i] == 1 && rank[i+1] == 1 && rank[i+2] == 1{
+                //                    var per = (classK[i]*100)/total
+                //                    print("1위: \(classV[i]) \(per)%")
+                //                    print("1위: \(classV[i+1]) \(per)%")
+                //                    print("1위: \(classV[i+2]) \(per)%")
+                //                    self.cat1lbl.text = "1위: \(classV[i]) \(per)%"
+                //                    self.cat2lbl.text = "1위: \(classV[i+1]) \(per)%"
+                //                    self.cat3lbl.text = "1위: \(classV[i+2]) \(per)%"
+                //                    return
+                //                }else if rank[i+1] == 1 && rank[i+2] != 1{
+                //                    var per = (classK[i]*100)/total
+                //                    print("1위: \(classV[i]) \(per)%")
+                //                    print("1위: \(classV[i+1]) \(per)%")
+                //                    print("3위: \(classV[i+2]) \(per)%")
+                //                    self.cat1lbl.text = "1위: \(classV[i]) \(per)%"
+                //                    self.cat2lbl.text = "1위: \(classV[i+1]) \(per)%"
+                //                    self.cat3lbl.text = "3위: \(classV[i+2]) \(per)%"
+                //                    return
+                //                }else if rank[i+1] != 1 && rank[i+2] != 3{
+                //                    var per = (classK[i]*100)/total
+                //                    print("1위: \(classV[i]) \(per)%")
+                //                    print("2위: \(classV[i+1]) \(per)%")
+                //                    print("2위: \(classV[i+2]) \(per)%")
+                //                    self.cat1lbl.text = "1위: \(classV[i]) \(per)%"
+                //                    self.cat2lbl.text = "2위: \(classV[i+1]) \(per)%"
+                //                    self.cat3lbl.text = "2위: \(classV[i+2]) \(per)%"
+                //                    return
+                //                }else{
+                //                    if rank[i] == 1{
+                //                        var per = (classK[i]*100)/total
+                //                        print("1위: \(classV[i]) \(per)%")
+                //                        self.cat1lbl.text = "1위: \(classV[i]) \(per)%"
+                //                    }else if rank[i] == 2{
+                //                        var per = (classK[i]*100)/total
+                //                        print("2위: \(classV[i]) \(per)%")
+                //                        self.cat2lbl.text = "2위: \(classV[i]) \(per)%"
+                //                    }else if rank[i] == 3{
+                //                        var per = (classK[i]*100)/total
+                //                        print("3위: \(classV[i]) \(per)%")
+                //                        self.cat3lbl.text = "3위: \(classV[i]) \(per)%"
+                //                    }                }
             }
             
         }) { (error) in
@@ -218,7 +225,7 @@ class graphViewController: UIViewController, ChartViewDelegate {
     }
     
     
-    func mostTeaDB(){
+    func mostTeaDB() {
         clearArrays()
         var dataURL:String = ""
         dataURL = "user/" + userNo + "/playList"
@@ -230,14 +237,14 @@ class graphViewController: UIViewController, ChartViewDelegate {
                 let catD = video.value as! Dictionary<String, Any>;()
                 let catId = video.key as! String
                 let cat = catD["author"] as! String
-//                print(cat)
+                //                print(cat)
                 dbTeaArray.append(cat)
             }
-//            print(dbTeaArray)
+            //            print(dbTeaArray)
             dataReceived = true
             let stringRepresentation = dbTeaArray.joined(separator: " ")
-      //      print(stringRepresentation)
-      //      print(self.wordCount(s: stringRepresentation))
+            //      print(stringRepresentation)
+            //      print(self.wordCount(s: stringRepresentation))
             
             print(self.wordCount(s: stringRepresentation))
             let classK = Array(self.wordCount(s: stringRepresentation).values)
@@ -274,47 +281,47 @@ class graphViewController: UIViewController, ChartViewDelegate {
                     print("3위: \(classV[i]) \(per)%")
                     self.teac3lbl.text = "3위: \(classV[i]) \(per)%"
                 }
-//                if rank[i] == 1 && rank[i+1] == 1 && rank[i+2] == 1{
-//                    var per = (classK[i]*100)/total
-//                    print("1위: \(classV[i]) \(per)%")
-//                    print("1위: \(classV[i+1]) \(per)%")
-//                    print("1위: \(classV[i+2]) \(per)%")
-//                    self.teac1lbl.text = "1위: \(classV[i]) \(per)%"
-//                    self.teac2lbl.text = "1위: \(classV[i+1]) \(per)%"
-//                    self.teac3lbl.text = "1위: \(classV[i+2]) \(per)%"
-//                    return
-//                }else if rank[i+1] == 1 && rank[i+2] != 1{
-//                    var per = (classK[i]*100)/total
-//                    print("1위: \(classV[i]) \(per)%")
-//                    print("1위: \(classV[i+1]) \(per)%")
-//                    print("3위: \(classV[i+2]) \(per)%")
-//                    self.teac1lbl.text = "1위: \(classV[i]) \(per)%"
-//                    self.teac2lbl.text = "1위: \(classV[i+1]) \(per)%"
-//                    self.teac3lbl.text = "3위: \(classV[i+2]) \(per)%"
-//                    return
-//                }else if rank[i+1] != 1 && rank[i+2] != 3{
-//                    var per = (classK[i]*100)/total
-//                    print("1위: \(classV[i]) \(per)%")
-//                    print("2위: \(classV[i+1]) \(per)%")
-//                    print("2위: \(classV[i+2]) \(per)%")
-//                    self.teac1lbl.text = "1위: \(classV[i]) \(per)%"
-//                    self.teac2lbl.text = "2위: \(classV[i+1]) \(per)%"
-//                    self.teac3lbl.text = "2위: \(classV[i+2]) \(per)%"
-//                    return
-//                }else{
-//                    if rank[i] == 1{
-//                        var per = (classK[i]*100)/total
-//                        print("1위: \(classV[i]) \(per)%")
-//                        self.teac1lbl.text = "1위: \(classV[i]) \(per)%"
-//                    }else if rank[i] == 2{
-//                        var per = (classK[i]*100)/total
-//                        print("2위: \(classV[i]) \(per)%")
-//                        self.teac2lbl.text = "2위: \(classV[i]) \(per)%"
-//                    }else if rank[i] == 3{
-//                        var per = (classK[i]*100)/total
-//                        print("3위: \(classV[i]) \(per)%")
-//                        self.teac3lbl.text = "3위: \(classV[i]) \(per)%"
-//                    }                }
+                //                if rank[i] == 1 && rank[i+1] == 1 && rank[i+2] == 1{
+                //                    var per = (classK[i]*100)/total
+                //                    print("1위: \(classV[i]) \(per)%")
+                //                    print("1위: \(classV[i+1]) \(per)%")
+                //                    print("1위: \(classV[i+2]) \(per)%")
+                //                    self.teac1lbl.text = "1위: \(classV[i]) \(per)%"
+                //                    self.teac2lbl.text = "1위: \(classV[i+1]) \(per)%"
+                //                    self.teac3lbl.text = "1위: \(classV[i+2]) \(per)%"
+                //                    return
+                //                }else if rank[i+1] == 1 && rank[i+2] != 1{
+                //                    var per = (classK[i]*100)/total
+                //                    print("1위: \(classV[i]) \(per)%")
+                //                    print("1위: \(classV[i+1]) \(per)%")
+                //                    print("3위: \(classV[i+2]) \(per)%")
+                //                    self.teac1lbl.text = "1위: \(classV[i]) \(per)%"
+                //                    self.teac2lbl.text = "1위: \(classV[i+1]) \(per)%"
+                //                    self.teac3lbl.text = "3위: \(classV[i+2]) \(per)%"
+                //                    return
+                //                }else if rank[i+1] != 1 && rank[i+2] != 3{
+                //                    var per = (classK[i]*100)/total
+                //                    print("1위: \(classV[i]) \(per)%")
+                //                    print("2위: \(classV[i+1]) \(per)%")
+                //                    print("2위: \(classV[i+2]) \(per)%")
+                //                    self.teac1lbl.text = "1위: \(classV[i]) \(per)%"
+                //                    self.teac2lbl.text = "2위: \(classV[i+1]) \(per)%"
+                //                    self.teac3lbl.text = "2위: \(classV[i+2]) \(per)%"
+                //                    return
+                //                }else{
+                //                    if rank[i] == 1{
+                //                        var per = (classK[i]*100)/total
+                //                        print("1위: \(classV[i]) \(per)%")
+                //                        self.teac1lbl.text = "1위: \(classV[i]) \(per)%"
+                //                    }else if rank[i] == 2{
+                //                        var per = (classK[i]*100)/total
+                //                        print("2위: \(classV[i]) \(per)%")
+                //                        self.teac2lbl.text = "2위: \(classV[i]) \(per)%"
+                //                    }else if rank[i] == 3{
+                //                        var per = (classK[i]*100)/total
+                //                        print("3위: \(classV[i]) \(per)%")
+                //                        self.teac3lbl.text = "3위: \(classV[i]) \(per)%"
+                //                    }                }
             }
             
             
@@ -322,7 +329,7 @@ class graphViewController: UIViewController, ChartViewDelegate {
             print(error.localizedDescription)
         }
     }
- 
+    
     func wordCount(s: String) -> Dictionary<String, Int>{
         var words = s.components(separatedBy: .whitespaces)
         var WordD = Dictionary<String, Int>()
@@ -335,8 +342,8 @@ class graphViewController: UIViewController, ChartViewDelegate {
         }
         return WordD
     }
-
-    func goalTimeDB(){
+    
+    func goalTimeDB() {
         clearArrays()
         var dataURL:String = "user/" + userNo
         //        var dataURL:String = ""
@@ -350,16 +357,17 @@ class graphViewController: UIViewController, ChartViewDelegate {
             let goal = goalD["goalTime"] as! Int
             print(goal)
             dbGoalArray.append(goal)
-            dataReceived = true
+            //dataReceived = true
             
             self.goalTimelbl.text = "\(goal)분"
             
-            if(goal<self.staTime){
+            if (goal < self.staTime) {
                 self.staTimelbl.text = "목표 달성"
                 self.staTimelbl.textColor = UIColor.blue
-                print(goal)
-                print(self.staTime)
-            }else{
+                print("goal : \(goal)")
+                print("staTime : \(self.staTime)")
+            }
+            else {
                 self.staTimelbl.text = "목표 미달성"
                 self.staTimelbl.textColor = UIColor.red
             }
@@ -367,12 +375,13 @@ class graphViewController: UIViewController, ChartViewDelegate {
             let ll = ChartLimitLine(limit: Double(goal)
                 , label: "목표")
             self.chartView.rightAxis.removeAllLimitLines()
-           self.chartView.rightAxis.addLimitLine(ll)
+            self.chartView.rightAxis.addLimitLine(ll)
             self.chartView.delegate = self
         }) { (error) in
             print(error.localizedDescription)
         }
     }
+    
     func clearArrays() {
         dbStudyArray.removeAll()
         dbCatArray.removeAll()
@@ -395,7 +404,7 @@ class graphViewController: UIViewController, ChartViewDelegate {
         
         var dataURL:String = "user/" + userNo + "/goalTime"
         
-        let timeA = UIAlertController(title: "목표 시간을 선택해 주세요", message: " ", preferredStyle: UIAlertController.Style.alert)
+        let timeA = UIAlertController(title: "목표 시간을 선택해 주세요", message: nil, preferredStyle: UIAlertController.Style.alert)
         
         let A10 = UIAlertAction(title: "10분", style: UIAlertAction.Style.default, handler: {ACTION in self.goalTime = 10
             self.setChart(dataPoints: self.months, values: self.unitSold)
@@ -433,14 +442,18 @@ class graphViewController: UIViewController, ChartViewDelegate {
             let updates = [dataURL:60]
             ref.updateChildValues(updates)
         })
+        
         timeA.addAction(A10)
         timeA.addAction(A20)
         timeA.addAction(A30)
         timeA.addAction(A40)
         timeA.addAction(A50)
         timeA.addAction(A60)
+        
         present(timeA, animated: true, completion: nil)
         goalTimelbl.text = "\(goalTime)분"
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "goalSet"), object: nil)
     }
     
     func setChart(dataPoints: [String], values: [Int]){
@@ -448,7 +461,7 @@ class graphViewController: UIViewController, ChartViewDelegate {
         
         var dataEntries: [BarChartDataEntry] = []
         
-        for i in 0 ..< dataPoints.count{
+        for i in 0 ..< dataPoints.count {
             let dataEntry = BarChartDataEntry(x: Double(Int(i)), y: Double(values[i]))
             dataEntries.append(dataEntry)
             
@@ -471,13 +484,13 @@ class graphViewController: UIViewController, ChartViewDelegate {
         
     }
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
