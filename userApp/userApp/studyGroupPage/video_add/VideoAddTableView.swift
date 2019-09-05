@@ -11,7 +11,7 @@ import Firebase
 var addArray = Array<String>()
 
 class VideoAddTableView: UITableView, UITableViewDataSource, UITableViewDelegate {
-
+    
     var textArray = ["","",""]
     var authorArray = ["","",""]
     var dataReceived:Bool = false
@@ -19,6 +19,7 @@ class VideoAddTableView: UITableView, UITableViewDataSource, UITableViewDelegate
     var videoIdArray = Array<String>()
     var databaseTitleArray = Array<String>()
     var databaseAuthorArray = Array<String>()
+    
     
     override func awakeFromNib() {
         self.delegate = self
@@ -114,7 +115,7 @@ class VideoAddTableView: UITableView, UITableViewDataSource, UITableViewDelegate
         }
         
         return cell
-}
+    }
     func onGoBack() {
         let transition: CATransition = CATransition()
         transition.duration = 0.5
@@ -130,18 +131,18 @@ class VideoAddTableView: UITableView, UITableViewDataSource, UITableViewDelegate
         for i in addArray
         {
             ref.child("58/lecture/" + i).observeSingleEvent(of: .value, with: { (snapshot) in
-    // Get user value
-            let value = snapshot.value as? Dictionary<String,Any>;()
-            let videoDict = value as! Dictionary<String, Any>;()
-            let author=videoDict["author"] as! String
-            let title=videoDict["title"] as! String
-            ///////////////////
-            print(curri_send)
-            print(i)
-            ref.child("58/study/"+curri_send+"/curriculum/"+i).setValue([
-                "author": author,
-                "title": title,
-                ])
+                // Get user value
+                let value = snapshot.value as? Dictionary<String,Any>;()
+                let videoDict = value as! Dictionary<String, Any>;()
+                let author=videoDict["author"] as! String
+                let title=videoDict["title"] as! String
+                ///////////////////
+                print(curri_send)
+                print(i)
+                ref.child("58/study/"+curri_send+"/curriculum/"+i).setValue([
+                    "author": author,
+                    "title": title,
+                    ])
                 self.dataReceived = true
             }) { (error) in
                 print(error.localizedDescription)
@@ -149,11 +150,11 @@ class VideoAddTableView: UITableView, UITableViewDataSource, UITableViewDelegate
         }
         addArray.removeAll()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "back"), object: nil)
-
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addcurri"), object: nil)
         }
-        }
     }
+}
 
 

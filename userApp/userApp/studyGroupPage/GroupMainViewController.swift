@@ -30,7 +30,7 @@ class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerV
     var study_nameArray = Array<String>()
     var study_detailtxt = Array<String>()
     var joinOn = true
-    
+    var row1 :Int=0;
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return PICKER_VIEW_COLUMN
     }
@@ -41,9 +41,8 @@ class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerV
         return study_nameArray[row]
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
-        //curri=study_nameArray[row]
+        row1=row
         detail.text = study_detailtxt[row]
-        
         print(curri_send)
         if(row==0){
             imageview.image = UIImage(named: "default.png")
@@ -142,7 +141,14 @@ class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerV
 //    }
     @IBAction func CoPJoin(_ sender: UIButton) {
         print(CoPcheck)
-        if(CoPcheck==0)
+        if(CoPcheck == 0 && row1 == 0)
+        {
+            let dialog = UIAlertController(title: "알림", message: "CoP를 선택하세요!", preferredStyle: .alert)
+            let action = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+            dialog.addAction(action)
+            self.present(dialog, animated: true, completion: nil)
+        }
+        else if(CoPcheck==0)
         {
             var ref: DatabaseReference!
             ref = Database.database().reference()
@@ -159,6 +165,7 @@ class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerV
             CoPcheck = 1
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "memberAdd"), object: nil)
         }
+            
         else{
             let dialog = UIAlertController(title: "알림", message: "이미 가입된 CoP입니다!", preferredStyle: .alert)
             let action = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)

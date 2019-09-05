@@ -33,6 +33,10 @@ class VideoaddViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(onGoBack), name: NSNotification.Name(rawValue: "back"), object: nil)
         // Do any additional setup after loading the view.
     }
+    override func viewWillAppear(_ animated: Bool) {
+        dropdownCategoryList1.removeAll()
+        dropdownCategoryList1.append("전체보기  ")
+    }
     @objc func dropdownButton(){
         dropdown?.show()
     }
@@ -89,6 +93,6 @@ extension VideoaddViewController : IndicatorInfoProvider{
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo{
         return IndicatorInfo(title: "CoP")
     }
-  
+    
     
 }
