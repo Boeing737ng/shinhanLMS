@@ -34,7 +34,7 @@ class VideoCollection: UICollectionView, UICollectionViewDelegate, UICollectionV
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child("user/" + userNo + "/selectedTags").observeSingleEvent(of: .value, with: { (snapshot) in
-            if !snapshot.exists() || snapshot.childrenCount == 0 {
+            if !snapshot.exists() || snapshot.value == nil {
                 return
             }
             let tagList = snapshot.value as! String
