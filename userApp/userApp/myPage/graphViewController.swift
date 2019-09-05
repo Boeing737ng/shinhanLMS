@@ -119,6 +119,137 @@ class graphViewController: UIViewController, ChartViewDelegate {
         }
     }
     
+    func goalTimeDB() {
+        clearArrays()
+        var dataURL:String = "user/" + userNo
+        //        var dataURL:String = ""
+        //        dataURL = "user/" + userNo
+        
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? Dictionary<String, Any>;()
+            let goalD = value as! Dictionary<String, Any>;()
+            let goal = goalD["goalTime"] as! Int
+            print(goal)
+            dbGoalArray.append(goal)
+            //dataReceived = true
+            
+            self.goalTimelbl.text = "\(goal)분"
+            
+            if (goal < self.staTime) {
+                self.staTimelbl.text = "목표 달성"
+                self.staTimelbl.textColor = UIColor.blue
+                print("goal : \(goal)")
+                print("staTime : \(self.staTime)")
+            }
+            else {
+                self.staTimelbl.text = "목표 미달성"
+                self.staTimelbl.textColor = UIColor.red
+            }
+            
+            let ll = ChartLimitLine(limit: Double(goal)
+                , label: "목표")
+            self.chartView.rightAxis.removeAllLimitLines()
+            self.chartView.rightAxis.addLimitLine(ll)
+            self.chartView.delegate = self
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    func clearArrays() {
+        dbStudyArray.removeAll()
+        dbCatArray.removeAll()
+        dbTeaArray.removeAll()
+    }
+    
+    @IBAction func setGoal(_ sender: UIButton) {
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        
+        var dataURL:String = "user/" + userNo + "/goalTime"
+        
+        let timeA = UIAlertController(title: "목표 시간을 선택해 주세요", message: nil, preferredStyle: UIAlertController.Style.alert)
+        
+        let A10 = UIAlertAction(title: "10분", style: UIAlertAction.Style.default, handler: {ACTION in self.goalTime = 10
+            self.setChart(dataPoints: self.months, values: self.unitSold)
+            self.goalTimelbl.text = "\(self.goalTime)분"
+            let updates = [dataURL:10]
+            ref.updateChildValues(updates)
+        })
+        let A20 = UIAlertAction(title: "20분", style: UIAlertAction.Style.default, handler: {ACTION in self.goalTime = 20
+            self.setChart(dataPoints: self.months, values: self.unitSold)
+            self.goalTimelbl.text = "\(self.goalTime)분"
+            let updates = [dataURL:20]
+            ref.updateChildValues(updates)
+        })
+        let A30 = UIAlertAction(title: "30분", style: UIAlertAction.Style.default, handler: {ACTION in self.goalTime = 30
+            self.setChart(dataPoints: self.months, values: self.unitSold)
+            self.goalTimelbl.text = "\(self.goalTime)분"
+            let updates = [dataURL:30]
+            ref.updateChildValues(updates)
+        })
+        let A40 = UIAlertAction(title: "40분", style: UIAlertAction.Style.default, handler: {ACTION in self.goalTime = 40
+            self.setChart(dataPoints: self.months, values: self.unitSold)
+            self.goalTimelbl.text = "\(self.goalTime)분"
+            let updates = [dataURL:40]
+            ref.updateChildValues(updates)
+        })
+        let A50 = UIAlertAction(title: "50분", style: UIAlertAction.Style.default, handler: {ACTION in self.goalTime = 50
+            self.setChart(dataPoints: self.months, values: self.unitSold)
+            self.goalTimelbl.text = "\(self.goalTime)분"
+            let updates = [dataURL:50]
+            ref.updateChildValues(updates)
+        })
+        let A60 = UIAlertAction(title: "60분", style: UIAlertAction.Style.default, handler: {ACTION in self.goalTime = 60
+            self.setChart(dataPoints: self.months, values: self.unitSold)
+            self.goalTimelbl.text = "\(self.goalTime)분"
+            let updates = [dataURL:60]
+            ref.updateChildValues(updates)
+        })
+        
+        timeA.addAction(A10)
+        timeA.addAction(A20)
+        timeA.addAction(A30)
+        timeA.addAction(A40)
+        timeA.addAction(A50)
+        timeA.addAction(A60)
+        
+        present(timeA, animated: true, completion: nil)
+        goalTimelbl.text = "\(goalTime)분"
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "goalSet"), object: nil)
+    }
+    
+    func setChart(dataPoints: [String], values: [Int]){
+        //        barChartView.noDataText = "you need to provide datafor the chart"
+        
+        var dataEntries: [BarChartDataEntry] = []
+        
+        for i in 0 ..< dataPoints.count {
+            let dataEntry = BarChartDataEntry(x: Double(Int(i)), y: Double(values[i]))
+            dataEntries.append(dataEntry)
+            
+            let chartDataSet = BarChartDataSet(entries: dataEntries, label: "학습량")
+            let chartData = BarChartData(dataSet: chartDataSet)
+            //            chartDataSet.colors = ChartColorTemplates.material()
+            chartDataSet.colors = [UIColor(red: 0/255, green: 170/255, blue: 255/255, alpha: 1)]
+            chartView.data = chartData
+            
+            chartView.xAxis.labelPosition = .bottom
+            chartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: months)
+            //            barChartView.backgroundColor = UIColor(red: 189/255, green: 195/255, blue: 199/255, alpha: 1)
+            chartView.animate(xAxisDuration: 2, yAxisDuration: 2)
+            
+            let ll = ChartLimitLine(limit: Double(goalTime), label: "목표")
+            chartView.rightAxis.removeAllLimitLines()
+            chartView.rightAxis.addLimitLine(ll)
+            chartView.delegate = self
+        }
+        
+    }
+    
     func mostCgDB() {
         clearArrays()
         var dataURL:String = ""
@@ -343,51 +474,6 @@ class graphViewController: UIViewController, ChartViewDelegate {
         return WordD
     }
     
-    func goalTimeDB() {
-        clearArrays()
-        var dataURL:String = "user/" + userNo
-        //        var dataURL:String = ""
-        //        dataURL = "user/" + userNo
-        
-        var ref: DatabaseReference!
-        ref = Database.database().reference()
-        ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
-            let value = snapshot.value as? Dictionary<String, Any>;()
-            let goalD = value as! Dictionary<String, Any>;()
-            let goal = goalD["goalTime"] as! Int
-            print(goal)
-            dbGoalArray.append(goal)
-            //dataReceived = true
-            
-            self.goalTimelbl.text = "\(goal)분"
-            
-            if (goal < self.staTime) {
-                self.staTimelbl.text = "목표 달성"
-                self.staTimelbl.textColor = UIColor.blue
-                print("goal : \(goal)")
-                print("staTime : \(self.staTime)")
-            }
-            else {
-                self.staTimelbl.text = "목표 미달성"
-                self.staTimelbl.textColor = UIColor.red
-            }
-            
-            let ll = ChartLimitLine(limit: Double(goal)
-                , label: "목표")
-            self.chartView.rightAxis.removeAllLimitLines()
-            self.chartView.rightAxis.addLimitLine(ll)
-            self.chartView.delegate = self
-        }) { (error) in
-            print(error.localizedDescription)
-        }
-    }
-    
-    func clearArrays() {
-        dbStudyArray.removeAll()
-        dbCatArray.removeAll()
-        dbTeaArray.removeAll()
-    }
-    
     @IBAction func onGoBack(_ sender: UIBarButtonItem) {
         let transition: CATransition = CATransition()
         transition.duration = 0.5
@@ -396,92 +482,6 @@ class graphViewController: UIViewController, ChartViewDelegate {
         transition.subtype = CATransitionSubtype.fromLeft
         self.view.window!.layer.add(transition, forKey: nil)
         self.dismiss(animated: false, completion: nil)
-    }
-    
-    @IBAction func setGoal(_ sender: UIButton) {
-        var ref: DatabaseReference!
-        ref = Database.database().reference()
-        
-        var dataURL:String = "user/" + userNo + "/goalTime"
-        
-        let timeA = UIAlertController(title: "목표 시간을 선택해 주세요", message: nil, preferredStyle: UIAlertController.Style.alert)
-        
-        let A10 = UIAlertAction(title: "10분", style: UIAlertAction.Style.default, handler: {ACTION in self.goalTime = 10
-            self.setChart(dataPoints: self.months, values: self.unitSold)
-            self.goalTimelbl.text = "\(self.goalTime)분"
-            let updates = [dataURL:10]
-            ref.updateChildValues(updates)
-        })
-        let A20 = UIAlertAction(title: "20분", style: UIAlertAction.Style.default, handler: {ACTION in self.goalTime = 20
-            self.setChart(dataPoints: self.months, values: self.unitSold)
-            self.goalTimelbl.text = "\(self.goalTime)분"
-            let updates = [dataURL:20]
-            ref.updateChildValues(updates)
-        })
-        let A30 = UIAlertAction(title: "30분", style: UIAlertAction.Style.default, handler: {ACTION in self.goalTime = 30
-            self.setChart(dataPoints: self.months, values: self.unitSold)
-            self.goalTimelbl.text = "\(self.goalTime)분"
-            let updates = [dataURL:30]
-            ref.updateChildValues(updates)
-        })
-        let A40 = UIAlertAction(title: "40분", style: UIAlertAction.Style.default, handler: {ACTION in self.goalTime = 40
-            self.setChart(dataPoints: self.months, values: self.unitSold)
-            self.goalTimelbl.text = "\(self.goalTime)분"
-            let updates = [dataURL:40]
-            ref.updateChildValues(updates)
-        })
-        let A50 = UIAlertAction(title: "50분", style: UIAlertAction.Style.default, handler: {ACTION in self.goalTime = 50
-            self.setChart(dataPoints: self.months, values: self.unitSold)
-            self.goalTimelbl.text = "\(self.goalTime)분"
-            let updates = [dataURL:50]
-            ref.updateChildValues(updates)
-        })
-        let A60 = UIAlertAction(title: "60분", style: UIAlertAction.Style.default, handler: {ACTION in self.goalTime = 60
-            self.setChart(dataPoints: self.months, values: self.unitSold)
-            self.goalTimelbl.text = "\(self.goalTime)분"
-            let updates = [dataURL:60]
-            ref.updateChildValues(updates)
-        })
-        
-        timeA.addAction(A10)
-        timeA.addAction(A20)
-        timeA.addAction(A30)
-        timeA.addAction(A40)
-        timeA.addAction(A50)
-        timeA.addAction(A60)
-        
-        present(timeA, animated: true, completion: nil)
-        goalTimelbl.text = "\(goalTime)분"
-        
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "goalSet"), object: nil)
-    }
-    
-    func setChart(dataPoints: [String], values: [Int]){
-        //        barChartView.noDataText = "you need to provide datafor the chart"
-        
-        var dataEntries: [BarChartDataEntry] = []
-        
-        for i in 0 ..< dataPoints.count {
-            let dataEntry = BarChartDataEntry(x: Double(Int(i)), y: Double(values[i]))
-            dataEntries.append(dataEntry)
-            
-            let chartDataSet = BarChartDataSet(entries: dataEntries, label: "학습량")
-            let chartData = BarChartData(dataSet: chartDataSet)
-            //            chartDataSet.colors = ChartColorTemplates.material()
-            chartDataSet.colors = [UIColor(red: 0/255, green: 170/255, blue: 255/255, alpha: 1)]
-            chartView.data = chartData
-            
-            chartView.xAxis.labelPosition = .bottom
-            chartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: months)
-            //            barChartView.backgroundColor = UIColor(red: 189/255, green: 195/255, blue: 199/255, alpha: 1)
-            chartView.animate(xAxisDuration: 2, yAxisDuration: 2)
-            
-            let ll = ChartLimitLine(limit: Double(goalTime), label: "목표")
-            chartView.rightAxis.removeAllLimitLines()
-            chartView.rightAxis.addLimitLine(ll)
-            chartView.delegate = self
-        }
-        
     }
     /*
      // MARK: - Navigation
