@@ -472,7 +472,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="newShinple" translatesAutoresizingMaskIntoConstraints="NO" id="esh-E7-5Rc">
-                                <rect key="frame" x="132" y="378" width="150" height="150"/>
+                                <rect key="frame" x="132" y="378" width="150" height="150.00000000000182"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="esh-E7-5Rc" secondAttribute="height" multiplier="1:1" id="VfS-3y-4mq"/>
                                     <constraint firstAttribute="width" constant="150" id="oSL-zK-6Bo"/>
@@ -509,7 +509,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="290" height="290"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shinple_logo" translatesAutoresizingMaskIntoConstraints="NO" id="ACA-qG-M47">
-                                                <rect key="frame" x="0.0" y="0.0" width="290" height="290"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="290.00000000000182" height="290"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="ACA-qG-M47" secondAttribute="height" multiplier="1:1" id="F8K-Dx-ZGB"/>
                                                 </constraints>
