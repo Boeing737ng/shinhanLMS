@@ -1579,7 +1579,8 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="120" id="5Uk-8u-n2H"/>
                                         </constraints>
-                                        <state key="normal" title=" Category  " image="iconmonstr-arrow-69-24">
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <state key="normal" title=" Category  " image="selectBtn">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                     </button>
@@ -1589,37 +1590,66 @@
                                 <rect key="frame" x="0.0" y="140" width="414" height="627"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="myCell" id="BKo-5i-Dfk" customClass="VideoAddCell" customModule="userApp" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="myCell" id="e6Q-Aa-y5G" userLabel="videoCell" customClass="VideoAddCell" customModule="userApp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BKo-5i-Dfk" id="WQ6-kF-LQb">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="e6Q-Aa-y5G" id="oNg-GN-FXQ">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="99.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iBY-Qc-GQr">
-                                                    <rect key="frame" x="11" y="1" width="113" height="96"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uQN-x8-DkS">
-                                                    <rect key="frame" x="132" y="1" width="215" height="40"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4du-P4-vZD">
-                                                    <rect key="frame" x="132" y="49" width="136" height="40"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jsh-ke-skz" userLabel="video info container">
+                                                    <rect key="frame" x="5" y="19" width="404" height="61.5"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WDB-bY-jYJ" userLabel="videoImage">
+                                                            <rect key="frame" x="0.0" y="0.0" width="110" height="61.5"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" secondItem="WDB-bY-jYJ" secondAttribute="height" multiplier="16:9" id="Zn6-Ui-YAx"/>
+                                                                <constraint firstAttribute="width" constant="110" id="cJd-9M-WLs"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fNg-fW-PnZ" userLabel="videoTextView">
+                                                            <rect key="frame" x="110" y="0.0" width="294" height="61.5"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="영상제목 영상제목 영상제목 영상제목 영상제목" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qye-9V-hIb">
+                                                                    <rect key="frame" x="8" y="5" width="235" height="31.5"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="최강사" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4i0-3n-rbl">
+                                                                    <rect key="frame" x="8" y="41.5" width="235" height="12"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                                    <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstItem="4i0-3n-rbl" firstAttribute="top" secondItem="Qye-9V-hIb" secondAttribute="bottom" constant="5" id="Dmj-bN-47L"/>
+                                                                <constraint firstItem="4i0-3n-rbl" firstAttribute="width" secondItem="fNg-fW-PnZ" secondAttribute="width" multiplier="0.8" id="O2E-pp-JKx"/>
+                                                                <constraint firstItem="Qye-9V-hIb" firstAttribute="leading" secondItem="fNg-fW-PnZ" secondAttribute="leading" constant="8" id="Q70-At-Mxj"/>
+                                                                <constraint firstItem="Qye-9V-hIb" firstAttribute="top" secondItem="fNg-fW-PnZ" secondAttribute="top" constant="5" id="YhV-im-aGU"/>
+                                                                <constraint firstItem="4i0-3n-rbl" firstAttribute="leading" secondItem="fNg-fW-PnZ" secondAttribute="leading" constant="8" id="sOe-qg-Jvg"/>
+                                                                <constraint firstItem="Qye-9V-hIb" firstAttribute="width" secondItem="fNg-fW-PnZ" secondAttribute="width" multiplier="0.8" id="xXL-hr-as2"/>
+                                                            </constraints>
+                                                        </view>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="WDB-bY-jYJ" firstAttribute="leading" secondItem="jsh-ke-skz" secondAttribute="leading" id="7Jt-bR-1cU"/>
+                                                    </constraints>
+                                                </stackView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="jsh-ke-skz" secondAttribute="trailing" constant="5" id="0iS-jg-9Hv"/>
+                                                <constraint firstItem="jsh-ke-skz" firstAttribute="leading" secondItem="oNg-GN-FXQ" secondAttribute="leading" constant="5" id="3SP-CW-Bpo"/>
+                                                <constraint firstItem="jsh-ke-skz" firstAttribute="centerY" secondItem="oNg-GN-FXQ" secondAttribute="centerY" id="yka-xq-0MK"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="videoAuthorLabel" destination="4du-P4-vZD" id="Dwe-BI-z2j"/>
-                                            <outlet property="videoThumbnail" destination="iBY-Qc-GQr" id="9ho-hh-tLU"/>
-                                            <outlet property="videoTitleLabel" destination="uQN-x8-DkS" id="1cR-nv-zbx"/>
+                                            <outlet property="videoAuthorLabel" destination="4i0-3n-rbl" id="gsS-wO-xPt"/>
+                                            <outlet property="videoThumbnail" destination="WDB-bY-jYJ" id="rSD-hH-3Sg"/>
+                                            <outlet property="videoTitleLabel" destination="Qye-9V-hIb" id="XqM-ev-s0N"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -4553,7 +4583,6 @@
         <image name="PW" width="240" height="240"/>
         <image name="alarm" width="240" height="240"/>
         <image name="default-1" width="450" height="450"/>
-        <image name="iconmonstr-arrow-69-24" width="24" height="24"/>
         <image name="imgAdd.jpeg" width="144" height="147"/>
         <image name="loginBackground" width="724" height="364"/>
         <image name="newShinple" width="6290" height="6369"/>
