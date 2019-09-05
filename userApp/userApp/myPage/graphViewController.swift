@@ -107,13 +107,13 @@ class graphViewController: UIViewController, ChartViewDelegate {
         ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
             
             if !snapshot.exists() || snapshot.childrenCount == 0 {
-                self.copStacklbl.text = "0개의 CoP에서 활동중"
+                self.copStacklbl.text = "● 0개의 CoP에서 활동중"
                 print("CoP NULL!!!!")
                 return
             }
             
             let studyCount = Int(snapshot.childrenCount)
-            self.copStacklbl.text = "\(String(studyCount))개의 CoP에서 활동중"
+            self.copStacklbl.text = "● \(String(studyCount))개의 CoP에서 활동중"
         }) { (error) in
             print(error.localizedDescription)
         }
