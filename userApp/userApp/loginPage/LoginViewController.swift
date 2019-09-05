@@ -159,7 +159,6 @@ class LoginViewController: UIViewController {
         print("Caching completed!!!")
     }
     func isCachingCompleted() {
-        print(urlDict)
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             LoadingView().stopLoading()
             self.performSegue(withIdentifier: "onSuccessLogin", sender: self)

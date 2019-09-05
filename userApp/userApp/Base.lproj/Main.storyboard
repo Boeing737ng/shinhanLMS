@@ -567,11 +567,10 @@
                                                     <constraint firstAttribute="width" constant="10" id="lvM-hh-cjJ"/>
                                                 </constraints>
                                             </stackView>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DoB-Ir-Eq5">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DoB-Ir-Eq5">
                                                 <rect key="frame" x="33" y="0.0" width="257" height="30"/>
                                                 <nil key="textColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                             </textField>
                                         </subviews>
                                         <constraints>
@@ -4565,7 +4564,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="pgX-Sd-WpQ"/>
-        <!-- <segue reference="RbT-en-H0r"/>
-        <segue reference="rhK-HN-NNB"/> -->
+        <segue reference="rhK-HN-NNB"/>
     </inferredMetricsTieBreakers>
 </document>
