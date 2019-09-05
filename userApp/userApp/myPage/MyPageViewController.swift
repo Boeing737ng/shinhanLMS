@@ -186,6 +186,9 @@ class MyPageViewController: UIViewController{
         
         let firebaseAuth = Auth.auth()
         do {
+            URLCache.shared.removeAllCachedResponses()
+            URLCache.shared.diskCapacity = 0
+            URLCache.shared.memoryCapacity = 0
             UserDefaults.standard.removeObject(forKey: "id")
             UserDefaults.standard.removeObject(forKey: "pwd")
             try firebaseAuth.signOut()

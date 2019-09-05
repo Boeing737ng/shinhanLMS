@@ -839,7 +839,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UOE-1G-f7R" userLabel="Study Select Stack View">
                                                 <rect key="frame" x="16" y="16" width="375" height="150"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MhK-IY-8Rp">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default" translatesAutoresizingMaskIntoConstraints="NO" id="MhK-IY-8Rp">
                                                         <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="MhK-IY-8Rp" secondAttribute="height" multiplier="1:1" id="g8g-ff-suF"/>
@@ -4552,6 +4552,7 @@
         <image name="ID" width="240" height="240"/>
         <image name="PW" width="240" height="240"/>
         <image name="alarm" width="240" height="240"/>
+        <image name="default" width="450" height="450"/>
         <image name="default-1" width="450" height="450"/>
         <image name="imgAdd.jpeg" width="144" height="147"/>
         <image name="loginBackground" width="724" height="364"/>
