@@ -30,6 +30,7 @@ class SelectedVideoListViewController: UIViewController {
     }
     
     func setDropdownBarText() {
+        dropdownCategoryList.removeAll()
         var index:Int = 1
         var ref: DatabaseReference!
         dropdownCategoryList.append("전체보기  ")

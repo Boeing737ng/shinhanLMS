@@ -65,6 +65,9 @@ class GroupMainViewController: UIViewController, UIPickerViewDelegate, UIPickerV
         getData()
         NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: NSNotification.Name(rawValue: "addcop"), object: nil)
     }
+    override func viewWillAppear(_ animated: Bool) {
+        selectedCategoryIndex = 0
+    }
     func getData() {
         initArrays()
         var ref: DatabaseReference!

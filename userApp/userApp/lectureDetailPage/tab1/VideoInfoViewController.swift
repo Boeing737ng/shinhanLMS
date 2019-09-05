@@ -15,9 +15,11 @@ var videoDescription:String = ""
 class VideoInfoViewController: UIViewController {
     
     @IBOutlet weak var videoTitle: UILabel!
-    @IBOutlet weak var videoViewCount: UILabel!
     @IBOutlet weak var videoAuthor: UILabel!
     @IBOutlet weak var videoDescriptionLabel: UILabel!
+    @IBOutlet weak var videoViewCount: UILabel!
+    
+    var viewArray = Array<Int>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +34,7 @@ class VideoInfoViewController: UIViewController {
     }
     
     func getLectureDescriptionFromDB() {
+        viewArray.removeAll()
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child(userCompanyCode + "/lecture/" + selectedLectureId).observeSingleEvent(of: .value, with: { (snapshot) in
@@ -39,7 +42,10 @@ class VideoInfoViewController: UIViewController {
             self.videoDescriptionLabel.text = videoInfo["description"]! as? String
             self.videoTitle.text = videoInfo["title"]! as? String
             self.videoAuthor.text = videoInfo["author"]! as? String
-            self.videoViewCount.text = videoInfo["view"] as? String
+            let view = videoInfo["view"] as? Int
+            self.viewArray.append(view!)
+            self.videoViewCount.text = String(self.viewArray[0])
+            
         }) { (error) in
             print(error.localizedDescription)
         }

@@ -1300,7 +1300,7 @@
                         <outlet property="videoAuthor" destination="DCh-Iy-e3r" id="Uey-MY-WVc"/>
                         <outlet property="videoDescriptionLabel" destination="aNH-h2-8cl" id="yaK-RJ-XV0"/>
                         <outlet property="videoTitle" destination="s9u-n7-34j" id="Y0E-Io-u2H"/>
-                        <outlet property="videoViewCount" destination="K2z-y4-dTI" id="Xb1-9M-wij"/>
+                        <outlet property="videoViewCount" destination="K2z-y4-dTI" id="whP-U4-ljS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zYu-fB-tAH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3725,31 +3725,8 @@
                                     <constraint firstAttribute="height" constant="130" id="v1S-Op-GJN"/>
                                 </constraints>
                             </view>
-                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XKq-YM-ApG">
-                                <rect key="frame" x="0.0" y="84" width="414" height="46"/>
-                                <subviews>
-                                    <searchBar contentMode="redraw" text="" translatesAutoresizingMaskIntoConstraints="NO" id="CDi-JM-QOI">
-                                        <rect key="frame" x="0.0" y="0.0" width="294" height="46"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </searchBar>
-                                    <button opaque="NO" contentMode="right" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SRj-4Y-MbZ">
-                                        <rect key="frame" x="294" y="0.0" width="120" height="46"/>
-                                        <color key="backgroundColor" red="0.78841382270000004" green="0.78796237710000006" blue="0.8078458905" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="120" id="PRO-dc-Mqu"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                        <state key="normal" title=" Category  " image="selectBtn">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                    </button>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="46" id="FBx-X2-GvO"/>
-                                </constraints>
-                            </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="85" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="xgI-i3-q7J" customClass="SelectedTableView" customModule="userApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="138" width="414" height="724"/>
+                                <rect key="frame" x="0.0" y="84" width="414" height="778"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SelectedVideoCell" id="Gf4-d7-aZh" userLabel="videoCell" customClass="SelectedVideoCell" customModule="userApp" customModuleProvider="target">
@@ -3848,24 +3825,17 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="xgI-i3-q7J" firstAttribute="bottom" secondItem="Mxh-4k-7aW" secondAttribute="bottom" id="Kgk-Vf-eGi"/>
                             <constraint firstItem="Mxh-4k-7aW" firstAttribute="top" secondItem="Mcw-Qq-gnz" secondAttribute="bottom" constant="-40" id="Omh-gD-XCc"/>
                             <constraint firstItem="Mcw-Qq-gnz" firstAttribute="width" secondItem="Mxh-4k-7aW" secondAttribute="width" id="PQq-Ak-U30"/>
-                            <constraint firstItem="XKq-YM-ApG" firstAttribute="centerX" secondItem="Mxh-4k-7aW" secondAttribute="centerX" id="Pgh-QQ-Bcp"/>
-                            <constraint firstItem="xgI-i3-q7J" firstAttribute="width" secondItem="XKq-YM-ApG" secondAttribute="width" id="TWW-a6-E8f"/>
-                            <constraint firstItem="xgI-i3-q7J" firstAttribute="top" secondItem="XKq-YM-ApG" secondAttribute="bottom" constant="8" symbolic="YES" id="auS-gO-aKa"/>
+                            <constraint firstItem="xgI-i3-q7J" firstAttribute="bottom" secondItem="Mxh-4k-7aW" secondAttribute="bottom" id="WJ2-X4-hGN"/>
+                            <constraint firstItem="xgI-i3-q7J" firstAttribute="top" secondItem="Mcw-Qq-gnz" secondAttribute="bottom" id="Yxf-0v-iNW"/>
                             <constraint firstItem="Mcw-Qq-gnz" firstAttribute="leading" secondItem="Mxh-4k-7aW" secondAttribute="leading" id="dVS-ff-iTn"/>
                             <constraint firstItem="Mcw-Qq-gnz" firstAttribute="trailing" secondItem="Mxh-4k-7aW" secondAttribute="trailing" id="et5-KZ-AjL"/>
-                            <constraint firstItem="XKq-YM-ApG" firstAttribute="top" secondItem="Mcw-Qq-gnz" secondAttribute="bottom" id="hKN-XD-Ii3"/>
-                            <constraint firstItem="xgI-i3-q7J" firstAttribute="centerX" secondItem="XKq-YM-ApG" secondAttribute="centerX" id="kc5-uC-IvY"/>
-                            <constraint firstItem="XKq-YM-ApG" firstAttribute="width" secondItem="QcU-tU-RIS" secondAttribute="width" id="vLh-gl-l2J"/>
-                            <constraint firstItem="XKq-YM-ApG" firstAttribute="top" secondItem="Mcw-Qq-gnz" secondAttribute="bottom" id="wmj-mg-YQh"/>
+                            <constraint firstItem="xgI-i3-q7J" firstAttribute="leading" secondItem="Mxh-4k-7aW" secondAttribute="leading" id="vW9-B9-b2f"/>
+                            <constraint firstItem="xgI-i3-q7J" firstAttribute="trailing" secondItem="Mxh-4k-7aW" secondAttribute="trailing" id="yhK-zR-yIB"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Mxh-4k-7aW"/>
                     </view>
-                    <connections>
-                        <outlet property="btn1" destination="SRj-4Y-MbZ" id="cqh-gf-g3d"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gmX-jP-Cfh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
