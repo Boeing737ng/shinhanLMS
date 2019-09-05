@@ -235,7 +235,9 @@ $(document).ready(function () {
   
       $.each(catArr, function (idx, chartObj) {
           chartObj['rowKey'] = idx;
-          chartArr.push(chartObj);
+          if(chartObj['requireYn'] != 'Y') { //필수강좌 아닌 애들만
+            chartArr.push(chartObj);
+          }
       });
       
 

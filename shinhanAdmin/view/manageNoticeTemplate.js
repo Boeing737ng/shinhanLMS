@@ -10,6 +10,16 @@ $(document).ready(function () {
     window.FakeLoader.init();
 
 
+    $('[data-toggle="tooltip"]').tooltip();
+
+
+    $('#btnGuide').on('click', function(e) {
+
+        //modal-guide
+        $('#modal-guide').modal();
+    });
+
+
     //행추가 버튼
     $('#btnAdd').on('click', function(e) {
         e.preventDefault();
@@ -98,7 +108,7 @@ $(document).ready(function () {
     /** start of grid ***********************/
     $("#grid").jsGrid({
         width: "100%",
-        height: "381px",
+        height: "581px",
         sorting: true,
         paging: false,
         data: [],
