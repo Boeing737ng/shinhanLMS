@@ -47,8 +47,8 @@ class LectureTableView: UITableView, UITableViewDelegate, UITableViewDataSource{
         ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             if snapshot.childrenCount == 0 {
-                return
                 self.reloadData()
+                return
             }
             let lectures = snapshot.value as? Dictionary<String,Any>;()
             for lecture in lectures! {
