@@ -128,6 +128,12 @@ class graphViewController: UIViewController, ChartViewDelegate {
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            if !snapshot.exists() || snapshot.childrenCount == 0 {
+                print("Playlist is empty!!!!")
+                return
+            }
+            
             let value = snapshot.value as? Dictionary<String, Any>;()
             let goalD = value as! Dictionary<String, Any>;()
             let goal = goalD["goalTime"] as! Int
@@ -257,6 +263,12 @@ class graphViewController: UIViewController, ChartViewDelegate {
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            if !snapshot.exists() || snapshot.childrenCount == 0 {
+                print("Playlist is empty!!!!")
+                return
+            }
+            
             let value = snapshot.value as? NSDictionary
             for video in value! {
                 
@@ -363,6 +375,12 @@ class graphViewController: UIViewController, ChartViewDelegate {
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            if !snapshot.exists() || snapshot.childrenCount == 0 {
+                print("Playlist is empty!!!!")
+                return
+            }
+            
             let value = snapshot.value as? NSDictionary
             for video in value! {
                 let catD = video.value as! Dictionary<String, Any>;()

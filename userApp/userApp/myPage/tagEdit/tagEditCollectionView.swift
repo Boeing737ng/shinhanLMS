@@ -45,6 +45,12 @@ class tagEditCollectionView: UICollectionView, UICollectionViewDelegate, UIColle
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child("user/" + userNo + "/selectedTags").observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            if !snapshot.exists() || snapshot.value == nil {
+                self.reloadData()
+                return
+            }
+            
             let tagList = snapshot.value as! String
             userSelectedTagArray = tagList.components(separatedBy: " ")
             
