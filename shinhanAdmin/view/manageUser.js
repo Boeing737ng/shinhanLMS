@@ -50,10 +50,10 @@ $(document).ready(function () {
         },
 
         fields: [
-            { name: "compNm", title: '회사명', type: "text", width: 120, editing: false, align: "left" },
-            { name: "department", title: '부서명', type: "text", width: 120, editing: false, align: "left" },
             { name: "empNo", title: '사번', type: "text", width: 120, editing: false, align: "center" },
             { name: "name", title: "성명", type: 'text', width: 120, editing: false, align: "center" },
+            { name: "compNm", title: '회사명', type: "text", width: 120, editing: false, align: "left" },
+            { name: "department", title: '부서명', type: "text", width: 120, editing: false, align: "left" },
             { name: "selectedTags", title: "관심태그", type: 'text', width: 150, editing: false, align: "left", cellRenderer: function(item, value){
                 var rslt = $("<td>").addClass("jsgrid-cell");
                 var div = $('<div></div>');

@@ -238,7 +238,8 @@ $(document).ready(function () {
         rowClick: function(args) {
             var arr = $('#contentGrid').jsGrid('option', 'data');
             var videoUrl = arr[args.itemIndex]['downloadURL'];
-            fnLoadVideo(videoUrl);
+            var thumbnailUrl = arr[args.itemIndex]['thumbnail'];
+            fnLoadVideo(videoUrl, thumbnailUrl);
             
             var $row = this.rowByItem(args.item);
             var selectedRow = $("#contentGrid").find('table tr.highlight');
@@ -599,7 +600,7 @@ $(document).ready(function () {
 
 
     //video load
-    function fnLoadVideo(videoUrl) {
+    function fnLoadVideo(videoUrl, thumbnailUrl) {
         var video = document.getElementById('video');
         video.pause();
 
@@ -608,6 +609,7 @@ $(document).ready(function () {
         source.src = videoUrl;
 
         video.innerHTML = '';
+        video.poster = thumbnailUrl;
         video.appendChild(source);
 
         video.load();
@@ -765,7 +767,7 @@ $(document).ready(function () {
     //상세조회
     function fnRetrieveDetail(item) {
         
-        fnLoadVideo('');
+        fnLoadVideo('' , '');
         selectedItemsContent = [];
         
         var searchCompany = compCd;
