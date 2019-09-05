@@ -184,6 +184,14 @@ class MyPageViewController: UIViewController{
     
     @IBAction func logoutbtn(_ sender: UIButton) {
         
+        let firebaseAuth = Auth.auth()
+        do {
+            UserDefaults.standard.removeObject(forKey: "id")
+            UserDefaults.standard.removeObject(forKey: "pwd")
+            try firebaseAuth.signOut()
+            self.performSegue(withIdentifier: "goToLoginPage", sender: self)
+        } catch let signOutError as NSError {
+            print ("Error signing out: %@", signOutError)
+        }
     }
-    
 }

@@ -42,26 +42,26 @@ class LectureTableView: UITableView, UITableViewDelegate, UITableViewDataSource{
         } else {
             dataURL = userCompanyCode + "/categories/" + categoryDict[selectedCategoryIndex]! + "/lecture"
         }
-        print(categoryDict[selectedCategoryIndex])
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child(dataURL).observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             if snapshot.childrenCount == 0 {
+                self.reloadData()
                 return
             }
-            let value = snapshot.value as? Dictionary<String,Any>;()
-            for video in value! {
-                let videoDict = video.value as! Dictionary<String, Any>;()
-                let videoId = video.key
-                let title = videoDict["title"] as! String
-                let author = videoDict["author"] as! String
-                self.databaseLectureIdArray.append(videoId)
+            let lectures = snapshot.value as? Dictionary<String,Any>;()
+            for lecture in lectures! {
+                let lectureDict = lecture.value as! Dictionary<String, Any>;()
+                let lectureId = lecture.key
+                let title = lectureDict["title"] as! String
+                let author = lectureDict["author"] as! String
+                self.databaseLectureIdArray.append(lectureId)
                 self.databaseTitleArray.append(title)
                 self.databaseAuthorArray.append(author)
-                ref.child(userCompanyCode + "/views/" + videoId).observeSingleEvent(of: .value, with: { (snapshot) in
-                    print(videoId)
-                    self.databaseViewArray.append(snapshot.value as! Int)
+                ref.child(userCompanyCode + "/lecture/" + lectureId).observeSingleEvent(of: .value, with: { (snapshot) in
+                    let lectureDict = snapshot.value as! Dictionary<String, Any>;()
+                    self.databaseViewArray.append(lectureDict["view"] as! Int)
                     self.dataReceived = true
                     self.reloadData()
                 }) { (error) in
