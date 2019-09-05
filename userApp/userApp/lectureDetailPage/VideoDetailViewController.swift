@@ -59,8 +59,13 @@ class VideoDetailViewController: UIViewController {
     
     let controlsContainerView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(white: 0, alpha: 1)
+        view.backgroundColor = UIColor.init(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.5)
         return view
+    }()
+    let backgroundLayer: UIView = {
+        let layer = UIView()
+        layer.backgroundColor = UIColor.init(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.5)
+        return layer
     }()
     lazy var pausePlayButton: UIButton = {
         let button = UIButton(type: .system)
@@ -115,7 +120,14 @@ class VideoDetailViewController: UIViewController {
     }
     
     @objc private func startVideoPlayer() {
+        activityIndicatorView.startAnimating()
+        print(selectedVideoId)
+        print(videoURL)
         print("Video Started")
+        controllViewIsHidden = false
+        isPlaying = false
+        player?.pause()
+        playerView.removeFromSuperview()
         showVideoPlayer()
         initVideoPlayer()
     }
@@ -207,23 +219,40 @@ class VideoDetailViewController: UIViewController {
     
     func playLastPlayedVideo() {
         var ref: DatabaseReference!
+        var completedVideoCount:Int = 0
+        var firstVideoId:String = ""
+        var firstVideoUrl:String = ""
         ref = Database.database().reference()
         ref.child("user/" + userNo + "/playList/" + selectedLectureId + "/videos").queryOrdered(byChild: "seq").observeSingleEvent(of: .value, with: { (snapshot) in
             if !snapshot.exists() || snapshot.childrenCount == 0 {
                 print("Video playlist is empty!!!!!!!!!!!!!!!!!!!!!!")
                 return
             }
+            var dataSize = snapshot.childrenCount
             let videos = snapshot.children.allObjects as! [DataSnapshot]
             for video in videos {
                 let videoInfo = video.value as! Dictionary<String, Any>;()
                 let videoState = videoInfo["state"] as! String
+                let seq = videoInfo["seq"] as! Int
+                if seq == 1 {
+                    firstVideoId = video.key
+                    firstVideoUrl = videoInfo["downloadURL"] as! String
+                }
                 if videoState == "playing" {
                     selectedVideoId = video.key
                     print(selectedVideoId)
                     videoURL = videoInfo["downloadURL"] as! String
                     self.startVideoPlayer()
                     return
+                } else if videoState == "completed" {
+                    completedVideoCount += 1
                 }
+            }
+            if dataSize == completedVideoCount {
+                print("It's completed Lecture. Playing First video....")
+                selectedVideoId = firstVideoId
+                videoURL = firstVideoUrl
+                self.startVideoPlayer()
             }
             //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "videoSelected"), object: nil)
         }) { (error) in
@@ -295,7 +324,9 @@ class VideoDetailViewController: UIViewController {
     func initVideoPlayer() {
         setupPlayerView()
         
+        backgroundLayer.frame = playerView.frame
         controlsContainerView.frame = playerView.frame
+        playerView.addSubview(backgroundLayer)
         playerView.addSubview(controlsContainerView)
         playerView.backgroundColor = .black
         
@@ -404,6 +435,7 @@ class VideoDetailViewController: UIViewController {
             self.controlsContainerView.alpha = 1.0
         }, completion:  {
             (value: Bool) in
+            self.backgroundLayer.isHidden = false
             self.controlsContainerView.isHidden = false
             self.controllViewIsHidden = false
         })
@@ -415,6 +447,7 @@ class VideoDetailViewController: UIViewController {
                 self.controlsContainerView.alpha = 0.0
             }, completion:  {
                 (value: Bool) in
+                self.backgroundLayer.isHidden = true
                 self.controlsContainerView.isHidden = true
                 self.controllViewIsHidden = true
             })
@@ -474,9 +507,13 @@ class VideoDetailViewController: UIViewController {
             isPlaying = true
             if let duration = player?.currentItem?.duration {
                 let seconds = CMTimeGetSeconds(duration)
-                let secondsText = Int(seconds) % 60
-                let minutesText = String(format: "%02d", Int(seconds) / 60)
-                videoLengthLabel.text = "\(minutesText):\(secondsText)"
+                if seconds.isNaN {
+                    return
+                } else {
+                    let secondsText = Int(seconds) % 60
+                    let minutesText = String(format: "%02d", Int(seconds) / 60)
+                    videoLengthLabel.text = "\(minutesText):\(secondsText)"
+                }
             }
             
         }
