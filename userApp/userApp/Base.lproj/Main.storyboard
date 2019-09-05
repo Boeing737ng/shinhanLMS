@@ -783,7 +783,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UOE-1G-f7R" userLabel="Study Select Stack View">
                                                 <rect key="frame" x="16" y="16" width="375" height="150"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default" translatesAutoresizingMaskIntoConstraints="NO" id="MhK-IY-8Rp">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default-1" translatesAutoresizingMaskIntoConstraints="NO" id="MhK-IY-8Rp">
                                                         <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="MhK-IY-8Rp" secondAttribute="height" multiplier="1:1" id="g8g-ff-suF"/>
@@ -973,7 +973,8 @@
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
                                                                 <connections>
-                                                                    <segue destination="vcC-G1-MYY" kind="show" id="lE8-es-HM3"/>
+                                                                    <action selector="board:" destination="O7e-i3-78I" eventType="touchUpInside" id="i1d-E3-yfO"/>
+                                                                    <segue destination="vcC-G1-MYY" kind="show" id="pwh-9a-7TH"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>
@@ -4523,6 +4524,7 @@
         <image name="PW" width="240" height="240"/>
         <image name="alarm" width="240" height="240"/>
         <image name="default" width="450" height="450"/>
+        <image name="default-1" width="450" height="450"/>
         <image name="iconmonstr-arrow-69-24" width="24" height="24"/>
         <image name="imgAdd.jpeg" width="144" height="147"/>
         <image name="loginBackground" width="724" height="364"/>
@@ -4534,6 +4536,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="pgX-Sd-WpQ"/>
-        <segue reference="lE8-es-HM3"/>
+        <segue reference="pwh-9a-7TH"/>
     </inferredMetricsTieBreakers>
 </document>
